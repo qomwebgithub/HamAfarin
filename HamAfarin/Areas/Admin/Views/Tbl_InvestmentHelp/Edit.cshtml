@@ -1,0 +1,100 @@
+﻿@model DataLayer.Tbl_InvestmentHelp
+
+@{
+    ViewBag.Title = "ویرایش سرمایه گذاری";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.InvestmentHelpID)
+        @Html.HiddenFor(model => model.IsDelete)
+        @Html.HiddenFor(model => model.IsActive)
+        @Html.HiddenFor(model => model.CreateDate)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InvestmentHelpTitle, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InvestmentHelpTitle)
+                @Html.ValidationMessageFor(model => model.InvestmentHelpTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullText)
+                @Html.ValidationMessageFor(model => model.FullText)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InvestmentProcess, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InvestmentProcess)
+                @Html.ValidationMessageFor(model => model.InvestmentProcess)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FrequentlyAskedQuestions, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FrequentlyAskedQuestions)
+                @Html.ValidationMessageFor(model => model.FrequentlyAskedQuestions)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HoldingCampaign, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HoldingCampaign)
+                @Html.ValidationMessageFor(model => model.HoldingCampaign)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SendPlan, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SendPlan)
+                @Html.ValidationMessageFor(model => model.SendPlan)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="بروزرسانی" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+    <--> ck editor</-->
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#FullText').ckeditor();
+            $('#InvestmentProcess').ckeditor();
+            $('#FrequentlyAskedQuestions').ckeditor();
+            $('#SendPlan').ckeditor();
+            $('#HoldingCampaign').ckeditor();
+        });
+    </script>
+}

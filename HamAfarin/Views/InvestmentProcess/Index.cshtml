@@ -1,0 +1,17 @@
+﻿@model IEnumerable<DataLayer.Tbl_InvestmentProcess>
+
+<section class="container mt-3">
+    <div class="section-header">
+        <h5 class="h6 py-1 px-2 d-inline-block m-0">فرآیند سرمایه گذاری</h5>
+    </div>
+
+
+    <div class="row justify-content-center py-2">
+        @foreach (var item in Model)
+        {
+            @Html.Partial("_BoxInvestmentProcess", item)
+        }
+
+    </div>
+
+</section>

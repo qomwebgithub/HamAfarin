@@ -1,0 +1,45 @@
+﻿@model IPagedList<ViewModels.BusinessPlansItemViewModel>
+@using PagedList.Mvc
+@using PagedList
+
+@{ var pastSize = ViewBag.Count;}
+
+@{ if (pastSize > 0)
+    {
+        int count = 5;
+
+
+        if (Request.Browser.IsMobileDevice)
+        {
+            count = 3;
+        }
+
+        <input class="hidden-input-paging" type="hidden" value="@pastSize" />
+        foreach (var item in Model)
+        {
+            @Html.Partial("_BoxPlans", item)
+        }
+
+
+        //این قسمت مربوط به صفحه بندی می باشد به علت ایجکس شدن غیر فعال شده است
+        @*@Html.PagedListPager(Model, page => Url.Action("index", new { page }), new PagedListRenderOptions { MaximumPageNumbersToDisplay = count });*@
+
+
+
+    }
+    else
+    {
+
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <h3 class="text-center"> طرحی وجود ندارد </h3>
+            <br />
+            <br />
+            <br />
+        </div>
+    }
+}
+
+

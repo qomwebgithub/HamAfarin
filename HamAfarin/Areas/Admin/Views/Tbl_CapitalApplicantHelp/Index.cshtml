@@ -1,0 +1,41 @@
+﻿@model DataLayer.Tbl_CapitalApplicantHelp
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>جزئیات تقاضای سرمایه</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FrequentlyAskedQuestions)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.FrequentlyAskedQuestions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoldingCampaign)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.HoldingCampaign)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SendPlan)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.SendPlan)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.CapitalApplicantID })
+</p>

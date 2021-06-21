@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DataLayer.Tbl_FutureBusinessPlan>
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "فهرست طرح های آینده";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+                      columns.Bound(item => @item.FutureBusinessPlanID).Title("تصویر").Filterable(false).Groupable(false)
+                    .Template(@<text>
+                        <img src="~/Images/FuturePlans/Thumb/@item.ImageName" class="thumbnail" style="max-width:200px" />
+                    </text>);
+columns.Bound(model => model.IsActive);
+columns.Bound(model => model.FutureBusinessPlanTitle);
+     columns.Bound(item => @item.FutureBusinessPlanID).Title("دستورات").Filterable(false).Groupable(false)
+             .Template(@<text>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = @item.FutureBusinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                    @Html.ActionLink("حذف", "Delete", new { id = @item.FutureBusinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+            </text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_FutureBusinessPlan").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+     .Server()
+
+     .Model(model => model.Id(item => item.FutureBusinessPlanID))
+)
+)

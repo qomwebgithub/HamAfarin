@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "فرایند سرمایه گذاری";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.INVESTMENT_PROCESS })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">فرایند سرمایه گذاری</h2>
+
+    <div>
+        <hr />
+        <div class="container m-4">
+            <dl class="dl-horizontal">
+
+
+                <dd>
+                    @Html.Raw(@Model.InvestmentProcess)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@model IEnumerable<DataLayer.Tbl_CommentPlan>
+@using Kendo.Mvc.UI
+
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+              columns.Bound(model => model.IsActive);
+columns.Bound(model => model.IsDeleted);
+columns.Bound(model => model.CreateDate);
+columns.Bound(model => model.CommentText);
+columns.Bound(model => model.Tbl_BussinessPlans.Title);
+columns.Bound(model => model.Tbl_CommentPlan2.CommentText);
+columns.Bound(model => model.Tbl_Users.UserName);
+            columns.Bound(item => @item.CommentID).Title("دستورات").Filterable(false).Groupable(false)
+                    .Template(@<text>
+                        @Html.ActionLink("ویرایش", "Edit", new { id = @item.CommentID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                        @Html.ActionLink("حذف", "Delete", new { id = @item.CommentID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+                    </text>).Width(200);
+})
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+             .Server()
+
+             .Model(model => model.Id(item => item.CommentID))
+)
+)

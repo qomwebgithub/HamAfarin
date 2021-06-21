@@ -1,0 +1,45 @@
+﻿@model ViewModels.SingleBlogViewModel
+@{
+    ViewBag.Title = Model.MetaTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Tags{
+
+    <meta name="keywords" content="@Model.SeoKey">
+    <meta name="description" content="@Model.MetaDescription" />
+    @if (string.IsNullOrEmpty(Model.Canonical) == false)
+    {
+        <link rel="canonical" href="@Model.Canonical" />
+    }
+}
+
+<div class="container col-12 col-md-8" id="single-blog-container">
+        
+            <!-- Title -->
+            <div id="header">
+                <h1 class="mt-4 blog-title ">@Model.Title</h1>
+
+
+                <!-- Date/Time -->
+                @{ 
+                    string monthName = null;
+                    monthName = Common.StringExtensions.MonthcountToMonthName(Model.CreateDate.Value.Month);
+                    string time = $"{Model.CreateDate.Value.Year} {monthName} {Model.CreateDate.Value.Day} | {Model.CreateDate.Value.Hour}:{Model.CreateDate.Value.Minute}";
+                    }
+                <span class="text-center blog-time"> <i class="bi bi-clock-history"></i> @time</span>
+            </div>
+            <center>
+
+                <!-- Preview Image -->
+                <img class="img-fluid rounded" src="~/Images/BlogImages/Image/@Model.ImageName" alt="@Model.ImageAlt">
+
+
+            </center>
+
+        <!-- Post Content -->
+        <p class="Text-Body">@Html.Raw(Model.FullText)</p>
+
+
+
+</div>
+

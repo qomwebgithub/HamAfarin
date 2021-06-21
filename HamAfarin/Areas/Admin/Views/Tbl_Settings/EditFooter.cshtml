@@ -1,0 +1,134 @@
+﻿@model ViewModels.FooterViewModel
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "ویرایش پاورقی";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (ViewBag.success != null)
+{
+    <script>
+        $(document).ready(function () {
+            alert('ویرایش انجام شد');
+        });
+    </script>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.SettingID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.AboutUs, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AboutUs)
+                @Html.ValidationMessageFor(model => model.AboutUs)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Permits, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Permits)
+                @Html.ValidationMessageFor(model => model.Permits)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactUs, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ContactUs)
+                @Html.ValidationMessageFor(model => model.ContactUs)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InvestmentProcess, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.InvestmentProcess)
+                @Html.ValidationMessageFor(model => model.InvestmentProcess)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CapitalApplicationProcess, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CapitalApplicationProcess)
+                @Html.ValidationMessageFor(model => model.CapitalApplicationProcess)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CampaignProcess, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CampaignProcess)
+                @Html.ValidationMessageFor(model => model.CampaignProcess)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SiteTermsConditions, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SiteTermsConditions)
+                @Html.ValidationMessageFor(model => model.SiteTermsConditions)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Privacy, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Privacy)
+                @Html.ValidationMessageFor(model => model.Privacy)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RiskAlertStatement, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RiskAlertStatement)
+                @Html.ValidationMessageFor(model => model.RiskAlertStatement)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RiskAlertStatementFullText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RiskAlertStatementFullText)
+                @Html.ValidationMessageFor(model => model.RiskAlertStatementFullText)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+    <--> ck editor</-->
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#AboutUs').ckeditor();
+            $('#Permits').ckeditor();
+            $('#ContactUs').ckeditor();
+            $('#InvestmentProcess').ckeditor();
+            $('#CapitalApplicationProcess').ckeditor();
+            $('#CampaignProcess').ckeditor();
+            $('#SiteTermsConditions').ckeditor();
+            $('#Privacy').ckeditor();
+            $('#RiskAlertStatementFullText').ckeditor();
+        });
+    </script>
+}
+

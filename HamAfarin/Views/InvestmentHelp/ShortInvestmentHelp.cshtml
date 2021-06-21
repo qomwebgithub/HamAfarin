@@ -1,0 +1,43 @@
+﻿@model DataLayer.Tbl_InvestmentHelp
+
+    <section class="mt-3">
+        <div class="container">
+            <div class=" section-header">
+                <h5 class="h6 py-1 px-2 d-inline-block m-0">سرمایه پذیری</h5>
+            </div>
+        </div>
+      
+        <div class="container-fluid section">
+            <div class="container">
+                <div class="d-block d-md-none col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6" style="text-align: center;padding-top: 25px;" data-aos="fade-down" data-aos-duration="2000" data-aos-once="true">
+                    <img class="img-fluid" src="~/Content/img/Investment.PNG">
+                </div>
+                <div class="row" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 p-4">
+                        <h2 class="font-weight-bold">
+                            @Model.InvestmentHelpTitle
+                        </h2>
+                        <p class="text-muted">
+                            @Model.Description
+                        </p>
+
+                        <p class="text-left">
+
+                            <a class="btn btn-orange" href="/InvestmentHelp/FullInvestmentHelp">
+                                <span>
+                                    ادامه ...
+                                </span>
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class=" d-none d-md-block col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6"  data-aos="fade-right" data-aos-once="true">
+                        <img class="img-fluid" src="~/Content/img/Investment.PNG">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    
+    </section>
+

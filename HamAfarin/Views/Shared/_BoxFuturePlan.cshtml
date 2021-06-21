@@ -1,0 +1,19 @@
+﻿@model DataLayer.Tbl_FutureBusinessPlan
+
+
+<div class="my-2 padding-10">
+    <div class="card">
+        <a class="text-dark" href="/FuturePlan/@Model.FutureBusinessPlanID" style="text-decoration:none">
+
+            <img src="~/Images/FuturePlans/Thumb/@Model.ImageName" style="height:200px; width:100%" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h2 class="card-title font-weight-bold">@Model.FutureBusinessPlanTitle</h2>
+
+
+                <p class="card-text text-muted">
+                    @Model.Description
+                </p>
+            </div>
+        </a>
+    </div>
+</div>

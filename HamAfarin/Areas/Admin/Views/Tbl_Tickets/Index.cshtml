@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DataLayer.Tbl_Tickets>
+@using Kendo.Mvc.UI
+
+<h2>تیکت ها</h2>
+
+        @(Html.Kendo().Grid(Model)
+.Name("Grid")
+.Columns(columns =>
+{
+//columns.Bound(model => model.IsDelete);
+//columns.Bound(model => model.IsClosed);
+//columns.Bound(model => model.ClosedDateTime);
+columns.Bound(model => model.Subject);
+//columns.Bound(model => model.Text);
+columns.Bound(model => model.IsUserChecked);
+columns.Bound(model => model.IsAdminChecked);
+//columns.Bound(model => model.UserCheckedDateTime);
+//columns.Bound(model => model.AdminCheckedDateTime);
+columns.Bound(model => model.AttachFileName);
+//columns.Bound(model => model.CreateDateTime);
+//columns.Bound(model => model.DeleteDateTime);
+//columns.Bound(model => model.EditDateTime);
+columns.Bound(model => model.Tbl_Tickets2.Subject);
+columns.Bound(model => model.Tbl_Users.MobileNumber);
+//columns.Bound(model => model.Tbl_Users1.MobileNumber);
+//columns.Bound(model => model.Tbl_Users2.MobileNumber);
+//columns.Bound(model => model.Tbl_Users3.MobileNumber);
+//columns.Bound(model => model.Tbl_Users4.MobileNumber);
+columns.Bound(item => @item.TicketID).Title("دستورات").Filterable(false).Groupable(false)
+        .Template(@<text>
+									@Html.ActionLink("ویرایش", "Edit", new {id = @item.TicketID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
+									@Html.ActionLink("حذف", "Delete", new {id = @item.TicketID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
+									</text>).Width(200);
+                  })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Custom().Action("Create","Tbl_Tickets").Text("افزودن");
+        }
+        )
+        .Groupable()
+        .Pageable()
+        .Sortable()
+        //.Scrollable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+                                    .Server()
+
+                                    .Model(model => model.Id(item => item.TicketID))
+                    )
+    )

@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "صفحه اصلی";
+}
+
+<!-- slider start -->
+@Html.Action("Sliders", "Home")
+<!-- slider end -->
+<!-- summary start  -->
+@Html.Action("InvestmentSummary", "Payment")
+<!-- summary end -->
+<!-- investment process start -->
+
+@Html.Action("Index", "InvestmentProcess")
+
+<!-- investment process end -->
+@Html.Action("ActiveBusinessPlans", "Home")
+<!-- about company start -->
+
+@Html.Action("IntroductionCompany", "Home")
+
+
+<!-- about company end -->
+<!-- future plan start -->
+
+@Html.Action("HomeFuturePlans", "FutureBusinessPlan")
+
+<!-- future plan end -->
+<!-- acceptable start -->
+@Html.Action("ShortInvestmentHelp", "InvestmentHelp")
+
+<!-- acceptable end -->
+<!-- news start -->
+@Html.Action("Index", "Blog")
+<!-- news end -->
+<!-- footer start  -->
+

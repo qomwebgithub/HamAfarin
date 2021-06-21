@@ -1,0 +1,75 @@
+﻿
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Style{
+    <!--kendo-->
+    <link href="~/Content/css/gly.css" rel="stylesheet" />
+
+    @*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common-nova.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.nova.min.css" rel="stylesheet" type="text/css" />*@
+    @*<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />*@
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    @*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.rtl.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.aspnetmvc.min.js"></script>*@
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script src="~/Areas/UserPanel/Content/js/popper.min.js"></script>
+
+    <!--end kendo-->
+    <link href="~/Areas/UserPanel/Content/css/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+}
+<hr />
+@*<div class="col-12">
+        <div class="row">
+            <div class="col-3">
+                @Html.Action("_Menu", "UserPanel")
+            </div>
+            <div class="col-9">
+                <div class="border border-dark">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("Scripts", false)*@
+
+
+<div class="employe_dashboard_wrapper jb_cover" style="background-color:#eaeded">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-3 col-md-12 col-sm-12 col-12 pl-0 pr-0 order-last order-md-first">
+                <div class="col-lg-12">
+                    <div class="emp_dashboard_sidebar jb_cover bg-white card" style="border-radius:8px">
+                        <div class="emp_follow_link jb_cover">
+                            @Html.Action("_Menu", "UserPanel", new { area = "UserPanel" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-9 col-md-12 col-sm-12 col-12 mr-0 card p-0 order-first order-md-last mb-4" style="border-radius:8px">
+
+                <div class="browse_img_banner jb_cover">
+                    <div class="col-12">
+                        <div class="card-body">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height:10px"></div>
+
+</div>
+@section Scripts{
+
+    @RenderSection("Scripts", false)
+}

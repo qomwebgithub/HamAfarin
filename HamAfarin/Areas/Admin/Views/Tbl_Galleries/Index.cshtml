@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DataLayer.Tbl_Galleries>
+@using Kendo.Mvc.UI
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تصاویر</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+    columns.Bound(item => @item.GalleryID).Title("تصویر").Filterable(false).Groupable(false)
+.Template(@<text>
+        <img src="~/Images/Galleries/Thumb/@item.ImageName" style="width:150px;" class="thumbnail" />
+</text>);
+columns.Bound(model => model.ImageUrl).Template(@<text>
+                        <p class="">@item.ImageUrl</p>
+                        <input type="text" disabled="disabled" value="@item.ImageUrl" id="myInput-@item.GalleryID" />
+</text>);
+             columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
+             columns.Bound(item => @item.GalleryID).Title("دستورات").Filterable(false).Groupable(false)
+          .Template(@<text>
+    <button onclick="CopyText(@item.GalleryID)" class="btn btn-info">کپی آدرس</button>
+    @Html.ActionLink("حذف", "Delete", new { id = @item.GalleryID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+        </text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_Galleries").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.GalleryID))
+)
+)
+<script>
+    function CopyText(id) {
+        console.log(id);
+        var copyText = document.getElementById("myInput-" + id);
+        copyText.removeAttribute("disabled");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999)
+        document.execCommand("copy");
+        alert("آدرس تصویر در کلیپ بورد شما کپی شد: " + copyText.value);
+        copyText.setAttribute("disabled", "disabled");
+    }
+</script>

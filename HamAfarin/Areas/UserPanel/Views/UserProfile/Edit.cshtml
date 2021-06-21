@@ -1,0 +1,236 @@
+﻿@model ViewModels.UserProfileViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ویرایش حساب کاربری</title>
+</head>
+<body>
+    @using (Html.BeginForm("Edit", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+            <div class="form-horizontal border p-2 m-2">
+
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.IsActive)
+                @Html.HiddenFor(model => model.Profile.ProfileID)
+                @Html.HiddenFor(model => model.Profile.BirthDate)
+                @Html.HiddenFor(model => model.IsLegal)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.MobileNumber, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.MobileNumber)
+                        @Html.ValidationMessageFor(model => model.Profile.MobileNumber)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.FirstName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.FirstName)
+                        @Html.ValidationMessageFor(model => model.Profile.FirstName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.LastName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.LastName)
+                        @Html.ValidationMessageFor(model => model.Profile.LastName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.Bio, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.Bio)
+                        @Html.ValidationMessageFor(model => model.Profile.Bio)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NationalCode, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NationalCode)
+                        @Html.ValidationMessageFor(model => model.NationalCode)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.FatherName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.FatherName)
+                        @Html.ValidationMessageFor(model => model.Profile.FatherName)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.ProfileNationalId, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.ProfileNationalId)
+                        @Html.ValidationMessageFor(model => model.Profile.ProfileNationalId)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.SejamCode, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.SejamCode)
+                        @Html.ValidationMessageFor(model => model.Profile.SejamCode)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.AccountNumber, new { @class = "control-label col-md-2", id = "Profile_AccountNumber" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.AccountNumber)
+                        @Html.ValidationMessageFor(model => model.Profile.AccountNumber)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.AccountSheba, new { @class = "control-label col-md-2", id = "Profile_AccountSheba" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Profile.AccountSheba)
+                        @Html.ValidationMessageFor(model => model.Profile.AccountSheba)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Profile.Email, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Profile.Email)
+                        @Html.ValidationMessageFor(model => model.Profile.Email)
+                    </div>
+                </div>
+
+                <div class="container">
+                    @Html.LabelFor(model => model.Profile.BirthDate, new { @class = "control-label col-md-4" })
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text cursor-pointer btn btn-success" id="BirthDateYMD">انتخاب تاریخ تولد</span>
+                                    <label id="showDate_class" class="m-3">
+                                        @string.Format("{0: yyyy/MM/dd}", Model.Profile.BirthDate)
+
+                                    </label>
+                                </div>
+                            </div>
+
+                            <input type="text" id="strBirthDate" name="strBirthDate">
+
+                            @Html.ValidationMessageFor(model => model.strBirthDate, null, new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-10">
+                        @Html.LabelFor(model => model.Gender)
+                        @Html.DropDownList("Gender")
+                        @Html.ValidationMessageFor(model => model.Gender)
+                    </div>
+                </div>
+
+                <hr />
+                <div id="legal" class="hidden">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.CompanyName, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PersonLegal.CompanyName)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.CompanyName)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.EconomicCode, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PersonLegal.EconomicCode)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.EconomicCode)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.NationalId, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PersonLegal.NationalId)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.NationalId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.RegistratioNumber, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PersonLegal.RegistratioNumber)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.RegistratioNumber)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.Address, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PersonLegal.Address)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.Address)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="buttons">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="بروزرسانی" class="btn btn-primary" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    }
+
+</body>
+</html>
+
+@section Scripts{
+    <script src="~/Areas/UserPanel/Content/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery.md.bootstrap.datetimepicker.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            handleLegal($("#IsLegal").is(':checked'))
+            $('#IsLegal').change(function () {
+                handleLegal(this.checked)
+            });
+
+        });
+
+        function handleLegal(checked) {
+            if (checked) {
+                $('#legal').show();
+                document.getElementById("Profile_AccountNumber").innerHTML = "شماره حساب شرکت";
+                document.getElementById("Profile_AccountSheba").innerHTML = "شبای شماره حساب شرکت";
+            }
+            else {
+                $('#legal').hide();
+                document.getElementById("Profile_AccountNumber").innerHTML = "شماره حساب";
+                document.getElementById("Profile_AccountSheba").innerHTML = "شبای شماره حساب";
+            }
+        };
+
+        $("#BirthDateYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#strBirthDate",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+
+    </script>
+}

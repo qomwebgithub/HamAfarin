@@ -1,0 +1,29 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "قوانین و مقررات سایت";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.SITE_TERMS_CONDITIONS })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">قوانین و مقررات سایت</h2>
+    <div class="container">
+
+        <div>
+            <hr />
+            <div class="container">
+                <dl class="dl-horizontal">
+
+
+                    <dd>
+                        @Html.Raw(@Model.SiteTermsConditions)
+                    </dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+</div>

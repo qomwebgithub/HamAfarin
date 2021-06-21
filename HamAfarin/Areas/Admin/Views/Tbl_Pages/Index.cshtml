@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DataLayer.Tbl_Pages>
+@using Kendo.Mvc.UI;
+@using System.Configuration;
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>صفحات سایت</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+           columns.Bound(item => @item.PageID).Title("تصویر").Filterable(false).Groupable(false)
+                            .Template(@<text>
+                        <img class="thumbnail" src="/Images/Pages/Thumb/@item.ImageName" style="max-width: 150px" />
+                            </text>);
+columns.Bound(model => model.CreateDate);
+columns.Bound(item => @item.PageID).Title("لینک صفحه").Filterable(false).Groupable(false)
+.Template(@<text>
+            <p style="direction: ltr;">@ConfigurationManager.AppSettings["ThisDomain"]Page/@item.PageID/@item.UrlTitle</p>
+</text>);
+ columns.Bound(model => model.IsActive);
+
+columns.Bound(item => @item.PageID).Title("دستورات").Filterable(false).Groupable(false)
+.Template(@<text>
+                @Html.ActionLink("ویرایش", "Edit", new { id = @item.PageID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                @Html.ActionLink("حذف", "Delete", new { id = @item.PageID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+</text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_Pages").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.PageID))
+)
+)

@@ -1,0 +1,47 @@
+﻿@model ViewModels.PlanCommentItemViewModel
+
+
+@using (Ajax.BeginForm("AddComment", "Comment", FormMethod.Post, new AjaxOptions()
+{
+    UpdateTargetId = "showCommentList",
+    OnSuccess = "Success"
+
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.Parent_id)
+        @Html.HiddenFor(model => model.User_id)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.CommentID)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.BusinessPlan_id)
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.CommentText, new { @class = "control-label col-md-12 p-2 form-control", @style = "height:120px;font-size:14px;" })
+                @Html.ValidationMessageFor(model => model.CommentText)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-12">
+                <div class="row">
+                    <span class="col-6" style="font-size:12px">
+                        ثبت نظر به معنی موافقت با
+                        <a href="/SiteTermsConditions" target="_blank" style="text-decoration:none">قوانین هم آفرین</a>
+                        است.
+                    </span>
+                    <div class="col-6">
+                        <input type="submit" value="ثبت نظر" class="btn btn-danger col-7 float-left" style="background-color:#ff1654;border-radius:10px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,40 @@
+﻿@model List<DataLayer.Tbl_Tickets>
+
+
+@if (Model.Any())
+{
+    <div class="col-12">
+        <h2>تیکت های جدید</h2>
+<br />
+        <div class="col-12">
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>ردیف</th>
+                    
+                    <th>موضوع</th>
+                    <th>دستورات</th>
+                </tr>
+
+                @{
+                    int intCounter = 0;
+                    foreach (var item in Model)
+                    {
+                        intCounter++;
+                        <tr>
+                            <th>@intCounter</th>
+                            
+                            <th>@item.Subject</th>
+                            <th><a href="/Employer/Tickets/TicketDetails/@(item.Parent_id!=null? item.Parent_id:item.TicketID)" class="btn btn-info">مشاهده تیکت</a></th>
+                        </tr>
+                    }
+
+                }
+
+            </table>
+
+        </div>
+    </div>
+ 
+
+}

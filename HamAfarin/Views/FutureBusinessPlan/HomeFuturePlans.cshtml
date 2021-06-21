@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DataLayer.Tbl_FutureBusinessPlan>
+
+
+<section class="container mt-3">
+    <div class="section-header">
+        <h5 class="h6 py-1 px-2 d-inline-block m-0">دانستنی ها</h5>
+    </div>
+
+
+    <div class="owl-carousel owl-theme" id="owl-future"  @*data-aos="fade-right" data-aos-once="true"*@>
+
+        @{ if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    @Html.Partial("_BoxFuturePlan", item)
+                }   
+            }
+            else
+            {
+                <div class="container">
+                    <br />
+                    <br />
+                    <br />
+                    <h3 class="text-center"> طرحی وجود ندارد </h3>
+                    <br />
+                    <br />
+                    <br />
+                </div>
+            }
+        }
+
+
+
+
+    </div>
+
+</section>

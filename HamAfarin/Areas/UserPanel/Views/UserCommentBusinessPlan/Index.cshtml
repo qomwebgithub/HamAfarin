@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ViewModels.UserCommentBusinessPlanList>
+<div class="container">
+
+    <h4>نظر های من</h4>
+    <hr />
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+
+            <table class="table table-striped border table-responsive text-center">
+                <thead>
+                    <tr>
+
+                        <td>
+                            ردیف
+                        </td>
+                        <td>
+                            عنوان طرح
+                        </td>
+                        <td>
+                            نام شرکت
+                        </td>
+                        <td>
+                            وضعیت طرح
+                        </td>
+                        <td>
+                            وضعیت نظر
+                        </td>
+                        <td>
+                            تاریخ درج
+                        </td>
+                        <td>
+                            متن
+                        </td>
+                        <td>
+                            عملیات
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.Row_id
+                            </td>
+                            <td>
+                                @item.BusinessPlanName
+                            </td>
+                            <td>
+                                @item.CompanyName
+                            </td>
+                            <td>
+                                @item.BusinessPlanStatus
+                            </td>
+                            <td>
+                                @item.BusinessCommentStatus
+                            </td>
+                            <td>
+                                @item.CreateDate.ToString("yyyy/MM/dd")
+                            </td>
+                            <td>
+                                @item.CommentText
+                            </td>
+                            <td>
+                                <a class="btn btn-info text-white" href="/UserPanel/UserPaymentBusinessPlan/SinglePaymentBusinessPlan/@item.CommentBusiness_id"> جزئیات</a>
+                                <a class="btn btn-danger text-white" onclick="DeleteComment(@item.CommentBusiness_id)"> حذف</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="container">
+                <p>
+                    موردی ثبت نشده است
+                </p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="container">
+            <p>
+                موردی ثبت نشده است
+            </p>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        function DeleteComment(id) {
+            if (confirm("آیا از حذف مطمين هستید؟"))
+                $.get("/UserPanel/UserCommentBusinessPlan/DeleteComment/" + id, function () {
+                    location.reload();
+                });
+        }
+    </script>
+
+}

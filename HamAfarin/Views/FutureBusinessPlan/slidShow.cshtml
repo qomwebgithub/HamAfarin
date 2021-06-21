@@ -1,0 +1,109 @@
+﻿@model IEnumerable<DataLayer.Tbl_FutureBusinessPlan>
+
+@{ var pastSize = Model.Count();}
+@{ if (pastSize > 0)
+    {
+        <div id="owl-future" class="carousel slide" data-ride="carousel" >
+            <ol class="carousel-indicators">
+                @{
+                    bool first = true;
+                    int i = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    if (first)
+                    {
+                        first = false;
+                        <li data-target="#carouselExampleCaptions" data-slide-to=@i class="active"></li>
+                    }
+                    else
+                    {
+                        <li data-target="#carouselExampleCaptions" data-slide-to="@i"></li>
+                    }
+                }
+            </ol>
+            <div class="carousel-inner">
+                @{
+                    first = true;
+                }
+
+                @foreach (var item in Model)
+                {
+
+                    if (first)
+                    {
+                        first = false;
+
+                        <div class="carousel-item active">
+                            <div class="my-2 padding-10">
+                                <div class="card">
+                                    <a class="text-dark" href="/FuturePlan/@item.FutureBusinessPlanID" style="text-decoration:none">
+
+                                        <img src="~/Images/FuturePlans/Thumb/@item.ImageName" style="height:200px; width:100%" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h2 class="card-title font-weight-bold">@item.FutureBusinessPlanTitle</h2>
+
+
+                                            <p class="card-text text-muted">
+                                                @item.Description
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="carousel-item">
+
+                            <div class="my-2 padding-10">
+                                <div class="card">
+                                    <a class="text-dark" href="/FuturePlan/@item.FutureBusinessPlanID" style="text-decoration:none">
+
+                                        <img src="~/Images/FuturePlans/Thumb/@item.ImageName" style="height:200px; width:100%" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <h2 class="card-title font-weight-bold">@item.FutureBusinessPlanTitle</h2>
+
+
+                                            <p class="card-text text-muted">
+                                                @item.Description
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    }
+                }
+
+            </div>
+            <a class="carousel-control-prev" href="#owl-future" role="button" data-slide="prev">
+                <img src="~/Content/img/next.svg" class="w-25" />
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#owl-future" role="button" data-slide="next">
+                <img src="~/Content/img/Previous.svg" class="w-25" />
+
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+    }
+    else
+    {
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <h3 class="text-center"> طرحی وجود ندارد </h3>
+            <br />
+            <br />
+            <br />
+        </div>
+    }
+}
+
+

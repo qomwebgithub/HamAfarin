@@ -1,0 +1,205 @@
+﻿@model ViewModels.AdminCreateEditPaymentViewModel
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "افزودن پرداخت";
+}
+
+
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<br />
+
+@using (Html.BeginForm("Create", "Tbl_BusinessPlanPayment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true)
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.BusinessPlan_id)
+        </div>
+        <div class="card-body">
+            @Html.DropDownList("BusinessPlan_id", String.Empty)
+            @Html.ValidationMessageFor(model => model.BusinessPlan_id)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsPaid)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.IsPaid)
+            @Html.ValidationMessageFor(model => model.IsPaid)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsConfirmedFromAdmin)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.IsConfirmedFromAdmin)
+            @Html.ValidationMessageFor(model => model.IsConfirmedFromAdmin)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaidDateTime)
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text cursor-pointer btn btn-success" id="PaidDateTimeYMD">انتخاب تاریخ</span>
+                            <label id="showDate_class" class="m-3">
+                            </label>
+                        </div>
+                    </div>
+
+                    <input type="text" id="strPaidDateTime" name="strPaidDateTime">
+                    @Html.ValidationMessageFor(model => model.strPaidDateTime, null, new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.AdminCheckDate)
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text cursor-pointer btn btn-success" id="AdminCheckDateYMD">انتخاب تاریخ</span>
+                            <label id="showDate_class" class="m-3">
+                            </label>
+                        </div>
+                    </div>
+
+                    <input type="text" id="strAdminCheckDate" name="strAdminCheckDate">
+                    @Html.ValidationMessageFor(model => model.strAdminCheckDate, null, new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaymentUser_id)
+        </div>
+        <div class="card-body">
+            @Html.DropDownList("PaymentUser_id", String.Empty)
+            @Html.ValidationMessageFor(model => model.PaymentUser_id)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaymentStatus)
+        </div>
+        <div class="card-body">
+            @Html.DropDownList("PaymentStatus_id", String.Empty)
+            @Html.ValidationMessageFor(model => model.PaymentStatus)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.TransactionPaymentCode)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.TransactionPaymentCode)
+            @Html.ValidationMessageFor(model => model.TransactionPaymentCode)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaymentPrice)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.PaymentPrice)
+            @Html.ValidationMessageFor(model => model.PaymentPrice)
+        </div>
+        <div class="form-group container-fluid">
+            <p class="control-label col-md-2 alert-primary" id="PaymentPriceSeprate"></p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaymentImageName)
+        </div>
+        <div class="card-body">
+            @Html.Kendo().Upload().Name("imgPaymentImageNameUploaded")
+            @Html.ValidationMessageFor(model => model.PaymentImageName)
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group" id="buttons">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ایجاد" class="btn btn-success" />
+            @Html.ActionLink("بازگشت به فهرست", "Index")
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts{
+
+    <script src="~/Scripts/jquery.md.bootstrap.datetimepicker.js"></script>
+
+    <script>
+
+
+        $("#PaidDateTimeYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#strPaidDateTime",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+
+        $("#AdminCheckDateYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#strAdminCheckDate",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+
+        $('#PaymentPrice').keyup(function (event) {
+            var PaymentPriceSeprate = document.getElementById('PaymentPriceSeprate');
+            var Num = $("#PaymentPrice").val();
+            var seprateValue = Num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            PaymentPriceSeprate.innerHTML = seprateValue + " تومان";
+
+        });
+
+    </script>
+}

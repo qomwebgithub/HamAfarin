@@ -1,0 +1,32 @@
+﻿@model DataLayer.Tbl_InvestmentHelp
+
+@{
+    ViewBag.Title = "SingleBlog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.INVESTMENT_PROCESS })
+<!-- slider end -->
+
+<div class="container">
+    <center>
+        <!-- Title -->
+        <h1 class="mt-4 blog-title">@Model.InvestmentHelpTitle</h1>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <span class="text-center"> @Model.Description</span>
+
+        <hr>
+
+    </center>
+
+    <!-- Post Content -->
+    <p>@Html.Raw(Model.FullText)</p>
+
+
+
+</div>
+

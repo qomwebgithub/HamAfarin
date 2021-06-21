@@ -1,0 +1,187 @@
+﻿@model ViewModels.InvestmentSummaryeViewModel
+@*<div class="">
+        <div class="bg-light py-4">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-7 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <div class="row">
+                            <div class="col-2 d-sm-none"></div>
+                            <div class="col-6 col-sm-3">
+                                <img src="~/Content/img/money.png" class="img-fluid" />
+                            </div>
+
+                            <div class="col-12 col-sm-9">
+                                <h6>
+                                    سرمایه های جذب شده
+                                </h6>
+                                <span class="font-weight-bold">
+                                    @Model.AmountCapitalRaised.ToString("#,##0") <span class="small">تومان</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-5 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <div class="row">
+                            <div class="col-1 d-sm-none"></div>
+                            <div class="col-8 col-sm-3">
+                                <img src="~/Content/img/handshake.png" class="img-fluid" />
+                            </div>
+
+                            <div class="col-12 col-sm-9">
+                                <h6 class="mt-1 mt-sm-0">
+                                    طرح های موفق
+                                </h6>
+                                <strong>
+                                    @Model.InvestmentSuccessPlanCount <span class="small">عدد</span>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-7 col-sm-6 col-md-6 col-lg-3 col-xl-3 ">
+                        <div class="row">
+                            <div class="col-2 d-sm-none"></div>
+                            <div class="col-6 col-sm-3">
+                                <img src="~/Content/img/money-2.png" class="img-fluid" />
+                            </div>
+
+                            <div class="col-12 col-sm-9">
+                                <h6 class="">
+                                    فرصتهای سرمایه گذاری
+                                </h6>
+                                <strong>
+                                    @Model.InvestmentablePlanCount <span class="small">عدد</span>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-5 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                        <div class="row">
+                            <div class="col-1 d-sm-none"></div>
+                            <div class="col-8 col-sm-3">
+                                <img src="~/Content/img/purse.png" class="img-fluid" />
+                            </div>
+
+                            <div class="col-12 col-sm-9">
+                                <h6 class="mt-2 mt-sm-0">
+                                    سرمایه گذاران
+                                </h6>
+                                <strong>
+                                    @Model.InvestmentCountPerson <span class="small">نفر</span>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>*@
+
+<div class="bg-light py-2" style="font-size:14px">
+    <div class="container">
+        <div class="col-12">
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-3 text-center py-2">
+                    <div class="col-12">
+                        <div class="row justify-content-center" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+                            <div class="col-7 col-sm-4">
+                                <img src="~/Content/img/money.png" class="img-fluid p-1" />
+                            </div>
+                            <div class="col-12 col-sm-8 font-weight-bold text-sm-right p-0 pt-1">
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <span>
+                                            سرمایه های جذب شده
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+
+                                        <span class="font-weight-bold">
+                                            @Model.AmountCapitalRaised.ToString("#,##0") <span class="small">تومان</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 text-center py-2">
+                    <div class="col-12">
+                        <div class="row justify-content-center" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+                            <div class="col-7 col-sm-4">
+                                <img src="~/Content/img/handshake.png" class="img-fluid p-1" />
+                            </div>
+                            <div class="col-12 col-sm-8 font-weight-bold text-sm-right p-0 pt-1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            طرح های موفق
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="font-weight-bold">
+                                            @Model.InvestmentSuccessPlanCount <span class="small">عدد</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 text-center py-2">
+                    <div class="col-12">
+                        <div class="row justify-content-center" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+                            <div class="col-7 col-sm-4">
+                                <img src="~/Content/img/money-2.png" class="img-fluid p-1" />
+                            </div>
+                            <div class="col-12 col-sm-8 font-weight-bold text-sm-right p-0 pt-1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            فرصتهای سرمایه گذاری
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+
+                                        <span class="font-weight-bold">
+                                            @Model.InvestmentablePlanCount <span class="small">عدد</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3 text-center py-2">
+                    <div class="col-12">
+                        <div class="row justify-content-center" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+                            <div class="col-7 col-sm-4">
+                                <img src="~/Content/img/purse.png" class="img-fluid p-1" />
+                            </div>
+                            <div class="col-12 col-sm-8 font-weight-bold text-sm-right p-0 pt-1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span>
+                                            سرمایه گذاران
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="font-weight-bold">
+                                            @Model.InvestmentCountPerson <span class="small">نفر</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

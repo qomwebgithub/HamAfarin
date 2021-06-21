@@ -1,0 +1,78 @@
+﻿@model ViewModels.AddEditSliderViewModel
+
+@{
+    ViewBag.Title = "جزئیات اسلایدر";
+}
+
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<br />
+<p>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.SliderID }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("برگشت به لیست", "Index")
+</p>
+
+<div>
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IsActive)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Title)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Title)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ImageName)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <img src="~/Images/SliderImages/@Model.ImageName" />
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Url)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Url)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Page_Title)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Page_Title)
+            </p>
+        </div>
+    </div>
+    <br />
+</div>

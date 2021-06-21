@@ -1,0 +1,117 @@
+﻿@model List<DataLayer.Tbl_Tickets>
+
+@{
+    ViewBag.Title = "تیکت";
+
+    var qParentTicket = Model.Where(m => m.Parent_id == null).FirstOrDefault();
+}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-12 col-md-6">
+            <span>وضعیت تیکت: </span>
+            @if (qParentTicket.IsClosed == true)
+            {
+
+                <span class="alert alert-danger">بسته</span>
+            }
+            else
+            {
+                <span class="alert alert-success">باز</span>
+            }
+            <br />
+
+        </div>
+        <div class="col-12 col-md-6">
+            کاربر:@qParentTicket.Tbl_Users.MobileNumber
+            <br />
+            <span>تاریخ ایجاد:</span>@qParentTicket.CreateDateTime
+        </div>
+
+
+    </div>
+
+</div>
+<hr />
+<!--TicketDetails-->
+<div class="container-fluid">
+    <div class="col-12">
+        <a href="/admin/Tbl_Tickets/Create?parentId=@qParentTicket.TicketID" class="btn btn-info">
+            ارسال تیکت به کاربر
+            <br />
+            <span class="text-white fas fa-comment"></span>
+        </a>
+
+        <hr />
+        @foreach (var item in Model)
+        {
+            <div class="col-12 col-md-12">
+                <div id="panel@(item.TicketID)" class="card text-white  @(item.IsAdminChecked==false?"bg-danger":"bg-success")">
+                    <div class="card-header">
+                        @item.Subject  @if (item.AttachFileName != null)
+                        {<span class="fas fa-paperclip"></span>}
+                    </div>
+                    <div class="card-body">@item.Text</div>
+
+                    <div class="card-footer">
+                        @item.CreateDateTime|
+                        @if (item.AttachFileName != null)
+                        {
+                            <a href="@FileAddressesDirectoryPath.TicketFileDownloadUrl(item.AttachFileName)" class="btn btn-warning">دانلود فایل پیوست شده <span class="fas fa-download"></span></a>
+                        }
+
+
+                        @if (item.IsAdminChecked == false)
+                        {
+                            <button id="btnChecked@(item.TicketID)" onclick="checkedTicket(@item.TicketID)" class="btn btn-info">
+                                چک کردم
+                                <span class="fas fa-check"></span>
+                            </button>
+                        }
+
+                        <a href="/admin/Tbl_Tickets/edit/@item.TicketID" class="btn btn-secondary">ویرایش</a>
+                        <a href="/admin/Tbl_Tickets/Delete/@item.TicketID" class="btn btn-danger">حذف</a>
+                    </div>
+
+                </div>
+            </div>
+
+            <br />
+        }
+    </div>
+
+
+</div>
+<!--EndTicketDetails-->
+
+
+
+<script>
+    function checkedTicket(ticketId) {
+
+        $.post("/admin/Tbl_Tickets/TicketAdminChecked/" + ticketId).done(function () {
+            $("#panel" + ticketId).removeClass("bg-danger");
+            $("#panel" + ticketId).addClass("bg-success");
+            $("#btnChecked"+ticketId).hide();
+        })
+            .fail(function () {
+                alert("ثبت نشد");
+            });
+        //{
+
+        //},
+        //function (data, status) {
+        //    alert("Data: " + data + "\nStatus: " + status);
+        //    if (data == "OK") {
+        //        $("#panel" + ticketId).removeClass("bg-danger");
+        //        $("#panel" + ticketId).addClass("bg-success")
+        //    }
+        //    else {
+        //        alert("ثبت نشد")
+        //    }
+        //});
+
+
+    }
+</script>

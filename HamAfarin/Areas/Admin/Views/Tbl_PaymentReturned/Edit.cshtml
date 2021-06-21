@@ -1,0 +1,53 @@
+﻿@model DataLayer.Tbl_PaymentReturned
+
+@{
+    ViewBag.Title = "ویرایش ";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">        
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ReturnedID)
+        @Html.HiddenFor(model => model.IsDelete)
+        @Html.HiddenFor(model => model.IsActive)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.IsConfirm)
+        @Html.HiddenFor(model => model.Payment_id)
+        @Html.HiddenFor(model => model.BusinessPlan_id)
+        @Html.HiddenFor(model => model.User_id)
+        @Html.HiddenFor(model => model.ConfirmDate)
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ReasonText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ReasonText)
+                @Html.ValidationMessageFor(model => model.ReasonText)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tbl_BusinessPlanPayment.PaymentPrice, new { @class = "control-label col-md-2" })
+            @Model.Tbl_BusinessPlanPayment.PaymentPrice تومان
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tbl_BussinessPlans.BussinessName, new { @class = "control-label col-md-2" })
+            @Model.Tbl_BussinessPlans.Title
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="تایید انصراف" class="btn btn-danger" />
+				@Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    </div>
+}
+

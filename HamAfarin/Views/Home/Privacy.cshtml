@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "حفظ حریم خصوصی";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.PRIVACY })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">حفظ حریم خصوصی</h2>
+
+    <div>
+        <hr />
+        <div class="container">
+            <dl class="dl-horizontal">
+
+
+                <dd>
+                    @Html.Raw(@Model.Privacy)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>

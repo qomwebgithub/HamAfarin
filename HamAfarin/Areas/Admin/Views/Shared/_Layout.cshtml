@@ -1,0 +1,140 @@
+﻿
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Mosaddek">
+    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <link rel="shortcut icon" href="~/Areas/Admin/Content/img/favicon.html">
+
+    <title>پنل ادمین هم افرین</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Areas/Admin/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/bootstrap-reset.css" rel="stylesheet" />
+    <!--external css-->
+    <link href="~/Areas/Admin/Content/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/owl.carousel.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/Areas/Admin/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/css/style-responsive.css" rel="stylesheet" />
+
+    <!--kendo-->
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common-nova.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.nova.min.css" rel="stylesheet" type="text/css" />
+    @*<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />*@
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.rtl.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/jszip.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2020.3.1118/js/kendo.aspnetmvc.min.js"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <!--end kendo-->
+
+    <link href="~/Areas/Admin/Content/css/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
+</head>
+<body class="text-right">
+
+    <section id="container" class="">
+        <!--header start-->
+        <header class="header white-bg">
+            <div class="sidebar-toggle-box">
+                <div data-original-title="Toggle Navigation" data-placement="right" class="icon-reorder tooltips"></div>
+            </div>
+            <!--logo start-->
+            <a href="#" class="logo">پنل <span>ادمین</span></a>
+
+
+            <!--logo end-->
+        </header>
+
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse ">
+
+                @Html.Action("_Menu", "AdminPanel")
+            </div>
+            <!-- sidebar menu end-->
+
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+            overview
+            <section class="wrapper">
+                <!--state  start-->
+                <!--state overview end-->
+                <div class="row  text-white text-secondary logo ">
+                    @*@Html.Action("ShowUserInfo", "Default")*@
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right" style="padding-right:7%;direction:rtl">
+                        @RenderBody()
+                    </div>
+                </div>
+
+
+            </section>
+        </section>
+        <!--main content end-->
+    </section>
+
+    <script src="~/Areas/Admin/Content/js/popper.min.js"></script>
+    <!-- js placed at the end of the document so the pages load faster -->
+    @*<script src="~/Areas/Admin/Content/js/jquery.js"></script>
+        <script src="~/Areas/Admin/Content/js/jquery-1.8.3.min.js"></script>*@
+    @*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+    <script src="~/Areas/Admin/Content/js/bootstrap.min.js"></script>
+    <script src="~/Areas/Admin/Content/js/jquery.scrollTo.min.js"></script>
+    @*<script src="~/Areas/Admin/Content/js/jquery.nicescroll.js"></script>*@
+    <script src="~/Areas/Admin/Content/js/jquery.sparkline.js"></script>
+    <script src="~/Areas/Admin/Content/assets/jquery-easy-pie-chart/jquery.easy-pie-chart.js"></script>
+    <script src="~/Areas/Admin/Content/js/owl.carousel.js"></script>
+    <script src="~/Areas/Admin/Content/js/jquery.customSelect.min.js"></script>
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="/Scripts/ckeditor/adapters/jquery.js"></script>
+
+    <!--common script for all pages-->
+    <script src="~/Areas/Admin/Content/js/common-scripts.js"></script>
+
+    <!--script for this page-->
+    <script src="~/Areas/Admin/Content/js/sparkline-chart.js"></script>
+    <script src="~/Areas/Admin/Content/js/easy-pie-chart.js"></script>
+
+    <script src="~/Scripts/kendo.culture.fa-IR.min.js"></script>
+    <script src="~/Scripts/kendo.messages.fa-IR.min.js"></script>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/kendo.messages.fa-IR.min.js"></script>
+
+    <script src="~/Scripts/jquery.md.bootstrap.datetimepicker.js"></script>
+    <script>
+
+
+        //custom select box
+
+        $(function () {
+            $('select.styled').customSelect();
+        });
+
+        $(function () {
+            $("select,input[type=text],textarea,input[type=number]").addClass("form-control");
+        });
+
+    </script>
+
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

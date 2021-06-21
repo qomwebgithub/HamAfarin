@@ -1,0 +1,37 @@
+﻿@model IEnumerable<DataLayer.Tbl_Menu>
+@using Kendo.Mvc.UI;
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>منو ها</h2>
+
+        @(Html.Kendo().Grid(Model)
+              .Name("Grid")
+              .Columns(columns =>
+                  {
+        columns.Bound(model => model.Title);
+        columns.Bound(model => model.CreateDate);
+        columns.Bound(model => model.Url);
+                                    columns.Bound(model => model.IsActive);
+					columns.Bound(item => @item.MenuID).Title("دستورات").Filterable(false).Groupable(false)
+							.Template(@<text>
+									@Html.ActionLink("ویرایش", "Edit", new {id = @item.MenuID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
+									@Html.ActionLink("حذف", "Delete", new {id = @item.MenuID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
+									</text>).Width(200);  
+		})
+		.ToolBar(toolbar =>
+					{
+						toolbar.Custom().Action("Create","Tbl_Menu").Text("افزودن");                          
+					}
+		)
+		.Groupable()
+		.Pageable()
+		.Sortable()
+		.Filterable()              
+		.DataSource(dataSource => dataSource
+									.Server()
+							
+									.Model(model => model.Id(item => item.MenuID))
+					)              
+	)

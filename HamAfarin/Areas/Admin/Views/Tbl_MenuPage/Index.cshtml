@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DataLayer.Tbl_MenuPage>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "منوهای " + ViewBag.MenuTypeTitle;
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+            columns.Bound(model => model.Title);
+columns.Bound(model => model.Url);
+columns.Bound(model => model.Sort);
+columns.Bound(model => model.Tbl_MenuType.Title).Title("دستورات").Filterable(false).Groupable(false)
+                            .Template(@<text>
+                                    @Html.ActionLink("ویرایش", "Edit", new { id = @item.MenuPageID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                                    @Html.ActionLink("حذف", "Delete", new { id = @item.MenuPageID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+                            </text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_MenuPage", new { id = ViewBag.MenuTypeID }).Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+      .Server()
+)
+)

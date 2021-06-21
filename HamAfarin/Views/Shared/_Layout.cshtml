@@ -1,0 +1,449 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>سکوی تامین مالی هم آفرین| @ViewBag.Title</title>
+    @RenderSection("Tags", false)
+
+    <link href="~/Content/css/bootstrap-rtl.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-reboot-rtl.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-grid-rtl.min.css" rel="stylesheet">
+    <link href="~/Content/css/simple-line-icons.css" rel="stylesheet">
+
+    <link href="~/Content/css/jquery.mobile-1.4.5.min.css" rel="stylesheet" />
+
+    <link href="~/Content/css/owl.carousel.min.css" rel="stylesheet">
+    <link href="~/Content/css/owl.theme.default.min.css" rel="stylesheet">
+    <link href="~/Content/css/owl.theme.green.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/css/animate.css">
+    <link href="~/Content/css/responsive.css" rel="stylesheet" />
+    <link href="~/Content/css/custom.css" rel="stylesheet">
+
+    <link href="~/Content/css/slides/css/splide.min.css" rel="stylesheet" />
+    <link href="~/Content/css/font-style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/css/awesome.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link href="~/Content/fonts/bootstarpicon/bootstrap-icons.css" rel="stylesheet" />
+    <link href="~/Content/css/aos.css" rel="stylesheet" />
+
+
+    @RenderSection("Style", false)
+
+    <style>
+        #owl-demo .item {
+            padding: 30px 0px;
+            margin: 10px;
+            color: #FFF;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .splide__slide img {
+            width: 100%;
+            height: auto;
+        }
+
+
+        .outer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .inner {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 20;
+        }
+    </style>
+
+
+
+</head>
+
+<body class="k-rtl">
+    @RenderSection("Modal", false)
+
+    <!-- Navigation Start -->
+    <section class="d-none d-sm-block container-fluid header-top">
+        <div class="container">
+            @Html.Action("Header", "Home", new { Area = "" })
+        </div>
+    </section>
+    <!-- Navigation End -->
+    <!-- Navigation End -->
+    <!-- menu start -->
+    @Html.Action("Menu", "Home", new { Area = "" })
+    <!-- menu end -->
+    @RenderBody()
+    <!-- footer start -->
+    @Html.Action("Footer", "Home", new { Area = "" })
+
+    <!-- footer end -->
+
+    <script src="~/Content/js/jquery-3.5.1.min.js"></script>
+    <script src="~/Content/js/bootstrap.bundle.min.js"></script>
+    @*<script src="~/Content/js/bootstrap.min.js"></script>*@
+    <script src="~/Content/js/sweetalert2.all.min.js"></script>
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Content/js/jquery-ui.min.js"></script>
+    <script src="~/Content/js/custom.js"></script>
+    <script src="~/Content/js/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <!-- login script start -->
+    @*<script>
+
+            $('.loginIcon').mouseenter(function () {
+
+                $('.login').show("blind")
+            })
+
+            $('.loginIcon').mouseleave(function () {
+
+                $('.login').hide("blind")
+            })
+
+        </script>*@
+
+    <!-- login script end -->
+
+    <script>
+        window.onload = function () {
+            var id = localStorage.getItem("menu");
+            var classes = ["search-menu", "guidcreatecartable-menu", "guidsetrequest-menu", "news-menu", "home-menu"];
+
+            classes.forEach(function (item) {
+                var Element = document.getElementById(item);
+
+                //Element.classList.remove("text-dark");
+            });
+            var currntelement = document.getElementById(id);
+            //currntelement.classList.add("text-dark");
+        };
+
+        function setcolor(id) {
+            localStorage.setItem("menu", id);
+            document.getElementById("menu-" + id).classList.add("text-dark");
+        };
+
+
+    </script>
+
+    @*<script src="~/Scripts/kendo.culture.fa-IR.min.js"></script>
+        <script src="~/Scripts/kendo.messages.fa-IR.min.js"></script>
+        <script src="~/Scripts/modernizr-2.6.2.js"></script>
+        <script src="~/Scripts/kendo.messages.fa-IR.min.js"></script>*@
+    @*<script src="~/Areas/UserPanel/Content/js/bootstrap.min.js"></script>*@
+
+    <script src="~/Scripts/jquery.md.bootstrap.datetimepicker.js"></script>
+
+    <script>
+
+
+        //custom select box
+
+        $(function () {
+            $('select.styled').customSelect();
+        });
+
+        $(function () {
+            $("select,input[type=text],textarea,input[type=number]").addClass("form-control");
+        });
+
+    </script>
+
+    @RenderSection("Scripts", false)
+
+
+    <script src="~/Content/js/wow.min.js"></script>
+    <script>
+        new WOW().init();
+
+
+
+    </script>
+
+
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+                navigation: true
+            });
+
+        });
+
+        (function ($) {
+            $(document).ready(function () {
+                $(".main-slider").owlCarousel({
+                    rtl: true,
+                    items: 1,
+                    dots: true,
+                    loop: true,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    smartSpeed: 800,
+                    autoHeight: true,
+                    nav: true,
+
+                });
+
+                $(".main-topside > .owl-carousel").owlCarousel({
+                    rtl: true,
+                    items: 1,
+                    dots: false,
+                    loop: true,
+                    autoplay: true,
+                    mouseDrag: false,
+                    autoplayTimeout: 4000,
+                    smartSpeed: 1000,
+                });
+
+                $(".header__bars").on("click", function (e) {
+                    e.preventDefault();
+                    $(".sidemenu").addClass("is-active");
+                    $(".overlay").addClass("is-active");
+                    $("body").addClass("overflow-hidden");
+                    $(".header__logo").addClass("is-hidden");
+                });
+
+                $(".overlay").on("click", function () {
+                    if ($(this).hasClass("is-active")) {
+                        $(".sidemenu").removeClass("is-active");
+                        $(this).removeClass("is-active");
+                        $("body").removeClass("overflow-hidden");
+                        $(".header__logo").removeClass("is-hidden");
+                    }
+                });
+
+                $(".sidemenu__menu > li > a").on("click", function (e) {
+                    if ($(this).parent("li").hasClass("has-sub")) {
+                        e.preventDefault();
+                    }
+                    if ($(this).next("ul").css("display") === "block") {
+                        $(".sidemenu__menu > li > ul").slideUp(300);
+                        $(this).next("ul").slideDown(300);
+                    } else {
+                        $(this).next("ul").slideUp(300);
+                    }
+                });
+
+                $('.owl-3-item').owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    nav: true,
+                    rtl: true,
+                    items: 3,
+                    dots: false,
+                    navText: ["<i class='glyphicon glyphicon-chevron-left'></i>", "<i class='glyphicon glyphicon-chevron-right'></i>"],
+                    responsive: {
+                        0: {
+                            items: 1,
+
+                        },
+                        600: {
+                            items: 2,
+
+                        },
+                        1000: {
+                            items: 3,
+                        }
+                    }
+                });
+
+                $('.owl-carousel').owlCarousel({
+                    loop: true,
+                    margin: 10,
+                    nav: true,
+                    rtl: true,
+                    items: 5,
+                    responsive: {
+                        100: {
+                            items: 1,
+
+                        },
+                        600: {
+                            items: 2,
+
+                        },
+                        1000: {
+                            items: 4,
+                        }
+                    }
+                });
+
+            });
+        }(jQuery));
+
+
+    </script>
+
+    <script src="~/Content/css/slides/js/splide.min.js"></script>
+    <script>
+
+
+        new Splide('.splide').mount();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            new Splide('.splide').mount();
+        });
+
+
+        var secondarySlider = new Splide('#secondary-slider').mount();
+        var primarySlider = new Splide('#primary-slider');
+        primaryslider.sync(secondarySlider).mount();
+
+        var elms = document.getElementsByClassName('splide');
+        for (var i = 0, len = elms.length; i < len; i++) {
+            new Splide(elms[i]).mount();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            new Splide('#image-slider', {
+                'cover': true,
+                'heightRatio': 0.5,
+            }).mount();
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            new Splide('#splide', {
+                rewind: true,
+                heightRatio: 0.5,
+                pagination: false,
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var splide = new Splide('#splide-gallery').mount();
+            // Collect elements of thumbnails.
+            var images = document.querySelectorAll('.js-thumbnails li');
+
+            var activeImage;
+            var activeClass = 'is-active';
+
+            // Listen a click event and toggle a class.
+            for (let i = 0, len = images.length; i < len; i++) {
+                var image = images[i];
+
+                splide.on('click', function () {
+                    if (activeImage !== image) {
+                        activeImage.classList.remove(activeClass);
+                        image.classList.add(activeClass);
+                        splide.go(i);
+                        activeImage = image;
+                    }
+                }, image);
+            }
+        });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var splide = new Splide('#splide-gallery');
+            var images = document.querySelectorAll('.js-thumbnails li');
+
+            var activeImage;
+            var activeClass = 'is-active';
+
+            for (let i = 0, len = images.length; i < len; i++) {
+                var image = images[i];
+
+                splide.on('click', function () {
+                    if (activeImage !== image) {
+                        if (activeImage) {
+                            activeImage.classList.remove(activeClass);
+                        }
+
+                        image.classList.add(activeClass);
+                        activeImage = image;
+                        splide.go(i);
+                    }
+                }, image);
+            }
+
+            // Listen a move event to change the active preview image.
+            splide.on('move', function (newIndex) {
+                var image = images[newIndex];
+
+                if (image && activeImage !== image) {
+                    if (activeImage) {
+                        activeImage.classList.remove(activeClass);
+                    }
+
+                    image.classList.add(activeClass);
+                    activeImage = image;
+                }
+            });
+
+            splide.mount();
+        });
+
+
+        slider.on('mounted', function () {
+            var image = images[slider.index];
+
+            if (image && activeImage !== image) {
+                if (activeImage) {
+                    activeImage.classList.remove(activeClass);
+                }
+
+                image.classList.add(activeClass);
+                activeImage = image;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var splide = new Splide('#splide-gallery');
+            var images = document.querySelectorAll('.js-thumbnails li');
+
+            var activeImage;
+            var activeClass = 'is-active';
+
+            for (let i = 0, len = images.length; i < len; i++) {
+                var image = images[i];
+
+                splide.on('click', function () {
+                    if (activeImage !== image) {
+                        splide.go(i);
+                    }
+                }, image);
+            }
+
+            splide.on('mounted move', function (newIndex) {
+                // newIndex will be undefined through the "mounted" event.
+                var image = images[newIndex !== undefined ? newIndex : splide.index];
+
+                if (image && activeImage !== image) {
+                    if (activeImage) {
+                        activeImage.classList.remove(activeClass);
+                    }
+
+                    image.classList.add(activeClass);
+                    activeImage = image;
+                }
+            });
+
+            splide.mount();
+        });
+
+
+
+    </script>
+</body>
+
+</html>

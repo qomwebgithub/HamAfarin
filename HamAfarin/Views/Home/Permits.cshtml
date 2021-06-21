@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "درباره هم آفرین";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.PERMITS })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">درباره هم آفرین</h2>
+
+    <div>
+        <hr />
+        <div class="container">
+            <dl class="dl-horizontal">
+
+
+                <dd>
+                    @Html.Raw(@Model.Permits)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>

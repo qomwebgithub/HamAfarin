@@ -1,0 +1,38 @@
+﻿@model IEnumerable<ViewModels.AddEditSliderViewModel>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "مدیریت اسلایدر";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+columns.Bound(model => model.Title);
+columns.Bound(model => model.Url).Width(100);
+columns.Bound(model => model.Page_Title);
+columns.Bound(model => model.IsActive);
+            columns.Bound(item => @item.SliderID).Title("دستورات").Filterable(false).Groupable(false)
+                    .Template(@<text>
+                @Html.ActionLink("جزئیات", "Details", new { id = @item.SliderID }, new { @class = "btn btn-info" })
+                @Html.ActionLink("حذف", "Delete", new { id = @item.SliderID }, new { @class = "btn btn-danger" })
+                    </text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_Sliders").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.SliderID))
+)
+)

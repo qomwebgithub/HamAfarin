@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "درباره فاینتک";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.ABOUT_US })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">درباره فاینتک</h2>
+
+    <div>
+        <hr />
+        <div class="container">
+            <dl class="dl-horizontal">
+
+
+                <dd>
+                    @Html.Raw(@Model.AboutUs)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>

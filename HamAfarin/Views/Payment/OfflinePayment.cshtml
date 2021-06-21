@@ -1,0 +1,115 @@
+﻿@model ViewModels.PaymentOfflineViewModel
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "افزودن ";
+}
+
+
+<div class="container">
+
+    @if (ViewBag.IsPaymentSuccess != null)
+    {
+        <div class="row justify-content-center align-items-center" style="min-height: 55vh !important">
+            <div class="col-12 col-lg-4 col-sm-8 m-5" style="font-size:14px;">
+                <div class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#28a745" class="bi bi-check-circle-fill mb-4" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                    </svg>
+                    <h2 class="h2">پرداخت موفق</h2>
+                    <br>
+                    <h4>رسید شما با موفقیت ارسال شد</h4>
+                    <br>
+                    <br>
+                    <a href="/" class="btn btn-outline-success">بازگشت</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h2> ثبت رسید بانکی</h2>
+
+        using (Html.BeginForm("OfflinePayment", "Payment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.BusinessPlan_id)
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+                <div class="container-fluid bg-danger p-3">
+                    <div class="col-12">
+                        حداقل مبلغ سرمایه گذاری : @Convert.ToDecimal(ViewBag.MinimumAmountInvest).ToString("#,##0") تومان
+
+                    </div>
+                    <div class="col-12">
+                        حداکثر مبلغ سرمایه گذاری : @Convert.ToDecimal(ViewBag.MaximumInvestment).ToString("#,##0") تومان
+                    </div>
+                    <div class="col-12">
+                        ضریب مبلغ سرمایه گذاری : @Convert.ToDecimal(ViewBag.MinimumAmountInvest).ToString("#,##0") تومان
+                    </div>
+                    @if (ViewBag.TotalMyInvestmentInPlan > 0)
+                    {
+                        <div class="col-12">
+                            سرمایه گذاری های قبلی من : @Convert.ToDecimal(ViewBag.TotalMyInvestmentInPlan).ToString("#,##0") تومان
+                        </div>
+                    }
+                </div>
+
+                <div class="container-fluid border border-dark mt-4 mb-4">
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TransactionPaymentCode, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.TransactionPaymentCode)
+                            @Html.ValidationMessageFor(model => model.TransactionPaymentCode)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PaymentPrice, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.PaymentPrice)
+                            @Html.ValidationMessageFor(model => model.PaymentPrice)
+                        </div>
+                    </div>
+
+                    <div class="form-group container-fluid">
+                        <p class="control-label col-md-2 alert-primary" id="PaymentPriceSeprate"></p>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PaymentImageName, new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Kendo().Upload().Name("imgPaymentImageNameUploaded")
+                            @Html.ValidationMessageFor(model => model.PaymentImageName)
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="buttons">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="ثبت رسید بانکی" class="btn btn-success" />
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        }
+    }
+
+</div>
+
+@section Scripts{
+
+    <script>
+
+        $('#PaymentPrice').keyup(function (event) {
+            var PaymentPriceSeprate = document.getElementById('PaymentPriceSeprate');
+            var Num = $("#PaymentPrice").val();
+            var seprateValue = Num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            PaymentPriceSeprate.innerHTML = seprateValue + " تومان";
+
+        });
+
+    </script>
+}

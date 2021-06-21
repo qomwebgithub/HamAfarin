@@ -1,0 +1,21 @@
+﻿@model DataLayer.Tbl_Pages
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-lg-8">
+
+
+    <!-- Preview Image -->
+    <img class="img-fluid rounded" src="~/Images/Pages/Image/@Model.ImageName">
+
+    <hr>
+
+    <!-- Post Content -->
+    <p>@Html.Raw(Model.FullText)</p>
+
+
+
+</div>

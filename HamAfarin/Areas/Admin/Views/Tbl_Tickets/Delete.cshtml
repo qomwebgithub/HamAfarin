@@ -1,0 +1,177 @@
+﻿@model DataLayer.Tbl_Tickets
+
+@{
+    ViewBag.Title = "حذف " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>آیا از حذف این مورد اطمینان دارید؟</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsClosed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsClosed)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClosedDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClosedDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsUserChecked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsUserChecked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAdminChecked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAdminChecked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserCheckedDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserCheckedDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdminCheckedDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdminCheckedDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AttachFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AttachFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeleteDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeleteDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EditDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EditDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Tickets2.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Tickets2.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users.MobileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users1.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users1.MobileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users2.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users2.MobileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users3.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users3.MobileNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users4.MobileNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users4.MobileNumber)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+       <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="تایید حذف" class="btn btn-primary" />
+				@Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    }
+</div>

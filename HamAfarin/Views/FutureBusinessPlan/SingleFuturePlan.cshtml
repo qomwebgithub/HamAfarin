@@ -1,0 +1,37 @@
+﻿@model DataLayer.Tbl_FutureBusinessPlan
+@{
+    ViewBag.Title = "SingleFuturePlan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.SINGLE_FURURE_PLAN })
+<!-- slider end -->
+
+<div class="container">
+    <center>
+        <!-- Title -->
+        <h1 class="mt-4 blog-title">@Model.FutureBusinessPlanTitle</h1>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <span class="text-center"> @Model.Description</span>
+
+        <hr>
+
+        <!-- Preview Image -->
+        <img class="img-fluid rounded" src="~/Images/FuturePlans/Image/@Model.ImageName" alt="@Model.FutureBusinessPlanTitle">
+
+        <hr>
+
+    </center>
+
+    <!-- Post Content -->
+    <p>@Html.Raw(Model.FullText)</p>
+
+
+
+</div>
+

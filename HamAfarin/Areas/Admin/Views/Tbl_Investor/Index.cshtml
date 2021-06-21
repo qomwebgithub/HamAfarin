@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DataLayer.Tbl_Investor>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "فهرست سرمایه گذار";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+                  columns.Bound(item => @item.InvestorID).Title("تصویر").Filterable(false).Groupable(false)
+                            .Template(@<text>
+                    <img src="~/Images/InvestorImages/Thumb/@item.ImageName" class="thumbnail" style="max-width:200px" />
+                            </text>);
+columns.Bound(model => model.Title);
+columns.Bound(model => model.IsActive);
+columns.Bound(model => model.CreateDate);
+columns.Bound(model => model.Sort);
+columns.Bound(item => @item.InvestorID).Title("دستورات").Filterable(false).Groupable(false)
+      .Template(@<text>
+                        @Html.ActionLink("ویرایش", "Edit", new { id = @item.InvestorID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                        @Html.ActionLink("حذف", "Delete", new { id = @item.InvestorID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+    </text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_Investor").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.InvestorID))
+)
+)

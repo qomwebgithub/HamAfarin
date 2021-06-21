@@ -1,0 +1,48 @@
+﻿﻿<!-- sidebar menu start-->
+
+<ul class="feedlist">
+    <li class="p-3" style="font-size:16px">
+        <a href="/UserPanel/UserProfile" style="text-decoration:none;color: #81858b;">
+            <i class="glyphicon glyphicon-user"></i>@UserSetAuthCookie.GetMobileNumber(User.Identity.Name)
+        </a>
+    </li>
+    <li class="pr-2 pl-2" style="font-size:16px">
+        <div class="col-12">
+            <a href="/Account/SejamLogin" class="btn btn-danger" style="background-color:#ff1654"> دریافت اطلاعات از سجام </a>
+        </div>
+    </li>
+    @if (ViewBag.UserStatus != null)
+    {
+        <li class="border-bottom pb-2 pr-2 pl-2">
+            <div class="col-12">
+                <a style="font-size:14px" href="/BusinessPlans" class="btn btn-orange">شروع سرمایه گذاری</a>
+            </div>
+        </li>
+    }
+
+    @*<li><a href="/UserPanel" class="link_active"><i class="glyphicon glyphicon-dashboard"></i> داشبورد </a></li>*@
+    <li class="pr-3"><a href="/UserPanel/UserPaymentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>سرمایه گذاری من </a></li>
+    <li class="pr-3">
+        <a href="/UserPanel/UserCommentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-comment"></i>نظرهای من </a>
+    </li>
+    <li class="pr-3">
+        <a href="/UserPanel/UserQuestionBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-question-sign"></i>پرسش های من </a>
+    </li>
+    <li class="pr-3">
+        <a href="/UserPanel/UserProfile" style="text-decoration:none;color: #81858b;">
+            <i class="glyphicon glyphicon-user"></i>اطلاعات کاربری
+        </a>
+    </li>
+    <li class="pr-3">
+        <a href="/UserPanel/UserProfile/ChangePassword" style="text-decoration:none;color: #81858b;">
+            <i class="glyphicon glyphicon-lock"></i>تغییر رمز عبور
+        </a>
+    </li>
+    <li class="pr-3">
+        <a href="/UserPanel/Tickets" style="text-decoration:none;color: #81858b;">
+            <i class="glyphicon glyphicon-envelope"></i>تیکت های پشتیبانی
+        </a>
+    </li>
+    <li class="pr-3"><a href="/LogOut" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-log-out"></i> خروج  </a></li>
+</ul>
+

@@ -1,0 +1,166 @@
+﻿@model IEnumerable<DataLayer.Tbl_Menu>
+<div class="d-block d-sm-block d-md-block d-lg-none d-xl-none">
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+
+        <div class="col-12">
+            <div class="row d-flex" style="justify-content:space-between;align-items: center;">
+                <div class=" d-sm-none">
+                    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarText"
+                            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+                <div class="">
+                    <a class="" href="/">
+                        <img src="~/Content/img/logo.png" class="img-logo m-1" />
+                    </a>
+                </div>
+                <div class="">
+                    @Html.Partial("_Login")
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav ml-auto">
+
+                        @* هنگام نمایش در حالت موبایل، نیازی به کشیدن خط زیر منو نمی باشد *@
+                        @foreach (var item in Model)
+                        {
+                            <li name="menuBarItemsInMobile" id="@("menuItemIdInMobile"+item.Url)" class="nav-item d-sm-none">
+                                <a class="nav-link text-dark small" href="@item.Url" style="color:black;font-size:17px;font-weight: bold;">@item.Title</a>
+                            </li>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="d-xl-block d-lg-block d-md-none d-sm-none d-none">
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-6 col-sm-4">
+                    <a class="float-right mx-3" href="/">
+                        <img src="~/Content/img/logo.png" class="img-logo" />
+                    </a>
+                </div>
+            </div>
+
+
+
+
+            @*<div class="float-right">
+                    <a class="navbar-brand" href="/">
+                        <img src="~/Content/img/logo.png" class="float-right img-logo" />
+                    </a>
+                </div>*@
+
+
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ml-auto">
+                    @foreach (var item in Model)
+                    {
+                        <li name="menuBarItems" id="@("menuItemId"+item.Url)" onloadstart="checkMenuItemIsRoot(this.id)" class="d-none d-sm-block nav-item">
+                            <a class="nav-link  ml-0" href="@item.Url" style="color:black;font-size:17px;">@item.Title</a>
+                        </li>
+                    }
+
+                </ul>
+                @Html.Partial("_Login")
+            </div>
+        </div>
+    </nav>
+</div>
+
+<script>
+    //function checkMenuItemIsRoot(menuItemId) {
+
+    //    var menuItemUrl = menuItemId.toString().replace("menuItemId", "");
+
+    //    alert("id is:" + menuItemId + " And Url is: " + menuItemUrl);
+
+
+
+    //    var pathname = window.location.pathname;
+    //    alert(pathname);
+
+    //}
+
+    (function () {
+
+        //خط کشیدن زیر منوی صفحه ی جاری
+
+        var pathname = decodeURI(window.location.pathname);
+
+
+        let x = document.getElementsByName('menuBarItems');
+
+        x.forEach((child) => {
+
+            var menuItemUrl = child.id.toString().replace("menuItemId", "");
+            if (menuItemUrl == pathname) {
+
+                var ItemId = child.id.toString();
+
+
+                var elementQuery = document.getElementById(ItemId);
+                elementQuery.classList.add("active");
+                //$(elementQuery).addClass("active");
+                //$("#"+ItemId).addClass("active");
+            }
+
+        });
+
+    })();
+
+
+
+
+    (function () {
+
+        //خط کشیدن زیر منوی صفحه ی جاری در حالت موبایل
+
+        var pathname = decodeURI(window.location.pathname);
+
+
+        let x = document.getElementsByName('menuBarItemsInMobile');
+
+        x.forEach((child) => {
+
+            var menuItemUrl = child.id.toString().replace("menuItemIdInMobile", "");
+            if (menuItemUrl == pathname) {
+
+                var ItemId = child.id.toString();
+
+
+                var elementQuery = document.getElementById(ItemId);
+                //elementQuery.classList.add("text-danger");
+
+
+
+                elementQuery.firstElementChild.classList.replace("text-dark", "text-danger");
+                elementQuery.firstElementChild.classList.add("text-underline");
+
+
+                //$(elementQuery).addClass("active");
+                //$("#"+ItemId).addClass("active");
+            }
+
+        });
+
+    })();
+
+</script>
+

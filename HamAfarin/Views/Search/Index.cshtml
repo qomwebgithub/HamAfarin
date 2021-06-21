@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ViewModels.BusinessPlansItemViewModel>
+
+@{ var pastSize = Model.Count();}
+@{
+    if (pastSize > 0)
+    {
+        foreach (var item in Model)
+        {
+            @Html.Partial("_BoxPlans", item)
+        }
+    }
+    else
+    {
+        <div class="container">
+            <br />
+            <br />
+            <br />
+            <h3 class="text-center"> طرحی وجود ندارد </h3>
+            <br />
+            <br />
+            <br />
+        </div>
+    }
+}
+

@@ -1,0 +1,90 @@
+﻿@model ViewModels.LoginViewModel
+@using CaptchaMvc.HtmlHelpers;
+@{
+    ViewBag.Title = "ورود";
+    var captcha = Html.Captcha("کد امنیتی جدید", "", 4, "لطفا کد امنیتی را وارد کنید", false);
+
+}
+
+<div class="col-12" style="background-color:#eaeded">
+    <div class="col-12">
+        <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 text-center">
+            <br />
+        </div>
+        <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 bg-white rounded-lg border-dark pl-0 pr-0" style="font-size:14px;">
+            <h5 class="text-center p-2  pt-3">ورود به هم آفرین</h5>
+            <hr />
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="col-12 pl-0 pr-0">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MobileNumber, htmlAttributes: new { @class = "control-label col-md-12" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.MobileNumber, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*شماره موبایل خود را وارد کنید", maxlength = "11" } })
+                            @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <div class="col-md-12">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "col-6 control-label pr-0" })
+                            <a href="#" class="pr-0 pl-0 float-left text-decoration-none" style="font-size:12px; border-bottom:1px dashed; text-align:left"> رمز عبور را فراموش کرده ام</a>
+                        </div>
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*کلمه عبور را وارد کنید" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-0">
+                        <div class="col-12">
+                            @captcha.RenderMarkup()
+                            @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-12">
+                            <input type="submit" value="ورود به سایت" class="btn btn-danger col-12" style="background-color:#ff1654" />
+                        </div>
+                    </div>
+
+                    <div class="form-group pr-3">
+                        <div class="form-check">
+                            @Html.EditorFor(model => model.RememberMe, new { htmlAttributes = new { @class = "form-check-input", @type = "checkbox", @id = "rememberMe" } })
+                            @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "form-check-label", @for = "rememberMe" })
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="col-12">
+                        <center>
+                            <p class="col-12 pb-3 font-size-small text-center">
+                                کاربر جدید هستید؟ <a href="/Account/Register" class="text-info" style="border-bottom:1px dashed;">ثبت نام در هم آفرین</a>
+                            </p>
+                        </center>
+                    </div>
+                    @*<hr />
+                        <div class="col-12">
+                            <center>
+                                <p class="col-11 pb-3 mr-1">
+                                    <a href="/Account/SejamLogin" class="text-info" style="border-bottom:1px dashed;">ورود با سامانه سجام</a>
+                                </p>
+                            </center>
+                        </div>*@
+                </div>
+            }
+
+        </div>
+        <div style="height:20px"></div>
+    </div>
+</div>
+@section scripts
+{
+    @captcha.RenderScript()
+}

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<DataLayer.Tbl_Tickets>
+
+@{
+}
+
+<h2>تیکت ها</h2>
+<div class="container">
+    <br />
+    <hr />
+    <a href="/UserPanel/Tickets/Create" class="btn btn-info">
+        ارسال تیکت به پشتیبانی
+        <br />
+        <span class="text-white fas fa-comment"></span>
+    </a>
+    <hr />
+    <table class="table table-bordered">
+        <tr>
+            <th>موضوع</th>
+            <th>وضعیت</th>
+            <th>دستورات</th>
+
+
+
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr style="padding:5px;">
+                <th>@item.Subject</th>
+
+                @if (item.IsClosed)
+                {
+                    <th>
+                        <span>بسته شده</span>
+                    </th>
+                }
+                else
+                {
+                    <th>
+                        
+                        @if (item.IsAdminChecked == false || item.Tbl_Tickets1.Where(t => t.IsAdminChecked == false).Any())
+                        {
+                            <span class="alert alert-info">در دست بررسی توسط مدیر...</span>
+                        }
+                        else if (item.IsUserChecked == false || item.Tbl_Tickets1.Where(t => t.IsUserChecked == false).Any())
+                        {
+                            <span class="alert alert-danger">پیام جدید دارید</span>
+                        }
+                        else
+                        {
+                            <span class="alert alert-success">پاسخ داده شده</span>
+                        }
+                        
+
+                    </th>
+
+                }
+
+                <th><a class="btn btn-info" href="/UserPanel/Tickets/TicketDetails/@item.TicketID">مشاهده</a></th>
+
+            </tr>
+
+
+        }
+
+    </table>
+
+
+</div>

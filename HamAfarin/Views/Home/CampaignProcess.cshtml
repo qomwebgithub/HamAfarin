@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "سوالات متداول";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.CAMPAIGN_PROCESS })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">سوالات متداول</h2>
+
+    <div>
+        <hr />
+        <div class="container">
+            <dl class="dl-horizontal">
+
+
+                <dd>
+                    @Html.Raw(@Model.CampaignProcess)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿@model DataLayer.Tbl_Sliders
+
+@{
+    ViewBag.Title = "حذف اسلاید";
+}
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<br />
+
+<h3>آیا از حذف این مورد اطمینان دارید؟</h3>
+<div>
+    <hr />
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="تایید حذف" class="btn btn-danger" />
+                @Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </div>
+        <div class="card-body col-12">
+            @Html.DisplayFor(model => model.IsActive)
+
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Title)
+        </div>
+        <div class="card-body col-12">
+            @Html.DisplayFor(model => model.Title)
+
+        </div>
+    </div>
+    <br />
+
+    @if (Model.ImageName != null)
+    {
+        <div class="card">
+            <div class="card-header">
+                @Html.DisplayNameFor(model => model.ImageName)
+            </div>
+            <div class="card-body col-12">
+                <img src="~/Images/SliderImages/@Model.ImageName" />
+
+            </div>
+        </div>
+        <br />
+    }
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Url)
+        </div>
+        <div class="card-body col-12">
+            @Html.DisplayFor(model => model.Url)
+
+        </div>
+    </div>
+    <br />
+</div>

@@ -1,0 +1,321 @@
+﻿@model DataLayer.Tbl_CapitalApplicantHelp
+@{
+    ViewBag.Title = "متقاضی سرمایه";
+}
+
+
+<style>
+
+    #time-3-icon {
+        fill: orange;
+    }
+
+    .my-svg-alternate {
+        display: none;
+    }
+
+    .no-svg .my-svg-alternate {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background-image: url(image.png);
+    }
+
+    .modalBackground {
+        background-color: Olive;
+        filter: alpha(opacity=70);
+        opacity: 0.7;
+    }
+
+    .modalPopup {
+        background-color: #ffffdd;
+        border-width: 3px;
+        border-style: solid;
+        border-color: Gray;
+        padding: 3px;
+        width: 250px;
+    }
+    #faq-tab{
+        padding:7px;
+    }
+    
+</style>
+
+
+
+
+<!-- banner start -->
+<section class="container-fluid p-0">
+    <img src="~/Content/img/headerTestBanerImage.jpg" class="w-100" style="max-height:350px" />
+</section>
+
+
+
+<section class="w-100 font-weight-bold container-tab ">
+    <div class="w-100 stickyNav_container">
+
+
+
+        <ul class="nav nav-tabs d-flex justify-content-center shadow p-3 mb-2 bg-white rounded stickyNav" id="myTab" role="tablist">
+            <div id="btnSarmayeGozariInMenu">
+
+            </div>
+
+            @*<li class="nav-item ml-4">
+
+                    <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home" aria-selected="true">معرفی طرح</a>
+                </li>*@
+            <div class="d-flex wraper">
+                <li class="nav-item ml-4">
+                    <a class="nav-link stickyNav-item text-dark active font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab" aria-controls="financial" aria-selected="false">
+                        مزایای هم آفرین
+                        برای کارآفرینان
+                    </a>
+                </li>
+                <li class="nav-item ml-4">
+
+                    <a class="nav-link stickyNav-item  text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home" aria-selected="true">فرایند تقاضای سرمایه</a>
+                </li>
+            </div>
+            <div class="d-flex wraper">
+
+                <li class="nav-item ml-4">
+                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                       aria-controls="contact" aria-selected="false">سوالات متداول</a>
+                </li>
+
+                <li class="nav-item ml-4">
+                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
+                       aria-controls="comment" aria-selected="false">برگزاری کمپین</a>
+                </li>
+            </div>
+            <li class="nav-item " id="send-li">
+                <a class="nav-link stickyNav-item  font-weight-bold btn-orange" id="faq-tab" data-toggle="tab" href="#faq" role="tab"
+                   aria-controls="faq" aria-selected="false">ارسال طرح</a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+
+
+        <div class="row">
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-12 col-md-9 mr-md-5 pl-md-5">
+
+
+
+                <div class=" tab-content mr-md-5" id="myTabContent">
+
+
+                    <div class="tab-pane show active fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        @*@Html.Action("BenefitsOfFinancingInHamAfarin", "InvestmentProcess")*@
+                        @Html.Action("BenefitsOfFinancingInHamAfarin", "InvestmentProcess")
+
+                    </div>
+
+                    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <br />
+                        <br />
+                        <br />
+                        <div style="height:120px;" class="d-sm-none"></div>
+                        @Html.Raw(Model.CapitalDemandProcess)
+                    </div>
+
+                    <div class="tab-pane fade p-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="d-sm-none" style="height:120px;"></div>
+                        <div>
+                            @Html.Raw(Model.FrequentlyAskedQuestions)
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="tab-pane fade container p-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="d-sm-none" style="height:120px;"></div>
+                        <div>
+                            @Html.Raw(Model.HoldingCampaign)
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                </div>
+                                <div class="modal-body" id="myModalBody">
+                                    ...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="tab-pane fade container p-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <div class="d-sm-none" style="height:120px;"></div>
+                        <div>
+                            @Html.Raw(Model.SendPlan)
+                        </div>
+                    </div>
+
+
+                    <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="addQuestionLabel">Modal title</h4>
+                                </div>
+                                <div class="modal-body" id="addQuestionBody">
+                                    ...
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="col-md-offset-2">
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-1">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- center nav end -->
+<!-- attention banner end -->
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+
+
+
+
+<script src="~/Scripts/modal.js"></script>
+@section Scripts{
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(window).bind('scroll', function () {
+                var vPos = $(window).scrollTop();
+                var totalH = $('.stickyNav_container').offset().top;
+                var finalSize = totalH - vPos;
+
+                var btnSarmayeGozari = $("#btnSarmayeGozari").html();
+
+
+
+                if (finalSize <= 0) {
+                    $('.stickyNav').css({
+                        'position': 'fixed',
+                        'top': 0
+                    });
+                    $('.stickyNav').addClass('w-100');
+                    $("#btnSarmayeGozariInMenu").html(btnSarmayeGozari);
+                } else {
+                    $('.stickyNav').css({
+                        'position': 'static'
+                    })
+                    $('.stickyNav').removeClass('w-100');
+
+                    $("#btnSarmayeGozariInMenu").html("");
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+
+        function ShowWarranty() {
+            $("#WarranyModal").modal();
+        }
+
+        @*function CreateComment(id) {
+            $.ajax({
+                url: "/Comment/AddComment/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
+                type: "Get"
+            }).done(function (result) {
+                 $("#myModalLabel").html("ثبت نظر شما");
+                $("#myModalBody").html(result);
+                $("#addCommentModal").modal();
+
+       $(".modal-backdrop").each(function(){
+    $(this).removeClass("modal-backdrop");
+       });
+            });
+        }
+        function CreateQuestion(id) {
+            $.ajax({
+                url: "/Question/AddQuestion/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
+                type: "Get"
+            }).done(function (result) {
+                                $("#addQuestionLabel").html("ثبت سوال شما");
+                $("#addQuestionBody").html(result);
+                $("#addQuestionModal").modal();
+
+                $(".modal-backdrop").each(function () {
+
+
+    $(this).removeClass("modal-backdrop");
+  });
+
+            });
+        }*@
+
+        function Success() {
+
+            $("#addCommentModal").modal('hide');
+            $("#addQuestionModal").modal('hide');
+
+        }
+
+        function showAlert(message) {
+            alert(message);
+        }
+    </script>
+
+}
+

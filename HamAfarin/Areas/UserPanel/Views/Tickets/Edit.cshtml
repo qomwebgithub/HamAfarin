@@ -1,0 +1,74 @@
+﻿@model DataLayer.Tbl_Tickets
+@using Kendo.Mvc.UI
+
+@{
+}
+
+<h2>ویرایش تیکت</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.TicketID)
+    @Html.HiddenFor(model => model.AdminCheckedDateTime)
+    @Html.HiddenFor(model => model.AdminChecked_id)
+    @Html.HiddenFor(model => model.AttachFileName)
+    @Html.HiddenFor(model => model.ClosedDateTime)
+    @Html.HiddenFor(model => model.CreateDateTime)
+    @Html.HiddenFor(model => model.IsAdminChecked)
+    @Html.HiddenFor(model => model.IsClosed)
+    @Html.HiddenFor(model => model.IsUserChecked)
+    @Html.HiddenFor(model => model.Parent_id)
+    @Html.HiddenFor(model => model.UserCreate_id)
+    @Html.HiddenFor(model => model.UserCheckedDateTime)
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.User_id, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("User_id")
+            @Html.ValidationMessageFor(model => model.User_id)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Subject)
+            @Html.ValidationMessageFor(model => model.Subject)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Text)
+            @Html.ValidationMessageFor(model => model.Text)
+        </div>
+    </div>
+
+
+    <div class="card-body">
+        <label class="" for="Title">بارگیری فایل</label>
+        <div class="col-md-10">
+            @if (Model.AttachFileName != null)
+            {
+                <a class="btn btn-info" href="@FileAddressesDirectoryPath.TicketFileDownloadUrl(Model.AttachFileName)">دانلود فایل قبلی</a>
+            }
+            @Html.Kendo().Upload().Name("attachTicketFileUpload").Multiple(true)
+        </div>
+    </div>
+
+    <div class="form-group" id="buttons">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ثبت" class="btn btn-primary" />
+            @Html.ActionLink("بازگشت به فهرست", "Index")
+        </div>
+    </div>
+</div>
+}
+

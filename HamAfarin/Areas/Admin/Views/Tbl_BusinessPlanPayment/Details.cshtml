@@ -1,0 +1,148 @@
+﻿@model DataLayer.Tbl_BusinessPlanPayment
+
+@{
+    ViewBag.Title = "جزئیات پرداخت";
+}
+
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+<br />
+<div>
+    <p>
+        @Html.ActionLink("ویرایش", "Edit", new { id = Model.PaymentID }, new { @class = "btn btn-info" }) |
+        @Html.ActionLink("بازگشت به لیست", "Index")
+    </p>
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsPaid)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IsPaid)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsConfirmedFromAdmin)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IsConfirmedFromAdmin)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaidDateTime)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.PaidDateTime)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.CreateDate)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.TransactionPaymentCode)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.TransactionPaymentCode)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaymentPrice)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.PaymentPrice)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PaymentImageName)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.PaymentImageName)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            نوع پرداخت
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Tbl_PaymentType.PaymentTitle)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            کاربر ایجاد کننده
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Tbl_Users.UserName)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            کاربر پرداخت کننده
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Tbl_Users1.UserName)
+            </p>
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Tbl_BussinessPlans.Title)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Tbl_BussinessPlans.Title)
+            </p>
+        </div>
+    </div>
+    <br />
+</div>

@@ -1,0 +1,62 @@
+﻿@model DataLayer.Tbl_Galleries
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>افزودن @Html.DisplayNameFor(model => model)</h2>
+
+@using (Html.BeginForm("Create", "Tbl_Galleries", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true)
+    @if (ViewBag.ImageNull == true)
+    {
+        <div class="col-md-12 text-danger">
+            تصویر اجباری میباشد
+        </div>
+    }
+    else if (ViewBag.ImageError == true)
+    {
+        <div class="text-danger col-md-12">
+            فرمت تصویر اشتباه
+        </div>
+    }
+
+    <div class="mb-5 col-12 d-flex justify-content-center">
+        <p class="text text-danger text-bold"> انتخاب عکس </p>
+        <div class="">
+
+            <img style="height: 300px; width:300px;" class="img-thumbnail col-12" id="imgShow" />
+            <input type="file" id="Image" name="Image" class="col-md-12" value="انتخاب عکس">
+        </div>
+    </div>
+
+    <div class="form-group" id="buttons">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ایجاد" class="btn btn-primary" />
+            @Html.ActionLink("بازگشت به فهرست", "Index")
+        </div>
+    </div>
+</div>
+}
+<script>
+           // نمایش عکس
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgShow').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#Image").change(function () {
+            readURL(this);
+        });
+</script>

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<DataLayer.Tbl_BusinessPlanGallery>
+
+@*<div class="main">
+        <div class="container triangles-of-section">
+            <div class="triangle-up-left"></div>
+            <div class="square-left"></div>
+            <div class="triangle-up-right"></div>
+            <div class="square-right"></div>
+        </div>
+        <section class="portfolio_slider_wrapper">
+            <div class="container">
+                <div>
+                    <img src="https://hamafarin.ir/Images/BusinessPlans/Image/@Model.First().ImageName" style="height:200px" class="card-img-top" alt="@Model.First().Title">
+                </div>
+
+                <div id="carousel" class="flexslider">
+                    <ul class="slides">
+                        @foreach (var item in Model)
+                        {
+                            <li> <img onclick="changePhoto(this)" src="https://hamafarin.ir/Images/BusinessPlans/thumb/@item.ImageName" alt="@item.Title" title="@item.Title"></li>
+                        }
+
+                    </ul>
+                </div>
+
+            </div>
+
+        </section>
+    </div>*@
+
+@*<div id="secondary-slider" class="splide">
+        <div class="splide__track">
+            <ul class="splide__list">
+                @foreach (var item in Model)
+                {
+                    <li class="splide__slide">
+
+                        <img src="https://hamafarin.ir/Images/BusinessPlans/Image/@item.ImageName" alt="@item.Title">
+                    </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+
+    <div class="thumbnails js-thumbnails">
+        <ul class="thumbnails__list">
+            @foreach (var item in Model)
+            {
+                <li class="thumbnails__item" role="button" tabindex="0">
+                    <img src="https://hamafarin.ir/Images/BusinessPlans/Image/@item.ImageName" alt="@item.Title">
+                </li>
+            }
+        </ul>
+    </div>*@
+
+
+@*<div id="image-slider" class="splide">
+        <div class="splide__track">
+            <ul class="splide__list">
+                @foreach (var item in Model)
+                {
+                    <li class="splide__slide">
+                        <img src="https://hamafarin.ir/Images/BusinessPlans/Image/@item.ImageName" alt="@item.Title">
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>*@
+
+
+
+<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators m-0 p-0">
+        @{
+            bool first = true;
+
+        }
+        @*تغییر فورایچ به فور برای صحولت در شمارش تعداد اسلاید*@
+        @for (int c = 0; c < Model.Count(); c++)
+        {
+            if (first)
+            {
+                first = false;
+                <li data-target="#carouselExampleCaptions" data-slide-to="@c" class="active"></li>
+            }
+            else
+            {
+                <li data-target="#carouselExampleCaptions" data-slide-to="@c"></li>
+            }
+        }
+    </ol>
+    <div class="carousel-inner offset-lg-1">
+        <div class="mr-5">
+            @{
+                first = true;
+            }
+
+            @foreach (var item in Model)
+            {
+
+                if (first)
+                {
+                    first = false;
+                    <div class="carousel-item active">
+                        <img src="https://hamafarin.ir/Images/BusinessPlans/Image/@item.ImageName" class="d-block w-75"
+                             alt="@item.Title" style="max-height:400px">
+                    </div>
+                }
+                else
+                {
+                    <div class="carousel-item">
+                        <img src="httpss://hamafarin.ir/Images/BusinessPlans/Image/@item.ImageName" class="d-block w-75"
+                             alt="@item.Title" style="max-height:400px">
+                    </div>
+
+                }
+            }
+
+        </div>
+    </div>
+    <a class="carousel-control-prev float-left" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <img src="~/Content/img/next.svg" style="width:50px" />
+
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <img src="~/Content/img/Previous.svg" style="width:50px" />
+
+        <span class="sr-only">Next</span>
+    </a>
+
+</div>
+

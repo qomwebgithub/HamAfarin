@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ViewModels.UserQuestionBusinessPlanList>
+<div class="container">
+
+    <h4>پرسش های من</h4>
+    <hr />
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+
+            <table class="table table-striped border table-responsive text-center">
+                <thead>
+                    <tr>
+
+                        <td>
+                            ردیف
+                        </td>
+                        <td>
+                            عنوان طرح
+                        </td>
+                        <td>
+                            نام شرکت
+                        </td>
+                        <td>
+                            وضعیت طرح
+                        </td>
+                        <td>
+                            وضعیت سوال
+                        </td>
+                        <td>
+                            تاریخ درج
+                        </td>
+                        <td>
+                            متن
+                        </td>
+                        <td>
+                            عملیات
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+                                @item.Row_id
+                            </td>
+                            <td>
+                                @item.BusinessPlanName
+                            </td>
+                            <td>
+                                @item.CompanyName
+                            </td>
+                            <td>
+                                @item.BusinessPlanStatus
+                            </td>
+                            <td>
+                                @item.BusinessQuestionStatus
+                            </td>
+                            <td>
+                                @item.CreateDate.ToString("yyyy/MM/dd")
+                            </td>
+                            <td>
+                                @item.QuestionText
+                            </td>
+                            <td>
+                                <a class="btn btn-info text-white" href="/UserPanel/UserPaymentBusinessPlan/SinglePaymentBusinessPlan/@item.QuestionBusiness_id"> جزئیات</a>
+                                <a class="btn btn-danger text-white" onclick="DeleteQuestion(@item.QuestionBusiness_id)"> حذف</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="container">
+                <p>
+                    موردی ثبت نشده است
+                </p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="container">
+            <p>
+                موردی ثبت نشده است
+            </p>
+        </div>
+    }
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        function DeleteQuestion(id) {
+            if (confirm("آیا از حذف مطمين هستید؟"))
+                $.get("/UserPanel/UserQuestionBusinessPlan/DeleteQuestion/" + id, function () {
+                    location.reload();
+                });
+        }
+    </script>
+
+}

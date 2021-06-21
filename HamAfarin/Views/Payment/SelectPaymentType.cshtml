@@ -1,0 +1,526 @@
+﻿@model ViewModels.SelectPaymentTypeViewModel
+
+@{
+    ViewBag.Title = "SelectPaymentType";
+    Layout = "~/Areas/UserPanel/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    @if (ViewBag.UserProfileIsActive != null && ViewBag.UserProfileIsActive == true)
+    {
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">تصویر ضمانت نامه</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <img src="~/Resources/BusinessPlans/Warranty/@Model.ImageNameWarranty" />
+
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="siteTermsConditionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-investment" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">قرارداد سرمایه گذاری</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container">
+                        <p>@Html.Raw(Model.SiteTermsConditions)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="privacyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-investment" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">قوانین و مقررات سرمایه گذاری</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container">
+                        <p>@Html.Raw(Model.Privacy)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end modal-->
+        using (Html.BeginForm("SelectPaymentType", "Payment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.BusinessPlanID)
+            @Html.HiddenFor(model => model.BussinessName)
+            @Html.HiddenFor(model => model.AmountRequiredRoRaiseCapital)
+            @Html.HiddenFor(model => model.CodeOTC)
+            @Html.HiddenFor(model => model.PercentageReturnInvestment)
+            @Html.HiddenFor(model => model.FinancialDuration_id)
+            @Html.HiddenFor(model => model.ImageNameWarranty)
+            @Html.HiddenFor(model => model.InvestorNationalCode)
+            @Html.HiddenFor(model => model.InvestorMobile)
+            @Html.HiddenFor(model => model.InvestorSejamId)
+            @Html.HiddenFor(model => model.MaximumInvestment)
+            @Html.HiddenFor(model => model.MinimumAmountInvest)
+            @Html.HiddenFor(model => model.CanInvestment)
+            @Html.HiddenFor(model => model.TotalInvestment)
+            @Html.HiddenFor(model => model.IsOnline)
+            <br />
+            <br />
+            <br />
+            <div class="container row">
+                <div class="row col-12 col-md-6">
+                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.BussinessName)</p>
+                    <p class="col-12"> @Html.DisplayFor(model => model.BussinessName)</p>
+                </div>
+                <div class="row col-12 col-md-6">
+                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CompanyName)</p>
+                    <p class="col-12"> @Html.DisplayFor(model => model.CompanyName)</p>
+                </div>
+            </div>
+            @*<div class="container border">
+                    <div class="row">
+                        <div class="col-sm">
+
+                            <p class="text-danger">خلاصه طرح</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.BussinessName)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.BussinessName)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CompanyName)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.CompanyName)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.AmountRequiredRoRaiseCapital)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12">
+                                    @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CodeOTC)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.CodeOTC)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.PercentageReturnInvestment)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.PercentageReturnInvestment) درصد</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.FinancialDuration_id)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.FinancialDuration_id)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.ImageNameWarranty)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12">
+                                    <a class="" data-toggle="modal" data-target="#exampleModal">
+                                        <img class="mt-2" src="~/Content/img/zemanatname.svg" />
+                                    </a>
+                                </p>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>*@
+
+            @*<div class="container border">
+                    <div class="row">
+                        <div class="col-sm">
+
+                            <p class="text-danger">مشخصات سرمایه گذار</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.InvestorFullName)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.InvestorFullName)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.InvestorNationalCode)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.InvestorNationalCode)</p>
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.InvestorSejamId)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.InvestorSejamId)</p>
+                            </div>
+                        </div>
+
+                        <div class="col-sm">
+                            <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.InvestorMobile)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Html.DisplayFor(model => model.InvestorMobile)</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>*@
+
+            <br />
+            <br />
+            <div class="container p-0">
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-10 px-0">
+                        @Html.EditorFor(model => model.InvestmentRoles)
+                        کلیه
+                        @*<a class="link_active" data-toggle="modal" data-target="#siteTermsConditionsModal" href="#">
+                                قوانین و مقررات
+                            </a>*@
+                        <a class="link_active" href="/SiteTermsConditions" target="_blank">
+                            قوانین و مقررات
+                        </a>
+                        و
+                        <a class="link_active" data-toggle="modal" data-target="#privacyModal" href="#">
+                            قرارداد سرمایه گذاری
+                        </a>
+                        را مطالعه نموده و پذیرفته ام.
+                        @Html.ValidationMessageFor(model => model.InvestmentRoles)
+                    </div>
+                </div>
+
+            </div>
+            <br />
+            <div id="paymentType" class="hidden">
+
+                <div class="col-sm p-0">
+                    @*<p class="text-danger"> سرمایه گذاری</p>*@
+
+                    @*<div class="row">
+                                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.MinimumAmountInvest)</p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-12"> @Model.MinimumAmountInvest.ToString("#,##0")</p>
+                                            </div>
+                                            <div class="row">
+                            <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.MaximumInvestment)</p>
+                        </div>
+                        <div class="row">
+                            <p class="col-12"> @Model.MaximumInvestment.ToString("#,##0")</p>
+                        </div>
+                                            <div class="row">
+                                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.TotalInvestment)</p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-12"> @Model.TotalInvestment.ToString("#,##0")</p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CanInvestment)</p>
+                                            </div>
+                                            <div class="row">
+                                                <p class="col-12"> @Model.CanInvestment.ToString("#,##0")</p>
+                                            </div>*@
+
+                    <table class="table text-center">
+                        <thead>
+                            <tr>
+                                <th scope="col">@Html.DisplayNameFor(model => model.MinimumAmountInvest)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.TotalInvestment)</th>
+                                <th scope="col">@Html.DisplayNameFor(model => model.CanInvestment)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>@Model.MinimumAmountInvest.ToString("#,##0")</td>
+                                <td>@Model.TotalInvestment.ToString("#,##0")</td>
+                                <td>@Model.CanInvestment.ToString("#,##0")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br />
+
+                <div class="container border pt-3">
+                    <div class="row">
+                        <div class="row justify-content-start col-sm form-check">
+                            <p class="text-nowrap col-12 col-md-2 text-bold mb-0" style=" line-height: 2.4;"> نوع پرداخت:</p>
+                            <div class="col-12 col-md-3 px-0">
+                                <div class="form-check form-check-inline" style="margin:8px">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="inlineRadioOptions"
+                                           id="onlineRadio"
+                                           value="optOnline" checked />
+                                    <label class="form-check-label" for="inlineRadio2">پرداخت آنلاین</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-3 px-0">
+                                <div class="form-check form-check-inline" style="margin:8px">
+                                    <input class="form-check-input"
+                                           type="radio"
+                                           name="inlineRadioOptions"
+                                           id="offlineRadio"
+                                           value="optOffline" />
+                                    <label class="form-check-label" for="inlineRadio2">فیش واریزی</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-sm d-flex align-items-center justify-content-center px-0">
+
+                            <div id="onlineView" class="col-sm hidden px-0">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label>مبلغ مورد نظر برای سرمایه گذاری را وارد نمایید</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @*@Html.EditorFor(model => model.OnlinePaymentPrice)*@
+                                        @Html.TextBoxFor(model => model.OnlinePaymentPrice, new { @oninput = "inputPriceHandeler('#OnlinePaymentPrice')" })
+                                        @Html.ValidationMessageFor(model => model.OnlinePaymentPrice, null, new { @class = "text-danger" })
+
+                                    </div>
+                                </div>
+
+                                <p class="control-label col-md-12 alert-primary" id="OnlinePaymentPriceSeprate"></p>
+
+                            </div>
+                            <div id="offlineView" class="col-sm hidden">
+                                <br />
+                                @*<div class="col-md-12">
+                                    <label>مبلغ مورد نظر برای سرمایه گذاری را وارد نمایید</label>
+                                </div>*@
+                                <br />
+                                <div class="form-group row">
+                                    @*@Html.LabelFor(model => model.OfflinePaymentPrice, new { @class = "control-label col-md-12" })*@
+                                    <label class="col-md-5">مبلغ مورد نظر برای سرمایه گذاری را وارد نمایید</label>
+                                    <div class="col-md-7">
+                                        @*@Html.EditorFor(model => model.OfflinePaymentPrice)*@
+                                        @Html.TextBoxFor(model => model.OfflinePaymentPrice, new { @oninput = "inputPriceHandeler('#OfflinePaymentPrice')" })
+                                        @Html.ValidationMessageFor(model => model.OfflinePaymentPrice, null, new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <p class="control-label col-md-12 alert-primary" id="OfflinePaymentPriceSeprate"></p>
+                                <div class="row">
+                                    <div class="form-group row col-md-6">
+                                        @Html.LabelFor(model => model.TransactionPaymentCode, new { @class = "control-label col-md-3 px-0" })
+                                        <div class="col-md-9 pr-0">
+                                            @Html.EditorFor(model => model.TransactionPaymentCode)
+                                            @Html.ValidationMessageFor(model => model.TransactionPaymentCode, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group row col-md-6 pl-0">
+                                        @Html.LabelFor(model => model.PaymentImageName, new { @class = "control-label col-md-4 px-0" })
+                                        <div class="col-md-8 px-0">
+                                            @Html.Kendo().Upload().Name("imgPaymentImageNameUploaded")
+                                            @Html.ValidationMessageFor(model => model.PaymentImageName, null, new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <br />
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div class="row ">
+
+                        <div class="container-fluid">
+                            <div class="form-group" id="buttons">
+                                <br />
+                                <div class="mx-auto" style="width: 200px;">
+                                    <input id="btnSubmit" type="submit" value="تایید" class="btn btn-success" />
+                                    <a href="/BusinessPlans" class="btn btn-danger">انصراف</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <br />
+
+                </div>
+            </div>
+
+        }
+
+    }
+    else if (ViewBag.UserProfileIsActive == null)
+    {
+        <div class="container alert alert-danger">
+            <p>پروفایل خود را بروزرسانی نکرده اید و متاسفانه امکان سرمایه گذاری ندارید</p>
+            <a href="/UserPanel/UserProfile/Create" class="btn btn-orange btn-lg" style="font-size: 15px;">
+                ویرایش پروفایل
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="container alert alert-danger">
+            <p>متاسفانه پروفایل شما تایید نشده است و امکان سرمایه گذاری ندارید</p>
+        </div>
+    }
+
+
+
+
+    <br />
+</div>
+
+@section Scripts{
+
+    <script src="~/Scripts/modal.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            handleInvestmentRoles($("#InvestmentRoles").is(':checked'));
+            $('#InvestmentRoles').change(function () {
+                handleInvestmentRoles($(this).is(":checked"));
+            });
+
+            if ($("#IsOnline").val().toLowerCase() == "true") {
+                document.getElementById("onlineRadio").checked = true;
+                document.getElementById("offlineRadio").checked = false;
+                handlePaymentOnline(true);
+            }
+            else {
+                document.getElementById("offlineRadio").checked = true;
+                document.getElementById("onlineRadio").checked = false;
+                handlePaymentOffline(true);
+            }
+            $('#onlineRadio').change(function () {
+                handlePaymentOnline($(this).is(":checked"));
+            });
+            $('#offlineRadio').change(function () {
+                handlePaymentOffline($(this).is(":checked"));
+            });
+        });
+
+        function handleInvestmentRoles(checked) {
+
+            if (checked) {
+                $('#paymentType').show();
+                $('#btnSubmit').show();
+            }
+            else {
+                $('#paymentType').hide();
+                $('#btnSubmit').hide();
+            }
+        };
+        function handlePaymentOnline(isOnlineRadio) {
+            $("#IsOnline").val(true);
+
+            if (isOnlineRadio) {
+                $('#onlineView').show();
+                $('#offlineView').hide();
+            }
+            else {
+                $('#onlineView').hide();
+                $('#offlineView').show();
+            }
+        };
+        function handlePaymentOffline(isOnlineRadio) {
+            $("#IsOnline").val(false);
+            if (isOnlineRadio) {
+                $('#offlineView').show();
+                $('#onlineView').hide();
+            }
+            else {
+                $('#offlineView').hide();
+                $('#onlineView').show();
+            }
+        };
+
+
+        $('#OnlinePaymentPrice').keyup(function (event) {
+            var PaymentPriceSeprate = document.getElementById('OnlinePaymentPriceSeprate');
+            var Num = $("#OnlinePaymentPrice").val();
+            var seprateValue = Num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            PaymentPriceSeprate.innerHTML = seprateValue + " تومان";
+        });
+
+
+        $('#OfflinePaymentPrice').keyup(function (event) {
+            var PaymentPriceSeprate = document.getElementById('OfflinePaymentPriceSeprate');
+            var Num = $("#OfflinePaymentPrice").val();
+            var seprateValue = Num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            PaymentPriceSeprate.innerHTML = seprateValue + " تومان";
+
+        });
+
+        function inputPriceHandeler(id) {
+            let inputVal = $(id).val();
+            let inputLength = inputVal.length;
+            if (inputLength == 0)
+                return false;
+            var x = inputVal.charAt(inputLength - 1);
+            if (x != '۰' && x != '۱' && x != '۲' && x != '۳' && x != '۴' && x != '۵' && x != '۶' && x != '۷' && x != '۸' && x != '۹') {
+
+                $(id).val(inputVal.replace(/[^0-9]/g, ''));
+            }
+        }
+
+        // بستن مودال با دکمه بک در گوشی
+        if (window.history && window.history.pushState) {
+            $('#privacyModal').on('show.bs.modal', function (e) {
+                window.history.pushState('forward', null, './#modal');
+            });
+
+            $(window).on('popstate', function () {
+                $('#privacyModal').modal('hide');
+            });
+        }
+
+    </script>
+}

@@ -1,0 +1,128 @@
+﻿@model DataLayer.Tbl_ShareHoldersCompany
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "ویرایش " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Edit", "Tbl_ShareHoldersCompany", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ShareHolderID)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.ImageName)
+        @Html.HiddenFor(model => model.LogoIcon)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ShareHolderTitle, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ShareHolderTitle)
+                @Html.ValidationMessageFor(model => model.ShareHolderTitle)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FullText, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FullText)
+                @Html.ValidationMessageFor(model => model.FullText)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LogoIcon, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().Upload().Name("imgLogoIcon")
+                @Html.ValidationMessageFor(model => model.LogoIcon)
+                @if (Model.LogoIcon != null)
+                {
+                    <div id="Logo_@(Model.ShareHolderID)" class="thumbnail col-md-3">
+                        <img src="~/Images/ShareHolders/Logo/@Model.LogoIcon" style="max-width: 150px" class="thumbnail" />
+                        <a onclick="DeleteLogoIntroductionCompany(@Model.ShareHolderID)" class="btn btn-danger btn-block">حذف</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Kendo().Upload().Name("imgImageName")
+                @Html.ValidationMessageFor(model => model.ImageName)
+                @if (Model.ImageName != null)
+                {
+                    <div id="Image_@(Model.ShareHolderID)" class="thumbnail col-md-3">
+                        <img src="~/Images/ShareHolders/Image/@Model.ImageName" style="max-width: 150px" class="thumbnail" />
+                        <a onclick="DeleteImageIntroductionCompany(@Model.ShareHolderID)" class="btn btn-danger btn-block">حذف</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsActive)
+                @Html.ValidationMessageFor(model => model.IsActive)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsDelete, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsDelete)
+                @Html.ValidationMessageFor(model => model.IsDelete)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+                @Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    </div>
+}
+
+
+
+@section Scripts
+{
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#FullText').ckeditor();
+        });
+
+        function DeleteLogoIntroductionCompany(id) {
+            if (confirm("آیا از حذف مطمين هستید؟"))
+                $.get("/Admin/Tbl_ShareHoldersCompany/DeleteLogoIntroductionCompany/" + id, function () {
+                    $("#Logo_" + id).slideUp(3000);
+                });
+        }
+
+        function DeleteImageIntroductionCompany(id) {
+            if (confirm("آیا از حذف مطمين هستید؟"))
+                $.get("/Admin/Tbl_ShareHoldersCompany/DeleteImageIntroductionCompany/" + id, function () {
+                    $("#Image_" + id).slideUp(3000);
+                });
+        }
+    </script>
+
+}

@@ -1,0 +1,217 @@
+﻿@model DataLayer.Tbl_Settings
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>تنظیمات</h2>
+
+<div>
+    <hr />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.SiteTItle)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.SiteTItle)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.SiteDescription)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.SiteDescription)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.AboutUs)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.AboutUs)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Slogen)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Slogen)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.SiteLogo)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @{ if (Model.SiteLogo != null && Model.SiteLogo != "")
+                    {
+                                <img src="~/Images/SettingImages/Thumb/@Model.SiteLogo" class="thumbnail" style="max-width:200px" />
+                    }
+                }
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.SiteRules)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.SiteRules)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.PartnershipAgreements)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.PartnershipAgreements)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.RiskWarningStatement)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.RiskWarningStatement)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.InstagramUrl)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.InstagramUrl)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.LinkedinUrl)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.LinkedinUrl)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.WhatsappUrl)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.WhatsappUrl)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.AparatUrl)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.AparatUrl)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Location)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Location)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.InvestmentRole)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.InvestmentRole)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.RiskAlertStatement)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.RiskAlertStatement)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IntroductionCompanyTitle)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IntroductionCompanyTitle)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IntroductionCompanyDescription)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IntroductionCompanyDescription)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IntroductionCompanyFullText)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.IntroductionCompanyFullText)
+            </p>
+        </div>
+    </div>
+    <br />
+    <dl class="dl-horizontal">
+    </dl>
+</div>
+@Html.ActionLink("ویرایش", "Edit", new { id = Model.SettingID }, new { @class = "btn btn-info" })

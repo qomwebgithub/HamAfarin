@@ -1,0 +1,47 @@
+﻿@model IEnumerable<DataLayer.Tbl_Blog>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "اخبار";
+}
+
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<br />
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+                  columns.Bound(item => @item.BlogID).Title("تصویر").Filterable(false).Groupable(false)
+                            .Template(@<text>
+                    <img src="~/Images/BlogImages/Thumb/@item.ImageName" class="thumbnail" style="max-width:200px" />
+                            </text>);
+columns.Bound(model => model.Title);
+columns.Bound(model => model.IsActive);
+columns.Bound(model => model.CreateDate);
+columns.Bound(model => model.ShowMainPage);
+columns.Bound(model => model.CountVisit);
+columns.Bound(model => model.Tbl_Users.UserName);
+columns.Bound(item => @item.BlogID).Title("دستورات").Filterable(false).Groupable(false)
+.Template(@<text>
+            @Html.ActionLink("جزئیات", "Details", new { id = @item.BlogID }, new { @class = "btn btn-info" })
+            @Html.ActionLink("حذف", "Delete", new { id = @item.BlogID }, new { @class = "btn btn-danger" })
+</text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_Blog").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.BlogID))
+)
+)

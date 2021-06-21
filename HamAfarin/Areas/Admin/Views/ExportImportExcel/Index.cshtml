@@ -1,0 +1,88 @@
+﻿
+@model IEnumerable<DataLayer.Tbl_Users>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<fieldset>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+        <div class="modal-section-header">
+            <p>Insured Details - Insurance Certificate Issuance</p>
+        </div>
+    </div>
+
+    <div>
+        @using (Html.BeginForm("ExportToExcel", "ExportImportExcel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div>
+                <input type="submit" value="Export" class="btn-primary" />
+            </div>
+
+        }
+    </div>
+
+    <div>
+
+        @using (Html.BeginForm("ImportFromExcel", "ExportImportExcel", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.ValidationSummary();
+            <input type="file" name="postedFile" />
+            <div>
+                <input type="submit" button id="upload" value="Import" class="btn-success" />
+            </div>
+        }
+    </div>
+
+</fieldset>
+
+
+<h2>InsuredDetails</h2>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 form-group">
+    <div class="modal-section-header">
+        <p>Insurance Certificate Issuance</p>
+    </div>
+
+</div>
+@section scripts{
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script>
+
+        $("#upload").click(function () {
+            debugger;
+            if (window.FormData == undefined)
+                alert("Error: FormData is undefined");
+
+            else {
+                var fileUpload = $("#postedFile").get(0);
+                var files = fileUpload.files;
+
+                var fileData = new FormData();
+
+                fileData.append(files[0].name, files[0]);
+
+                $.ajax({
+                    url: '/InsuranceCertificate/ImportFromExcel',
+                    type: 'post',
+                    datatype: 'json',
+                    contentType: false,
+                    processData: false,
+                    async: false,
+                    data: fileData,
+                    success: function (response) {
+                        alert(response);
+                    }
+                });
+            }
+
+        });
+    </script>
+
+}
+

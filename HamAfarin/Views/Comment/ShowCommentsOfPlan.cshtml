@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ViewModels.PlanCommentItemViewModel>
+
+
+<div class="col-12 colxl-12 divide-by-line">
+    <div class="float-right">
+        <h6>
+            شما هم می توانید در مورد این طرح نظر بدهید.
+        </h6>
+        @{ if (!User.Identity.IsAuthenticated)
+            {
+                <h6 class="text-muted">
+                    برای ثبت نظر, لازم است ابتدا وارد حساب کاربری خود شوید.
+                </h6>
+            }
+        }
+    </div>
+    @{ if (User.Identity.IsAuthenticated)
+        {
+
+            <div class="float-left">
+                <button type="button" onclick="CreateComment()" class="btn btn-orange my-2" data-toggle="modal" data-target="#myModal2">ثبت نظر من</button>
+            </div>
+        }
+        else
+        {
+            <div class="float-left">
+                <a href="/Account/Login" class="btn btn-orange my-2">ورود</a>
+            </div>
+        }
+    }
+</div>
+
+
+@foreach (var item in Model.Where(c => c.Parent_id == null))
+{
+    @Html.Partial("_BoxComment", item);
+}
+
+

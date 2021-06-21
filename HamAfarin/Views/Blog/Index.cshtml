@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ViewModels.BlogItemViewModel>
+
+
+    <section class="container mt-3">
+        <div class="section-header">
+            <h5 class="h6 py-1 px-2 d-inline-block m-0">اخبار</h5>
+        </div>
+        <div class="owl-carousel owl-theme" id="owl-news" style="padding-right: 11px;padding-left: 11px;"
+             @*data-aos="fade-left" data-aos-once="true"*@>
+
+            @foreach (var item in Model)
+            {
+                @Html.Partial("_BoxBlog", item)
+            }
+            @*for test*@
+            @*@foreach (var item in Model)
+            {
+                @Html.Partial("_BoxBlog", item)
+            }*@
+
+        </div>
+
+    </section>

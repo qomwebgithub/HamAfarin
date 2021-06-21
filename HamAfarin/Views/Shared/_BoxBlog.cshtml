@@ -1,0 +1,16 @@
+﻿@model ViewModels.BlogItemViewModel
+
+
+<div class="my-2">
+    <div class="card">
+        <a class="text-dark" href="/Blog/@Model.BlogID" style="text-decoration:none">
+            <img src="@Model.ImageUrl" class="card-img-top" alt="@Model.ImageAlt">
+            <div class="card-body" style="text-align: justify;">
+                <h2 class="card-title font-weight-bold">@Model.Title</h2>
+                <p class="card-text text-muted">
+                    @Model.Description
+                </p>
+            </div>
+        </a>
+    </div>
+</div>

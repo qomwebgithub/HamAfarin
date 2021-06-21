@@ -1,0 +1,30 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "بیانه هشدار ریسک";
+}
+
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.RISK_ALERT_STATEMENT })
+<!-- slider end -->
+
+<div class="container">
+    <center>
+        <!-- Title -->
+        <h2 class="m-4">بیانیه هشدار ریسک</h2>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <span class="text-center"> @Model.RiskAlertStatement</span>
+
+
+    </center>
+
+    <!-- Post Content -->
+    <p>@Html.Raw(Model.RiskAlertStatementFullText)</p>
+
+
+
+</div>

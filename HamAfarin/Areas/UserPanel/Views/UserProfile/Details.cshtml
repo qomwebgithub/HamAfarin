@@ -1,0 +1,228 @@
+﻿@model ViewModels.UserProfileViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Tbl_Profile</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.MobileNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.MobileNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.Bio)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.Bio)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.NationalCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.ProfileNationalCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.FatherName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.FatherName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.NationalId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.NationalId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.Profile.SejamCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.SejamCode)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.AccountNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.AccountNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.AccountSheba)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.AccountSheba)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Profile.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Profile.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.strBirthDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.strBirthDate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsLegal)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsLegal)
+            </dd>
+
+        </dl>
+    </div>
+
+    @{ if (Model.IsLegal)
+        {
+            <hr />
+            <div id="legal" class="hidden">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PersonLegal.CompanyName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PersonLegal.CompanyName)
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PersonLegal.EconomicCode)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PersonLegal.EconomicCode)
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PersonLegal.NationalId)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PersonLegal.NationalId)
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PersonLegal.RegistratioNumber)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PersonLegal.RegistratioNumber)
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PersonLegal.Address)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PersonLegal.Address)
+                    </dd>
+                </dl>
+            </div>
+        } }
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Profile_id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+            handleLegal($("#IsLegal").is(':checked'))
+            $('#IsLegal').change(function () {
+                handleLegal(this.checked)
+            });
+
+        });
+
+        function handleLegal(checked) {
+            if (checked) {
+                $('#legal').show();
+            }
+            else {
+                $('#legal').hide();
+            }
+        };
+
+        $("#BirthDateYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#strBirthDate",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+
+    </script>
+}

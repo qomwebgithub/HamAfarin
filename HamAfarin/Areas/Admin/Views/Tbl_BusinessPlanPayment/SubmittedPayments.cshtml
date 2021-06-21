@@ -1,0 +1,41 @@
+﻿@model IEnumerable<DataLayer.Tbl_BusinessPlanPayment>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "پرداخت های تایید شده";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+                        columns.Bound(model => model.IsPaid);
+columns.Bound(model => model.PaidDateTime);
+columns.Bound(model => model.TransactionPaymentCode);
+columns.Bound(model => model.PaymentPrice);
+columns.Bound(model => model.Tbl_Users.UserName);
+columns.Bound(model => model.Tbl_BussinessPlans.Title);
+            columns.Bound(item => @item.PaymentID).Title("دستورات").Filterable(false).Groupable(false)
+                    .Template(@<text>
+                @Html.ActionLink("ویرایش", "Edit", new { id = @item.PaymentID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                @Html.ActionLink("حذف", "Delete", new { id = @item.PaymentID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+                    </text>).Width(200);
+})
+.ToolBar(toolbar =>
+{
+toolbar.Custom().Action("Create", "Tbl_BusinessPlanPayment").Text("افزودن");
+}
+)
+.Groupable()
+.Pageable()
+.Sortable()
+.Scrollable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.PaymentID))
+)
+)

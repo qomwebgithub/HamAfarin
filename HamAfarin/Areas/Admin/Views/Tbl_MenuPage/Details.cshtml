@@ -1,0 +1,67 @@
+﻿@model DataLayer.Tbl_MenuPage
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/UserPanel/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_MenuPage</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Url)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Url)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Page_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Page_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_MenuType.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_MenuType.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Pages.ImageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Pages.ImageName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

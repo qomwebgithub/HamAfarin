@@ -1,0 +1,46 @@
+﻿@model ViewModels.IntroductionCompanyViewModel
+
+@{
+    ViewBag.Title = "IntroductionCompany";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>معرفی شرکت</h2>
+
+<div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IntroductionCompanyTitle)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IntroductionCompanyTitle)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IntroductionCompanyDescription)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IntroductionCompanyDescription)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IntroductionCompanyFullText)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(@Model.IntroductionCompanyFullText)
+            </p>
+        </div>
+    </div>
+</div>
+<br />
+@Html.ActionLink("ویرایش", "EditIntroductionCompany",null, new { @class = "btn btn-info" })

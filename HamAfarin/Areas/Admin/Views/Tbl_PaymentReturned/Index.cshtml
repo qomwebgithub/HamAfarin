@@ -1,0 +1,35 @@
+﻿@model IEnumerable<DataLayer.Tbl_PaymentReturned>
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "فهرست درخواست انصراف";
+}
+
+<h2>@ViewBag.Title</h2>
+
+        @(Html.Kendo().Grid(Model)
+              .Name("Grid")
+              .Columns(columns =>
+                  {
+        columns.Bound(model => model.CreateDate);
+        columns.Bound(model => model.IsConfirm);
+        columns.Bound(model => model.ConfirmDate);
+        columns.Bound(model => model.Tbl_BusinessPlanPayment.PaymentPrice);
+        columns.Bound(model => model.Tbl_BussinessPlans.Title);
+        columns.Bound(model => model.Tbl_Users.UserName);
+					columns.Bound(item => @item.ReturnedID).Title("دستورات").Filterable(false).Groupable(false)
+							.Template(@<text>
+									@Html.ActionLink("ویرایش", "Edit", new {id = @item.ReturnedID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
+									@Html.ActionLink("حذف", "Delete", new {id = @item.ReturnedID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
+									</text>).Width(200);  
+		})
+		
+		.Groupable()
+		.Pageable()
+		.Sortable()
+		.Filterable()              
+		.DataSource(dataSource => dataSource
+									.Server()
+							
+									.Model(model => model.Id(item => item.ReturnedID))
+					)              
+	)

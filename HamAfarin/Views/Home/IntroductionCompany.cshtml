@@ -1,0 +1,106 @@
+﻿@model ViewModels.IntroductionCompanyViewModel
+
+<section class=" mt-3">
+    <div class="container">
+        <div class="section-header">
+            <h5 class="h6 py-1 px-2 d-inline-block m-0">معرفی شرکت</h5>
+        </div>
+    </div>
+
+    <div class="container-fluid section">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4" data-aos="fade-left" data-aos-duration="2000" data-aos-once="true" >
+                    <img class="img-fluid" src="~/Content/img/IntroductionCompany.PNG">
+                </div>
+
+                <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 p-4" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
+                    <h1 class="font-weight-bold">
+                        @Model.IntroductionCompanyTitle
+                    </h1>
+                    <p class="text-muted">
+                        @Model.IntroductionCompanyDescription
+                    </p>
+                    <p class="text-left mb-0">
+                        <a class="btn btn-orange" href="/Home/SingleIntroductionCompany">
+                            <span>
+                                ادامه ...
+                            </span>
+                        </a>
+                    </p>
+
+                    <div class="col-12">
+                        <section class="">
+                            <div class="">
+                                <h4 class="h d-inline-block m-0 mb-2">سهامداران ما :</h4>
+                            </div>
+                            <div class="owl-carousel owl-theme" id="owl-logoCompany">
+                                @{
+                                    List<DataLayer.Tbl_ShareHoldersCompany> lstShareHolders = ViewBag.ShareHolders as List<DataLayer.Tbl_ShareHoldersCompany>;
+                                    foreach (var item in lstShareHolders)
+                                    {
+
+                                        <div class="my-2">
+                                            <div class="">
+                                                <a class="text-dark" href="/ShareHolder/@item.ShareHolderID" style="text-decoration:none;">
+                                                    <img src="https://hamafarin.ir/Images/ShareHolders/Logo/@item.ImageName" class="shadow-small-item "  id="comp" />
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                    }
+                                }
+                            </div>
+                        </section>
+
+                    </div>
+
+
+                    @*<section style="width:450px">
+                            <div class="owl-carousel owl-theme">
+                                @{
+                                    List<DataLayer.Tbl_ShareHoldersCompany> lstShareHolders = ViewBag.ShareHolders as List<DataLayer.Tbl_ShareHoldersCompany>;
+                                    foreach (var item in lstShareHolders)
+                                    {
+                                        <div class="item">
+                                            <a href="/ShareHolder/@item.ShareHolderID">
+                                                <img src="https://hamafarin.ir/Images/ShareHolders/Logo/@item.ImageName" class="shadow-small-item" style="width:100px; height:100px;" />
+                                            </a>
+                                        </div>
+                                    }
+                                }
+
+                            </div>
+                        </section>*@
+                    @*<div class="">
+                            @if (ViewBag.ShareHolders != null)
+                            {
+                                List<DataLayer.Tbl_ShareHoldersCompany> lstShareHolders = ViewBag.ShareHolders as List<DataLayer.Tbl_ShareHoldersCompany>;
+
+                                <div id="owl-demo" class="owl-carousel owl-theme">
+                                    @foreach (var item in lstShareHolders)
+                                    {
+                                        <div class="item">
+                                            <a href="/ShareHolder/@item.ShareHolderID">
+                                                <img src="~/Images/ShareHolders/Logo/@item.ImageName" class="shadow-small-item mr-2" style="height: 100px;width:100px;" />
+                                            </a>
+                                        </div>
+                                    }
+
+                                </div>
+
+                            }
+
+                        </div>*@
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+

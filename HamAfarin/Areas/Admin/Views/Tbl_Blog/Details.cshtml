@@ -1,0 +1,149 @@
+﻿@model DataLayer.Tbl_Blog
+
+@{
+    ViewBag.Title = "جزئیات خبر";
+}
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<br />
+<p>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.BlogID }, new { @class = "btn btn-info" }) |
+    @Html.ActionLink("برگشت به لیست", "Index")
+</p>
+<div>
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.IsActive)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Title)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Title)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.MetaTitle)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.MetaTitle)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Description)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Description)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.MetaDescription)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.MetaDescription)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.FullText)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.Raw(Model.FullText)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ImageName)
+        </div>
+        <div class="card-body">
+            <img src="~/Images/BlogImages/Thumb/@Model.ImageName" />
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ImageAlt)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.ImageAlt)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Canonical)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.Canonical)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.TitleUrl)
+        </div>
+        <div class="card-body">
+            <a href="@Model.TitleUrl">
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.TitleUrl)
+                </p>
+            </a>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ShowMainPage)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.ShowMainPage)
+            </p>
+        </div>
+    </div>
+    <br />
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.CountVisit)
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                @Html.DisplayFor(model => model.CountVisit)
+            </p>
+        </div>
+    </div>
+    <br />
+</div>

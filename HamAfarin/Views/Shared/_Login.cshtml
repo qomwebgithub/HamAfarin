@@ -1,0 +1,79 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="" style="position:relative">
+        <a class="btn shadow-none border-left" href="/InvestmentHelp/FinancingPage#faq">
+            <i class="bi bi-file-earmark-plus addicon"></i>
+        </a>
+        @*<button type="button" class="btn loginIcon shadow-none  ">
+            <i class="bi bi-person-circle"></i>
+
+            <div class="login" style=" display:none;">
+
+
+                @if (@UserSetAuthCookie.GetRoleID(User.Identity.Name) == 1)
+                {
+                    <a href="/Admin" class="btn btn-login-register  " style="color:#b52c26"><i class="bi bi-person-check-fill d-inline"></i> @UserSetAuthCookie.GetUserName(User.Identity.Name)</a>
+                }
+                else
+                {
+                    <a href="/UserPanel/UserProfile" class="btn btn-login-register  " style="color:#b52c26"><i class="bi bi-person-check-fill d-inline"></i> @UserSetAuthCookie.GetUserName(User.Identity.Name)</a>
+
+                }
+                <span class="text-danger space  "> </span>
+                <a href="/LogOut" class="btn btn-login-register  " style="color:#b52c26"><i class="bi bi-power d-inline"></i> خروج </a>
+            </div>
+
+        </button>*@
+        <button class="btn loginIcon dropdown shadow-none px-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-person-circle"></i>
+        </button>
+        <div class="dropdown-menu login px-4 py-3" aria-labelledby="dropdownMenuButton">
+            @if (@UserSetAuthCookie.GetRoleID(User.Identity.Name) == 1)
+            {
+                <a href="/Admin" class="btn btn-login-register  " style="color:#b52c26"><i class="bi bi-person-check-fill d-inline"></i> @UserSetAuthCookie.GetUserName(User.Identity.Name)</a>
+            }
+            else
+            {
+                <a href="/UserPanel/UserProfile" class="btn btn-login-register  " style="color:#b52c26"><i class="bi bi-person-check-fill d-inline"></i> @UserSetAuthCookie.GetUserName(User.Identity.Name)</a>
+
+            }
+            <span class="text-danger space  "> </span>
+            <a href="/LogOut" class="btn btn-login-register  " style="color:#b52c26"><i class="bi bi-power d-inline"></i> خروج </a>
+        </div>
+
+
+    </div>
+}
+else
+{
+    <div class="" style="position:relative">
+        <button type="button" class="btn shadow-none border-left">
+            <a class="btn shadow-none pl-0" href="/InvestmentHelp/FinancingPage#faq">
+
+                <i class="bi bi-file-earmark-plus addicon"></i>
+            </a>
+        </button>
+        @*<button type="button" class="btn loginIcon shadow-none">
+                <i class="bi bi-person-circle"></i>
+
+                <div class="login" style=" display:none;">
+                    <a href="/Account/Login" class="btn btn-login-register" style="color:#b52c26"><i class="bi bi-person d-inline"></i> ورود</a>
+                    <span class="text-danger space"> </span>
+                    <a href="/Account/Register" class="btn btn-login-register" style="color:#b52c26"><i class="bi bi-person-plus-fill d-inline"></i> ثبت نام </a>
+                </div>
+
+            </button>*@
+
+        <button class="btn loginIcon dropdown shadow-none" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="bi bi-person-circle"></i>
+        </button>
+        <div class="dropdown-menu login px-4 py-3" aria-labelledby="dropdownMenuButton">
+            <a href="/Account/Login" class="btn btn-login-register" style="color:#b52c26"><i class="bi bi-person d-inline"></i> ورود</a>
+            <span class="text-danger space"> </span>
+            <a href="/Account/Register" class="btn btn-login-register" style="color:#b52c26"><i class="bi bi-person-plus-fill d-inline"></i> ثبت نام </a>
+        </div>
+
+
+    </div>
+}
+

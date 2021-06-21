@@ -1,0 +1,922 @@
+﻿﻿@model ViewModels.BusinessPlanSingleViewModel
+
+<style>
+    #time-3-icon {
+        fill: orange;
+    }
+
+    .my-svg-alternate {
+        display: none;
+    }
+
+    .no-svg .my-svg-alternate {
+        display: block;
+        width: 100px;
+        height: 100px;
+        background-image: url(image.png);
+    }
+
+    .modalBackground {
+        background-color: Olive;
+        filter: alpha(opacity=70);
+        opacity: 0.7;
+    }
+
+    .modalPopup {
+        background-color: #ffffdd;
+        border-width: 3px;
+        border-style: solid;
+        border-color: Gray;
+        padding: 3px;
+        width: 250px;
+    }
+
+    .modal-dialog {
+        position: absolute;
+        top: 50% !important;
+        transform: translate(0, -50%) !important;
+        -ms-transform: translate(0, -50%) !important;
+        -webkit-transform: translate(0, -50%) !important;
+        margin: auto 30%;
+        width: 50%;
+        height: 50%;
+    }
+
+    .modal-content {
+        min-height: 50%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .modal-body {
+        position: absolute;
+        top: 45px; /** height of header **/
+        bottom: 45px; /** height of footer **/
+        left: 0;
+        right: 0;
+        overflow-y: auto;
+    }
+
+    .modal-footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
+
+
+<!-- banner start -->
+<section class="container-fluid mt-0 p-0">
+    <img src="~/Images/BusinessPlans/Image/@Model.ImageName" class="w-100" style="max-height:350px; min-height:150px" />
+    <div class="col-12 d-sm-none" style="height:70px"></div>
+</section>
+
+<!-- banner end -->
+<!-- Modal -->
+<div class="modal fade" id="WarranyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <img src="~/Resources/BusinessPlans/Warranty/@Model.ImageNameWarranty" />
+        </div>
+    </div>
+</div>
+
+<!-- after banner start -->
+<section class="container-fluid bg-light">
+    <div class="container-xl container-lg position-relative">
+        <div class="row d-flex justify-content-center">
+            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 center-panel" data-aos="fade-up" data-aos-once="true" style="margin-bottom: -50px;">
+
+                <div class="row text-align-center">
+                    <div class=" d-none d-md-flex align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3  justify-content-center">
+                        <div id="btnSarmayeGozari">
+                            @if (Model.RemainingTime < 0)
+                            {
+                                if (Model.PercentageComplate >= 100)
+                                {
+                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                        تکمیل شده <i class="bi bi-check2-circle"></i>
+                                    </a>
+                                }
+                                else
+                                //'فرصت سرمایه گذاری در این طرح به اتمام رسده است .<br/>می توانید در طرح های دیگر سرمایه گذاری کنید'
+                                {
+                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                        فرصت تمام شده<i class="bi bi-check2-circle"></i>
+                                    </a>
+                                }
+                            }
+                            else if (Model.IsSuccessBussinessPlan)
+                            {
+                                <a class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                    تکمیل شده <i class="bi bi-check2-circle"></i>
+                                </a>
+                            }
+                            else if (Model.IsAcceptInvestment || Model.IsOverflowInvestment)
+                            {
+                                <a href="/Payment/SelectPaymentType/@Model.BussinessPlanID" class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                    سرمایه گذاری میکنم <i class="bi bi-check2-circle"></i>
+                                </a>
+                            }
+
+                            else
+                            {
+                                <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                    تکمیل شده <i class="bi bi-check2-circle"></i>
+                                </a>
+                            }
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                        @*دونسخه موجود در مبایل و دکستاپ*@
+                        <div class=" d-none d-md-block col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                            <div class="mt-1 float-right text-right">
+                                <span class="d-block text-muted text-nowrap h6 small">
+                                    مبلغ هدف (تومان)
+                                </span>
+                                <strong>
+                                    @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
+                                </strong>
+                            </div>
+                            <div class="mt-1 float-left text-left">
+                                <span class="d-block text-muted text-nowrap h6 small">
+                                    سرمایه تامین شده (تومان)
+                                </span>
+                                <strong>
+                                    @Model.PriceComplated.ToString("#,##0")
+                                </strong>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="mb-3 mb-md-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-2">
+                            <div class="progress flex-row-reverse">
+                                @{ if (Model.PercentageComplate == 100)
+                                    {
+                                        <div class="progress-bar" role="progressbar" style="background-color:#62be7f ;width: @Model.WidthPercentage"
+                                             aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                    }
+                                    else if (Model.PercentageComplate > 100)
+                                    {
+
+                                        int up100 = @Model.PercentageComplate - 100;
+                                        string strUp100 = up100 + "%";
+                                        <div class="progress-bar outer" role="progressbar" style="background-color:#3b9c59 ;width: @Model.WidthPercentage"
+                                             aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100">
+
+                                            <div class="progress-bar inner" role="progressbar" style="background-color:#3b6659 ;width: @strUp100"
+                                                 aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: @Model.WidthPercentage"
+                                             aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                    }
+                                }
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="offset-xl-1 offset-lg-1"></div>
+                            @*دونسخه موجود در مبایل و دکستاپ*@
+
+                            <div class="mb-3 mb-md-0 d-block d-md-none col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center text-align-center">
+                                <span class="d-block text-muted text-nowrap h6 small">
+                                    مبلغ هدف (تومان)
+                                </span>
+                                <strong>
+                                    @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
+                                </strong>
+                            </div>
+
+                            <div class="mb-3 mb-md-0 d-block d-md-none d-sm-block col-xl-2 col-6 col-sm-6 col-lg-2 border-left text-align-center">
+                                <span class="d-block text-muted text-nowrap h6 small">
+                                    سرمایه تامین شده (تومان)
+                                </span>
+                                <strong>
+                                    @Model.PriceComplated.ToString("#,##0")
+                                </strong>
+                            </div>
+                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+                                <span class="text-muted text-nowrap h6 small">زمان باقی مانده</span>
+                                @{ if (Model.RemainingTime == 0)
+                                    {
+                                        <p class="mb-0 small text-danger font-weight-bold text-center">
+                                            روز پایانی - @Model.PercentageComplate%
+                                        </p>
+                                    }
+                                    else if (Model.RemainingTime < 0)
+                                    {
+                                        <p class="mb-0 small text-danger font-weight-bold text-center">
+                                            به اتمام رسید
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="mb-0 small font-weight-bold text-center">
+                                            @Model.RemainingTime روز
+                                        </p>
+                                    }
+                                }
+                            </div>
+
+
+
+                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+
+                                <span class="text-muted text-nowrap h6 small">سود طرح</span>
+                                <p class="mb-0 small font-weight-bold text-center">
+                                    @Model.PercentageReturnInvestment%
+                                </p>
+                            </div>
+
+                            <div class=" d-none d-sm-block col-xl-2 col-6 col-sm-6
+                                col-lg-2 border-left
+
+                                ">
+                                <span class="text-muted text-nowrap h6 small text-center">علاقه مندان طرح</span>
+                                <p class="small font-weight-bold text-center">
+                                    @Model.InvestorCount نفر
+                                </p>
+                            </div>
+
+
+                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left
+
+                                ">
+                                <span class=" text-muted text-nowrap h6 small text-center">سرمایه گذاران</span>
+                                <p class="mb-0 small font-weight-bold text-center">
+                                    @Model.InvestorCount نفر
+                                </p>
+                            </div>
+
+                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2
+
+                                ">
+                                <span class="text-muted text-nowrap h6 small text-center">درصد تامین شده</span>
+                                <p class="mb-0 small font-weight-bold text-center">
+                                    @Model.PercentageComplate%
+                                </p>
+                            </div>
+                            <div class="align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3 d-flex justify-content-center">
+                                <div class="d-block d-md-none" id="btnSarmayeGozari">
+                                    @if (Model.RemainingTime < 0)
+                                    {
+                                        if (Model.PercentageComplate >= 100)
+                                        {
+                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                تکمیل شده <i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        }
+                                        else
+                                        //'فرصت سرمایه گذاری در این طرح به اتمام رسده است .<br/>می توانید در طرح های دیگر سرمایه گذاری کنید'
+                                        {
+                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                فرصت تمام شده<i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        }
+                                    }
+                                    else if (Model.IsSuccessBussinessPlan)
+                                    {
+                                        <a class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                            تکمیل شده <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+                                    else if (Model.IsAcceptInvestment || Model.IsOverflowInvestment)
+                                    {
+                                        <a href="/Payment/SelectPaymentType/@Model.BussinessPlanID" class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                            سرمایه گذاری میکنم <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+
+                                    else
+                                    {
+                                        <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                            تکمیل شده <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="center-panel-container col-xl-10 col-12 col-sm-10 col-md-10 col-lg-10 mt-1 pr-5 mr-md-5" data-aos="zoom-in" data-aos-once="true">
+                @*<div class="d-block d-sm-none" style="height:120px">
+
+                </div>*@
+                <div class="row row-icons">
+
+                    <div class="col-4 " data-aos="fade-up" data-aos-once="true">
+                        <div class="row">
+                            <div class="col-xl-3 border-md-left d-flex infor">
+                                <img src="~/Content/img/file.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
+
+                            </div>
+
+                            <div class="col-xl-9  ">
+                                <span class="text-orange d-block">نام شرکت : </span>
+                                <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;"> @Model.CompanyName</strong>
+
+                                <div class="image-icon" style="margin-top:16px">
+                                    <div class="row" style="padding-right:15px;">
+                                        <a onclick="CopyToClipboard()" class="pl-2">
+                                            <img src="~/Content/img/shar.svg" style="width:20px" />
+                                        </a>
+                                        <a href="@Model.BussinessAparatAddress" class="pl-2 d-none d-sm-block" target="_blank">
+                                            <img src="~/Content/img/aparat.png" style="width:30px" />
+                                        </a>
+                                        <a href="@Model.BussinessInstagramAddress" class="pl-2" target="_blank">
+                                            <img src="~/Content/img/instagram.png" style="width:25px" />
+                                        </a>
+
+                                        <a href="@Model.BussinessWebSiteAddress" class="pl-2" target="_blank">
+                                            <img src="~/Content/img/world-wide-web.png" style="width:25px" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-4 " data-aos="flip-up" data-aos-once="true">
+                        <div class="row">
+                            <div class="col-xl-3 border-md-left d-flex infor">
+                                <img src="~/Content/img/zemanat.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
+                            </div>
+
+                            <div class="col-xl-9 ">
+                                <span class="text-orange d-block">ضمانت نامه :</span>
+                                <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
+                                    اصل و سود سرمایه
+                                </strong>
+                                <div style="margin-top:16px">
+
+                                    @{ if (Model.ImageNameWarranty != null && Model.ImageNameWarranty != "" && !Model.ImageNameWarranty.Contains("no-photo"))
+                                        {
+                                            <a class="d-none d-sm-block" onclick="ShowWarranty('@Model.ImageNameWarranty')" href="#">
+                                                <img class="" src="~/Content/img/zemanatname.svg" style="width:25px" />
+                                            </a>
+                                        }}
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-4 " data-aos="fade-up" data-aos-once="true">
+                        <div class="row">
+                            <div class="col-xl-3 border-md-left d-flex infor">
+                                <img src="~/Content/img/clock.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
+
+                            </div>
+
+                            <div class="col-xl-9 ">
+                                <span class="text-orange d-block">مدت طرح: </span>
+                                <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
+                                    @Model.FinancialDuration
+                                </strong>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="d-none d-sm-block" style="height:220px">
+
+                    </div>
+
+                    <div class="d-block d-sm-none" style="height:250px">
+
+                    </div>*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- after banner end -->
+<!-- center nav start -->
+
+
+
+
+
+
+<section class="w-100 font-weight-bold container-tab ">
+    <div class="w-100 stickyNav_container">
+
+
+
+        <ul class="nav nav-tabs d-flex justify-content-center shadow p-md-3 mb-md-2 bg-white rounded stickyNav" id="myTab" role="tablist" data-aos="fade-down">
+            <div id="btnSarmayeGozariInMenu">
+
+            </div>
+            <div class="col-12 d-sm-none" id="btnSarmayeGozariInMenu">
+
+            </div>
+            @*<li class="nav-item ml-4">
+
+                    <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home" aria-selected="true">معرفی طرح</a>
+                </li>*@
+
+            <li class="nav-item ml-md-4">
+
+                <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                   aria-controls="home" aria-selected="true">معرفی طرح</a>
+            </li>
+
+
+
+            <li class="nav-item ml-md-4">
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab"
+                   aria-controls="financial" aria-selected="false">اطلاعات مالی</a>
+            </li>
+            <li class="nav-item ml-md-4">
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                   aria-controls="contact" aria-selected="false">گزارش پیشرفت</a>
+            </li>
+
+            <li class="nav-item ml-md-4">
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="investment-tab" data-toggle="tab" href="#investment" role="tab"
+                   aria-controls="investment" aria-selected="false">سرمایه گذاران</a>
+            </li>
+
+            <li class="nav-item ml-md-4">
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
+                   aria-controls="comment" aria-selected="false">نظرات</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="faq-tab" data-toggle="tab" href="#faq" role="tab"
+                   aria-controls="faq" aria-selected="false">پرسش و پاسخ</a>
+            </li>
+        </ul>
+
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" role="tablist" data-aos="fade-down">
+
+
+        <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5">
+
+
+
+            <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
+                <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <br />
+                    <br />
+
+
+                    <div>
+                        @if (!String.IsNullOrEmpty(Model.VideoFileName))
+                        {
+                            <center>
+                                <video height="400">
+
+
+                                    <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
+
+
+                                    <source src="mov_bbb.ogg" type="video/ogg">
+                                    مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
+                                </video>
+                            </center>
+                        }
+
+                        <div class="" id="accordion">
+
+
+                            <div class="col-12 col-sm-10 offset-lg-1">
+                                <div id="headercollapse1" class="">
+                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse1">
+                                        <h5 class="font-weight-bold text-dark mt-5 font-size-normal">
+                                            <i class="bi bi-plus text-dark mx-2"></i>ویژگی های طرح
+                                        </h5>
+                                    </a>
+                                </div>
+                                <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
+                                    <div width="400" id="video">
+                                        <video width="100%" controls id="Tvideo">
+                                            <source src="~/Resources/BusinessPlans/Idea/demo.mp4" type="video/mp4">
+                                            Your browser does not support HTML video.
+                                        </video>
+                                        <div id="Vshadow">
+
+                                        </div>
+                                    </div>
+                                    <p class="figure-caption text-muted pt-1">
+
+                                        @Html.Raw(@Model.BusinessPlanFeatures)
+
+                                    </p>
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-12 offset-lg-1">
+                                <div id="headercollapse2" class="">
+                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse2">
+
+                                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> بازار هدف و مزیت های رقابتی</h5>
+                                    </a>
+
+                                </div>
+                                <div id="collapse2" class="collapse mr-md-5" data-parent="#accordion">
+
+                                    <p class="figure-caption text-muted pt-1">
+
+                                        @Html.Raw(@Model.MarketTarget)
+
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="col-10 offset-lg-1">
+                                <div id="headercollapse3" class="">
+                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse3">
+
+                                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
+                                    </a>
+
+                                </div>
+                                <div id="collapse3" class="collapse mr-md-5" data-parent="#accordion">
+
+                                    <p class="figure-caption text-muted pt-1">
+
+                                        @Html.Raw(@Model.BusinessPlanRisks)
+
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-10 offset-lg-1 mb-5">
+                                <div id="headercollapse4" class="">
+                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse4">
+
+                                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> گالری</h5>
+                                    </a>
+
+                                </div>
+                                <div id="collapse4" class="collapse mr-md-5" data-parent="#accordion">
+
+                                    <p class="figure-caption text-muted pt-1">
+
+                                        @Html.Action("GalleryPlan", Model.BussinessPlanID)
+
+                                    </p>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="tab-pane fade mr-md-5 p-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div class="col-12 d-sm-none" style="height:20px"></div>
+                    @Html.Raw(@Model.FinancialInformationText)
+
+                </div>
+
+
+                <div class="tab-pane fade p-md-5 mr-md-5 p-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div class="col-12 d-sm-none" style="height:30px"></div>
+                    @Html.Raw(@Model.ProgressReportText)
+
+                </div>
+
+                <div class="tab-pane fade mr-md-5 p-md-5" id="investment" role="tabpanel" aria-labelledby="investment-tab">
+
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div class="col-12 d-sm-none" style="height:30px"></div>
+                    @Html.Raw(@Model.InvestorsText)
+                </div>
+
+
+
+                <div class="tab-pane fade mr-md-5 p-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="container">
+                        <div class="row" id="showCommentList">
+                            <div class="col-12 d-sm-none" style="height:30px"></div>
+                            @Html.Action("ShowCommentsOfPlan", "Comment", Model.BussinessPlanID)
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog col-4">
+                        <div class="modal-content">
+                            <div class="col-12 pt-4">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <span class="col-10" style="font-size:16px">
+                                            نظر خود را در مورد طرح مطرح کنید
+                                        </span>
+                                        <div class="col-2">
+                                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0" id="myModalBody">
+                                ...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="tab-pane fade mr-md-5 p-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                    <br />
+                    <br />
+                    <br />
+
+                    <div class="container">
+                        <div class="row" id="showQuestionList">
+
+                            <div class="col-12 d-sm-none" style="height:30px"></div>
+                            @Html.Action("ShowQuestionsOfPlan", "Question", Model.BussinessPlanID)
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog col-4">
+                        <div class="modal-content">
+                            <div class="col-12 pt-4">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <span class="col-10" style="font-size:16px">
+                                            پرسش خود را در مورد طرح مطرح کنید
+                                        </span>
+                                        <div class="col-2">
+                                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0" id="addQuestionBody">
+                                ...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-offset-2">
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="col-md-2">
+
+        </div>
+
+    </div>
+
+
+</section>
+<!-- center nav end -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="w-100" style="background-color:#f5f6f8">
+    <div class="col-12">
+        <div class="col-12 col-sm-8 col-lg-offset-2 pt-2 pb-5 container">
+            <h4 class="">
+                <img src="~/Content/img/risk.png" style="width:70px" />
+
+                بیانیه ریسک
+
+            </h4>
+
+            <div class="col-12">
+                <p>
+                    @ViewBag.RiskAlertStatement
+                </p>
+            </div>
+
+            <div class="row float-left text-left ml-5">
+                <a href="/RiskAlertStatement" class="btn btn-orange btn-lg " style="font-size: 15px;">
+                    ادامه
+                </a>
+            </div>
+            <br />
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- attention banner end -->
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+
+
+
+
+<script src="~/Scripts/modal.js"></script>
+@section Scripts{
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(window).bind('scroll', function () {
+                var vPos = $(window).scrollTop();
+                var totalH = $('.stickyNav_container').offset().top;
+                var finalSize = totalH - vPos;
+
+                var btnSarmayeGozari = $("#btnSarmayeGozari").html();
+
+
+
+                if (finalSize <= 0) {
+                    $('.stickyNav').css({
+                        'position': 'fixed',
+                        'top': 0
+                    });
+                    $('.stickyNav').addClass('w-100');
+                    $("#btnSarmayeGozariInMenu").html(btnSarmayeGozari);
+                } else {
+                    $('.stickyNav').css({
+                        'position': 'static'
+                    })
+                    $('.stickyNav').removeClass('w-100');
+
+                    $("#btnSarmayeGozariInMenu").html("");
+                }
+            });
+        });
+    </script>
+
+
+    <script>
+
+        function CopyToClipboard() {
+            var textToCopy = window.location.href;
+            // navigator clipboard api needs a secure context (https)
+            if (navigator.clipboard && window.isSecureContext) {
+                // navigator clipboard api method'
+               alert("آدرس صفحه در کلیپ بورد شما کپی شد: "+textToCopy);
+                return navigator.clipboard.writeText(textToCopy);
+            } else {
+                // text area method
+                let textArea = document.createElement("textarea");
+                textArea.value = textToCopy;
+                // make the textarea out of viewport
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                textArea.style.top = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                alert("آدرس صفحه در کلیپ بورد شما کپی شد: "+textToCopy);
+                return new Promise((res, rej) => {
+                    // here the magic happens
+                    document.execCommand('copy') ? res() : rej();
+                    textArea.remove();
+                });
+            }
+        }
+
+        function AlertInvestment(message) {
+            
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: message,
+                confirmButtonText: `باشه`,
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/BusinessPlans";
+                }
+            });
+            //if (confirm(message))
+            //        window.location.href = "/BusinessPlans";
+        }
+
+        function ShowWarranty() {
+            $("#WarranyModal").modal();
+        }
+
+        function CreateComment(id) {
+            $.ajax({
+                url: "/Comment/AddComment/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
+                type: "Get"
+            }).done(function (result) {
+                 $("#myModalLabel").html("نظر خود را ثبت کنید");
+                $("#myModalBody").html(result);
+                $("#addCommentModal").modal();
+
+       $(".modal-backdrop").each(function(){
+    $(this).removeClass("modal-backdrop");
+       });
+            });
+        }
+
+        function CreateQuestion(id) {
+            $.ajax({
+                url: "/Question/AddQuestion/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
+                type: "Get"
+            }).done(function (result) {
+                                $("#addQuestionLabel").html("پرسش خود را مطرح کنید");
+                $("#addQuestionBody").html(result);
+                $("#addQuestionModal").modal();
+
+                $(".modal-backdrop").each(function () {
+
+
+    $(this).removeClass("modal-backdrop");
+  });
+
+            });
+        }
+
+        function Success() {
+
+            $("#addCommentModal").modal('hide');
+            $("#addQuestionModal").modal('hide');
+
+        }
+
+        function showAlert(message) {
+            alert(message);
+           
+        }
+    </script>
+    <script>
+        function GoToElement(elementId) {
+            $("#" + elementId).addClass("show mt-5");
+
+            document.getElementById("header" + elementId).scrollIntoView();
+
+            //location.href("#"+elementId);
+        }
+    </script>
+
+}
+

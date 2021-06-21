@@ -1,0 +1,103 @@
+﻿@model ViewModels.BusinessPlansItemViewModel
+
+
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 my-2" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true" >
+    <div class="card">
+        <a class="text-dark" href="/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID" style="text-decoration:none">
+            <div class="">
+                <img src="~/Images/BusinessPlans/Thumb/@Model.ImageName" style="height:200px; width:100%" class="card-img-top" alt="@Model.Title">
+                <div style="position: absolute;top: 2px;left: 2px;background-color:white; padding:2px; color:grey" class="small rounded" data-toggle="tooltip" data-placement="right" title="@Model.CodeOTC">
+                    <i class="bi bi-plus-circle"></i>
+                    کد فرابورس طرح
+                </div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title font-weight-bold FontLarger">@Model.Title</h2>
+                <p class="card-text text-muted">
+                    @Model.ShortDescription
+                </p>
+                <div class="text-dark small">
+                    <i class="bi-file-earmark-check text-success font-weight-bold" style="font-size:17px;"></i>
+                    <span>
+                        تضمین شده
+                    </span>
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="">
+                    <div class="col-12 text-left mt-4">
+                        @{ if (Model.RemainingTime == 0)
+                            {
+                                <strong class="small font-weight-bold text-danger">
+                                    روز پایانی - @Model.PercentageComplate%
+                                </strong> }
+                            else if (Model.RemainingTime < 0)
+                            {
+                                <strong class="small font-weight-bold text-danger">
+                                    زمان سرمایه گذاری به اتمام رسید  - @Model.PercentageComplate%
+                                </strong>
+                            }
+                            else
+                            {
+                                <strong class="small font-weight-bold">
+                                    @Model.RemainingTime روز - @Model.PercentageComplate%
+
+                                </strong>
+                            }
+                        }
+                    </div>
+                    <div class="progress flex-row-reverse">
+                        @{ if (Model.PercentageComplate == 100)
+                            {
+                                <div class="progress-bar" role="progressbar" style="background-color:#62be7f ;width: @Model.widthPercentage"
+                                     aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                            }
+                            else if (Model.PercentageComplate > 100)
+                            {
+                                int up100 = @Model.PercentageComplate - 100;
+                                string strUp100 = up100 + "%";
+                                <div class="progress-bar outer" role="progressbar" style="background-color:#3b9c59 ;width: @Model.widthPercentage"
+                                     aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100">
+
+                                    <div class="progress-bar inner" role="progressbar" style="background-color:#3b6659 ;width: @strUp100"
+                                         aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: @Model.widthPercentage"
+                                     aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                            }
+                        }
+                    </div>
+
+
+                    <div class="row mt-2 text-center">
+                        <div class="col-5 col-sm-5 col-md-5 col-lg-5 col-xl-5 border-left border-gray">
+                            <span class="text-muted text-nowrap h6 small">مبلغ هدف (تومان)</span>
+
+                            <p class="small font-weight-bold text-center">
+                                @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
+                            </p>
+                        </div>
+
+                        <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 border-left border-gray">
+                            <span class="text-muted text-nowrap h6 small">سرمایه گذاران</span>
+                            <p class="small font-weight-bold text-center">
+                                @Model.InvestorCount نفر
+                            </p>
+                        </div>
+
+                        <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                            <span class="text-muted text-nowrap h6 small">سود طرح</span>
+                            <p class="small font-weight-bold text-center">
+                                @Model.PercentageReturnInvestment%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+    </div>
+</div>
+

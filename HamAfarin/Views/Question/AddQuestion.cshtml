@@ -1,0 +1,47 @@
+﻿@model ViewModels.PlanQuestionItemViewModel
+
+
+@using (Ajax.BeginForm("AddQuestion", "Question", FormMethod.Post, new AjaxOptions()
+{
+    UpdateTargetId = "showQuestionList",
+    OnSuccess = "Success"
+
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.Parent_id)
+        @Html.HiddenFor(model => model.User_id)
+        @Html.HiddenFor(model => model.UserName)
+        @Html.HiddenFor(model => model.QuestionID)
+        @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.BusinessPlan_id)
+
+
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.QuestionText, new { @class = "control-label col-md-12 p-2 form-control", @style = "height:120px" })
+                @Html.ValidationMessageFor(model => model.QuestionText)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-12">
+                <div class="row">
+                    <span class="col-6" style="font-size:12px">
+                        ثبت پرسش به معنی موافقت با
+                        <a href="/SiteTermsConditions" target="_blank" style="text-decoration:none">قوانین هم آفرین</a>
+                        است.
+                    </span>
+                    <div class="col-6">
+                        <input type="submit" value="ثبت پرسش" class="btn btn-danger col-8 float-left" style="background-color:#ff1654;border-radius:10px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

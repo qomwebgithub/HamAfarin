@@ -1,0 +1,225 @@
+﻿@model ViewModels.AdminCreateEditPaymentViewModel
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "ویرایش پرداخت";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.PaymentID)
+        @Html.HiddenFor(model => model.PaymentImageName)
+        @Html.HiddenFor(model => model.PaidDateTime)
+        @Html.HiddenFor(model => model.CreateDate)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BusinessPlan_id, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("BusinessPlan_id", String.Empty)
+                @Html.ValidationMessageFor(model => model.BusinessPlan_id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsPaid, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsPaid)
+                @Html.ValidationMessageFor(model => model.IsPaid)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsConfirmedFromAdmin, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsConfirmedFromAdmin)
+                @Html.ValidationMessageFor(model => model.IsConfirmedFromAdmin)
+            </div>
+        </div>
+
+        <div class="container">
+            @Html.LabelFor(model => model.PaidDateTime, new { @class = "control-label col-md-4" })
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text cursor-pointer btn btn-success" id="PaidDateTimeYMD">تاریخ پرداخت</span>
+                            <label id="showDate_class" class="m-3">
+                                @Html.DisplayFor(model => model.PaidDateTime)
+                            </label>
+                        </div>
+                    </div>
+
+                    <input type="text" id="strPaidDateTime" name="strPaidDateTime">
+
+                    @Html.ValidationMessageFor(model => model.PaidDateTime, null, new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreateUser_id, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CreateUser_id", String.Empty)
+                @Html.ValidationMessageFor(model => model.CreateUser_id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentUser_id, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PaymentUser_id", String.Empty)
+                @Html.ValidationMessageFor(model => model.PaymentUser_id)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransactionPaymentCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TransactionPaymentCode)
+                @Html.ValidationMessageFor(model => model.TransactionPaymentCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentPrice, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PaymentPrice)
+                @Html.ValidationMessageFor(model => model.PaymentPrice)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PaymentType_id, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PaymentType_id", String.Empty)
+                @Html.ValidationMessageFor(model => model.PaymentType_id)
+            </div>
+        </div>
+        @{ if (Model.PaymentType_id == 2)
+            {
+                <div class="container">
+                    <br />
+                    <br />
+                    <h4>مشخصات درگاه</h4>
+
+                    <div class="col-12">
+                        <div class="border p-2">
+                            <div class="row m-2">
+                                <div class="col-2 pl-0">
+                                    <span class="font-weight-normal">وضعیت پرداخت :</span>
+                                </div>
+                                @if (Model.OnlineDetails.IsFinally)
+                                {
+                                    <span class="text-success">
+                                        نهایی شده
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-danger">
+                                        نهایی نشده
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 m-2">
+                        <div class="row">
+                            <div class="col-6 p-0">
+                                <div class="col-12 border-left border-bottom p-3">
+                                    <p class=" mb-0" style="color: #81858b;">شناسه شاپرک</p>
+                                    <span class="font-weight-normal">@Model.OnlineDetails.ShaparakToken</span>
+                                </div>
+                                <div class="col-12 border-bottom border-left p-3">
+                                    <p class="mb-0" style="color: #81858b;">شناسه ارجاع</p>
+                                    <span class="font-weight-normal">@Model.OnlineDetails.TransactionReferenceID</span>
+                                </div>
+                                <div class="col-12 border-left border-bottom p-3">
+                                    <p class="mb-0" style="color: #81858b;">شناسه ارجاع شاپرک</p>
+                                    <span class="font-weight-normal"> @Model.OnlineDetails.ShaparakCheckTransactionResult</span>
+                                </div>
+                            </div>
+
+                            <div class="col-6 p-0">
+                                <div class="col-12 border-bottom p-3">
+                                    <p class="mb-0" style="color: #81858b;">پرداخت نهایی شاپرک</p>
+                                    @if (Model.OnlineDetails.IsFinally == false)
+                                    {
+                                        <span class="font-weight-normal">پرداخت نهایی شاپرک ندارد</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="font-weight-normal">@Model.OnlineDetails.ShaparakVerifyPayment</span>
+                                    }
+
+                                </div>
+                                <div class="col-12 border-bottom p-3">
+                                    <p class="mb-0" style="color: #81858b;">تاریخ ایجاد</p>
+                                    <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.OnlineDetails.CreateDate)</span>
+                                </div>
+                                <div class="col-12 border-bottom p-3">
+                                    <p class="mb-0" style="color: #81858b;">تاریخ نهایی</p>
+                                    @if (Model.OnlineDetails.IsFinally == false)
+                                    {
+                                        <span class="font-weight-normal">تاریخ نهایی ندارد</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.OnlineDetails.FinallyDate)</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PaymentImageName, new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <br />
+                        <img src="~/Images/PaymentImages/@Model.PaymentImageName" class="thumbnail" />
+                    </div>
+                </div>
+            }
+        }
+
+
+
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-primary" />
+                @Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts{
+
+
+    <script>
+
+        $("#PaidDateTimeYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#strPaidDateTime",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+
+    </script>
+}
+

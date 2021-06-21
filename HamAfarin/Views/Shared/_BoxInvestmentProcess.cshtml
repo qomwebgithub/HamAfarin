@@ -1,0 +1,27 @@
+﻿@model DataLayer.Tbl_InvestmentProcess
+
+
+@if (Model.InvestmentProcessID == 5 || Model.InvestmentProcessID == 6)
+{
+    <div class="col-4 text-center col-md-2 col-sm-3 d-none d-md-block" data-aos="fade-up" data-aos-duration="2000" data-aos-once="true" data-wow-duration="2s" data-wow-delay="1s">
+        <a class="text-dark" href="@Model.Url" style="text-decoration:none">
+            <img src="https://hamafarin.ir/Images/InvestmentProcess/Image/@Model.ImageName" class="mw-100" style="max-width:200px;max-height:200px" />
+            <p class="text-center font-weight-bold">
+                @Model.Title
+            </p>
+        </a>
+    </div>
+
+}
+else
+{
+    <div class="col-4 text-center col-md-2 col-sm-3" data-aos="fade-up" data-aos-duration="2000" data-aos-once="true" data-wow-duration="2s" data-wow-delay="1s">
+        <a class="text-dark" href="@Model.Url" style="text-decoration:none">
+            <img src="https://hamafarin.ir/Images/InvestmentProcess/Image/@Model.ImageName" class="mw-100" style="max-width:200px;max-height:200px" />
+            <p class="text-center font-weight-bold">
+                @Model.Title
+            </p>
+        </a>
+    </div>
+
+}

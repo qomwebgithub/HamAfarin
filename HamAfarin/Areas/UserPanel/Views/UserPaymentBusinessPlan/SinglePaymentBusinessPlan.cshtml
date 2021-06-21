@@ -1,0 +1,760 @@
+﻿@model ViewModels.UserPaymentBusinessPlanSingleViewModel
+<br />
+
+
+<!-- Modal -->
+
+<div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog col-12 col-md-4">
+        <div class="modal-content">
+            <div class="col-12 pt-4">
+                <div class="col-12">
+                    <div class="row mb-2">
+                        <span class="col-10" style="font-size:16px">
+                            دلیل انصراف خود را وارد کنید.
+                        </span>
+                        <div class="col-2">
+                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body pt-0" id="myModalBody">
+                ...
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<body>
+    <div class="container p-0">
+        <!-- Start of New -->
+
+        <div class="row pb-2">
+            <div class="col-6">
+                <h4>سرمایه گذاری من</h4>
+            </div>
+            <div class="col-6">
+                <a href="/UserPanel/UserPaymentBusinessPlan" style="font-size: 12px;" class="btn btn-danger float-left">بازگشت</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <p class="small">سرمایه شما <span class="text-success pr-1">150000000</span> تومان</p>
+            </div>
+            <div class="col-12 col-md-4">
+                <p class="small">سود شما <span class="text-success pr-1">3265000</span> تومان</p>
+            </div>
+            <div class="col-12 col-md-4">
+                <p class="small">جمع کل سرمایه <span class="text-success pr-1">150000000</span> تومان</p>
+            </div>
+        </div>
+        <hr />
+        <!-- banner start -->
+        <section class="container-fluid mt-0 p-0">
+            <img src="~/Images/BusinessPlans/Image/@Model.ImageName" class="w-100" style="max-height:350px" />
+            <div class="col-12 d-sm-none" style="height:70px"></div>
+        </section>
+        <!-- banner end -->
+        <!-- after banner start -->
+        <section class="container-fluid bg-light">
+            <div class="container-xl container-lg position-relative">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 center-panel" style="top:-70px" data-aos="fade-uo" data-aos-once="true">
+
+                        <div class="row text-align-center">
+                            <div class=" d-none d-md-flex align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3  justify-content-center">
+                                <div id="btnSarmayeGozari">
+                                    @if (Model.RemainingTime < 0)
+                                    {
+                                        if (Model.PercentageComplate >= 100)
+                                        {
+                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                تکمیل شده <i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        }
+                                        else
+                                        //'فرصت سرمایه گذاری در این طرح به اتمام رسده است .<br/>می توانید در طرح های دیگر سرمایه گذاری کنید'
+                                        {
+                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                فرصت تمام شده<i class="bi bi-check2-circle"></i>
+                                            </a>
+                                        }
+                                    }
+                                    else if (Model.IsSuccessBussinessPlan)
+                                    {
+                                        <a class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                            تکمیل شده <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+                                    else if (Model.IsAcceptInvestment || Model.IsOverflowInvestment)
+                                    {
+                                        <a href="/Payment/SelectPaymentType/@Model.BusinessPlanID" class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                            سرمایه گذاری میکنم <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+
+                                    else
+                                    {
+                                        <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                            تکمیل شده <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                                @*دونسخه موجود در مبایل و دکستاپ*@
+                                <div class=" d-none d-md-block col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <div class="mt-1 float-right text-right">
+                                        <span class="d-block text-muted text-nowrap h6 small">
+                                            مبلغ هدف (تومان)
+                                        </span>
+                                        <strong>
+                                            @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
+                                        </strong>
+                                    </div>
+                                    <div class="mt-1 float-left text-left">
+                                        <span class="d-block text-muted text-nowrap h6 small">
+                                            سرمایه تامین شده (تومان)
+                                        </span>
+                                        <strong>
+                                            @Model.PriceComplated.ToString("#,##0")
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="mb-3 mb-md-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-2">
+                                    <div class="progress flex-row-reverse">
+                                        @{ if (Model.PercentageComplate == 100)
+                                            {
+                                                <div class="progress-bar" role="progressbar" style="background-color:#62be7f ;width: @Model.WidthPercentage"
+                                                     aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                            else if (Model.PercentageComplate > 100)
+                                            {
+
+                                                int up100 = @Model.PercentageComplate - 100;
+                                                string strUp100 = up100 + "%";
+                                                <div class="progress-bar outer" role="progressbar" style="background-color:#3b9c59 ;width: @Model.WidthPercentage"
+                                                     aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100">
+
+                                                    <div class="progress-bar inner" role="progressbar" style="background-color:#3b6659 ;width: @strUp100"
+                                                         aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="progress-bar bg-warning" role="progressbar" style="width: @Model.WidthPercentage"
+                                                     aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="offset-xl-1 offset-lg-1"></div>
+                                    @*دونسخه موجود در مبایل و دکستاپ*@
+
+                                    <div class="mb-3 mb-md-0 px-0 d-block d-md-none col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center text-align-center">
+                                        <span class="d-block text-muted h6 small">
+                                            مبلغ هدف (تومان)
+                                        </span>
+                                        <strong>
+                                            @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
+                                        </strong>
+                                    </div>
+
+                                    <div class="mb-3 mb-md-0 px-0 d-block d-md-none d-sm-block col-xl-2 col-6 col-sm-6 col-lg-2 border-left text-align-center">
+                                        <span class="d-block text-muted h6 small">
+                                            سرمایه تامین شده (تومان)
+                                        </span>
+                                        <strong>
+                                            @Model.PriceComplated.ToString("#,##0")
+                                        </strong>
+                                    </div>
+                                    <div class="mb-3 mb-md-0 px-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+                                        <span class="text-muted h6 small">زمان باقی مانده</span>
+                                        @{ if (Model.RemainingTime == 0)
+                                            {
+                                                <p class="mb-0 small text-danger font-weight-bold text-center">
+                                                    روز پایانی - @Model.PercentageComplate%
+                                                </p>
+                                            }
+                                            else if (Model.RemainingTime < 0)
+                                            {
+                                                <p class="mb-0 small text-danger font-weight-bold text-center">
+                                                    به اتمام رسید
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="mb-0 small font-weight-bold text-center">
+                                                    @Model.RemainingTime روز
+                                                </p>
+                                            }
+                                        }
+                                    </div>
+
+
+
+                                    <div class="mb-3 mb-md-0 px-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+
+                                        <span class="text-muted h6 small">سود طرح</span>
+                                        <p class="mb-0 small font-weight-bold text-center">
+                                            @Model.PercentageReturnInvestment%
+                                        </p>
+                                    </div>
+
+                                    <div class=" d-none d-sm-block px-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+                                        <span class="text-muted h6 small text-center">علاقه مندان طرح</span>
+                                        <p class="small font-weight-bold text-center">
+                                            @Model.InvestorCount نفر
+                                        </p>
+                                    </div>
+
+
+                                    <div class="mb-3 mb-md-0 px-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left">
+                                        <span class=" text-muted h6 small text-center">سرمایه گذاران</span>
+                                        <p class="mb-0 small font-weight-bold text-center">
+                                            @Model.InvestorCount نفر
+                                        </p>
+                                    </div>
+
+                                    <div class="mb-3 mb-md-0 px-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2">
+                                        <span class="text-muted h6 small text-center">درصد تامین شده</span>
+                                        <p class="mb-0 small font-weight-bold text-center">
+                                            @Model.PercentageComplate%
+                                        </p>
+                                    </div>
+                                    <div class="align-items-center col-12 col-lg-2 col-md-3 col-sm-3 col-xl-3 d-flex justify-content-center">
+                                        <div class="d-block d-md-none" id="btnSarmayeGozari">
+                                            @if (Model.RemainingTime < 0)
+                                            {
+                                                if (Model.PercentageComplate >= 100)
+                                                {
+                                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                        تکمیل شده <i class="bi bi-check2-circle"></i>
+                                                    </a>
+                                                }
+                                                else
+                                                //'فرصت سرمایه گذاری در این طرح به اتمام رسده است .<br/>می توانید در طرح های دیگر سرمایه گذاری کنید'
+                                                {
+                                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                        فرصت تمام شده<i class="bi bi-check2-circle"></i>
+                                                    </a>
+                                                }
+                                            }
+                                            else if (Model.IsSuccessBussinessPlan)
+                                            {
+                                                <a class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                                    تکمیل شده <i class="bi bi-check2-circle"></i>
+                                                </a>
+                                            }
+                                            else if (Model.IsAcceptInvestment || Model.IsOverflowInvestment)
+                                            {
+                                                <a href="/Payment/SelectPaymentType/@Model.BusinessPlanID" class="btn btn-orange btn-lg" style="font-size: 15px;">
+                                                    سرمایه گذاری میکنم <i class="bi bi-check2-circle"></i>
+                                                </a>
+                                            }
+
+                                            else
+                                            {
+                                                <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                                    تکمیل شده <i class="bi bi-check2-circle"></i>
+                                                </a>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="center-panel-container col-12 mt-1 pr-5 mt-sm-5 mr-md-5 mt-md-1" data-aos="zoom-in" data-aos-once="true">
+                        @*<div class="d-block d-sm-none" style="height:120px"></div>*@
+                        <div class="row row-icons">
+                            <div class="col-4" data-aos="fade-up" data-aos-once="true">
+                                <div class="row">
+                                    <div class="col-xl-3 border-md-left d-flex infor">
+                                        <img src="~/Content/img/file.svg" style="max-width:30px;height: 30px;margin-top: 5px" />
+
+                                    </div>
+
+                                    <div class="col-xl-9  ">
+                                        <span class="text-orange d-block">نام شرکت : </span>
+                                        <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:12px;"> @Model.CompanyName</strong>
+
+                                        <div class="image-icon" style="margin-top:16px">
+                                            <div class="row" style="padding-right:15px;">
+                                                <a onclick="CopyToClipboard()" class="pl-2">
+                                                    <img src="~/Content/img/shar.svg" style="width:10px" />
+                                                </a>
+                                                <a href="@Model.BusinessAparatAddress" class="pl-2 d-none d-sm-block" target="_blank">
+                                                    <img src="~/Content/img/aparat.png" style="width:15px" />
+                                                </a>
+                                                <a href="@Model.BusinessInstagramAddress" class="pl-2" target="_blank">
+                                                    <img src="~/Content/img/instagram.png" style="width:12px" />
+                                                </a>
+
+                                                <a href="@Model.BusinessWebSiteAddress" class="pl-2" target="_blank">
+                                                    <img src="~/Content/img/world-wide-web.png" style="width:12px" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4 " data-aos="flip-up" data-aos-once="true">
+                                <div class="row">
+                                    <div class="col-xl-3 border-md-left d-flex infor">
+                                        <img src="~/Content/img/zemanat.svg" style="max-width:30px;height: 30px;margin-top: 5px" />
+                                    </div>
+
+                                    <div class="col-xl-9 ">
+                                        <span class="text-orange d-block">ضمانت نامه :</span>
+                                        <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:12px;">
+                                            اصل و سود سرمایه
+                                        </strong>
+                                        <div style="margin-top:16px">
+
+                                            @{ if (Model.ImageNameWarranty != null && Model.ImageNameWarranty != "" && !Model.ImageNameWarranty.Contains("no-photo"))
+                                                {
+                                                    <a class="d-none d-sm-block" onclick="ShowWarranty('@Model.ImageNameWarranty')" href="#">
+                                                        <img class="" src="~/Content/img/zemanatname.svg" style="width:12px" />
+                                                    </a>
+                                                }}
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-4 " data-aos="fade-up" data-aos-once="true">
+                                <div class="row">
+                                    <div class="col-xl-3 border-md-left d-flex infor">
+                                        <img src="~/Content/img/clock.svg" style="max-width:30px;height: 30px;margin-top: 5px" />
+
+                                    </div>
+
+                                    <div class="col-xl-9 ">
+                                        <span class="text-orange d-block">مدت طرح: </span>
+                                        <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:12px;">
+                                            @Model.FinancialDuration
+                                        </strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<div class="d-none d-sm-block" style="height:220px"></div>
+                                <div class="d-block d-sm-none" style="height:250px"></div>*@
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- after banner end -->
+        <section class="container-fluid px-0">
+            <div class="table-responsive d-none d-md-block">
+                <table class="table mt-2 table-bordered">
+                    <thead class="thead" style="background-color: #DCDCDC;">
+                        <tr>
+                            <th scope="col">تاریخ واریز</th>
+                            <th scope="col">مبلغ (تومان)</th>
+                            <th scope="col">تایید ادمین</th>
+                            <th scope="col">شماره تراکنش /فیش بانکی</th>
+                            <th scope="col">انصراف</th>
+                            <th scope="col">چاپ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@string.Format("{0: yyyy/MM/dd}", Model.PaidDateTime)</td>
+                            <td>@Model.BusinessPlanPayment.ToString("#,##0")</td>
+                            <td>
+                                @* ندارد=0 و دارد=1 و برگشت خورده=2 و در انتظار تایید=3 *@
+                                @if (Model.PaymentStatusColorType == 0)
+                                {
+                                    <span class="text-danger"><i class="bi bi-x-circle"> @Model.PaymentStatus</i></span>
+                                }
+                                else if (Model.PaymentStatusColorType == 1)
+                                {
+                                    <span class="text-success"><i class="bi bi-arrow-left"> @Model.PaymentStatus</i></span>
+                                }
+                                else if (Model.PaymentStatusColorType == 2)
+                                {
+                                    <span class="text-danger"><i class="bi bi-exclamation-circle"> @Model.PaymentStatus</i></span>
+                                }
+                                else if (Model.PaymentStatusColorType == 3)
+                                {
+                                    <span class="text-warning"><i class="bi bi-clock"> @Model.PaymentStatus</i></span>
+                                }
+                            </td>
+                            @if (Model.InvoiceNumber == null)
+                            {
+                                <td>کد پرداخت ندارد</td>
+                            }
+                            else
+                            {
+                                <td>@Model.InvoiceNumber</td>
+                            }
+                        <td>
+                            @if (Model.PaymentStatus == "انصراف")
+                            {
+                                <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
+                            }
+                            else
+                            {
+                                <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
+                            }
+                        </td>
+                            <td>
+                                <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <table class="table d-flex justify-content-center mt-2 table-striped d-block d-md-none user-payment-sm-table">
+                <tbody>
+                    <tr>
+                        <td>تاریخ واریز</td>
+                        <td class="text-left">@string.Format("{0: yyyy/MM/dd}", Model.PaidDateTime)</td>
+                    </tr>
+                    <tr>
+                        <td>مبلغ (تومان)</td>
+                        <td class="text-left">@Model.BusinessPlanPayment.ToString("#,##0")</td>
+                    </tr>
+                    <tr>
+                        <td>تایید ادمین</td>
+                        <td class="text-left">
+                            @* ندارد=0 و دارد=1 و برگشت خورده=2 و در انتظار تایید=3 *@
+                            @if (Model.PaymentStatusColorType == 0)
+                            {
+                                <span class="text-danger"><i class="bi bi-x-circle"> @Model.PaymentStatus</i></span>
+                            }
+                            else if (Model.PaymentStatusColorType == 1)
+                            {
+                                <span class="text-success"><i class="bi bi-arrow-left"> @Model.PaymentStatus</i></span>
+                            }
+                            else if (Model.PaymentStatusColorType == 2)
+                            {
+                                <span class="text-danger"><i class="bi bi-exclamation-circle"> @Model.PaymentStatus</i></span>
+                            }
+                            else if (Model.PaymentStatusColorType == 3)
+                            {
+                                <span class="text-warning"><i class="bi bi-clock"> @Model.PaymentStatus</i></span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>شماره 1تراکنش /فیش بانکی</td>
+                        @if (Model.InvoiceNumber == null)
+                        {
+                            <td class="text-left">کد پرداخت ندارد</td>
+                        }
+                        else
+                        {
+                            <td class="text-left">@Model.InvoiceNumber</td>
+                        }
+                    </tr>
+                    <tr>
+                        <td>انصراف</td>
+                        <td class="text-left">
+                            @if (Model.PaymentStatus == "انصراف")
+                            {
+                                <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-secondary " style="font-size:12px">انصراف</a>
+                            }
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <td>چاپ</td>
+
+                        <td class="text-left">
+                            <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <div class="mr-4">
+                    <a style="font-size:14px" href="#" class="btn btn-orange user-payment-btn float-left">چاپ قرارداد</a>
+                </div>
+                <div class="">
+                    <a style="font-size:14px" href="#" class="btn btn-orange user-payment-btn float-left">چاپ گواهی شراکت</a>
+                </div>
+            </div>
+        </section>
+
+        <!--End of New-->
+        <!-- Start of Old -->
+        @*<a class="glyphicon glyphicon-circle-arrow-right pl-1" style="text-decoration:none;">
+                @Html.ActionLink("بازگشت به فهرست", "Index", new { @style = "text-decoration:none;" })
+            </a>
+            <br />
+            <br />
+            <h4>خلاصه طرح</h4>
+            <div class="col-12">
+                <div class="border p-2">
+                    <div class="row m-2">
+                        <div class="col-6 pl-0">
+                            <span class="font-weight-normal">وضعیت پرداخت :</span>
+                        </div>
+                        @if (Model.PaymentStatusColorType == 1)
+                        {
+                            <span class="text-success">
+                                @Model.PaymentStatus
+                            </span>
+                        }
+                        else if (Model.PaymentStatusColorType == 2)
+                        {
+                            <span class="text-danger">
+                                @Model.PaymentStatus
+                            </span>
+                        }
+                        else if (Model.PaymentStatusColorType == 3)
+                        {
+                            <span class="text-warning">
+                                @Model.PaymentStatus
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="text-info">
+                                @Model.PaymentStatus
+                            </span>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 m-2">
+                <div class="row">
+                    <div class="col-6 p-0">
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">نام طرح</p>
+                            <span class="font-weight-normal">@Model.BussinessName</span>
+                        </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class=" mb-0" style="color: #81858b;">نام شرکت</p>
+                            <span class="font-weight-normal">@Model.CompanyName</span>
+                        </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">مبلغ هدف(تومان)</p>
+                            <span class="font-weight-normal"> @Model.AmountRequiredRoRaiseCapital</span>
+                        </div>
+                        <div class="col-12 border-bottom border-left p-3">
+                            <p class="mb-0" style="color: #81858b;">مدت طرح</p>
+                            <span class="font-weight-normal">@Model.FinancialDuration_id</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 p-0">
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">کد فرابورس</p>
+                            <span class="font-weight-normal"> @Model.CodeOTC</span>
+                        </div>
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">سود طرح</p>
+                            <span class="font-weight-normal"> @Model.PercentageReturnInvestment درصد</span>
+                        </div>
+                        <div class="col-12 border-bottom pl-3 pr-3 pt-3 pb-0">
+                            <p class="mb-0" style="color: #81858b;">تضامین طرح</p>
+                            <a class="" onclick="ShowWarranty(@Model.ImageNameWarranty)" href="#">
+                                <img class="mt-2" src="~/Content/img/zemanatname.svg" />
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <br />
+            <hr />
+            <br />
+
+            <h4>مشخصات سرمایه گذار</h4>
+            <div class="col-12 m-2">
+                <div class="row">
+                    <div class="col-6 p-0">
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">نام و نام خانوادگی</p>
+                            <span class="font-weight-normal">@Model.InvestorFullName</span>
+                        </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">کد ملی</p>
+                            <span class="font-weight-normal">@Model.InvestorNationalCode</span>
+                        </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class=" mb-0" style="color: #81858b;">شماره موبایل</p>
+                            <span class="font-weight-normal">@Model.InvestorMobile</span>
+                        </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">کد پرداخت</p>
+                            @if (Model.InvoiceNumber == null)
+                            {
+                                <span class="font-weight-normal">کد پرداخت ندارد</span>
+                            }
+                            else
+                            {
+                                <span class="font-weight-normal"> @Model.InvoiceNumber</span>
+                            }
+                        </div>
+                        <div class="col-12 border-bottom border-left p-3">
+                            <p class="mb-0" style="color: #81858b;">تاریخ پرداخت</p>
+                            <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.PaidDateTime)</span>
+                        </div>
+                    </div>
+
+                    <div class="col-6 p-0">
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">کد سجام</p>
+                            @if (Model.InvestorSejamId == null || Model.InvestorSejamId == "")
+                            {
+                                <span class="font-weight-normal">کد سجام ندارد</span>
+                            }
+                            else
+                            {
+                                <span class="font-weight-normal"> @Model.InvestorSejamId</span>
+                            }
+                        </div>
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">تاریخ تایید</p>
+                            @if (Model.AdminCheckDate == null)
+                            {
+                                <span class="font-weight-normal">تاریخ تایید ندارد</span>
+                            }
+                            else
+                            {
+                                <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.AdminCheckDate)</span>
+                            }
+                        </div>
+
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">کد پیگیری</p>
+                            @if (Model.TransactionPaymentCode == null)
+                            {
+                                <span class="font-weight-normal">کد پیگیری ندارد</span>
+                            }
+                            else
+                            {
+                                <span class="font-weight-normal"> @Model.TransactionPaymentCode</span>
+                            }
+                        </div>
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">مبلغ سرمایه گذاری شده</p>
+                            <span class="font-weight-normal">@Model.BusinessPlanPayment.ToString("#,##0") تومان</span>
+                        </div>
+                        @if (!Model.IsRequestedReturn)
+                        {
+                            <div class="col-12 border-bottom pl-3 pr-3 pt-3 pb-2">
+                                <div class="form-group" id="buttons">
+                                    <div class="col-md-offset-2 col-md-10">
+
+                                        <a class="btn btn-danger text-white" onclick="ReurnedPayment()">انصراف از سرمایه گذاری</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>*@
+        <!-- End of Old -->
+    </div>
+</body>
+
+<br />
+
+
+<!-- attention banner end -->
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+
+
+
+
+<script src="~/Scripts/modal.js"></script>
+@section Scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+
+        function ReurnedPayment() {
+            $.ajax({
+                url: "/UserPanel/PaymentReturned/DoReturnedPayment?paymentId="+@Model.PaymentID+"&planId="+@Model.BusinessPlanID,
+                type: "Get"
+            }).done(function (result) {
+                 $("#myModalLabel").html("انصراف از سرمایه گذاری");
+                $("#myModalBody").html(result);
+                $("#returnModal").modal();
+
+               $(".modal-backdrop").each(function(){
+            $(this).removeClass("modal-backdrop");
+               });
+                    });
+                }
+
+        function Success() {
+            $("#returnModal").modal('hide');
+            //alert("با موفقیت انجام شد");
+            Swal.fire({
+                icon: 'success',
+                title: 'با موفقیت انجام شد',
+                confirmButtonText: `باشه`,
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                } else {
+                    location.reload();
+                }
+            });
+        }
+
+        function AlertInvestment(message) {
+            if (confirm(message))
+                    window.location.href = "/BusinessPlans";
+        }
+
+        if (@ViewBag.Notify.ToString().ToLower()) {
+            Swal.fire({
+                icon: 'info',
+                title: 'توجه',
+                text: 'شما می توانید در هر زمانی با استفاده از دکمه چاپ قرارداد، قرارداد خود را دانلود یا چاپ نمایید.',
+                confirmButtonText: `باشه`,
+                confirmButtonColor: '#d0aa45',
+            })
+        }
+
+        function inputCheck() {
+            let button = document.querySelector("#CancelPaymentBtn");
+            let input = document.querySelector("#CancelPaymentInput");
+            if (input.value === "") {
+                button.disabled = true;
+            } else {
+                button.disabled = false;
+            }
+        };
+
+    </script>
+
+}
+

@@ -1,0 +1,482 @@
+﻿@model DataLayer.Tbl_BussinessPlans
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_BussinessPlans</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessLogoImageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessLogoImageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessSummaryDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessSummaryDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyRegisterCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyRegisterCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyRegisterDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyRegisterDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyNationalCertificateCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyNationalCertificateCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyEconomicCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyEconomicCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyAgentFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyAgentFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyAgentRole)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyAgentRole)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyAgentPhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyAgentPhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyAgentEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyAgentEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyIntroductionLetterFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyIntroductionLetterFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyRegisterAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyRegisterAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyPostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyPostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyCity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyActiveAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyActiveAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyActivePostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyActivePostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDaneshBonyan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDaneshBonyan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessWebSiteAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessWebSiteAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessLinkdInAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessLinkdInAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessInstagramAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessInstagramAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessTwitterAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessTwitterAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SiteRules)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiteRules)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAccepedSiteRules)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAccepedSiteRules)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartnershipAgreements)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartnershipAgreements)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAcceptPartnershipAgreements)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAcceptPartnershipAgreements)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RiskWarningStatement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RiskWarningStatement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsAcceptRiskWarningStatement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsAcceptRiskWarningStatement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BussinessModelFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BussinessModelFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MainIdea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainIdea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntroductionIdeaVideoFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntroductionIdeaVideoFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarketSize)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarketSize)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MarketTarget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MarketTarget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Coasts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Coasts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompetitiveAdvantagesAndDisadvantages)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompetitiveAdvantagesAndDisadvantages)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SlideShowPresentationFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SlideShowPresentationFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentsAndReportsFileName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocumentsAndReportsFileName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountRequiredRoRaiseCapital)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountRequiredRoRaiseCapital)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HaveYouRaisedCapitalPrevious)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HaveYouRaisedCapitalPrevious)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvestmentAmountPrevious)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvestmentAmountPrevious)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PercentageOfSharesCapitalPrevious)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PercentageOfSharesCapitalPrevious)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreviousInvestorFullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreviousInvestorFullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreviousInvestorType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreviousInvestorType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PreviousDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreviousDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PercentageReturnInvestment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PercentageReturnInvestment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_BussinessPlan_BussenessFields.BussinessFieldTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_BussinessPlan_BussenessFields.BussinessFieldTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_BussinessPlan_FinancialDuration.FinancialDurationTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_BussinessPlan_FinancialDuration.FinancialDurationTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_BussinessPlan_Status.StatusTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_BussinessPlan_Status.StatusTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_CompanyType.CompanyTypeTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_CompanyType.CompanyTypeTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_MonetaryUnits.MonetaryUnitTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_MonetaryUnits.MonetaryUnitTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BussinessPlanID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

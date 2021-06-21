@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+@{
+    ViewBag.Title = "تماس با ما";
+}
+
+<!-- slider start -->
+@Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.CONTACT_US })
+<!-- slider end -->
+<div class="container">
+
+    <h2 class="m-4">تماس با ما</h2>
+
+    <div>
+        <hr />
+        <div class="container">
+            <dl class="dl-horizontal">
+
+
+                <dd>
+                    @Html.Raw(@Model.ContactUs)
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+</div>

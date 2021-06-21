@@ -1,0 +1,171 @@
+﻿@model DataLayer.Tbl_Blog
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "ویرایش " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+}
+
+
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("Edit", "Tbl_Blog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.BlogID)
+    @Html.HiddenFor(model => model.CreateUser_id)
+    @Html.HiddenFor(model => model.CreateDate)
+    @Html.HiddenFor(model => model.ImageName)
+    @Html.HiddenFor(model => model.IsDeleted)
+    @Html.HiddenFor(model => model.CountVisit)
+    @Html.HiddenFor(model => model.TitleUrl)
+    
+    <br />
+
+    <div class="border border-primary">
+
+        <p>عنوان آدرس</p>
+        <p dir="ltr">www.hamafarin.com/blog/@Model.BlogID/@Model.TitleUrl</p>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.IsActive)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Title)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.MetaTitle)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.MetaTitle)
+            @Html.ValidationMessageFor(model => model.MetaTitle)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Description)
+        </div>
+        <div class="card-body">
+            @Html.TextAreaFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.MetaTitle)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.MetaDescription)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.MetaDescription)
+            @Html.ValidationMessageFor(model => model.MetaDescription)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.FullText)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.FullText)
+            @Html.ValidationMessageFor(model => model.FullText)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ImageName)
+        </div>
+        <div class="card-body">
+            @Html.Kendo().Upload().Name("imgUp")
+            @Html.ValidationMessageFor(model => model.ImageName)
+            @if (Model.ImageName != null)
+            {
+                <img src="/Images/BlogImages/Thumb/@Model.ImageName" style="max-width: 150px" class="thumbnail" />
+            }
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ImageAlt)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.ImageAlt)
+            @Html.ValidationMessageFor(model => model.ImageAlt)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.Canonical)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.Canonical)
+            @Html.ValidationMessageFor(model => model.Canonical)
+        </div>
+    </div>
+    <br />
+
+    <div class="card">
+        <div class="card-header">
+            @Html.DisplayNameFor(model => model.ShowMainPage)
+        </div>
+        <div class="card-body">
+            @Html.EditorFor(model => model.ShowMainPage)
+            @Html.ValidationMessageFor(model => model.ShowMainPage)
+        </div>
+    </div>
+    <br />
+</div>
+
+
+    <div class="form-group" id="buttons">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ثبت" class="btn btn-success" />
+            @Html.ActionLink("بازگشت به فهرست", "Index", new { id = Model.BlogID })
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#FullText').ckeditor();
+        });
+    </script>
+
+}

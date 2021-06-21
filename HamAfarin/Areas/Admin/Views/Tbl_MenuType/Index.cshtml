@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DataLayer.Tbl_MenuType>
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "فهرست نوع صفحات";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+        @(Html.Kendo().Grid(Model)
+              .Name("Grid")
+              .Columns(columns =>
+                  {
+        columns.Bound(model => model.Title);
+        columns.Bound(model => model.IsActive);
+					columns.Bound(item => @item.MenuTypeID)
+                  .Title("دستورات").Filterable(false).Groupable(false)
+							.Template(@<text>
+									@Html.ActionLink("ویرایش", "Edit", new {id = @item.MenuTypeID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
+									@Html.ActionLink("حذف", "Delete", new {id = @item.MenuTypeID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
+									@Html.ActionLink("مدیریت صفحات", "Index","Tbl_MenuPage", new {id = @item.MenuTypeID}, new {@class = "k-button k-button-icontext k-grid-Info"})
+									</text>).Width(200);  
+		})
+		.ToolBar(toolbar =>
+					{
+						toolbar.Custom().Action("Create","Tbl_MenuType").Text("افزودن");                          
+					}
+		)
+		.Groupable()
+		.Pageable()
+		.Sortable()
+		.Filterable()              
+		.DataSource(dataSource => dataSource
+									.Server()
+							
+									.Model(model => model.Id(item => item.MenuTypeID))
+					)              
+	)

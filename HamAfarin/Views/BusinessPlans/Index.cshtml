@@ -1,0 +1,745 @@
+﻿
+@{
+    ViewBag.Title = "فرصت های سرمایه گذاری";
+}
+
+
+<!-- slider start -->
+@Html.Action("Sliders", "Home")
+<!-- slider end -->
+
+<style>
+
+    .has-search .form-control {
+        padding-left: 2.375rem;
+    }
+
+    .has-search .form-control-feedback {
+        position: absolute;
+        z-index: 20;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        pointer-events: none;
+        color: #aaa;
+    }
+
+    /*start loading animation*/
+    .loadingCricle {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        border: 4px solid #ccc;
+        border-top: 4px solid #e30d0d;
+        animation: spin 1s linear infinite;
+    }
+
+    .m-auto {
+        margin: auto;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg)
+        }
+
+        100% {
+            transform: rotate(360deg)
+        }
+    }
+    /*end loading animation*/
+
+    /*start two point range slider*/
+
+    /*! nouislider - 8.1.0 - 2015-10-25 16:05:44 */
+    .noUi-target, .noUi-target * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -ms-touch-action: none;
+        touch-action: none;
+        -ms-user-select: none;
+        -moz-user-select: none;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box
+    }
+
+    .noUi-target {
+        position: relative;
+        direction: ltr
+    }
+
+    .noUi-base {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 20
+    }
+
+    .noUi-origin {
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: 0;
+        bottom: 0
+    }
+
+    .noUi-handle {
+        position: relative;
+        z-index: 20
+    }
+
+    .noUi-stacking .noUi-handle {
+        z-index: 25
+    }
+
+    .noUi-state-tap .noUi-origin {
+        -webkit-transition: left .3s,top .3s;
+        transition: left .3s,top .3s
+    }
+
+    .noUi-state-drag * {
+        cursor: inherit !important
+    }
+
+    .noUi-base {
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0)
+    }
+
+    .noUi-horizontal {
+        height: 18px
+    }
+
+        .noUi-horizontal .noUi-handle {
+            width: 34px;
+            height: 28px;
+            left: -17px;
+            top: -6px
+        }
+
+    .noUi-vertical {
+        width: 18px
+    }
+
+        .noUi-vertical .noUi-handle {
+            width: 28px;
+            height: 34px;
+            left: -6px;
+            top: -17px
+        }
+
+    .noUi-background {
+        background: #FAFAFA;
+        box-shadow: inset 0 1px 1px #f0f0f0
+    }
+
+    .noUi-connect {
+        background: #d0aa45;
+        box-shadow: inset 0 0 3px rgba(51,51,51,.45);
+        -webkit-transition: background 450ms;
+        transition: background 450ms
+    }
+
+    .noUi-origin {
+        border-radius: 2px
+    }
+
+    .noUi-target {
+        border-radius: 4px;
+        border: 1px solid #D3D3D3;
+        box-shadow: inset 0 1px 1px #F0F0F0,0 3px 6px -5px #BBB
+    }
+
+        .noUi-target.noUi-connect {
+            box-shadow: inset 0 0 3px rgba(51,51,51,.45),0 3px 6px -5px #BBB
+        }
+
+    .noUi-draggable {
+        cursor: w-resize
+    }
+
+    .noUi-vertical .noUi-draggable {
+        cursor: n-resize
+    }
+
+    .noUi-handle {
+        border: 1px solid #D9D9D9;
+        border-radius: 3px;
+        background: #FFF;
+        cursor: default;
+        box-shadow: inset 0 0 1px #FFF,inset 0 1px 7px #EBEBEB,0 3px 6px -3px #BBB
+    }
+
+    .noUi-active {
+        box-shadow: inset 0 0 1px #FFF,inset 0 1px 7px #DDD,0 3px 6px -3px #BBB
+    }
+
+    .noUi-handle:after, .noUi-handle:before {
+        content: "";
+        display: block;
+        position: absolute;
+        height: 14px;
+        width: 1px;
+        background: #E8E7E6;
+        left: 14px;
+        top: 6px
+    }
+
+    .noUi-handle:after {
+        left: 17px
+    }
+
+    .noUi-vertical .noUi-handle:after, .noUi-vertical .noUi-handle:before {
+        width: 14px;
+        height: 1px;
+        left: 6px;
+        top: 14px
+    }
+
+    .noUi-vertical .noUi-handle:after {
+        top: 17px
+    }
+
+    [disabled] .noUi-connect, [disabled].noUi-connect {
+        background: #B8B8B8
+    }
+
+    [disabled] .noUi-handle, [disabled].noUi-origin {
+        cursor: not-allowed
+    }
+
+    .noUi-pips, .noUi-pips * {
+        -moz-box-sizing: border-box;
+        box-sizing: border-box
+    }
+
+    .noUi-pips {
+        position: absolute;
+        color: #999
+    }
+
+    .noUi-value {
+        width: 40px;
+        position: absolute;
+        text-align: center
+    }
+
+    .noUi-value-sub {
+        color: #ccc;
+        font-size: 10px
+    }
+
+    .noUi-marker {
+        position: absolute;
+        background: #CCC
+    }
+
+    .noUi-marker-large, .noUi-marker-sub {
+        background: #AAA
+    }
+
+    .noUi-pips-horizontal {
+        padding: 10px 0;
+        height: 50px;
+        top: 100%;
+        left: 0;
+        width: 100%
+    }
+
+    .noUi-value-horizontal {
+        margin-left: -20px;
+        padding-top: 20px
+    }
+
+        .noUi-value-horizontal.noUi-value-sub {
+            padding-top: 15px
+        }
+
+    .noUi-marker-horizontal.noUi-marker {
+        margin-left: -1px;
+        width: 2px;
+        height: 5px
+    }
+
+    .noUi-marker-horizontal.noUi-marker-sub {
+        height: 10px
+    }
+
+    .noUi-marker-horizontal.noUi-marker-large {
+        height: 15px
+    }
+
+    .noUi-pips-vertical {
+        padding: 0 10px;
+        height: 100%;
+        top: 0;
+        left: 100%
+    }
+
+    .noUi-value-vertical {
+        width: 15px;
+        margin-left: 20px;
+        margin-top: -5px
+    }
+
+    .noUi-marker-vertical.noUi-marker {
+        width: 5px;
+        height: 2px;
+        margin-top: -1px
+    }
+
+    .noUi-marker-vertical.noUi-marker-sub {
+        width: 10px
+    }
+
+    .noUi-marker-vertical.noUi-marker-large {
+        width: 15px
+    }
+
+    .noUi-tooltip {
+        display: block;
+        position: absolute;
+        border: 1px solid #D9D9D9;
+        border-radius: 3px;
+        background: #fff;
+        padding: 5px;
+        left: -45px;
+        text-align: center;
+        width: 120px;
+    }
+
+    .noUi-handle-lower .noUi-tooltip {
+        top: -32px
+    }
+
+    .noUi-handle-upper .noUi-tooltip {
+        bottom: -32px
+    }
+
+    /*end two point range slider*/
+</style>
+
+@section Modal{
+    <div id="filter-box" style="display:none">
+
+        <div id="filter-selector">
+            <button class="btn btn-danger close" id="close-btn"><i class="bi bi-x d-flex"></i></button>
+            <div class="p-5">
+                <p>محدوده حداقل مبلغ قابل سرمایه گذاری</p>
+                <div class="form-row">
+                    <div class="form-group col-md-6 col-sm-12">
+                        <input type="text" class="form-control max-value" value="" placeholder="تا (تومان)" />
+                    </div>
+                    <div class="form-group col-md-6 col-sm-12">
+                        <input type="text" class="form-control min-value" value="" placeholder="از (تومان)" />
+                    </div>
+                </div>
+                <div class="form-group pt-4">
+                    <div class="double-handle-slider "></div>
+                </div>
+            </div>
+            <button onclick="search()" class="btn btn-orange" id="F-btn">فیلتر</button>
+        </div>
+
+        <div class="close" id="filter-closer">
+
+        </div>
+
+    </div>
+}
+
+<section class="w-100 font-weight-bold container-tab ">
+
+    <div class="w-100 stickyNav_container">
+
+        <ul class="nav nav-tabs d-flex shadow p-3 mb-2 bg-white rounded stickyNav" id="myTab" role="tablist">
+            <div class="container d-flex flex-column flex-md-row">
+
+                <li class="nav-item ml-md-4 text-align-center mod" id="active-idea" style="">
+
+                    <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                       aria-controls="all" aria-selected="true">طرح های فعال(@ViewBag.ActivePlanCount)</a>
+                </li>
+                @*<li class="nav-item ml-4">
+                        <a class="nav-link stickyNav-item text-dark font-weight-bold" id="future-tab" data-toggle="tab" href="#future" role="tab"
+                           aria-controls="future" aria-selected="false">طرح های آینده(@ViewBag.FuturePlanCount)</a>
+                    </li>
+                    <li class="nav-item ml-4">
+                        <a class="nav-link stickyNav-item text-dark font-weight-bold" id="past-tab" data-toggle="tab" href="#past" role="tab"
+                           aria-controls="past" aria-selected="false">طرح های گذشته(@ViewBag.PastPlanCount)</a>
+                    </li>*@
+
+                <li class="nav-item mr-md-5  mt-2  mt-md-0 not-li mod" style="height: 40px;">
+                    <!-- Actual search box -->
+                    <div class="form-group has-search d-flex">
+
+                        <button onclick="search()" class="btn" id="serch-btn"><i class="bi bi-search d-flex"></i></button>
+                        <input id="search_box" type="text" class="form-control" placeholder="جستجو در عنوان و توضیحات طرح">
+                        <button class="btn d-none" id="filter-btn"><i class="bi bi-funnel d-flex"></i></button>
+                    </div>
+
+                </li>
+                <li class="mr-2 mt-2">
+                    <a class="stickyNav-item text-dark font-weight-bold">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </a>
+                    @*<a class="nav-link stickyNav-item text-dark font-weight-bold">فیلتر</a>*@
+                </li>
+            </div>
+        </ul>
+
+    </div>
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-0">
+
+
+        <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5">
+
+
+
+            <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
+                <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="col-12 d-sm-none" style="height:90px"></div>
+
+                    <div>
+                        <div id="list-plans" class="row py-2">
+                            @*@Html.Action("ActivePlans", "BusinessPlans")*@
+                        </div>
+                    </div>
+                    <div id="progress" class="text-center pb-3" style="display:none">
+                        <p class="text-center">در حال بارگزاری اطلاعات ...</p>
+                        <div class="loadingCricle m-auto"></div>
+                    </div>
+
+
+
+                </div>
+                <div class="tab-pane fade" id="future" role="tabpanel" aria-labelledby="future-tab">
+
+                    <br />
+                    <br />
+                    <br />
+
+
+                    <div id="future-result" class="row py-2">
+
+                        @Html.Action("FuturePlans", "FutureBusinessPlan")
+
+                    </div>
+
+                </div>
+
+
+                <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
+                    <br />
+                    <br />
+                    <br />
+
+
+                    <div id="past-result" class="row py-2">
+
+                        @Html.Action("PastPlans", "BusinessPlans")
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="tab-pane fade mr-5 p-5" id="search" role="tabpanel" aria-labelledby="search-tab">
+
+                    <br />
+                    <br />
+                    <br />
+
+
+                    <div id="list-active-plans" class="row py-2">
+
+                        @Html.Partial("ActivePlans")
+
+                    </div>
+                </div>
+
+
+
+                <div class="tab-pane fade mr-5 p-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="container">
+                        <div class="row" id="showCommentList">
+                            @*@Html.Action("ShowCommentsOfPlan", "Comment", Model.BussinessPlanID)*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog col-4">
+                        <div class="modal-content">
+                            <div class="col-12 pt-4">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <span class="col-10" style="font-size:16px">
+                                            نظر خود را در مورد طرح مطرح کنید
+                                        </span>
+                                        <div class="col-2">
+                                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0" id="myModalBody">
+                                ...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="tab-pane fade mr-5 p-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                    <br />
+                    <br />
+                    <br />
+                    <div class="container">
+                        <div class="row" id="showQuestionList">
+                            @*@Html.Action("ShowQuestionsOfPlan", "Question", Model.BussinessPlanID)*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog col-4">
+                        <div class="modal-content">
+                            <div class="col-12 pt-4">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <span class="col-10" style="font-size:16px">
+                                            پرسش خود را در مورد طرح مطرح کنید
+                                        </span>
+                                        <div class="col-2">
+                                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-body pt-0" id="addQuestionBody">
+                                ...
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-offset-2">
+
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+        <div class="col-md-2">
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+<!-- active items end -->
+<!-- attention banner start -->
+<section id="risk" class="w-100" style="background-color:#f5f6f8">
+    <div class="col-12">
+        <div class="col-12 col-sm-8 col-lg-offset-2 pt-2 pb-5 container">
+            <h4 class="">
+                <img src="~/Content/img/risk.png" style="width:70px" />
+
+                بیانیه ریسک
+
+            </h4>
+
+            <div class="col-12">
+                <p>
+                    @ViewBag.RiskAlertStatement
+                </p>
+            </div>
+
+            <div class="row float-left text-left ml-5">
+                <a href="/RiskAlertStatement" class="btn btn-orange btn-lg " style="font-size: 15px;">
+                    ادامه
+                </a>
+            </div>
+            <br />
+        </div>
+    </div>
+</section>
+
+<!-- attention banner end -->
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+@section Scripts{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Content/js/range.slider.js"></script>
+
+    <script>
+        var pageIndex = 1;
+        var pageSize = 6;
+        var totalPageCount = 1;
+        var searchTextInput = "";
+        const lowestPrice = @ViewBag.MinimumPrice;
+        const highestPrice = @ViewBag.MaximumPrice;
+        var minFilterPriceInput = @ViewBag.MinimumPrice;
+        var maxFilterPriceInput = @ViewBag.MaximumPrice;
+
+
+        if ($(window).data('ajaxready') == true) {
+            appendData();
+        }
+
+        //.data('ajaxready', true) این مقدار برای جلوگیری ارسال درخواست تکراری استفاده شده است
+        $(window).data('ajaxready', true).scroll(function () {
+
+            if ($(window).data('ajaxready') == false) return;
+
+            var footer = $('#risk');
+
+            if (totalPageCount >= pageIndex &&
+                $(window).scrollTop() + $(window).height() >= $(footer).offset().top) {
+                appendData();
+            }
+        });
+
+        // ارسال اولین درخواست هنگام لود صفحه بدون اسکرول
+        if ($(window).data('ajaxready') == true) {
+            appendData();
+        }
+
+        // درخواست ایجکس
+        function appendData() {
+            $(window).data('ajaxready', false);
+            $.ajax({
+                type: 'GET',
+                url: '/BusinessPlans/ActivePlans',
+                data: { "searchText": searchTextInput, "lowestPrice": minFilterPriceInput, "highestPrice": maxFilterPriceInput, "page": pageIndex },
+                success: function (data) {
+                    if (data != null) {
+                        $("#list-plans").append(data);
+                        totalPageCount = Math.ceil(parseInt($(".hidden-input-paging").val()) / pageSize);
+                        pageIndex++;
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("appendData, " + xhr.status + ", " + thrownError);
+                },
+                beforeSend: function () {
+                    $("#progress").show();
+                },
+                complete: function () {
+                    $("#progress").hide();
+                    $(window).data('ajaxready', true);
+                },
+            });
+        }
+
+        function filterPriceInput() {
+            var min = $('.min-value').val();
+            var max = $('.max-value').val();
+
+            if (min != "" && max != "") {
+                maxFilterPriceInput = min;
+                minFilterPriceInput = max;
+            }
+        }
+
+        // جستجو ایجکس
+        function search() {
+            pageIndex = 1;
+            $("#list-plans").empty();
+            filterPriceInput();
+            searchTextInput = $('#search_box').val();
+            appendData();
+        }
+
+        $("#search_box").on('keyup', function (e) {
+            if (e.which == 13) {
+                search();
+            }
+        });
+
+        //range silder
+        ;(function () {
+
+            var doubleHandleSlider = document.querySelector('.double-handle-slider');
+            var minValInput = document.querySelector('.min-value');
+            var maxValInput = document.querySelector('.max-value');
+
+
+            noUiSlider.create(doubleHandleSlider, {
+                start: [lowestPrice, highestPrice],
+                connect: true,
+                tooltips: true,
+                step: (highestPrice-lowestPrice)/100,
+                range: {
+                    'min': [lowestPrice],
+                    'max': [highestPrice]
+                },
+                format: {
+                    to: function (value) {
+                        return value;
+                    },
+                    from: function (value) {
+                        return value;
+                    }
+                }
+            });
+
+            // can also be on 'update' for instant update
+            doubleHandleSlider.noUiSlider.on('change', function (values, handle) {
+
+                // This version updates both inputs.
+                var rangeValues = values;
+                minValInput.value = rangeValues[0];
+                maxValInput.value = rangeValues[1];
+
+                /*
+                        // This version updates a single input on change
+                        var val = values[handle]; // 0 or 1
+
+                        if(handle) {
+                            maxValInput.value = Math.round(val);
+                        } else {
+                            minValInput.value = Math.round(val);
+                        }*/
+            });
+
+
+            minValInput.addEventListener('change', function () {
+                doubleHandleSlider.noUiSlider.set([this.value, null]);
+            });
+
+            maxValInput.addEventListener('change', function () {
+                doubleHandleSlider.noUiSlider.set([null, this.value]);
+            });
+
+
+        })();
+
+    </script>
+}

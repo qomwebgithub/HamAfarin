@@ -1,0 +1,35 @@
+﻿@model ViewModels.PaymentReturnedViewModel
+
+
+
+@using (Ajax.BeginForm("DoReturnedPayment", "PaymentReturned", FormMethod.Post, new AjaxOptions()
+{
+    OnSuccess = "Success"
+
+}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.PaymentId)
+        @Html.HiddenFor(model => model.BusinessPlan_id)
+
+
+        
+        <div class="form-group">
+            <div class="col-md-12">
+                @Html.TextAreaFor(model => model.ReasonText, new { @class = "control-label col-md-12 p-2 form-control", @style = "height:120px;font-size:14px;", id = "CancelPaymentInput", oninput = "inputCheck()" })
+                @Html.ValidationMessageFor(model => model.ReasonText)
+            </div>
+            <p class="col-12 pt-2">برای بازگشت مبلغ سرمایه گذاری به حساب بانکی شما، با شما تماس می گیریم</p>
+
+        </div>
+        <div class="form-group row justify-content-center" id="buttons">
+            <div class="col-md-6 col-12">
+                <button type="submit" id="CancelPaymentBtn" class="btn btn-danger col-12 float-left" style="background-color:#ff1654;border-radius:10px" disabled>تایید</button>
+            </div>
+        </div>
+    </div>
+}
+

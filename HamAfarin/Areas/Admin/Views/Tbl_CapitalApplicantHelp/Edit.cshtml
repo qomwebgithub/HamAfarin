@@ -1,0 +1,77 @@
+﻿@model DataLayer.Tbl_CapitalApplicantHelp
+
+@{
+    ViewBag.Title = "ویرایش تقاضای سرمایه";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.CapitalApplicantID)
+    @Html.HiddenFor(model => model.IsDelete)
+    @Html.HiddenFor(model => model.IsActive)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FrequentlyAskedQuestions, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FrequentlyAskedQuestions)
+            @Html.ValidationMessageFor(model => model.FrequentlyAskedQuestions)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HoldingCampaign, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.HoldingCampaign)
+            @Html.ValidationMessageFor(model => model.HoldingCampaign)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SendPlan, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.SendPlan)
+            @Html.ValidationMessageFor(model => model.SendPlan)
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.CapitalDemandProcess, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.CapitalDemandProcess)
+            @Html.ValidationMessageFor(model => model.CapitalDemandProcess)
+        </div>
+    </div>
+
+    <div class="form-group" id="buttons">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ثبت" class="btn btn-primary" />
+            @Html.ActionLink("بازگشت به فهرست", "Index")
+        </div>
+    </div>
+</div>
+}
+
+
+
+@section Scripts{
+
+    <--> ck editor</-->
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/adapters/jquery.js"></script>
+    <script>
+        $(function () {
+            $('#FrequentlyAskedQuestions').ckeditor();
+            $('#SendPlan').ckeditor();
+            $('#HoldingCampaign').ckeditor();
+            $('#CapitalDemandProcess').ckeditor();
+        });
+    </script>
+}

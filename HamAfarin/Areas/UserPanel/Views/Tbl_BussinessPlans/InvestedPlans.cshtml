@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ViewModels.UserBusinessPlanViewModel>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "فهرست طرح های تجاری سرمایه گذاری شده";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+ columns.Bound(item => @item.BussinessPlanID).Title("تصویر").Filterable(false).Groupable(false)
+                            .Template(@<text>
+                                    <img class="thumbnail" src="/Images/BusinessPlans/Thumb/@item.ImageNameInListPalns" style="max-width: 150px" />
+                            </text>);
+       columns.Bound(model => model.Title);
+       columns.Bound(model => model.TotalInvestmentPrice);
+       columns.Bound(model => model.IsActive);
+       columns.Bound(model => model.IsConfirmedFromAdmin);
+       columns.Bound(model => model.PaidDateTime);
+       columns.Bound(model => model.PaymentType);
+       columns.Bound(model => model.TransactionPaymentCode);
+   })
+
+.Groupable()
+.Pageable()
+.Sortable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.BussinessPlanID))
+)
+)

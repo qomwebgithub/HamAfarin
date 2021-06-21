@@ -1,0 +1,84 @@
+﻿@model ViewModels.PaymentOnlineViewModel
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "افزودن ";
+}
+
+<div class="container">
+    <h2>پرداخت آنلاین</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model => model.BusinessPlan_id)
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+
+            <div class="container-fluid bg-danger p-3">
+                <div class="col-12">
+                    حداقل مبلغ سرمایه گذاری : @Convert.ToDecimal(ViewBag.MinimumAmountInvest).ToString("#,##0") تومان
+
+                </div>
+                <div class="col-12">
+                    حداکثر مبلغ سرمایه گذاری : @Convert.ToDecimal(ViewBag.MaximumInvestment).ToString("#,##0") تومان
+                </div>
+                <div class="col-12">
+                    ضریب مبلغ سرمایه گذاری : @Convert.ToDecimal(ViewBag.MinimumAmountInvest).ToString("#,##0") تومان
+                </div>
+                @if (ViewBag.TotalMyInvestmentInPlan > 0)
+                {
+                    <div class="col-12">
+                        سرمایه گذاری های قبلی من : @Convert.ToDecimal(ViewBag.TotalMyInvestmentInPlan).ToString("#,##0") تومان
+                    </div>
+                }
+            </div>
+
+            <div class="container-fluid border border-dark mt-4">
+                <div class="form-group">
+                    <div class="col-md-6">
+                        <label>مبلغ مورد نظر برای سرمایه گذاری را وارد نمایید</label>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.PaymentPrice)
+                        @Html.ValidationMessageFor(model => model.PaymentPrice)
+                    </div>
+                </div>
+
+                <div class="form-group container-fluid">
+                    <p class="control-label col-md-2 alert-primary" id="PaymentPriceSeprate"></p>
+                </div>
+                <div class="form-group" id="buttons">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="رفتن به درگاه پرداخت" class="btn btn-success" />
+                    </div>
+                </div>
+                <br />
+
+            </div>
+            <br />
+
+
+
+
+        </div>
+    }
+
+</div>
+
+@section Scripts{
+
+    <script>
+
+        $('#PaymentPrice').keyup(function (event) {
+            var PaymentPriceSeprate = document.getElementById('PaymentPriceSeprate');
+            var Num = $("#PaymentPrice").val();
+            var seprateValue = Num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            PaymentPriceSeprate.innerHTML = seprateValue + " تومان";
+
+        });
+
+    </script>
+}
+

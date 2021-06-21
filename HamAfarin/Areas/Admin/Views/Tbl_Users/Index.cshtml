@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DataLayer.Tbl_Users>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "فهرست کاربران";
+}
+
+<h2>@ViewBag.Title</h2>
+
+        @(Html.Kendo().Grid(Model)
+              .Name("Grid")
+              .Columns(columns =>
+                  {
+        columns.Bound(model => model.UserName);
+        columns.Bound(model => model.MobileNumber);
+        columns.Bound(model => model.Tbl_Roles.RoleDisplayTitle);
+        columns.Bound(model => model.IsActive);
+        columns.Bound(model => model.RegisterDate);
+        columns.Bound(model => model.ActivateDate);
+					columns.Bound(item => @item.UserID).Title("دستورات").Filterable(false).Groupable(false)
+							.Template(@<text>
+									@Html.ActionLink("ویرایش", "Edit", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
+									@Html.ActionLink("حذف", "Delete", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
+									</text>).Width(200);
+                  })
+        //.ToolBar(toolbar =>
+        //			{
+        //				toolbar.Custom().Action("Create","Tbl_Users").Text("افزودن");                          
+        //			}
+        //)
+        .Groupable()
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+                                    .Server()
+
+                                    .Model(model => model.Id(item => item.UserID))
+                    )
+    )

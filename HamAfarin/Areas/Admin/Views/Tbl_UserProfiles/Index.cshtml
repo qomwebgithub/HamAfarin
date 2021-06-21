@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DataLayer.Tbl_UserProfiles>
+@using Kendo.Mvc.UI
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+        @(Html.Kendo().Grid(Model)
+              .Name("Grid")
+              .Columns(columns =>
+                  {
+        columns.Bound(model => model.CreateDate);
+        columns.Bound(model => model.MobileNumber);
+        columns.Bound(model => model.FirstName);
+        columns.Bound(model => model.LastName);
+        columns.Bound(model => model.NationalCode);
+        columns.Bound(model => model.SejamCode);
+        columns.Bound(model => model.BirthDate);
+        columns.Bound(model => model.Gender);
+        columns.Bound(model => model.IsActive);
+        columns.Bound(model => model.Tbl_Users.IsLegal);
+					columns.Bound(item => @item.ProfileID).Title("دستورات").Filterable(false).Groupable(false)
+							.Template(@<text>
+									@Html.ActionLink("ویرایش", "Edit", new {id = @item.ProfileID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
+									@Html.ActionLink("حذف", "Delete", new {id = @item.ProfileID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
+									</text>).Width(200);
+                  })
+        .ToolBar(toolbar =>
+        {
+            //toolbar.Custom().Action("Create","Tbl_UserProfiles").Text("افزودن");                          
+        }
+        )
+        .Groupable()
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+                                    .Server()
+
+                                    .Model(model => model.Id(item => item.ProfileID))
+                    )
+    )

@@ -1,0 +1,153 @@
+﻿@model ViewModels.UserProfileViewModel
+
+@{
+    ViewBag.Title = "ویرایش " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>افزودن @Html.DisplayNameFor(model => model)</title>
+</head>
+
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.Profile_id)
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    <p>نام و نام خانوادگی</p>
+                </dt>
+                <dd>
+                    @{
+                        var fullName = Model.Profile.FirstName + " " + Model.Profile.LastName;
+                        @Html.DisplayFor(model => fullName)
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </dt>
+
+                <dt>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-4" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.IsActive)
+                            @Html.ValidationMessageFor(model => model.IsActive)
+                        </div>
+                    </div>
+
+                </dt>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </dt>
+
+                <dd>
+                    @{ if (Model.Gender == 1)
+                        {
+                            <p>مرد</p>
+                        }
+                        else
+                        {
+                            <p>زن</p>
+                        }
+                    }
+
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.strBirthDate)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.strBirthDate)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsLegal)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsLegal)
+                </dd>
+
+            </dl>
+
+            <hr />
+
+            @{ if (Model.IsLegal)
+                {
+                    <div id="legal" class="hidden">
+                        <dl>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PersonLegal.CompanyName)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PersonLegal.CompanyName)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PersonLegal.EconomicCode)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PersonLegal.EconomicCode)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PersonLegal.NationalId)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PersonLegal.NationalId)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PersonLegal.RegistratioNumber)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PersonLegal.RegistratioNumber)
+                            </dd>
+
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PersonLegal.Address)
+                            </dt>
+
+                            <dd>
+                                @Html.DisplayFor(model => model.PersonLegal.Address)
+                            </dd>
+
+                        </dl>
+                    </div>
+                }
+            }
+            <div class="form-group" id="buttons">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="بروزرسانی" class="btn btn-primary" />
+                    @Html.ActionLink("بازگشت به فهرست", "UnSubmittedProfile")
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>
