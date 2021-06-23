@@ -514,7 +514,7 @@
         // بستن مودال با دکمه بک در گوشی
         if (window.history && window.history.pushState) {
             $('#privacyModal').on('show.bs.modal', function (e) {
-                window.history.pushState('forward', null, './#modal');
+                window.history.pushState('forward', null, '#modal');
             });
 
             $(window).on('popstate', function () {
