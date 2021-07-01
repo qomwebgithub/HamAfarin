@@ -373,6 +373,7 @@ namespace HamAfarin
                     oUserProfiles.MobileNumber = oBasePerson.mobile;
                     oUserProfiles.ProfileNationalId = oBasePerson.privatePerson.shNumber;
                     oUserProfiles.AccountSheba = oBasePerson.accounts.sheba;
+                    oUserProfiles.SejamCode = oBasePerson.tradingCode.code;
                 }
                 else
                 {
@@ -393,8 +394,9 @@ namespace HamAfarin
                         // strBirthDate = oBasePerson.privatePerson.birthDate,
                         MobileNumber = oBasePerson.mobile,
                         ProfileNationalId = oBasePerson.privatePerson.shNumber,
-                        AccountSheba = oBasePerson.accounts.sheba
-                    };
+                        AccountSheba = oBasePerson.accounts.sheba,
+                        SejamCode = oBasePerson.tradingCode.code
+                };
                     db.Tbl_UserProfiles.Add(oUserProfiles);
                 }
 

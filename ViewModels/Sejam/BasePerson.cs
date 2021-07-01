@@ -27,6 +27,7 @@ namespace ViewModels
         public string status { get; set; }
         public PrivatePersonViewModel privatePerson { get; set; }
         public BankingAccountViewModel accounts { get; set; }
+        public TradingCodeViewModel tradingCode { get; set; }
         public LegalPersonViewModel legalPerson { get; set; }
         public List<AddressViewModel> addresses { get; set; }
         public List<TradingCodeViewModel> tradingCodes { get; set; }

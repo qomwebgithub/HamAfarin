@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,14 @@ namespace ViewModels
 {
     public class TradingCodeViewModel
     {
-        public string type { get; set; }
+        public string code { get; set; }
+
+        public static implicit operator TradingCodeViewModel(JToken jsonData)
+        {
+            return new TradingCodeViewModel()
+            {
+                code = (string)jsonData["code"]
+            };
+        }
     }
 }
