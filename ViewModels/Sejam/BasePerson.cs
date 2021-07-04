@@ -19,6 +19,7 @@ namespace ViewModels
             type = (string)jUser["type"];
             privatePerson = jUser["privatePerson"];
             accounts = jUser["accounts"][0];
+            tradingCodes = jUser["tradingCodes"][0];
         }
         public string mobile { get; set; }
         public string email { get; set; }
@@ -27,10 +28,10 @@ namespace ViewModels
         public string status { get; set; }
         public PrivatePersonViewModel privatePerson { get; set; }
         public BankingAccountViewModel accounts { get; set; }
-        public TradingCodeViewModel tradingCode { get; set; }
+        public TradingCodeViewModel tradingCodes { get; set; }
         public LegalPersonViewModel legalPerson { get; set; }
         public List<AddressViewModel> addresses { get; set; }
-        public List<TradingCodeViewModel> tradingCodes { get; set; }
+        //public List<TradingCodeViewModel> tradingCodes { get; set; }
         public AgentViewModel agent { get; set; }
         public JobInfoViewModel jobInfo { get; set; }
         public FinancialInfoViewModel financialInfo { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Common;
 using DataLayer;
+using HamAfarin.Classes;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace HamAfarin
                     // Add an Accept header for JSON format.
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     StringContent json = new StringContent("{\"uniqueIdentifier\": \"" + uniqueIdentifier + "\"}", Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await client.PostAsync("kycOtp", json);  
+                    HttpResponseMessage response = await client.PostAsync("kycOtp", json);
                     if (response.IsSuccessStatusCode)
                     {
                         //return "Message: " + response.RequestMessage + " Header: " + response.Content.Headers + " content: " + responseContent;
@@ -125,7 +126,7 @@ namespace HamAfarin
                         db.SaveChanges();
                         return true;
                     }
-                    
+
                     UserToken = Message;
                     return false;
                 }
@@ -196,7 +197,7 @@ namespace HamAfarin
                     loginResult = (false, kycOtpResult.Message);
                     return loginResult;
                 }
-                loginResult = (false,"کاربر یافت نشد");
+                loginResult = (false, "کاربر یافت نشد");
                 return loginResult;
             }
             catch (Exception e)
@@ -214,7 +215,7 @@ namespace HamAfarin
                 loginResult = (false, e.ToString());
                 return loginResult;
             }
-            
+
         }
 
 
@@ -373,7 +374,7 @@ namespace HamAfarin
                     oUserProfiles.MobileNumber = oBasePerson.mobile;
                     oUserProfiles.ProfileNationalId = oBasePerson.privatePerson.shNumber;
                     oUserProfiles.AccountSheba = oBasePerson.accounts.sheba;
-                    oUserProfiles.SejamCode = oBasePerson.tradingCode.code;
+                    oUserProfiles.SejamCode = oBasePerson.tradingCodes.code;
                 }
                 else
                 {
@@ -395,8 +396,8 @@ namespace HamAfarin
                         MobileNumber = oBasePerson.mobile,
                         ProfileNationalId = oBasePerson.privatePerson.shNumber,
                         AccountSheba = oBasePerson.accounts.sheba,
-                        SejamCode = oBasePerson.tradingCode.code
-                };
+                        SejamCode = oBasePerson.tradingCodes.code
+                    };
                     db.Tbl_UserProfiles.Add(oUserProfiles);
                 }
 
@@ -450,7 +451,7 @@ namespace HamAfarin
             try
             {
 
-                
+
                 //از این روش به علت ارسال دو درخواست تا زمان رفع باگ استفاده نمی شود
                 //Tbl_SajamToken qSajamToken = db.Tbl_SajamToken.FirstOrDefault(t => t.IsActive && t.IsDelete == false);
 
@@ -522,7 +523,7 @@ namespace HamAfarin
                             hdb.Tbl_SajamToken.Add(oSajamToken);
                             hdb.SaveChanges();
                         }
-                        
+
                     }
                     httpResponse.Close();
                 }
@@ -530,7 +531,7 @@ namespace HamAfarin
                 {
                     token = e.Message;
 
-                   Tbl_SajamToken oExSajamToken = new Tbl_SajamToken()
+                    Tbl_SajamToken oExSajamToken = new Tbl_SajamToken()
                     {
                         DateExpire = DateTime.Now,
                         DateRequest = DateTime.Now,
