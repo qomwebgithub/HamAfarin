@@ -63,5 +63,6 @@ namespace DataLayer
         public virtual DbSet<Tbl_Tickets> Tbl_Tickets { get; set; }
         public virtual DbSet<Tbl_UserProfiles> Tbl_UserProfiles { get; set; }
         public virtual DbSet<Tbl_Users> Tbl_Users { get; set; }
+        public virtual DbSet<Tbl_SmsException> Tbl_SmsException { get; set; }
     }
 }

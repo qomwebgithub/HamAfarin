@@ -527,6 +527,18 @@
           <Property Name="LinkClick2" Type="nvarchar(max)" />
           <Property Name="IsActiveClick2" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsException' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Tbl_SmsException">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="Method" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Tbl_Tickets">
           <Key>
             <PropertyRef Name="TicketID" />
@@ -1012,6 +1024,15 @@
           <EntitySet Name="Tbl_Tickets" EntityType="Self.Tbl_Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="Self.Tbl_UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SmsException" EntityType="Self.Tbl_SmsException" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Tbl_SmsException].[ID] AS [ID], 
+    [Tbl_SmsException].[Exception] AS [Exception], 
+    [Tbl_SmsException].[Method] AS [Method], 
+    [Tbl_SmsException].[Description] AS [Description], 
+    [Tbl_SmsException].[CreateDate] AS [CreateDate]
+    FROM [dbo].[Tbl_SmsException] AS [Tbl_SmsException]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="Self.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1180,6 +1201,7 @@
           <EntitySet Name="Tbl_Tickets" EntityType="webqomir_HamAfarinDBModel.Tbl_Tickets" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" />
           <EntitySet Name="Tbl_Users" EntityType="webqomir_HamAfarinDBModel.Tbl_Users" />
+          <EntitySet Name="Tbl_SmsException" EntityType="webqomir_HamAfarinDBModel.Tbl_SmsException" />
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1962,6 +1984,16 @@
           <NavigationProperty Name="Tbl_Tickets3" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users3" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_Tickets4" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users4" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_UserProfiles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Profile_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_UserProfiles" />
+        </EntityType>
+        <EntityType Name="Tbl_SmsException">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Tbl_Blog_Tbl_Users">
           <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
@@ -2972,6 +3004,17 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SmsException">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_SmsException">
+              <MappingFragment StoreEntitySet="Tbl_SmsException">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

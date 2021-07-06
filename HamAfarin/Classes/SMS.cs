@@ -1,14 +1,21 @@
-﻿using System;
+﻿using DataLayer;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace HamAfarin
 {
     public class SMS
     {
+        HamAfarinDBEntities db = new HamAfarinDBEntities();
+
         public void SendSMS(string MobileNumber, string Message)
         {
             SaharSendSms(MobileNumber, Message);
@@ -60,6 +67,63 @@ namespace HamAfarin
                 using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var result = streamReader.ReadToEnd();
+                }
+            }
+        }
+
+        public  (bool Success, string Message) PayamSmsSendSms(string MobileNumber, string Message)
+        {
+            (bool Success, string Message) tokenResult;
+            // این کد پیش فرض داخل داکیومنت می باشد
+            string url = "https://ws2.adpdigital.com/url/send?username=irfintech&password=irfintech123&dstaddress=" + MobileNumber + "&srcaddress=98200071072&body=" + Message + "&unicode=1";
+            
+            WebClient client = new WebClient();
+            try
+            {
+                byte[] respData = client.DownloadData(url);
+                string response = Encoding.ASCII.GetString(respData);
+                tokenResult = (true, response);
+                return tokenResult;
+            }
+            catch (WebException x)
+            {
+                Tbl_SmsException oSmsException = new Tbl_SmsException()
+                {
+                    CreateDate = DateTime.Now,
+                    Description = "Message: " + x.Message + " - Response: " + x.Response,
+                    Exception = x.ToString(),
+                    ID = Guid.NewGuid().ToString(),
+                    Method = nameof(PayamSmsSendSms)
+                };
+                db.Tbl_SmsException.Add(oSmsException);
+                db.SaveChanges();
+                tokenResult = (false, "Message: " + x.Message + " - Response: " + x.Response);
+                return tokenResult;
+            }
+
+        }
+
+        public async Task<(bool Success, string Message)> PayamSmsSendSmsAsync(string MobileNumber, string Message)
+        {
+            (bool Success, string Message) tokenResult;
+
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://ws2.adpdigital.com/url/");
+
+                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress="+ MobileNumber + "&srcaddress=98200071072&body="+ Message + "&unicode=1", null);
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    tokenResult = (true, responseContent);
+                    return tokenResult;
+                }
+                else
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    string errorMessage = responseContent;
+                    tokenResult = (false, errorMessage);
+                    return tokenResult;
                 }
             }
         }
