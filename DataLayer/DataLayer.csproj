@@ -220,6 +220,9 @@
     <Compile Include="Tbl_Sliders.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tbl_Sms.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_SmsException.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
