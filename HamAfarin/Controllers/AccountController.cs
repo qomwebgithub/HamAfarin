@@ -60,7 +60,9 @@ namespace Hamafarin.Controllers
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
                         string formatedMobileNumber = "98" + user.MobileNumber.Substring(1);
-                        (bool Success, string Message) result = new SMS().PayamSmsSendSms(formatedMobileNumber, "به هم آفرین خوش آمدید" + "\r\n" + "شما در پنل سرمایه گذاری هستید");
+                        // 1 = ورود
+                        Tbl_Sms qSms = db.Tbl_Sms.Find(1);
+                        (bool Success, string Message) result = oSms.PayamSmsSendSms(formatedMobileNumber, qSms.Message);
 
                         if (user.Role_id == 1)
                             return Redirect(ReturnUrl);
@@ -138,9 +140,6 @@ namespace Hamafarin.Controllers
                     }
 
                     db.SaveChanges();
-
-                    //string formatedMobileNumber = "98" + oUser.MobileNumber.Substring(1);
-                    //(bool Success, string Message) result = new SMS().PayamSmsSendSms(formatedMobileNumber, "به هم آفرین خوش آمدید" + "\r\n" + "ثبت نام شما با موفقیت انجام شد.");
 
                     ViewBag.IsSuccess = true;
 
@@ -260,9 +259,10 @@ namespace Hamafarin.Controllers
                             db.SaveChanges();
 
                         }
-
+                        // 2 = ثبت نام
+                        Tbl_Sms qSms = db.Tbl_Sms.Find(2);
                         string formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
-                        (bool Success, string Message) result = new SMS().PayamSmsSendSms(formatedMobileNumber, "به هم آفرین خوش آمدید" + "\r\n" + "ثبت نام شما با موفقیت انجام شد.");
+                        (bool Success, string Message) result = oSms.PayamSmsSendSms(formatedMobileNumber, qSms.Message);
 
 
                         string strSetAuthCookie = qUser.UserID + "," + qUser.Role_id + "," + qUser.UserName + "," + qUser.MobileNumber;
