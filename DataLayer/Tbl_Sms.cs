@@ -17,5 +17,6 @@ namespace DataLayer
         public int ID { get; set; }
         public string Title { get; set; }
         public string Message { get; set; }
+        public Nullable<System.DateTime> EditDate { get; set; }
     }
 }

@@ -534,6 +534,7 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="EditDate" Type="datetime" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsException' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -1905,6 +1906,7 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsException' does not have a 
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Tbl_Tickets">
           <Key>
@@ -2951,6 +2953,7 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsException' does not have a 
           <EntitySetMapping Name="Tbl_Sms">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Sms">
               <MappingFragment StoreEntitySet="Tbl_Sms">
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

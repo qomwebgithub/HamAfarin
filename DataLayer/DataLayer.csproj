@@ -78,6 +78,7 @@
     <Compile Include="MetadataClasses\Tbl_CapitalApplicantHelpMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_MenuTypeMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_MenuPageMetadata.cs" />
+    <Compile Include="MetadataClasses\Tbl_SmsMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_PaymentOnlineDetilsMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_BussinessPlansMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_InvestableMetadata.cs" />
