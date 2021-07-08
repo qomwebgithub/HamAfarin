@@ -546,8 +546,6 @@
           <Property Name="Message" Type="nvarchar(max)" />
           <Property Name="EditDate" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Tbl_SmsLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -1043,19 +1041,10 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primar
           <EntitySet Name="Tbl_ShareHoldersCompany" EntityType="Self.Tbl_ShareHoldersCompany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Sliders" EntityType="Self.Tbl_Sliders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Sms" EntityType="Self.Tbl_Sms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SmsLog" EntityType="Self.Tbl_SmsLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Tickets" EntityType="Self.Tbl_Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="Self.Tbl_UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tbl_SmsLog" EntityType="Self.Tbl_SmsLog" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Tbl_SmsLog].[ID] AS [ID], 
-    [Tbl_SmsLog].[Exception] AS [Exception], 
-    [Tbl_SmsLog].[Method] AS [Method], 
-    [Tbl_SmsLog].[MobileNumber] AS [MobileNumber], 
-    [Tbl_SmsLog].[Message] AS [Message], 
-    [Tbl_SmsLog].[CreateDate] AS [CreateDate]
-    FROM [dbo].[Tbl_SmsLog] AS [Tbl_SmsLog]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="Self.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1223,10 +1212,10 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primar
           <EntitySet Name="Tbl_ShareHoldersCompany" EntityType="webqomir_HamAfarinDBModel.Tbl_ShareHoldersCompany" />
           <EntitySet Name="Tbl_Sliders" EntityType="webqomir_HamAfarinDBModel.Tbl_Sliders" />
           <EntitySet Name="Tbl_Sms" EntityType="webqomir_HamAfarinDBModel.Tbl_Sms" />
+          <EntitySet Name="Tbl_SmsLog" EntityType="webqomir_HamAfarinDBModel.Tbl_SmsLog" />
           <EntitySet Name="Tbl_Tickets" EntityType="webqomir_HamAfarinDBModel.Tbl_Tickets" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" />
           <EntitySet Name="Tbl_Users" EntityType="webqomir_HamAfarinDBModel.Tbl_Users" />
-          <EntitySet Name="Tbl_SmsLog" EntityType="webqomir_HamAfarinDBModel.Tbl_SmsLog" />
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1932,6 +1921,17 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primar
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EditDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="Tbl_SmsLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Tbl_Tickets">
           <Key>
             <PropertyRef Name="TicketID" />
@@ -2028,17 +2028,6 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primar
           <NavigationProperty Name="Tbl_Tickets3" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users3" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_Tickets4" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users4" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_UserProfiles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Profile_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_UserProfiles" />
-        </EntityType>
-        <EntityType Name="Tbl_SmsLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Tbl_Blog_Tbl_Users">
           <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
@@ -2996,6 +2985,18 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SmsLog">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_SmsLog">
+              <MappingFragment StoreEntitySet="Tbl_SmsLog">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Tickets">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Tickets">
               <MappingFragment StoreEntitySet="Tbl_Tickets">
@@ -3070,18 +3071,6 @@ warning 6002: The table/view 'HamAfarinDB.dbo.Tbl_SmsLog' does not have a primar
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Tbl_SmsLog">
-            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_SmsLog">
-              <MappingFragment StoreEntitySet="Tbl_SmsLog">
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Message" ColumnName="Message" />
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
-                <ScalarProperty Name="Method" ColumnName="Method" />
-                <ScalarProperty Name="Exception" ColumnName="Exception" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
