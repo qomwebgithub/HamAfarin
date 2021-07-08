@@ -21,6 +21,8 @@ namespace HamAfarin.Areas.Admin.Controllers
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
         UserService userService = new UserService();
+        SMS oSms = new SMS();
+
         // GET: Admin/Tbl_BusinessPlanPayment
         public ActionResult Index(int? id)
         {
@@ -218,6 +220,20 @@ namespace HamAfarin.Areas.Admin.Controllers
                 {
                     tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
                     tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
+
+
+                    // 5 = تایید سرمایه گذاری توسط ادمین
+                    Tbl_Sms qSms = db.Tbl_Sms.Find(5);
+                    string massage = qSms.Message;
+                    if (qSms.Message.Contains("@T"))
+                    {
+                        Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == tbl_BusinessPlanPayment.BusinessPlan_id);
+                        massage = qSms.Message.Replace("@T", qBussinessPlan.Title);
+                    }
+
+                    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    string formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
+                    (bool Success, string Message) result = oSms.AdpSendSms(formatedMobileNumber, massage);
                 }
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 db.SaveChanges();
