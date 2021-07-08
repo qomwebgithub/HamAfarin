@@ -12,12 +12,13 @@ namespace DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Tbl_SmsException
+    public partial class Tbl_SmsLog
     {
         public string ID { get; set; }
         public string Exception { get; set; }
         public string Method { get; set; }
-        public string Description { get; set; }
+        public string MobileNumber { get; set; }
+        public string Message { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
     }
 }

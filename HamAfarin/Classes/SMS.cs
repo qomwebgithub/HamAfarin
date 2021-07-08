@@ -71,31 +71,43 @@ namespace HamAfarin
             }
         }
 
-        public  (bool Success, string Message) AdpSendSms(string MobileNumber, string Message)
+        public  (bool Success, string Message) AdpSendSms(string mobileNumber, string message)
         {
             (bool Success, string Message) tokenResult;
+
             // این کد پیش فرض داخل داکیومنت می باشد
-            string url = "https://ws2.adpdigital.com/url/send?username=irfintech&password=irfintech123&dstaddress=" + MobileNumber + "&srcaddress=98200071072&body=" + Message + "&unicode=1";
-            
+            string url = "https://ws2.adpdigital.com/url/send?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&srcaddress=98200071072&body=" + message + "&unicode=1";
             WebClient client = new WebClient();
             try
             {
                 byte[] respData = client.DownloadData(url);
                 string response = Encoding.ASCII.GetString(respData);
+                Tbl_SmsLog oSmsException = new Tbl_SmsLog()
+                {
+                    CreateDate = DateTime.Now,
+                    Exception = null,
+                    MobileNumber = mobileNumber,
+                    Message = message,
+                    ID = Guid.NewGuid().ToString(),
+                    Method = nameof(AdpSendSms)
+                };
+                db.Tbl_SmsLog.Add(oSmsException);
+                db.SaveChanges();
                 tokenResult = (true, response);
                 return tokenResult;
             }
             catch (WebException x)
             {
-                Tbl_SmsException oSmsException = new Tbl_SmsException()
+                Tbl_SmsLog oSmsException = new Tbl_SmsLog()
                 {
                     CreateDate = DateTime.Now,
-                    Description = "Message: " + x.Message + " - Response: " + x.Response,
-                    Exception = x.ToString(),
+                    Exception = "Exception: " + x.ToString() + "Message: " + x.Message + " - Response: " + x.Response,
+                    MobileNumber = mobileNumber,
+                    Message = message,
                     ID = Guid.NewGuid().ToString(),
                     Method = nameof(AdpSendSms)
                 };
-                db.Tbl_SmsException.Add(oSmsException);
+                db.Tbl_SmsLog.Add(oSmsException);
                 db.SaveChanges();
                 tokenResult = (false, "Message: " + x.Message + " - Response: " + x.Response);
                 return tokenResult;
@@ -103,7 +115,7 @@ namespace HamAfarin
 
         }
 
-        public async Task<(bool Success, string Message)> AdpSendSmsAsync(string MobileNumber, string Message)
+        public async Task<(bool Success, string Message)> AdpSendSmsAsync(string mobileNumber, string message)
         {
             (bool Success, string Message) tokenResult;
 
@@ -111,27 +123,39 @@ namespace HamAfarin
             {
                 client.BaseAddress = new Uri("https://ws2.adpdigital.com/url/");
 
-                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress="+ MobileNumber + "&srcaddress=98200071072&body="+ Message + "&unicode=1", null);
+                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress="+ mobileNumber + "&srcaddress=98200071072&body="+ message + "&unicode=1", null);
                 if (response.IsSuccessStatusCode)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
+                    Tbl_SmsLog oSmsException = new Tbl_SmsLog()
+                    {
+                        CreateDate = DateTime.Now,
+                        Exception = null,
+                        MobileNumber = mobileNumber,
+                        Message = message,
+                        ID = Guid.NewGuid().ToString(),
+                        Method = nameof(AdpSendSmsAsync)
+                    };
+                    db.Tbl_SmsLog.Add(oSmsException);
+                    await db.SaveChangesAsync();
                     tokenResult = (true, responseContent);
                     return tokenResult;
                 }
                 else
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
-                    string errorMessage = responseContent;
-                    Tbl_SmsException oSmsException = new Tbl_SmsException()
+                    Tbl_SmsLog oSmsException = new Tbl_SmsLog()
                     {
                         CreateDate = DateTime.Now,
-                        Description = errorMessage,
+                        Exception = "Response Code: " + response.StatusCode.ToString() + "Error Message: " + responseContent,
+                        MobileNumber = mobileNumber,
+                        Message = message,
                         ID = Guid.NewGuid().ToString(),
                         Method = nameof(AdpSendSmsAsync)
                     };
-                    db.Tbl_SmsException.Add(oSmsException);
-                    db.SaveChanges();
-                    tokenResult = (false, errorMessage);
+                    db.Tbl_SmsLog.Add(oSmsException);
+                    await db.SaveChangesAsync();
+                    tokenResult = (false, responseContent);
                     return tokenResult;
                 }
             }
