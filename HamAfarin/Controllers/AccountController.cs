@@ -62,7 +62,7 @@ namespace Hamafarin.Controllers
                         string formatedMobileNumber = "98" + user.MobileNumber.Substring(1);
                         // 1 = ورود
                         Tbl_Sms qSms = db.Tbl_Sms.Find(1);
-                        (bool Success, string Message) result = oSms.PayamSmsSendSms(formatedMobileNumber, qSms.Message);
+                        (bool Success, string Message) result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
 
                         if (user.Role_id == 1)
                             return Redirect(ReturnUrl);
@@ -233,6 +233,10 @@ namespace Hamafarin.Controllers
 
                     Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
 
+                    Tbl_Sms qSms;
+                    string formatedMobileNumber;
+                    (bool Success, string Message) result;
+
                     if (qUser != null)
                     {
                         if (qUser.Role_id != 1)
@@ -245,6 +249,12 @@ namespace Hamafarin.Controllers
                                 {
                                     ViewBag.profile = Message;
                                     ModelState.AddModelError("SmsCode", Message);
+
+                                    // 3 = ثبت اطلاعات از سجام
+                                    qSms = db.Tbl_Sms.Find(3);
+                                    formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
+                                    result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+
                                     return View(verifySms);
                                 }
                             }
@@ -259,10 +269,11 @@ namespace Hamafarin.Controllers
                             db.SaveChanges();
 
                         }
+
                         // 2 = ثبت نام
-                        Tbl_Sms qSms = db.Tbl_Sms.Find(2);
-                        string formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
-                        (bool Success, string Message) result = oSms.PayamSmsSendSms(formatedMobileNumber, qSms.Message);
+                        qSms = db.Tbl_Sms.Find(2);
+                        formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
+                        result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
 
 
                         string strSetAuthCookie = qUser.UserID + "," + qUser.Role_id + "," + qUser.UserName + "," + qUser.MobileNumber;

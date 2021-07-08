@@ -71,7 +71,7 @@ namespace HamAfarin
             }
         }
 
-        public  (bool Success, string Message) PayamSmsSendSms(string MobileNumber, string Message)
+        public  (bool Success, string Message) AdpSendSms(string MobileNumber, string Message)
         {
             (bool Success, string Message) tokenResult;
             // این کد پیش فرض داخل داکیومنت می باشد
@@ -93,7 +93,7 @@ namespace HamAfarin
                     Description = "Message: " + x.Message + " - Response: " + x.Response,
                     Exception = x.ToString(),
                     ID = Guid.NewGuid().ToString(),
-                    Method = nameof(PayamSmsSendSms)
+                    Method = nameof(AdpSendSms)
                 };
                 db.Tbl_SmsException.Add(oSmsException);
                 db.SaveChanges();
@@ -103,7 +103,7 @@ namespace HamAfarin
 
         }
 
-        public async Task<(bool Success, string Message)> PayamSmsSendSmsAsync(string MobileNumber, string Message)
+        public async Task<(bool Success, string Message)> AdpSendSmsAsync(string MobileNumber, string Message)
         {
             (bool Success, string Message) tokenResult;
 
@@ -122,6 +122,15 @@ namespace HamAfarin
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
                     string errorMessage = responseContent;
+                    Tbl_SmsException oSmsException = new Tbl_SmsException()
+                    {
+                        CreateDate = DateTime.Now,
+                        Description = errorMessage,
+                        ID = Guid.NewGuid().ToString(),
+                        Method = nameof(AdpSendSmsAsync)
+                    };
+                    db.Tbl_SmsException.Add(oSmsException);
+                    db.SaveChanges();
                     tokenResult = (false, errorMessage);
                     return tokenResult;
                 }
