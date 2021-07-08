@@ -1,0 +1,32 @@
+﻿@model IEnumerable<DataLayer.Tbl_Sms>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "تنظیمات پیامک";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+      .Name("Grid")
+      .Columns(columns =>
+          {
+                        columns.Bound(model => model.Title);
+columns.Bound(model => model.Message);
+columns.Bound(model => model.EditDate);
+            columns.Bound(item => @item.ID).Title("عملیات").Filterable(false).Groupable(false)
+                    .Template(@<text>
+                @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                    </text>).Width(200);
+          })
+.Groupable()
+.Pageable()
+.Sortable()
+.Scrollable()
+.Filterable()
+.DataSource(dataSource => dataSource
+.Server()
+
+.Model(model => model.Id(item => item.ID))
+)
+)
