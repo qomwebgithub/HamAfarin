@@ -25,6 +25,7 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Blog> Tbl_Blog { get; set; }
         public virtual DbSet<Tbl_BusinessLevels> Tbl_BusinessLevels { get; set; }
         public virtual DbSet<Tbl_BusinessPlanGallery> Tbl_BusinessPlanGallery { get; set; }
@@ -60,6 +61,8 @@ namespace DataLayer
         public virtual DbSet<Tbl_Settings> Tbl_Settings { get; set; }
         public virtual DbSet<Tbl_ShareHoldersCompany> Tbl_ShareHoldersCompany { get; set; }
         public virtual DbSet<Tbl_Sliders> Tbl_Sliders { get; set; }
+        public virtual DbSet<Tbl_Sms> Tbl_Sms { get; set; }
+        public virtual DbSet<Tbl_SmsLog> Tbl_SmsLog { get; set; }
         public virtual DbSet<Tbl_Tickets> Tbl_Tickets { get; set; }
         public virtual DbSet<Tbl_UserProfiles> Tbl_UserProfiles { get; set; }
         public virtual DbSet<Tbl_Users> Tbl_Users { get; set; }

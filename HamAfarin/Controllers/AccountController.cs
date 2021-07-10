@@ -58,6 +58,12 @@ namespace Hamafarin.Controllers
                         // FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
                         string strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber;
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
+
+                        string formatedMobileNumber = "98" + user.MobileNumber.Substring(1);
+                        // 1 = ورود
+                        Tbl_Sms qSms = db.Tbl_Sms.Find(1);
+                        (bool Success, string Message) result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+
                         if (user.Role_id == 1)
                             return Redirect(ReturnUrl);
                         return Redirect(ReturnUrl);
@@ -111,36 +117,31 @@ namespace Hamafarin.Controllers
                     Random rndSmsCode = new Random();
                     int smsCode = rndSmsCode.Next(1000, 9999);
                     Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == regiser.MobileNumber);
-                    if (oUser != null)
+
+                    oUser = new Tbl_Users()
                     {
-                        oUser.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(regiser.Password, "MD5");
-                        oUser.SmsCode = smsCode;
-                    }
-                    else
-                    {
-                        oUser = new Tbl_Users()
-                        {
-                            UserName = StringExtensions.Fa2En(regiser.MobileNumber),
-                            MobileNumber = StringExtensions.Fa2En(regiser.MobileNumber),
-                            IsActive = false,
-                            IsDeleted = false,
-                            RegisterDate = DateTime.Now,
-                            Role_id = 2,
-                            Password = FormsAuthentication.HashPasswordForStoringInConfigFile(regiser.Password, "MD5"),
-                            SmsCode = smsCode,
-                            IsLegal = regiser.IsLegal,
-                            UserToken = Guid.NewGuid().ToString(),
-                            HasSejam = false,
-                            ActivateDate = null,
-                        };
-                        db.Tbl_Users.Add(oUser);
-                    }
+                        UserName = StringExtensions.Fa2En(regiser.MobileNumber),
+                        MobileNumber = StringExtensions.Fa2En(regiser.MobileNumber),
+                        IsActive = false,
+                        IsDeleted = false,
+                        RegisterDate = DateTime.Now,
+                        Role_id = 2,
+                        Password = FormsAuthentication.HashPasswordForStoringInConfigFile(regiser.Password, "MD5"),
+                        SmsCode = smsCode,
+                        IsLegal = regiser.IsLegal,
+                        UserToken = Guid.NewGuid().ToString(),
+                        HasSejam = false,
+                        ActivateDate = null,
+                    };
+                    db.Tbl_Users.Add(oUser);
+
                     if (oUser.UserToken == null)
                     {
                         oUser.UserToken = Guid.NewGuid().ToString();
                     }
 
                     db.SaveChanges();
+
                     ViewBag.IsSuccess = true;
 
                     oSms.SendSMS(oUser.MobileNumber, oUser.SmsCode.ToString());
@@ -233,6 +234,10 @@ namespace Hamafarin.Controllers
 
                     Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
 
+                    Tbl_Sms qSms;
+                    string formatedMobileNumber;
+                    (bool Success, string Message) result;
+
                     if (qUser != null)
                     {
                         if (qUser.Role_id != 1)
@@ -245,6 +250,12 @@ namespace Hamafarin.Controllers
                                 {
                                     ViewBag.profile = Message;
                                     ModelState.AddModelError("SmsCode", Message);
+
+                                    // 3 = ثبت اطلاعات از سجام
+                                    qSms = db.Tbl_Sms.Find(3);
+                                    formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
+                                    result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+
                                     return View(verifySms);
                                 }
                             }
@@ -259,6 +270,13 @@ namespace Hamafarin.Controllers
                             db.SaveChanges();
 
                         }
+
+                        // 2 = ثبت نام
+                        qSms = db.Tbl_Sms.Find(2);
+                        formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
+                        result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+
+
                         string strSetAuthCookie = qUser.UserID + "," + qUser.Role_id + "," + qUser.UserName + "," + qUser.MobileNumber;
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
                         return Redirect("/UserPanel/UserProfile");
@@ -400,7 +418,7 @@ namespace Hamafarin.Controllers
 
         }
 
-        
+
         public async Task<JsonResult> TestApi(string id)
         {
             (bool Success, string Message) kycOtpResulat = await oSejamClass.kycOtpHttpClientAsync(id);

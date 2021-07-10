@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="webqomir_HamAfarinDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
             <PropertyRef Name="BlogID" />
@@ -527,6 +537,26 @@
           <Property Name="LinkClick2" Type="nvarchar(max)" />
           <Property Name="IsActiveClick2" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_Sms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="EditDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tbl_SmsLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Exception" Type="nvarchar(max)" />
+          <Property Name="Method" Type="nvarchar(max)" />
+          <Property Name="MobileNumber" Type="nvarchar(max)" />
+          <Property Name="Message" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Tbl_Tickets">
           <Key>
             <PropertyRef Name="TicketID" />
@@ -974,6 +1004,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="webqomir_HamAfarinDBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Blog" EntityType="Self.Tbl_Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_BusinessLevels" EntityType="Self.Tbl_BusinessLevels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_BusinessPlanGallery" EntityType="Self.Tbl_BusinessPlanGallery" Schema="dbo" store:Type="Tables" />
@@ -1009,6 +1040,8 @@
           <EntitySet Name="Tbl_Settings" EntityType="Self.Tbl_Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ShareHoldersCompany" EntityType="Self.Tbl_ShareHoldersCompany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Sliders" EntityType="Self.Tbl_Sliders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Sms" EntityType="Self.Tbl_Sms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_SmsLog" EntityType="Self.Tbl_SmsLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Tickets" EntityType="Self.Tbl_Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="Self.Tbl_UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" Schema="dbo" store:Type="Tables" />
@@ -1142,6 +1175,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="webqomir_HamAfarinDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="HamAfarinDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="webqomir_HamAfarinDBModel.sysdiagrams" />
           <EntitySet Name="Tbl_Blog" EntityType="webqomir_HamAfarinDBModel.Tbl_Blog" />
           <EntitySet Name="Tbl_BusinessLevels" EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessLevels" />
           <EntitySet Name="Tbl_BusinessPlanGallery" EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanGallery" />
@@ -1177,6 +1211,8 @@
           <EntitySet Name="Tbl_Settings" EntityType="webqomir_HamAfarinDBModel.Tbl_Settings" />
           <EntitySet Name="Tbl_ShareHoldersCompany" EntityType="webqomir_HamAfarinDBModel.Tbl_ShareHoldersCompany" />
           <EntitySet Name="Tbl_Sliders" EntityType="webqomir_HamAfarinDBModel.Tbl_Sliders" />
+          <EntitySet Name="Tbl_Sms" EntityType="webqomir_HamAfarinDBModel.Tbl_Sms" />
+          <EntitySet Name="Tbl_SmsLog" EntityType="webqomir_HamAfarinDBModel.Tbl_SmsLog" />
           <EntitySet Name="Tbl_Tickets" EntityType="webqomir_HamAfarinDBModel.Tbl_Tickets" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" />
           <EntitySet Name="Tbl_Users" EntityType="webqomir_HamAfarinDBModel.Tbl_Users" />
@@ -1305,6 +1341,16 @@
             <End Role="Tbl_UserProfiles" EntitySet="Tbl_UserProfiles" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
             <PropertyRef Name="BlogID" />
@@ -1866,6 +1912,26 @@
           <Property Name="LinkClick2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActiveClick2" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Tbl_Sms">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Tbl_SmsLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Exception" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Method" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
         <EntityType Name="Tbl_Tickets">
           <Key>
             <PropertyRef Name="TicketID" />
@@ -2341,6 +2407,17 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="webqomir_HamAfarinDBModelStoreContainer" CdmEntityContainer="HamAfarinDBEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Blog">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Blog">
               <MappingFragment StoreEntitySet="Tbl_Blog">
@@ -2895,6 +2972,28 @@
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="SliderID" ColumnName="SliderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Sms">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Sms">
+              <MappingFragment StoreEntitySet="Tbl_Sms">
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_SmsLog">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_SmsLog">
+              <MappingFragment StoreEntitySet="Tbl_SmsLog">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Exception" ColumnName="Exception" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

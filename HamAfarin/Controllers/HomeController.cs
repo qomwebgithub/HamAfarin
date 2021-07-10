@@ -22,10 +22,6 @@ namespace Hamafarin.Controllers
         HamAfarinDBEntities db = new HamAfarinDBEntities();
         PlanService planService = new PlanService();
         // GET: Home
-
-
-
-
         public ActionResult Index()
         {
             return View();

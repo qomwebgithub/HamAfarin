@@ -456,6 +456,11 @@
             <div class="col-md-10">
                 @Html.Kendo().Upload().Name("ideaFile").Messages(model => model.Select("بارگذاری گالری ویدیو معرفی ایده"))
                 @Html.ValidationMessageFor(model => model.IntroductionIdeaVideoFileName)
+                @if (Model.IntroductionIdeaVideoFileName != null)
+                {
+                    <br />
+                    <a id="DeleteVideoBtn" onclick="DeleteVideo(@Model.BussinessPlanID)" class="btn btn-danger btn-block col-md-2 text-white">حذف ویدیو</a>
+                }
                 @{ if (Model.CompanyIntroductionLetterFileName != null)
                     {
                         <br />
@@ -782,6 +787,12 @@
             if (confirm("آیا از حذف مطمين هستید؟"))
                 $.get("/Admin/Tbl_BussinessPlans/DeleteImageGallery/" + id, function () {
                     $("#Gallery_" + id).slideUp(3000);
+                });
+        }
+        function DeleteVideo(id) {
+            if (confirm("آیا از حذف مطمين هستید؟"))
+                $.get("/Admin/Tbl_BussinessPlans/DeleteVideo/" + id, function () {
+                    $("#DeleteVideoBtn").hide();
                 });
         }
     </script>

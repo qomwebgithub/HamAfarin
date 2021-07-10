@@ -480,7 +480,7 @@
 
 
                     <div>
-                        @if (!String.IsNullOrEmpty(Model.VideoFileName))
+                        @*@if (!String.IsNullOrEmpty(Model.VideoFileName))
                         {
                             <center>
                                 <video height="400">
@@ -493,7 +493,7 @@
                                     مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
                                 </video>
                             </center>
-                        }
+                        }*@
 
                         <div class="" id="accordion">
 
@@ -507,15 +507,18 @@
                                     </a>
                                 </div>
                                 <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
-                                    <div width="400" id="video">
-                                        <video width="100%" controls id="Tvideo">
-                                            <source src="~/Resources/BusinessPlans/Idea/demo.mp4" type="video/mp4">
-                                            Your browser does not support HTML video.
-                                        </video>
-                                        <div id="Vshadow">
+                                    @if (!String.IsNullOrEmpty(Model.VideoFileName))
+                                    {
+                                        <div width="300" id="video">
+                                            <video width="300" controls id="Tvideo">
+                                                <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
+                                                مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
+                                            </video>
+                                            <div id="Vshadow">
 
+                                            </div>
                                         </div>
-                                    </div>
+                                    }
                                     <p class="figure-caption text-muted pt-1">
 
                                         @Html.Raw(@Model.BusinessPlanFeatures)

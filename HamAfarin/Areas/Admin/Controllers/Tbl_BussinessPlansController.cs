@@ -453,6 +453,19 @@ namespace Hamafarin.Areas.Admin.Controllers
             db.SaveChanges();
         }
 
+        /// <summary>
+        /// حذف ویدیو
+        /// </summary>
+        /// <param name="id">شناسه ویدیو</param>
+        public void DeleteVideo(int id)
+        {
+            var qBussinessPlans = db.Tbl_BussinessPlans.Find(id);
+            System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Idea/" + qBussinessPlans.IntroductionIdeaVideoFileName));
+            qBussinessPlans.IntroductionIdeaVideoFileName = null;
+            db.Entry(qBussinessPlans).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

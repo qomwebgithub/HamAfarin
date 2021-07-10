@@ -1,0 +1,42 @@
+﻿@model DataLayer.Tbl_Sms
+@using Kendo.Mvc.UI
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Edit", "Tbl_Sms", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.Title)
+    @Html.HiddenFor(model => model.EditDate)
+
+    @* تایید سرمایه گذاری توسط ادمین=5 | صدور گواهی شراکت=6 *@
+    @if (Model.ID == 5 || Model.ID == 6)
+    {
+        <h5>توجه: برای جای گذاری نام طرح از @@T استفاده کنید</h5>
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Message, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Message)
+            @Html.ValidationMessageFor(model => model.Message)
+        </div>
+    </div>
+
+    <div class="form-group" id="buttons">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="ثبت" class="btn btn-primary" />
+            @Html.ActionLink("بازگشت به فهرست", "Index")
+        </div>
+    </div>
+</div>
+}

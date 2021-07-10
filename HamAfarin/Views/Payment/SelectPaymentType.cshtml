@@ -45,7 +45,7 @@
             <div class="modal-dialog modal-investment" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">قوانین و مقررات سرمایه گذاری</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">قرارداد سرمایه گذاری</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -514,7 +514,7 @@
         // بستن مودال با دکمه بک در گوشی
         if (window.history && window.history.pushState) {
             $('#privacyModal').on('show.bs.modal', function (e) {
-                window.history.pushState('forward', null, './#modal');
+                window.history.pushState('forward', null, '#modal');
             });
 
             $(window).on('popstate', function () {
