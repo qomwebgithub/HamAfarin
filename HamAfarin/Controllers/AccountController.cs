@@ -80,6 +80,7 @@ namespace Hamafarin.Controllers
             }
             return View(model);
         }
+
         [Route("LogOut")]
         public ActionResult LogOff()
         {
