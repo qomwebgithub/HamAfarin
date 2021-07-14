@@ -17,6 +17,7 @@
         @Html.HiddenFor(model => model.PaymentImageName)
         @Html.HiddenFor(model => model.PaidDateTime)
         @Html.HiddenFor(model => model.CreateDate)
+        @Html.HiddenFor(model => model.IsConfirmedFromAdmin)
 
         <div class="form-group">
             @Html.LabelFor(model => model.BusinessPlan_id, new { @class = "control-label col-md-2" })
@@ -34,13 +35,18 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsConfirmedFromAdmin, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsConfirmedFromAdmin)
-                @Html.ValidationMessageFor(model => model.IsConfirmedFromAdmin)
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.IsConfirmedFromAdmin, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IsConfirmedFromAdmin)
+                    @Html.ValidationMessageFor(model => model.IsConfirmedFromAdmin)
+                </div>
+            </div>*@
+
+        @if (Model.IsConfirmedFromAdmin == false)
+        {
+            <a id="ConfirmAdmin" class="btn btn-primary text-white" onclick="confirmAdmin(@Model.PaymentID)">تایید پرداخت توسط ادمین</a>
+        }
 
         <div class="container">
             @Html.LabelFor(model => model.PaidDateTime, new { @class = "control-label col-md-4" })
@@ -219,6 +225,29 @@
             modalMode: false,
             englishNumber: false,
         });
+
+        function confirmAdmin(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: 'آیا از تایید پرداخت مطمئن هستید؟',
+                showCancelButton: true,
+                confirmButtonText: `بله`,
+                cancelButtonText: 'خیر',
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.get("/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id), function myfunction() {
+                        $("#ConfirmAdmin").prop('disabled', true);
+                        $('IsConfirmedFromAdmin').val(true);
+                    }
+                }
+            });
+        }
+
+            //function confirmAdmin(id) {
+            //    $.get("/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id);
+            //}
 
     </script>
 }

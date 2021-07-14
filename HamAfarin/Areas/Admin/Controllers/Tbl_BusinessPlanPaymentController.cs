@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -112,7 +113,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                 {
                     IsDelete = false,
                     IsPaid = createPaymentModel.IsPaid,
-                    IsConfirmedFromAdmin = createPaymentModel.IsConfirmedFromAdmin,
+                    IsConfirmedFromAdmin = false,
+                    //IsConfirmedFromAdmin = createPaymentModel.IsConfirmedFromAdmin,
                     IsReturned = false,
                     BusinessPlan_id = createPaymentModel.BusinessPlan_id,
                     InvoiceNumber = createPaymentModel.InvoiceNumber,
@@ -306,6 +308,16 @@ namespace HamAfarin.Areas.Admin.Controllers
             var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.IsPaid == false)
                 .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
             return View(tbl_BusinessPlanPayment.ToList());
+        }
+
+        public async Task ConfirmedFromAdmin(int id)
+        {
+            Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
+            tbl_BusinessPlanPayment.IsConfirmedFromAdmin = true;
+            db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
+            await db.SaveChangesAsync();
+            FaraboorsClass faraboors = new FaraboorsClass();
+            (bool Success, string Message) result = await faraboors.ProjectFinancingProviderAsync(id);
         }
     }
 }

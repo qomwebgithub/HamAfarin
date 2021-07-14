@@ -26,7 +26,7 @@ namespace HamAfarin
 
         }
 
-        // در صورت غیر فعال شدن اکشن تست ای پی آی در کنترل اکلنت این متد پرایوت شود
+        // در صورت غیر فعال شدن اکشن تست ای پی آی در کنترل اکانت این متد پرایوت شود
         public async Task<(bool Success, string Message)> kycOtpHttpClientAsync(string uniqueIdentifier)
         {
             // string uniqueIdentifier = "0022168842";
