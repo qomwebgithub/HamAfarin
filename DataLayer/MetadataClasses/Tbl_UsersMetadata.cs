@@ -15,6 +15,10 @@ namespace DataLayer
         [Display(Name = "حذف شده")]
 
         public bool IsDeleted { get; set; }
+
+        [Display(Name = "تاییدیه سجام")]
+        public bool HasSejam { get; set; }
+
         [Display(Name = "تایید شده")]
         public bool IsActive { get; set; }
         [Display(Name = "حقوقی هستید؟")]
