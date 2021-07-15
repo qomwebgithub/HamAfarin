@@ -974,3 +974,7 @@ input,[type="password"] {
     direction: ltr;
     text-align: center;
 }
+
+.hamafarin-slider {
+    min-height: 200px;
+}
