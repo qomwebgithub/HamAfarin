@@ -206,6 +206,11 @@ namespace HamAfarin.Areas.Admin.Controllers
                 };
                 adminCreateEditPayment.OnlineDetails = adminOnlineDetails;
             }
+
+            (string Date, string Time) dateTime = DateTimeFormating(tbl_BusinessPlanPayment.PaidDateTime);
+            ViewBag.PaymentDate = dateTime.Date;
+            ViewBag.PaymentTime = dateTime.Time;
+
             return View(adminCreateEditPayment);
         }
 
@@ -245,6 +250,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             ViewBag.CreateUser_id = new SelectList(db.Tbl_Users, "UserID", "UserName", tbl_BusinessPlanPayment.CreateUser_id);
             ViewBag.PaymentUser_id = new SelectList(db.Tbl_Users, "UserID", "UserName", tbl_BusinessPlanPayment.PaymentUser_id);
             ViewBag.BusinessPlan_id = new SelectList(db.Tbl_BussinessPlans, "BussinessPlanID", "Title", tbl_BusinessPlanPayment.BusinessPlan_id);
+
             return View(tbl_BusinessPlanPayment);
         }
 
@@ -310,14 +316,49 @@ namespace HamAfarin.Areas.Admin.Controllers
             return View(tbl_BusinessPlanPayment.ToList());
         }
 
-        public async Task ConfirmedFromAdmin(int id)
+        [HttpPost]
+        public async Task<ActionResult> ConfirmedFromAdmin(int id, string payDate)
         {
             Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
             tbl_BusinessPlanPayment.IsConfirmedFromAdmin = true;
             db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
             await db.SaveChangesAsync();
             FaraboorsClass faraboors = new FaraboorsClass();
-            (bool Success, string Message) result = await faraboors.ProjectFinancingProviderAsync(id);
+            (bool Success, string Message) result = await faraboors.ProjectFinancingProviderAsync(id, payDate);
+
+            return Json(new { success = result.Success, message = result.Message });
+        }
+
+        private (string date,string time) DateTimeFormating(DateTime? dateTime)
+        {
+            (string Date, string Time) dateTimeFixed;
+
+            string[] lstPaidDateTime = dateTime.ToString().Split(' ');
+
+            dateTimeFixed.Date = lstPaidDateTime[0];
+
+            if (lstPaidDateTime[2].Contains("ب.ظ"))
+            {
+                string[] lstTime = lstPaidDateTime[1].Split(':');
+
+                List<int> lstNumbers = new List<int>();
+                foreach (string num in lstTime)
+                {
+                    lstNumbers.Add(int.Parse(num));
+                }
+
+                TimeSpan time = new TimeSpan(lstNumbers[0], lstNumbers[1], lstNumbers[2]);
+                time = time.Add(new TimeSpan(12, 0, 0));
+
+                dateTimeFixed.Time = time.ToString();
+
+            }
+            else
+            {
+                dateTimeFixed.Time = lstPaidDateTime[2];
+            }
+
+            return dateTimeFixed;
         }
     }
 }

@@ -18,6 +18,7 @@
         @Html.HiddenFor(model => model.PaidDateTime)
         @Html.HiddenFor(model => model.CreateDate)
         @Html.HiddenFor(model => model.IsConfirmedFromAdmin)
+        @Html.HiddenFor(model => model.InvoiceNumber)
 
         <div class="form-group">
             @Html.LabelFor(model => model.BusinessPlan_id, new { @class = "control-label col-md-2" })
@@ -45,7 +46,7 @@
 
         @if (Model.IsConfirmedFromAdmin == false)
         {
-            <a id="ConfirmAdmin" class="btn btn-primary text-white" onclick="confirmAdmin(@Model.PaymentID)">تایید پرداخت توسط ادمین</a>
+            <a id="ConfirmAdmin" class="btn btn-primary text-white" onclick="confirmAdmin(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">تایید پرداخت توسط ادمین</a>
         }
 
         <div class="container">
@@ -226,7 +227,7 @@
             englishNumber: false,
         });
 
-        function confirmAdmin(id) {
+        function confirmAdmin(id, date, time) {
             Swal.fire({
                 icon: 'warning',
                 title: 'توجه',
@@ -237,10 +238,26 @@
                 confirmButtonColor: '#d0aa45',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    $.get("/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id), function myfunction() {
-                        $("#ConfirmAdmin").prop('disabled', true);
-                        $('IsConfirmedFromAdmin').val(true);
-                    }
+                    $('#ConfirmAdmin').addClass("disabled");
+                    const miladiDate = moment.from(date, 'fa', 'DD-MM-YYYY').format('YYYY-MM-DD');
+                    const paidDateTime = miladiDate + "T" + time + ".000Z";
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id,
+                        data: {
+                            //payDate: "2021-07-14T11:48:27.974Z"
+                            payDate: paidDateTime
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                $('#IsConfirmedFromAdmin').val(true);
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
                 }
             });
         }

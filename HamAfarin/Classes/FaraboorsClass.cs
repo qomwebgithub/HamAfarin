@@ -21,7 +21,7 @@ namespace HamAfarin
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
 
-        public async Task<(bool Success, string Message)> ProjectFinancingProviderAsync(int id)
+        public async Task<(bool Success, string Message)> ProjectFinancingProviderAsync(int id, string payDate)
         {
             (bool Success, string Message) tokenResult;
 
@@ -32,11 +32,14 @@ namespace HamAfarin
 
             using (HttpClient client = new HttpClient())
             {
-                client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+                //client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+                client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
 
-                var projectId = qBusinessPlan.CodeOTC;
-                var apiKey = "85d5ff91-0c4d-4142-beab-d734b72a40fe";
-                var subUrl = projectId + "/projectfinancingprovider?apiKey=" + apiKey;
+                string projectId = qBusinessPlan.CodeOTC;
+                string apiKey = "85d5ff91-0c4d-4142-beab-d734b72a40fe";
+
+                //var subUrl = projectId + "/projectfinancingprovider?apiKey=" + apiKey;
+                string subUrl = "3403cbaa-911b-44c3-af6f-de3c97367627/projectfinancingprovider?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe";
 
                 FaraboorsJsonModel body = new FaraboorsJsonModel
                 {
@@ -46,8 +49,18 @@ namespace HamAfarin
                     LastNameOrCompanyName = qUserProfile.LastName,
                     ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice,
                     BourseCode = qUserProfile.SejamCode,
-                    PaymentDate = qBusinessPlanPayment.PaidDateTime.ToString(),
+                    PaymentDate = payDate,
                 };
+                //FaraboorsJsonModel body = new FaraboorsJsonModel
+                //{
+                //    NationalID = 1290485941,
+                //    IsLegal = false,
+                //    FirstName = "443",
+                //    LastNameOrCompanyName = "434",
+                //    ProvidedFinancePrice = 5000,
+                //    BourseCode = "456456",
+                //    PaymentDate = "2021-07-14T11:48:27.974Z",
+                //};
 
                 string json = JsonConvert.SerializeObject(body);
 
