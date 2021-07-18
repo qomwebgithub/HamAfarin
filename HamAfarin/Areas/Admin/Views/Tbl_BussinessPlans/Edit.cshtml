@@ -793,6 +793,7 @@
             if (confirm("آیا از حذف مطمين هستید؟"))
                 $.get("/Admin/Tbl_BussinessPlans/DeleteVideo/" + id, function () {
                     $("#DeleteVideoBtn").hide();
+                    $("#IntroductionIdeaVideoFileName").removeAttr('value');
                 });
         }
     </script>
