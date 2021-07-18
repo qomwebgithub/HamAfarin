@@ -69,7 +69,7 @@ namespace Hamafarin.Controllers
                 // حداقل مبلغ برای سرمایه گذاری
                 selectPayment.MinimumAmountInvest = Convert.ToInt64(qBussinessPlans.MinimumAmountInvest);
                 // حداکثر مبلغ برای سرمایه گذاری
-                selectPayment.MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+                selectPayment.MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
                 // حداکثر امکان سرمایه گذاری شما
                 selectPayment.CanInvestment = selectPayment.MaximumInvestment - selectPayment.TotalInvestment;
                 return View(selectPayment);
