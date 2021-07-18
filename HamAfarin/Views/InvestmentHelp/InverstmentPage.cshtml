@@ -23,7 +23,6 @@
 
     .modalBackground {
         background-color: Olive;
-        filter: alpha(opacity=70);
         opacity: 0.7;
     }
 
@@ -53,45 +52,49 @@
 
 
         <ul class="nav nav-tabs d-flex justify-content-center shadow p-3 mb-2 bg-white rounded stickyNav" id="myTab" role="tablist">
-            <div id="btnSarmayeGozariInMenu">
+            @*<div id="btnSarmayeGozariInMenu">
 
-            </div>
+                </div>*@
 
-            @*<li class="nav-item ml-4">
+            @*<li class="nav-item mx-2">
 
                     <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
                        aria-controls="home" aria-selected="true">معرفی طرح</a>
                 </li>*@
             <div class="d-flex wraper">
-                <li class="nav-item ml-4">
-                    <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab"
-                       aria-controls="financial" aria-selected="false">مزایای سرمایه گذاری</a>
-                </li>
-
-                <li class="nav-item ml-4">
-
-                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="true">فرایند سرمایه گذاری</a>
-                </li>
-            </div>
-            <li class="nav-item ml-4">
-                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                   aria-controls="contact" aria-selected="false">سوالات متداول</a>
+            <li class="nav-item mx-2">
+                <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab"
+                   aria-controls="financial" aria-selected="false">مزایای سرمایه گذاری</a>
             </li>
 
+            <li class="nav-item mx-2">
 
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                   aria-controls="home" aria-selected="true">فرایند سرمایه گذاری</a>
+            </li>
+    </div>
+    <div class="d-flex wraper">
+
+        <li class="nav-item mx-2">
+            <a class="nav-link stickyNav-item text-dark font-weight-bold" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+               aria-controls="contact" aria-selected="false">سوالات متداول</a>
+        </li>
+        <li class="nav-item mx-2">
             <a href="/BusinessPlans" class="btn btn-orange float-left">سرمایه گذاری در طرح ها</a>
+        </li>
+
+    </div>
 
 
-            @*<li class="nav-item ml-4">
-                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
-                       aria-controls="comment" aria-selected="false">برگزاری کمپین</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="faq-tab" data-toggle="tab" href="#faq" role="tab"
-                       aria-controls="faq" aria-selected="false">ارسال طرح</a>
-                </li>*@
-        </ul>
+    @*<li class="nav-item mx-2">
+            <a class="nav-link stickyNav-item text-dark font-weight-bold" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
+               aria-controls="comment" aria-selected="false">برگزاری کمپین</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link stickyNav-item text-dark font-weight-bold" id="faq-tab" data-toggle="tab" href="#faq" role="tab"
+               aria-controls="faq" aria-selected="false">ارسال طرح</a>
+        </li>*@
+    </ul>
 
     </div>
 
@@ -111,14 +114,12 @@
                         <br />
                         <br />
                         <br />
-
-                        <div class="d-sm-none" style="height:20px;"></div>
-                        <div class="container col-10 pt-5 m-auto" id="InvestmentProcess"
-                             >
+                        <div class="d-sm-none" style="height:30px;"></div>
+                        <div class="container col-10 pt-5 m-auto" id="InvestmentProcess">
                             @*@Html.Raw(Model.InvestmentProcess)*@
-                            <h2>برای سرمایه گذاری از کجا شروع کنم؟</h2>
+                            <h2 class="text-center text-bold font-size-normal">برای سرمایه گذاری از کجا شروع کنم؟</h2>
                             <div class="Process InvestmentProcess">
-                                <div class="InvestmentProcess-img  col-12 col-md-3"><img src="~/Content/img/InvestmentProcess/1005729-200.png" /></div>                              
+                                <div class="InvestmentProcess-img  col-12 col-md-3"><img src="~/Content/img/InvestmentProcess/1005729-200.png" /></div>
                                 <div class="InvestmentProcess-line col-12 col-md-3"></div>
                                 <div class="InvestmentProcess-text col-12 col-md-6">
                                     <span>مرحله 1</span>
@@ -180,7 +181,8 @@
                         <br />
                         <br />
                         <br />
-                        <div class="d-sm-none" style="height:120px;"></div>
+                        <br />
+                        <div class="d-sm-none" style="height: 30px;"></div>
                         @*@Html.Action("BenefitsOfFinancingInHamAfarin", "InvestmentProcess")*@
                         @Html.Action("InvestmentBenefits", "InvestmentProcess")
 
@@ -191,11 +193,10 @@
                         <br />
                         <br />
                         <br />
-                        <br />
-                        <div class="d-sm-none" style="height:120px;"></div>
+                        <div class="d-sm-none" style="height:80px;"></div>
                         <div class="container-fluid container-md">
-                            <div class="row"
-                                 @Html.Raw(@Model.FrequentlyAskedQuestions)
+                            <div class="row">
+                                @Html.Raw(@Model.FrequentlyAskedQuestions)
                             </div>
                         </div>
 

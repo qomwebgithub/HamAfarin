@@ -30,6 +30,11 @@ body {
     right: 0px !important;
 }
 
+li.active > a, .nav-tabs .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent !important;
+}
+
 li.active > a, .nav-tabs .nav-link.active {
     border: none;
     border-bottom: 3px solid var(--orange) !important;
@@ -39,7 +44,7 @@ li.active > a, .nav-tabs .nav-link.active {
     background-color: var(--orange) !important;
     color: #fff !important;
     position: relative;
-    border-radius: 10px;
+    border-radius: 10px !important;
 }
 
     .btn-orange:hover {
@@ -547,7 +552,7 @@ h4 {
     }
 
     #send-li {
-        width: 100% !important;
+        width: 50% !important;
     }
 
     ul#myTab a {
@@ -868,13 +873,13 @@ div#header {
     margin-right: 1px;
 }
 
-#InvestmentProcess h2 {
+/*#InvestmentProcess h2 {
     text-align: center;
-    font-size: 25px;
+    font-size: 25px;*/
     /* font-family: 'IRANSansWeb' !important; */
-    font-weight: 700;
+    /*font-weight: 700;
     color: #0000008a;
-}
+}*/
 
 .pagination li {
     border: 1px solid transparent;

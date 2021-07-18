@@ -98,14 +98,14 @@
                             {
                                 if (Model.PercentageComplate >= 100)
                                 {
-                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه لازم برای این طرح تکمیل شده است. مشاهده و سرمایه گذاری در سایر طرح ها')">
                                         تکمیل شده <i class="bi bi-check2-circle"></i>
                                     </a>
                                 }
                                 else
                                 //'فرصت سرمایه گذاری در این طرح به اتمام رسده است .<br/>می توانید در طرح های دیگر سرمایه گذاری کنید'
                                 {
-                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                    <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسیده است. می توانید در طرح های دیگر سرمایه گذاری کنید')">
                                         فرصت تمام شده<i class="bi bi-check2-circle"></i>
                                     </a>
                                 }
@@ -125,7 +125,7 @@
 
                             else
                             {
-                                <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه لازم برای این طرح تکمیل شده است. مشاهده و سرمایه گذاری در سایر طرح ها')">
                                     تکمیل شده <i class="bi bi-check2-circle"></i>
                                 </a>
                             }
@@ -230,7 +230,7 @@
 
                             <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
 
-                                <span class="text-muted text-nowrap h6 small">سود طرح</span>
+                                <span class="text-muted text-nowrap h6 small">پیش بینی سود طرح</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.PercentageReturnInvestment%
                                 </p>
@@ -270,14 +270,14 @@
                                     {
                                         if (Model.PercentageComplate >= 100)
                                         {
-                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه لازم برای این طرح تکمیل شده است. مشاهده و سرمایه گذاری در سایر طرح ها')">
                                                 تکمیل شده <i class="bi bi-check2-circle"></i>
                                             </a>
                                         }
                                         else
                                         //'فرصت سرمایه گذاری در این طرح به اتمام رسده است .<br/>می توانید در طرح های دیگر سرمایه گذاری کنید'
                                         {
-                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                            <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('فرصت سرمایه گذاری در این طرح به اتمام رسیده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
                                                 فرصت تمام شده<i class="bi bi-check2-circle"></i>
                                             </a>
                                         }
@@ -297,7 +297,7 @@
 
                                     else
                                     {
-                                        <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه گذاری در این طرح تکمیل شده است .می توانید در طرح های دیگر سرمایه گذاری کنید')">
+                                        <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه لازم برای این طرح تکمیل شده است. مشاهده و سرمایه گذاری در سایر طرح ها')">
                                             تکمیل شده <i class="bi bi-check2-circle"></i>
                                         </a>
                                     }
@@ -355,7 +355,7 @@
                             </div>
 
                             <div class="col-xl-9 ">
-                                <span class="text-orange d-block">ضمانت نامه :</span>
+                                <span class="text-orange d-block">تضامین :</span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
                                     اصل و سود سرمایه
                                 </strong>
@@ -466,10 +466,10 @@
 
     </div>
 
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" role="tablist" data-aos="fade-down">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-0" role="tablist" data-aos="fade-down">
 
 
-        <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5">
+        <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5 px-0">
 
 
 
@@ -509,14 +509,14 @@
                                 <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
                                     @if (!String.IsNullOrEmpty(Model.VideoFileName))
                                     {
-                                        <div width="300" id="video">
+                                        <div width="300" class="d-flex justify-content-md-start justify-content-start mb-4" id="video">
                                             <video width="300" controls id="Tvideo">
                                                 <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
                                                 مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
                                             </video>
-                                            <div id="Vshadow">
+                                            @*<div id="Vshadow">
 
-                                            </div>
+                                            </div>*@
                                         </div>
                                     }
                                     <p class="figure-caption text-muted pt-1">
@@ -851,7 +851,7 @@
                 icon: 'warning',
                 title: 'توجه',
                 text: message,
-                confirmButtonText: `باشه`,
+                confirmButtonText: `قبول`,
                 confirmButtonColor: '#d0aa45',
             }).then((result) => {
                 if (result.isConfirmed) {
