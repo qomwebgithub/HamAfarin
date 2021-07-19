@@ -94,6 +94,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
 
             IPagedList PagedList = lstUserPaymentBusinessPlan.ToPagedList(page, 6);
             ViewBag.Count = lstUserPaymentBusinessPlan.Count();
+            ViewBag.Profit = qlstBusinessPlanPayments.Select(p => p.PaymentPrice).Sum();
             return View(PagedList);
         }
 
