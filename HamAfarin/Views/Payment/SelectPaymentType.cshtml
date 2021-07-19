@@ -224,9 +224,13 @@
                         <a class="link_active" href="/SiteTermsConditions" target="_blank">
                             قوانین و مقررات
                         </a>
-                        و
+                        ،
                         <a class="link_active" data-toggle="modal" data-target="#privacyModal" href="#">
                             قرارداد سرمایه گذاری
+                        </a>
+                        و
+                        <a class="link_active" href="/RiskAlertStatement" target="_blank">
+                            بیانیه ریسک
                         </a>
                         را مطالعه نموده و پذیرفته ام.
                         @Html.ValidationMessageFor(model => model.InvestmentRoles)
@@ -333,8 +337,8 @@
                             <div id="offlineView" class="col-sm hidden">
                                 <br />
                                 @*<div class="col-md-12">
-                                    <label>مبلغ مورد نظر برای سرمایه گذاری را وارد نمایید</label>
-                                </div>*@
+                                        <label>مبلغ مورد نظر برای سرمایه گذاری را وارد نمایید</label>
+                                    </div>*@
                                 <br />
                                 <div class="form-group row">
                                     @*@Html.LabelFor(model => model.OfflinePaymentPrice, new { @class = "control-label col-md-12" })*@
@@ -363,7 +367,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <br />
                             </div>
 
