@@ -657,6 +657,7 @@
     <Content Include="Areas\Admin\Views\ExportImportExcel\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Sms\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Sms\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Users\PaymentList.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">

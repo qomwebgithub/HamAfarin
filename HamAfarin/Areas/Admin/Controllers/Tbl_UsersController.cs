@@ -87,10 +87,10 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult Edit(Tbl_Users tbl_Users)
         {
 
-            
+
 
             bool blnPreviosIsActive;
-            using(HamAfarinDBEntities dbTest=new HamAfarinDBEntities())
+            using (HamAfarinDBEntities dbTest = new HamAfarinDBEntities())
             {
                 blnPreviosIsActive = dbTest.Tbl_Users.Find(tbl_Users.UserID).IsActive;
             }
@@ -200,6 +200,12 @@ namespace HamAfarin.Areas.Admin.Controllers
             db.Entry(tbl_UserProfiles).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("UnSubmittedProfile");
+        }
+
+        public ActionResult PaymentList(int id)
+        {
+            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.PaymentUser_id == id).Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
+            return View(tbl_BusinessPlanPayment.OrderByDescending(c => c.PaidDateTime).ToList());
         }
 
         protected override void Dispose(bool disposing)
