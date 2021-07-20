@@ -365,7 +365,7 @@ namespace HamAfarin
                     oUserProfiles.FatherName = oBasePerson.privatePerson.fatherName;
                     oUserProfiles.BirthDate = StringToDate(oBasePerson.privatePerson.birthDate);
                     oUserProfiles.Email = oBasePerson.email;
-                    oUserProfiles.Gender = oBasePerson.privatePerson.gender;
+                    oUserProfiles.Gender = oBasePerson.privatePerson.gender == "Male" ? "مذکر" : "مونث";
                     oUserProfiles.User_id = oUser.UserID;
                     oUserProfiles.strSejamResponse = Profile;
                     oUserProfiles.IsActive = true;
@@ -386,7 +386,7 @@ namespace HamAfarin
                         FatherName = oBasePerson.privatePerson.fatherName,
                         BirthDate = StringToDate(oBasePerson.privatePerson.birthDate),
                         Email = oBasePerson.email,
-                        Gender = oBasePerson.privatePerson.gender,
+                        Gender = oBasePerson.privatePerson.gender == "Male" ? "مذکر" : "مونث",
                         User_id = oUser.UserID,
                         strSejamResponse = Profile,
                         CreateDate = DateTime.Now,
