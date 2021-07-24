@@ -98,7 +98,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             return View(PagedList);
         }
 
-        public ActionResult SinglePaymentBusinessPlan(int id, bool notify= false)
+        public ActionResult SinglePaymentBusinessPlan(int id, bool notify = false)
         {
             Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id);
             UserPaymentBusinessPlanSingleViewModel selectPayment = new UserPaymentBusinessPlanSingleViewModel();
@@ -149,10 +149,11 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             //اگر پرداخت آنلاین باشد رکورد جزییات آن را دریافت میکنیم
             if (qBusinessPlanPayment.PaymentType_id == 2)
             {
-               Tbl_PaymentOnlineDetils qOnlineDetails= db.Tbl_PaymentOnlineDetils.FirstOrDefault(d => d.Payment_id == id);
+                Tbl_PaymentOnlineDetils qOnlineDetails = db.Tbl_PaymentOnlineDetils.FirstOrDefault(d => d.Payment_id == id);
                 selectPayment.TransactionPaymentCode = qOnlineDetails.TransactionReferenceID;
             }
-            else { 
+            else
+            {
                 selectPayment.TransactionPaymentCode = qBusinessPlanPayment.TransactionPaymentCode;
             }
             int myUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
@@ -188,6 +189,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             //اجازه ی سرمایه گذاری
             selectPayment.IsAcceptInvestment = planService.IsAcceptInvestmentPlan(db, tbl_BussinessPlans.BussinessPlanID);
 
+            ViewBag.Privacy = db.Tbl_Settings.Select(s => s.Privacy).FirstOrDefault();
             ViewBag.Notify = notify;
 
             return View(selectPayment);
