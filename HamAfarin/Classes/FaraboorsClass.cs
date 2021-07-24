@@ -20,6 +20,38 @@ namespace HamAfarin
     public class FaraboorsClass
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
+        public async Task<(bool Success, string Message)> GetProjectParticipationReportAsync()
+        {
+            (bool Success, string Message) tokenResult;
+
+            using (HttpClient client = new HttpClient())
+            {
+                ////Real API
+                //client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+
+
+                client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
+
+                //Test API
+                string subUrl = "GetProjectParticipationReport?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe&projectId=3403cbaa-911b-44c3-af6f-de3c97367627&nationalID=1290485941";
+                
+                HttpResponseMessage response = await client.PostAsync(subUrl, null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    tokenResult = (true, responseContent);
+                    return tokenResult;
+                }
+                else
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    tokenResult = (false, responseContent);
+                    return tokenResult;
+                }
+
+            }
+        }
 
         public async Task<(bool Success, string Message)> ProjectFinancingProviderAsync(int id, string payDate)
         {
@@ -32,13 +64,18 @@ namespace HamAfarin
 
             using (HttpClient client = new HttpClient())
             {
+                ////Real API
                 //client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+
+                //Test API
                 client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
 
-                string projectId = qBusinessPlan.CodeOTC;
-                string apiKey = "85d5ff91-0c4d-4142-beab-d734b72a40fe";
-
+                ////Real API
+                //string projectId = qBusinessPlan.CodeOTC;
+                //string apiKey = "85d5ff91-0c4d-4142-beab-d734b72a40fe";
                 //var subUrl = projectId + "/projectfinancingprovider?apiKey=" + apiKey;
+
+                //Test API
                 string subUrl = "3403cbaa-911b-44c3-af6f-de3c97367627/projectfinancingprovider?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe";
 
                 FaraboorsJsonModel body = new FaraboorsJsonModel
