@@ -56,7 +56,7 @@ namespace ViewModels
         public Nullable<int> OnlinePaymentPrice { get; set; }
         [Display(Name = "تصویر فیش واریزی")]
         public string PaymentImageName { get; set; }
-        [Display(Name = "کد پیگیری")]
+        [Display(Name = "شماره فیش واریزی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string TransactionPaymentCode { get; set; }
     }
