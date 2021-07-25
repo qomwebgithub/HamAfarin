@@ -2423,6 +2423,8 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Home\sejamprofile.cshtml" />
     <Content Include="Views\Account\SejamLogin.cshtml" />
+    <Content Include="Views\Blog\BlogPartial.cshtml" />
+    <Content Include="Views\Shared\_CardBlog.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

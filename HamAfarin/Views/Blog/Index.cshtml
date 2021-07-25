@@ -1,23 +1,35 @@
-﻿@model IEnumerable<ViewModels.BlogItemViewModel>
+﻿@model IPagedList<ViewModels.BlogItemViewModel>
+@using PagedList.Mvc
+@using PagedList
+
+@{ var pastSize = ViewBag.Count;}
+
+@{
+    ViewBag.Title = "اخبار";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ if (pastSize > 0)
+    {
+        int count = 5;
 
 
+        if (Request.Browser.IsMobileDevice)
+        {
+            count = 3;
+        }
     <section class="container mt-3">
-        <div class="section-header">
-            <h5 class="h6 py-1 px-2 d-inline-block m-0">اخبار</h5>
+        <div class="section-header text-center">
+            <h1 class="h2 py-2 px-5 d-inline-block font-weight-bold page-title m-0">اخبار</h1>
         </div>
-        <div class="owl-carousel owl-theme" id="owl-news" style="padding-right: 11px;padding-left: 11px;"
-             @*data-aos="fade-left" data-aos-once="true"*@>
-
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 my-4">
             @foreach (var item in Model)
             {
-                @Html.Partial("_BoxBlog", item)
+                @Html.Partial("_CardBlog", item)
             }
-            @*for test*@
-            @*@foreach (var item in Model)
-            {
-                @Html.Partial("_BoxBlog", item)
-            }*@
-
         </div>
-
+        @Html.PagedListPager(Model, page => Url.Action("index", new { page }), new PagedListRenderOptions { MaximumPageNumbersToDisplay = count });
     </section>
+    }
+}
+
