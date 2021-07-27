@@ -24,6 +24,7 @@ namespace DataLayer
         public string NationalId { get; set; }
         public string RegistratioNumber { get; set; }
         public string Address { get; set; }
+        public string LegalFile { get; set; }
     
         public virtual Tbl_Users Tbl_Users { get; set; }
     }

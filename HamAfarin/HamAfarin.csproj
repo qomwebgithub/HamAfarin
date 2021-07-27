@@ -2449,7 +2449,7 @@
     <Folder Include="Resources\BusinessPlans\NationalCard\" />
     <Folder Include="Resources\BusinessPlans\Report\" />
     <Folder Include="Resources\BusinessPlans\Slide\" />
-    <Folder Include="UploadFiles\TicketFileUploads\" />
+    <Folder Include="UploadFiles\LegalFiles\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">

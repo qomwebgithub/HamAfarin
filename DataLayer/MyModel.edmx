@@ -426,6 +426,7 @@
           <Property Name="NationalId" Type="nvarchar" MaxLength="50" />
           <Property Name="RegistratioNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="LegalFile" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Tbl_Roles">
           <Key>
@@ -1799,6 +1800,7 @@
           <Property Name="NationalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="RegistratioNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LegalFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PersonLegal_Tbl_Users" FromRole="Tbl_PersonLegal" ToRole="Tbl_Users" />
         </EntityType>
         <EntityType Name="Tbl_Roles">
@@ -2845,6 +2847,7 @@
           <EntitySetMapping Name="Tbl_PersonLegal">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_PersonLegal">
               <MappingFragment StoreEntitySet="Tbl_PersonLegal">
+                <ScalarProperty Name="LegalFile" ColumnName="LegalFile" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="RegistratioNumber" ColumnName="RegistratioNumber" />
                 <ScalarProperty Name="NationalId" ColumnName="NationalId" />
