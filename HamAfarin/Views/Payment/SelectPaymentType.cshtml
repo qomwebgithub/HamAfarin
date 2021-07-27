@@ -221,16 +221,12 @@
                         @*<a class="link_active" data-toggle="modal" data-target="#siteTermsConditionsModal" href="#">
                                 قوانین و مقررات
                             </a>*@
-                        <a class="link_active" href="/SiteTermsConditions" target="_blank">
-                            قوانین و مقررات
-                        </a>
-                        ،
-                        <a class="link_active" data-toggle="modal" data-target="#privacyModal" href="#">
-                            قرارداد سرمایه گذاری
+                        <a class="link_active" href="/SiteTermsConditions" target="_blank">قوانین و مقررات</a>،<a class="link_active" href="/RiskAlertStatement" target="_blank">
+                            بیانیه ریسک
                         </a>
                         و
-                        <a class="link_active" href="/RiskAlertStatement" target="_blank">
-                            بیانیه ریسک
+                        <a class="link_active" data-toggle="modal" data-target="#privacyModal" href="#">
+                            قرارداد سرمایه گذاری
                         </a>
                         را مطالعه نموده و پذیرفته ام.
                         @Html.ValidationMessageFor(model => model.InvestmentRoles)
@@ -273,14 +269,14 @@
                         <thead>
                             <tr>
                                 <th scope="col">@Html.DisplayNameFor(model => model.MinimumAmountInvest)</th>
-                                <th scope="col">@Html.DisplayNameFor(model => model.TotalInvestment)</th>
+                                @*<th scope="col">@Html.DisplayNameFor(model => model.TotalInvestment)</th>*@
                                 <th scope="col">@Html.DisplayNameFor(model => model.CanInvestment)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>@Model.MinimumAmountInvest.ToString("#,##0")</td>
-                                <td>@Model.TotalInvestment.ToString("#,##0")</td>
+                                @*<td>@Model.TotalInvestment.ToString("#,##0")</td>*@
                                 <td>@Model.CanInvestment.ToString("#,##0")</td>
                             </tr>
                         </tbody>
