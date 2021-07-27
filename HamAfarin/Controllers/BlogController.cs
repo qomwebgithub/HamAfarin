@@ -35,7 +35,7 @@ namespace HamAfarin.Controllers
                 };
                 lstBlog.Add(blog);
             }
-            IPagedList pagedList = lstBlog.ToPagedList(page, 6);
+            IPagedList pagedList = lstBlog.ToPagedList(page, 8);
             ViewBag.Count = lstBlog.Count();
             return PartialView(pagedList);
         }
