@@ -61,7 +61,8 @@ namespace Hamafarin
                 NationalId = qLegal.NationalId,
                 EconomicCode = qLegal.EconomicCode,
                 CompanyName = qLegal.CompanyName,
-                Address = qLegal.Address
+                Address = qLegal.Address,
+                LegalFile = qLegal.LegalFile
             };
         }
 

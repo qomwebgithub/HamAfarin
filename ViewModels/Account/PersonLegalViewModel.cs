@@ -31,5 +31,8 @@ namespace ViewModels
         
         [StringLength(500, ErrorMessage = "حداکثر تعدا کاراکتر 500")]
         public string Address { get; set; }
+
+        [Display(Name = "بارگذاری فایل")]
+        public string LegalFile { get; set; }
     }
 }

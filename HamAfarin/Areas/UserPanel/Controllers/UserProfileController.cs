@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -95,7 +96,7 @@ namespace HamAfarin.Areas.UserPanel
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserProfileViewModel userProfile)
+        public ActionResult Create(UserProfileViewModel userProfile, HttpPostedFileBase legalFile)
         {
             if (!userProfile.IsLegal)
             {
@@ -137,6 +138,12 @@ namespace HamAfarin.Areas.UserPanel
             }
             if (ModelState.IsValid)
             {
+                if (legalFile != null)
+                {
+                    userProfile.PersonLegal.LegalFile = Guid.NewGuid().ToString() + Path.GetExtension(legalFile.FileName);
+                    legalFile.SaveAs(Server.MapPath("/UploadFiles/LegalFiles/" + userProfile.PersonLegal.LegalFile));
+
+                }
                 int userId = UserSetAuthCookie.GetUserID(User.Identity.Name);
                 Tbl_UserProfiles Tbl_UserProfiles = new Tbl_UserProfiles()
                 {
@@ -172,6 +179,7 @@ namespace HamAfarin.Areas.UserPanel
                         NationalId = userProfile.PersonLegal.NationalId,
                         RegistratioNumber = userProfile.PersonLegal.RegistratioNumber,
                         Address = userProfile.PersonLegal.Address,
+                        LegalFile = userProfile.PersonLegal.LegalFile
                     };
                     db.Tbl_PersonLegal.Add(personLegal);
                 }

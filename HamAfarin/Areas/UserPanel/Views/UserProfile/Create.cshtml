@@ -7,7 +7,7 @@
 <body>
 
     <hr />
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -127,12 +127,12 @@
                     </div>
 
                     @*<div class="form-group">
-                        @Html.LabelFor(model => model.Profile.Bio, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.TextAreaFor(model => model.Profile.Bio)
-                            @Html.ValidationMessageFor(model => model.Profile.Bio)
-                        </div>
-                    </div>*@
+                            @Html.LabelFor(model => model.Profile.Bio, new { @class = "control-label col-md-6" })
+                            <div class="col-md-12">
+                                @Html.TextAreaFor(model => model.Profile.Bio)
+                                @Html.ValidationMessageFor(model => model.Profile.Bio)
+                            </div>
+                        </div>*@
 
 
                 </div>
@@ -189,6 +189,24 @@
                         <div class="col-md-12">
                             @Html.TextAreaFor(model => model.PersonLegal.Address)
                             @Html.ValidationMessageFor(model => model.PersonLegal.Address)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            موارد زیر در یک فایل فشرده (zip) بارگزاری شود:
+                            <ol>
+                                <li>روز نامه رسمی آخرین تغیررات</li>
+                                <li>نامه معرفی فرد حقوقی شامل کد سجام</li>
+                                <li>نامه معرفی ثبت کننده پنل سرمایه گذاری</li>
+                                <li>نامه معرفی شخص مجاز به ثبت سفارش در طرح ها</li>
+                                <li>روزنامه رسمی صاحبان امضای مجاز</li>
+                            </ol>
+                        </div>
+                        @Html.LabelFor(model => model.PersonLegal.LegalFile, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.Kendo().Upload().Name("legalFile")
+                            @Html.ValidationMessageFor(model => model.PersonLegal.LegalFile)
                         </div>
                     </div>
                 </div>
