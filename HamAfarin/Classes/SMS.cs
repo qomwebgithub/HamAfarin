@@ -18,7 +18,10 @@ namespace HamAfarin
 
         public void SendSMS(string MobileNumber, string Message)
         {
-            SaharSendSms(MobileNumber, Message);
+            //SaharSendSms(MobileNumber, Message);
+
+            AdpSendSms(MobileNumber, Message);
+
             //string url = "https://www.saharsms.com/api/kZDja1GdmznrkBMwSVVuJQ5KjzRNsAsM/json/SendVerify?receptor=" + MobileNumber + "&template=HamafarinVerify-21713&token=" + Message;
 
             //ServicePointManager.Expect100Continue = true;
