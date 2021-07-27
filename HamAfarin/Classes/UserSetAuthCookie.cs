@@ -47,5 +47,19 @@ namespace HamAfarin
             string Username = UserIdentityName.Split(',')[3];
             return Username;
         }
+
+        public static string GetFullName(string UserIdentityName)
+        {
+            string fullName = null;
+
+            string[] array = UserIdentityName.Split(',');
+            int index = 4;
+
+            if (index < array.Length)
+            {
+                fullName = array[index];
+            }
+            return fullName;
+        }
     }
 }

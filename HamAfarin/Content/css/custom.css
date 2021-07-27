@@ -35,10 +35,10 @@ li.active > a, .nav-tabs .nav-link {
     border-bottom: 3px solid transparent !important;
 }
 
-li.active > a, .nav-tabs .nav-link.active {
-    border: none;
-    border-bottom: 3px solid var(--orange) !important;
-}
+    li.active > a, .nav-tabs .nav-link.active {
+        border: none;
+        border-bottom: 3px solid var(--orange) !important;
+    }
 
 .btn-orange {
     background-color: var(--orange) !important;
@@ -451,9 +451,9 @@ h4 {
         border-bottom: 3px solid transparent !important;
     }
 
-    .navbar-nav a:hover, .stickyNav_container ul li a:not(.btn-orange):hover {
-        border-bottom: 3px solid #b52c26 !important;
-    }
+        .navbar-nav a:hover, .stickyNav_container ul li a:not(.btn-orange):hover {
+            border-bottom: 3px solid #b52c26 !important;
+        }
 }
 
 .text-danger {
@@ -471,6 +471,7 @@ h4 {
     #active-idea {
         margin-left: auto !important;
     }
+
     .hover-page {
         color: white !important;
         background-color: #d0aa45 !important;
@@ -480,14 +481,17 @@ h4 {
 
 @media(max-width: 560px) {
     .PagedList-skipToFirst {
-        display:none;
+        display: none;
     }
+
     .PagedList-skipToLast {
         display: none;
     }
+
     .PagedList-ellipses {
         display: none;
     }
+
     .image-icon img {
         width: 18px !important;
     }
@@ -623,7 +627,6 @@ h4 {
             display: flex;
             justify-content: center;
         }
- 
 }
 
 #comp {
@@ -692,7 +695,6 @@ video#Tvideo {
     box-shadow: none !important;
     /* border-color: #b52c2657; */
     border: 2px solid #d0aa45;
-
     /*until filtering is fixed show left border*/
     border-radius: 8px 0 0 8px;
     /*border-left: none;*/
@@ -876,8 +878,8 @@ div#header {
 /*#InvestmentProcess h2 {
     text-align: center;
     font-size: 25px;*/
-    /* font-family: 'IRANSansWeb' !important; */
-    /*font-weight: 700;
+/* font-family: 'IRANSansWeb' !important; */
+/*font-weight: 700;
     color: #0000008a;
 }*/
 
@@ -910,12 +912,12 @@ ul.pagination {
 .pagination li {
     margin: 0px 5px;
 }
-    .pagination li:not(.active):hover {
 
-        
+    .pagination li:not(.active):hover {
         /* border-radius: 5px; */
         /* border: 2px solid #d0aa45; */
     }
+
 .PagedList-ellipses {
     color: #d0aa45;
 }
@@ -927,25 +929,31 @@ ul.pagination {
 .text-center {
     text-align: center;
 }
+
 #carouselExampleCaptions ol li.active {
     background-color: gold !important;
 }
+
 .svg-icon {
     width: 70px;
     height: 70px;
     fill: #d0aa45;
 }
+
 .user-payment-img {
     min-height: 125px;
 }
+
 .user-payment-btn {
     font-size: 12px;
     border-radius: 0.25rem
 }
+
 .user-payment-sm-table td {
     border-bottom: 1px solid black;
     border-top: 1px solid black;
 }
+
 .user-payment-sm-table tr {
     border: 1px solid black;
 }
@@ -954,27 +962,33 @@ table.table-bordered {
     border: 1px solid black;
 }
 
-table.table-bordered > thead > tr > th {
-    border: 1px solid black;
-}
+    table.table-bordered > thead > tr > th {
+        border: 1px solid black;
+    }
 
-table.table-bordered > tbody > tr > td {
-    border: 1px solid black;
-}
+    table.table-bordered > tbody > tr > td {
+        border: 1px solid black;
+    }
+
 .btn {
     padding: 0.25rem 0.75rem;
 }
+
 .modal-investment {
     max-width: 700px;
 }
+
 .font-size-normal {
     font-size: 1.06rem;
 }
+
 .font-size-small {
     font-size: 13px;
 }
-input,[type="password"] {
+
+input, [type="password"] {
 }
+
 .ltr-text, #CaptchaInputText {
     direction: ltr;
     text-align: center;
@@ -986,7 +1000,11 @@ input,[type="password"] {
 
 .page-title {
     background-color: var(--orange);
-    border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     color: #fff;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
 }

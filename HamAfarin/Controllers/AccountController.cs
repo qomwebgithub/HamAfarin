@@ -49,6 +49,7 @@ namespace Hamafarin.Controllers
                 model.MobileNumber = StringExtensions.Fa2En(model.MobileNumber);
                 Tbl_Users user = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == model.MobileNumber &&
                   u.Password == hashPassword);
+                Tbl_UserProfiles userProfiles;
 
                 if (user != null)
                 {
@@ -56,7 +57,16 @@ namespace Hamafarin.Controllers
                     {
                         //Request.UrlReferrer.Host()
                         // FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
-                        string strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber;
+                        string strSetAuthCookie;
+                        if (user.HasSejam)
+                        {
+                            userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
+                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + userProfiles.FirstName + " " + userProfiles.LastName;
+                        }
+                        else
+                        {
+                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber;
+                        }
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
                         string formatedMobileNumber = "98" + user.MobileNumber.Substring(1);
