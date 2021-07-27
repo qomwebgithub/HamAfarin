@@ -513,7 +513,7 @@
                     <a style="font-size:14px" data-toggle="modal" data-target="#privacyModal" href="#" class="btn btn-orange user-payment-btn float-left">مشاهده قرارداد</a>
                 </div>
                 <div class="">
-                    <a style="font-size:14px" href="#" class="btn btn-orange user-payment-btn float-left">چاپ گواهی شراکت</a>
+                    <a style="font-size:14px" onclick="partnershipCertificate()" class="btn btn-orange user-payment-btn float-left">چاپ گواهی شراکت</a>
                 </div>
             </div>
         </section>
@@ -743,6 +743,17 @@
                 }
             });
         }
+
+        function partnershipCertificate() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: "سرمایه گذار محترم پس از تکمیل موفق سرمایه طرح و تایید سازمان محترم فرابورس از طریق سامانه پیامکی هم آفرین به شما اطلاع رسانی می شود و گواهی شراکت قابل دانلود می گردد",
+                confirmButtonText: `قبول`,
+                confirmButtonColor: '#d0aa45',
+            });
+        }
+
 
         function AlertInvestment(message) {
             Swal.fire({
