@@ -5,7 +5,7 @@
     Layout = "~/Areas/UserPanel/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container">
+<div class="container px-0">
 
     @if (ViewBag.UserProfileIsActive != null && ViewBag.UserProfileIsActive == true)
     {
@@ -79,16 +79,21 @@
             <br />
             <br />
             <br />
-            <div class="container row">
-                <div class="row col-12 col-md-6">
-                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.BussinessName)</p>
-                    <p class="col-12"> @Html.DisplayFor(model => model.BussinessName)</p>
-                </div>
-                <div class="row col-12 col-md-6">
-                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CompanyName)</p>
-                    <p class="col-12"> @Html.DisplayFor(model => model.CompanyName)</p>
-                </div>
-            </div>
+            <table class="table text-center">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(model => model.BussinessName)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.CompanyName)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.BussinessName)</td>
+                        <td>@Html.DisplayFor(model => model.CompanyName)</td>
+                    </tr>
+                </tbody>
+            </table>
+            
             @*<div class="container border">
                     <div class="row">
                         <div class="col-sm">
@@ -266,7 +271,7 @@
                                             </div>*@
 
                     <table class="table text-center">
-                        <thead>
+                        <thead class="thead-light">
                             <tr>
                                 <th scope="col">@Html.DisplayNameFor(model => model.MinimumAmountInvest)</th>
                                 @*<th scope="col">@Html.DisplayNameFor(model => model.TotalInvestment)</th>*@
