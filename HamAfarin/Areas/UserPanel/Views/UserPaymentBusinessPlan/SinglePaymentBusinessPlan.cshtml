@@ -341,12 +341,13 @@
                                         </strong>
                                         <div style="margin-top:16px">
 
-                                            @{ if (Model.ImageNameWarranty != null && Model.ImageNameWarranty != "" && !Model.ImageNameWarranty.Contains("no-photo"))
+                                            @* بعدا فعال شود *@
+                                            @*@{ if (Model.ImageNameWarranty != null && Model.ImageNameWarranty != "" && !Model.ImageNameWarranty.Contains("no-photo"))
                                                 {
                                                     <a class="d-none d-sm-block" onclick="ShowWarranty('@Model.ImageNameWarranty')" href="#">
                                                         <img class="" src="~/Content/img/zemanatname.svg" style="width:12px" />
                                                     </a>
-                                                }}
+                                                }}*@
 
 
                                         </div>
@@ -382,7 +383,7 @@
         <!-- after banner end -->
         <section class="container-fluid px-0">
             <div class="table-responsive d-none d-md-block">
-                <table class="table mt-2 table-bordered">
+                <table class="table mt-2 table-bordered text-center">
                     <thead class="thead" style="background-color: #DCDCDC;">
                         <tr>
                             <th scope="col">تاریخ واریز</th>
@@ -390,7 +391,7 @@
                             <th scope="col">تایید ادمین</th>
                             <th scope="col">شماره تراکنش /فیش بانکی</th>
                             @*<th scope="col">انصراف</th>*@
-                            <th scope="col">چاپ</th>
+                            @*<th scope="col">چاپ</th>*@
                         </tr>
                     </thead>
                     <tbody>
@@ -416,27 +417,36 @@
                                     <span class="text-warning"><i class="bi bi-clock"> @Model.PaymentStatus</i></span>
                                 }
                             </td>
-                            @if (Model.InvoiceNumber == null)
+                            @if (Model.InvoiceNumber == null && Model.TransactionPaymentCode == null)
                             {
                                 <td>کد پرداخت ندارد</td>
                             }
                             else
                             {
-                                <td>@Model.InvoiceNumber</td>
+                                if (Model.InvoiceNumber != null)
+                                {
+                                    <td>@Model.InvoiceNumber</td>
+
+                                }
+                                if (Model.TransactionPaymentCode != null)
+                                {
+                                    <td>@Model.TransactionPaymentCode</td>
+
+                                }
                             }
                             @*<td>
-                                    @if (Model.PaymentStatus == "انصراف")
-                                    {
-                                        <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
-                                    }
-                                    else
-                                    {
-                                        <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
-                                    }
-                                </td>*@
-                            <td>
-                                <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
-                            </td>
+            @if (Model.PaymentStatus == "انصراف")
+            {
+                <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
+            }
+            else
+            {
+                <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
+            }
+        </td>*@
+                            @*<td>
+            <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+        </td>*@
                         </tr>
                     </tbody>
                 </table>
@@ -498,14 +508,14 @@
                             </td>
                         </tr>*@
 
-                    <tr>
+                    @*<tr>
 
                         <td>چاپ</td>
 
                         <td class="text-left">
                             <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
                         </td>
-                    </tr>
+                    </tr>*@
                 </tbody>
             </table>
             <div class="d-flex flex-row-reverse">
