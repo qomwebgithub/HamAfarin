@@ -165,7 +165,9 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.InvestorNationalCode = tbl_UserProfiles.NationalCode;
             selectPayment.IsRequestedReturn = boolIsRequestedReturn;
 
-            string strPaymentStatus = "انصراف";
+            //string strPaymentStatus = "انصراف";
+            string strPaymentStatus = "در انتظار تایید";
+
             int intPaymentStatusColorType = 0;
             if (qBusinessPlanPayment.IsConfirmedFromAdmin)
             {
