@@ -23,7 +23,10 @@
 									@Html.ActionLink("لیست سرمایه گذاری ها", "PaymentList", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("ویرایش", "Edit", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("حذف", "Delete", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
-                                    <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_UserProfiles/Details/@item.UserID">اطلاعات سرمایه گذار</a>
+                                    @if (item.HasSejam)
+                                    {
+                                        <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_UserProfiles/Details/@item.UserID">اطلاعات سرمایه گذار</a>
+                                    }
 									</text>).Width(200);
                   })
         //.ToolBar(toolbar =>
