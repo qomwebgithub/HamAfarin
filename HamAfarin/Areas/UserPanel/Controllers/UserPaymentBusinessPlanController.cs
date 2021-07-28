@@ -192,6 +192,12 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.IsAcceptInvestment = planService.IsAcceptInvestmentPlan(db, tbl_BussinessPlans.BussinessPlanID);
 
             ViewBag.Privacy = db.Tbl_Settings.Select(s => s.Privacy).FirstOrDefault();
+            ViewBag.TotalPayment = db.Tbl_BusinessPlanPayment
+                .Where(p => p.BusinessPlan_id == qBusinessPlanPayment.BusinessPlan_id &&
+                p.PaymentUser_id == qBusinessPlanPayment.PaymentUser_id)
+                .Select(p => p.PaymentPrice)
+                .Sum();
+            
             ViewBag.Notify = notify;
 
             return View(selectPayment);
