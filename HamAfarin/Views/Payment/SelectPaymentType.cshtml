@@ -83,7 +83,7 @@
                 <thead class="thead-light">
                     <tr>
                         <th scope="col">@Html.DisplayNameFor(model => model.BussinessName)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.CompanyName)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.CompanyName)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -93,7 +93,7 @@
                     </tr>
                 </tbody>
             </table>
-            
+
             @*<div class="container border">
                     <div class="row">
                         <div class="col-sm">
@@ -402,16 +402,24 @@
     else if (ViewBag.UserProfileIsActive == null)
     {
         <div class="container alert alert-danger">
-            <p>پروفایل خود را بروزرسانی نکرده اید و متاسفانه امکان سرمایه گذاری ندارید</p>
-            <a href="/UserPanel/UserProfile/Create" class="btn btn-orange btn-lg" style="font-size: 15px;">
-                ویرایش پروفایل
+            <p>برای تکمیل فرآیند سرمایه گذاری، اطلاعات سجام شما لازم می باشد.</p>
+            <a href="/Account/SejamLogin" class="btn btn-orange btn-lg" style="font-size: 15px;">
+                دریافت اطلاعات از سجام
             </a>
+            <div class="mt-2">
+                <a href="https://www.sejam.ir/" target="_blank">
+                    در صورت عدم ثبت نام در سجام، اینجا کلیک کنید
+                </a>
+            </div>
         </div>
     }
     else
     {
         <div class="container alert alert-danger">
-            <p>متاسفانه پروفایل شما تایید نشده است و امکان سرمایه گذاری ندارید</p>
+            <p>
+                پروفایل شما در انتظار تایید ادمین می باشد.<br />
+                برای اطلاعات بیشتر با پشیبانی 42417000-021 داخلی 5 تماس بگیرید.
+            </p>
         </div>
     }
 
