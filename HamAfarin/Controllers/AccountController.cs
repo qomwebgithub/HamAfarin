@@ -61,11 +61,11 @@ namespace Hamafarin.Controllers
                         if (user.HasSejam)
                         {
                             userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
-                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + userProfiles.FirstName + " " + userProfiles.LastName;
+                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam + "," + userProfiles.FirstName + " " + userProfiles.LastName;
                         }
                         else
                         {
-                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber;
+                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam;
                         }
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
