@@ -103,7 +103,7 @@ namespace Hamafarin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(RegiserViewModel regiser)
+        public ActionResult Register(RegisterViewModel register)
         {
             //**************************************************///
             //**************************************************////
@@ -111,7 +111,7 @@ namespace Hamafarin.Controllers
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
                 ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
-                return View(regiser);
+                return View(register);
             }
             //recaptcha
             //**************************************************///
@@ -120,25 +120,25 @@ namespace Hamafarin.Controllers
             {
                 //if (!IsUserNameExist(regiser.UserName))
                 //{
-                regiser.MobileNumber = StringExtensions.Fa2En(regiser.MobileNumber);
+                register.MobileNumber = StringExtensions.Fa2En(register.MobileNumber);
 
-                if (!IsMobileNumberExist(regiser.MobileNumber))
+                if (!IsMobileNumberExist(register.MobileNumber))
                 {
                     Random rndSmsCode = new Random();
                     int smsCode = rndSmsCode.Next(1000, 9999);
-                    Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == regiser.MobileNumber);
+                    Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == register.MobileNumber);
 
                     oUser = new Tbl_Users()
                     {
-                        UserName = StringExtensions.Fa2En(regiser.MobileNumber),
-                        MobileNumber = StringExtensions.Fa2En(regiser.MobileNumber),
+                        UserName = StringExtensions.Fa2En(register.MobileNumber),
+                        MobileNumber = StringExtensions.Fa2En(register.MobileNumber),
                         IsActive = false,
                         IsDeleted = false,
                         RegisterDate = DateTime.Now,
                         Role_id = 2,
-                        Password = FormsAuthentication.HashPasswordForStoringInConfigFile(regiser.Password, "MD5"),
+                        Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
                         SmsCode = smsCode,
-                        IsLegal = regiser.IsLegal,
+                        IsLegal = register.IsLegal,
                         UserToken = Guid.NewGuid().ToString(),
                         HasSejam = false,
                         ActivateDate = null,
@@ -168,7 +168,7 @@ namespace Hamafarin.Controllers
                 //    ModelState.AddModelError("UserName", "نام کاربری تکراری می باشد");
                 //}
             }
-            return View(regiser);
+            return View(register);
         }
 
 
@@ -369,7 +369,7 @@ namespace Hamafarin.Controllers
         bool IsMobileNumberExist(string mobileNumber)
         {
             mobileNumber = StringExtensions.Fa2En(mobileNumber);
-            return db.Tbl_Users.Any(u => u.MobileNumber == mobileNumber.Trim().ToLower() && u.IsActive);
+            return db.Tbl_Users.Any(u => u.MobileNumber == mobileNumber.Trim().ToLower());
         }
 
 

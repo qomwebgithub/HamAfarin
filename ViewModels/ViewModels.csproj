@@ -75,7 +75,7 @@
     <Compile Include="Account\Sejam\SejamLoginViewModel.cs" />
     <Compile Include="Account\UserProfileViewModel.cs" />
     <Compile Include="Account\LoginViewModel.cs" />
-    <Compile Include="Account\RegiserViewModel.cs" />
+    <Compile Include="Account\RegisterViewModel.cs" />
     <Compile Include="Account\VerifySmsViewModel.cs" />
     <Compile Include="Blog\BlogItemViewModel.cs" />
     <Compile Include="Comment\UserCommentBusinessPlanList.cs" />

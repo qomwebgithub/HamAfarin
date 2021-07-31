@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ViewModels
 {
-    public class RegiserViewModel
+    public class RegisterViewModel
     {
         public string UserName { get; set; }
         [Display(Name = "شماره موبایل")]
