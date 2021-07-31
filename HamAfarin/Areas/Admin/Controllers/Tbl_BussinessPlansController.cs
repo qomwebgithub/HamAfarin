@@ -284,7 +284,7 @@ namespace Hamafarin.Areas.Admin.Controllers
 
             }
 
-            if (imgInListPalns != null && imgWarranty.IsImage())
+            if (imgInListPalns != null && imgInListPalns.IsImage())
             {
                 if (adminCreateEditBusinessPlan.ImageNameInListPalns != "no-photo.jpg")
                 {
