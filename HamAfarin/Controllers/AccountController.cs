@@ -154,7 +154,8 @@ namespace Hamafarin.Controllers
 
                     ViewBag.IsSuccess = true;
 
-                    oSms.SendSMS(oUser.MobileNumber, oUser.SmsCode.ToString());
+                    string formatedMobileNumber = "98" + oUser.MobileNumber.Substring(1);
+                    oSms.SendSMS(formatedMobileNumber, oUser.SmsCode.ToString());
 
                     return RedirectToAction("VerifySms", new { id = oUser.UserToken });
                 }
@@ -195,7 +196,8 @@ namespace Hamafarin.Controllers
                     int smsCode = rndSmsCode.Next(1000, 9999);
                     qUser.SmsCode = smsCode;
                     db.SaveChanges();
-                    oSms.SendSMS(qUser.MobileNumber, qUser.SmsCode.ToString());
+                    string formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
+                    oSms.SendSMS(formatedMobileNumber, qUser.SmsCode.ToString());
                 }
 
                 return Json(new { success = true, Message = Message }, JsonRequestBehavior.AllowGet);

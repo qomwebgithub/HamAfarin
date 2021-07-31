@@ -58,7 +58,15 @@ namespace HamAfarin
         /// <returns></returns>
         public static bool GetHasSejam(string userIdentityName)
         {
-            bool hasSejam = Convert.ToBoolean(userIdentityName.Split(',')[4]);
+            bool hasSejam = false;
+
+            string[] array = userIdentityName.Split(',');
+            int index = 4;
+
+            if (index < array.Length)
+            {
+                hasSejam = Convert.ToBoolean(array[index]);
+            }
             return hasSejam;
         }
 
