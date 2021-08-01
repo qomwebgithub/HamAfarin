@@ -58,13 +58,19 @@ namespace Hamafarin.Controllers
                         //Request.UrlReferrer.Host()
                         // FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
                         string strSetAuthCookie;
-                        if (user.HasSejam)
+                        userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
+                        if (user.HasSejam && userProfiles != null)
                         {
-                            userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
                             strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam + "," + userProfiles.FirstName + " " + userProfiles.LastName;
+
                         }
                         else
                         {
+                            if (user.HasSejam && userProfiles == null)
+                            {
+                                user.HasSejam = false;
+                                db.SaveChanges();
+                            }
                             strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam;
                         }
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
