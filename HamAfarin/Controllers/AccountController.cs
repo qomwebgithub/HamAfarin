@@ -69,10 +69,9 @@ namespace Hamafarin.Controllers
                         }
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
-                        string formatedMobileNumber = "98" + user.MobileNumber.Substring(1);
                         // 1 = ورود
                         Tbl_Sms qSms = db.Tbl_Sms.Find(1);
-                        (bool Success, string Message) result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+                        (bool Success, string Message) result = oSms.AdpSendSms(user.MobileNumber, qSms.Message);
 
                         if (user.Role_id == 1)
                             return Redirect(ReturnUrl);
@@ -154,8 +153,7 @@ namespace Hamafarin.Controllers
 
                     ViewBag.IsSuccess = true;
 
-                    string formatedMobileNumber = "98" + oUser.MobileNumber.Substring(1);
-                    oSms.SendSMS(formatedMobileNumber, oUser.SmsCode.ToString());
+                    oSms.AdpSendSms(oUser.MobileNumber, oUser.SmsCode.ToString());
 
                     return RedirectToAction("VerifySms", new { id = oUser.UserToken });
                 }
@@ -196,8 +194,7 @@ namespace Hamafarin.Controllers
                     int smsCode = rndSmsCode.Next(1000, 9999);
                     qUser.SmsCode = smsCode;
                     db.SaveChanges();
-                    string formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
-                    oSms.SendSMS(formatedMobileNumber, qUser.SmsCode.ToString());
+                    oSms.AdpSendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
                 }
 
                 return Json(new { success = true, Message = Message }, JsonRequestBehavior.AllowGet);
@@ -265,8 +262,7 @@ namespace Hamafarin.Controllers
 
                                     // 3 = ثبت اطلاعات از سجام
                                     qSms = db.Tbl_Sms.Find(3);
-                                    formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
-                                    result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+                                    result = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
 
                                     return View(verifySms);
                                 }
@@ -285,8 +281,7 @@ namespace Hamafarin.Controllers
 
                         // 2 = ثبت نام
                         qSms = db.Tbl_Sms.Find(2);
-                        formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
-                        result = oSms.AdpSendSms(formatedMobileNumber, qSms.Message);
+                        result = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
 
 
                         string strSetAuthCookie = qUser.UserID + "," + qUser.Role_id + "," + qUser.UserName + "," + qUser.MobileNumber;

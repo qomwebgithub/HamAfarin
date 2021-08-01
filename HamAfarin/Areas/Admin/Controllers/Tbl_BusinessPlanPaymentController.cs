@@ -239,8 +239,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     }
 
                     Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                    string formatedMobileNumber = "98" + qUser.MobileNumber.Substring(1);
-                    (bool Success, string Message) result = oSms.AdpSendSms(formatedMobileNumber, massage);
+                    (bool Success, string Message) result = oSms.AdpSendSms(qUser.MobileNumber, massage);
                 }
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 db.SaveChanges();

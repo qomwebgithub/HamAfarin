@@ -18,9 +18,7 @@ namespace HamAfarin
 
         public void SendSMS(string MobileNumber, string Message)
         {
-            //SaharSendSms(MobileNumber, Message);
-
-            AdpSendSms(MobileNumber, Message);
+            SaharSendSms(MobileNumber, Message);
 
             //string url = "https://www.saharsms.com/api/kZDja1GdmznrkBMwSVVuJQ5KjzRNsAsM/json/SendVerify?receptor=" + MobileNumber + "&template=HamafarinVerify-21713&token=" + Message;
 
@@ -76,6 +74,8 @@ namespace HamAfarin
 
         public  (bool Success, string Message) AdpSendSms(string mobileNumber, string message)
         {
+            mobileNumber = "98" + mobileNumber.Substring(1);
+
             (bool Success, string Message) tokenResult;
 
             // این کد پیش فرض داخل داکیومنت می باشد
