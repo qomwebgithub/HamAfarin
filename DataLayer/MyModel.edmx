@@ -203,6 +203,11 @@
           <Property Name="InvestorsText" Type="nvarchar(max)" />
           <Property Name="ReasonsExtendingPlan" Type="nvarchar(max)" />
           <Property Name="Canonical" Type="nvarchar(max)" />
+          <Property Name="MetaTitle" Type="nvarchar(max)" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="ImageAlt" Type="nvarchar(max)" />
+          <Property Name="TitleUrl" Type="nvarchar(max)" />
+          <Property Name="SeoKey" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_CapitalApplicantHelp">
           <Key>
@@ -251,6 +256,12 @@
           <Property Name="FullText" Type="nvarchar(max)" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="ImageName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MetaTitle" Type="nvarchar(max)" />
+          <Property Name="MetaDescription" Type="nvarchar(max)" />
+          <Property Name="ImageAlt" Type="nvarchar(max)" />
+          <Property Name="Canonical" Type="nvarchar(max)" />
+          <Property Name="TitleUrl" Type="nvarchar(max)" />
+          <Property Name="SeoKey" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_Galleries">
           <Key>
@@ -1554,6 +1565,11 @@
           <Property Name="InvestorsText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ReasonsExtendingPlan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Canonical" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageAlt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TitleUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SeoKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_BusinessPlanGallery" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanGallery_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanGallery" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanPayment" />
           <NavigationProperty Name="Tbl_BusinessPlanQuestion" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanQuestion_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanQuestion" />
@@ -1617,6 +1633,12 @@
           <Property Name="FullText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="ImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MetaTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ImageAlt" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Canonical" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TitleUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SeoKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_Galleries">
           <Key>
@@ -2544,6 +2566,11 @@
           <EntitySetMapping Name="Tbl_BussinessPlans">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_BussinessPlans">
               <MappingFragment StoreEntitySet="Tbl_BussinessPlans">
+                <ScalarProperty Name="SeoKey" ColumnName="SeoKey" />
+                <ScalarProperty Name="TitleUrl" ColumnName="TitleUrl" />
+                <ScalarProperty Name="ImageAlt" ColumnName="ImageAlt" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
                 <ScalarProperty Name="Canonical" ColumnName="Canonical" />
                 <ScalarProperty Name="ReasonsExtendingPlan" ColumnName="ReasonsExtendingPlan" />
                 <ScalarProperty Name="InvestorsText" ColumnName="InvestorsText" />
@@ -2660,6 +2687,12 @@
           <EntitySetMapping Name="Tbl_FutureBusinessPlan">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_FutureBusinessPlan">
               <MappingFragment StoreEntitySet="Tbl_FutureBusinessPlan">
+                <ScalarProperty Name="SeoKey" ColumnName="SeoKey" />
+                <ScalarProperty Name="TitleUrl" ColumnName="TitleUrl" />
+                <ScalarProperty Name="Canonical" ColumnName="Canonical" />
+                <ScalarProperty Name="ImageAlt" ColumnName="ImageAlt" />
+                <ScalarProperty Name="MetaDescription" ColumnName="MetaDescription" />
+                <ScalarProperty Name="MetaTitle" ColumnName="MetaTitle" />
                 <ScalarProperty Name="ImageName" ColumnName="ImageName" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="FullText" ColumnName="FullText" />

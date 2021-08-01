@@ -22,5 +22,11 @@ namespace DataLayer
         public string FullText { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string ImageName { get; set; }
+        public string MetaTitle { get; set; }
+        public string MetaDescription { get; set; }
+        public string ImageAlt { get; set; }
+        public string Canonical { get; set; }
+        public string TitleUrl { get; set; }
+        public string SeoKey { get; set; }
     }
 }
