@@ -251,7 +251,7 @@ namespace Hamafarin.Controllers
 
                     Tbl_Sms qSms;
                     string formatedMobileNumber;
-                    (bool Success, string Message) result;
+                    (bool Success, string Message) smsResult;
 
                     if (qUser != null)
                     {
@@ -261,16 +261,19 @@ namespace Hamafarin.Controllers
                             {
                                 oSejamClass = new SejamClass();
                                 bool VerifySejam = oSejamClass.VerifyUser(verifySms, out string Message);
+
                                 if (VerifySejam == false)
                                 {
                                     ViewBag.profile = Message;
                                     ModelState.AddModelError("SmsCode", Message);
 
+                                    return View(verifySms);
+                                }
+                                else
+                                {
                                     // 3 = ثبت اطلاعات از سجام
                                     qSms = db.Tbl_Sms.Find(3);
-                                    result = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
-
-                                    return View(verifySms);
+                                    smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
                                 }
                             }
                             else if (qUser.SmsCode != Convert.ToInt32(verifySms.SmsCode))
@@ -287,7 +290,7 @@ namespace Hamafarin.Controllers
 
                         // 2 = ثبت نام
                         qSms = db.Tbl_Sms.Find(2);
-                        result = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
+                        smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
 
 
                         string strSetAuthCookie = qUser.UserID + "," + qUser.Role_id + "," + qUser.UserName + "," + qUser.MobileNumber;
@@ -304,7 +307,20 @@ namespace Hamafarin.Controllers
                         //}
 
                     }
+                    else
+                    {
+                        ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
+                    }
+
                 }
+                else
+                {
+                    ModelState.AddModelError("SmsCode", "VerifySmsViewModel is Empty");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("SmsCode", "Model State is Not valid");
             }
 
             return View(verifySms);

@@ -9,7 +9,6 @@ namespace ViewModels
 {
     public class VerifySmsViewModel
     {
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید ")]
         public string UserToken { get; set; }
         [Display(Name = "کد تایید")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید ")]
