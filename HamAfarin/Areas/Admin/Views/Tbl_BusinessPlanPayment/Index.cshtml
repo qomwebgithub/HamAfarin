@@ -18,6 +18,18 @@
                         columns.Bound(model => model.IsPaid);
 columns.Bound(model => model.PaidDateTime);
 columns.Bound(model => model.TransactionPaymentCode);
+columns.Bound(item => item.PaymentType_id).Filterable(false).Groupable(false)
+        .Template(@<text>
+                @if (item.PaymentType_id == 2)
+                 {
+                    <p>درگاه</p>
+                 }
+                 else if (item.PaymentType_id == 3)
+                 {
+                    <p>فیش</p>
+                 }
+
+        </text>);
 columns.Bound(model => model.PaymentPrice);
 columns.Bound(model => model.Tbl_Users.UserName);
 columns.Bound(model => model.Tbl_BussinessPlans.Title);
