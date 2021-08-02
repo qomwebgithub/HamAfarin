@@ -1,5 +1,19 @@
 ﻿﻿@model ViewModels.BusinessPlanSingleViewModel
 
+@{
+    ViewBag.Title = Model.MetaTitle;
+}
+
+@section Tags{
+
+    <meta name="keywords" content="@Model.SeoKey">
+    <meta name="description" content="@Model.MetaDescription" />
+    @if (string.IsNullOrEmpty(Model.Canonical) == false)
+    {
+        <link rel="canonical" href="@Model.Canonical" />
+    }
+}
+
 <style>
     #time-3-icon {
         fill: orange;
@@ -313,7 +327,7 @@
             <div class="center-panel-container col-xl-10 col-12 col-sm-10 col-md-10 col-lg-10 mt-1 pr-5 mr-md-5" data-aos="zoom-in" data-aos-once="true">
                 @*<div class="d-block d-sm-none" style="height:120px">
 
-                </div>*@
+                    </div>*@
                 <div class="row row-icons">
 
                     <div class="col-4 " data-aos="fade-up" data-aos-once="true">
@@ -395,11 +409,11 @@
 
                     @*<div class="d-none d-sm-block" style="height:220px">
 
-                    </div>
+                        </div>
 
-                    <div class="d-block d-sm-none" style="height:250px">
+                        <div class="d-block d-sm-none" style="height:250px">
 
-                    </div>*@
+                        </div>*@
 
                 </div>
             </div>
@@ -479,19 +493,19 @@
 
                     <div>
                         @*@if (!String.IsNullOrEmpty(Model.VideoFileName))
-                        {
-                            <center>
-                                <video height="400">
+                            {
+                                <center>
+                                    <video height="400">
 
 
-                                    <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
+                                        <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
 
 
-                                    <source src="mov_bbb.ogg" type="video/ogg">
-                                    مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
-                                </video>
-                            </center>
-                        }*@
+                                        <source src="mov_bbb.ogg" type="video/ogg">
+                                        مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
+                                    </video>
+                                </center>
+                            }*@
 
                         <div class="" id="accordion">
 
@@ -514,7 +528,7 @@
                                             </video>
                                             @*<div id="Vshadow">
 
-                                            </div>*@
+                                                </div>*@
                                         </div>
                                     }
                                     <p class="figure-caption text-muted pt-1">
@@ -844,7 +858,7 @@
         }
 
         function AlertInvestment(message) {
-            
+
             Swal.fire({
                 icon: 'warning',
                 title: 'توجه',
@@ -906,7 +920,7 @@
 
         function showAlert(message) {
             alert(message);
-           
+
         }
     </script>
     <script>

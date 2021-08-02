@@ -42,7 +42,6 @@ namespace DataLayer
         [Display(Name = "تگ کنونیکال")]
         public string Canonical { get; set; }
         [Display(Name = "آدرس عنوان")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string TitleUrl { get; set; }
         [Display(Name = "تاریخ ایجاد")]
         [DisplayFormat(DataFormatString = "{0: yyyy/mm/dd}")]

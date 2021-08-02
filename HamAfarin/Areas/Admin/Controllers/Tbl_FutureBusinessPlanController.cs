@@ -65,6 +65,14 @@ namespace HamAfarin.Areas.Admin.Controllers
                         Server.MapPath("/Images/FuturePlans/Thumb/" + tbl_FutureBusinessPlan.ImageName));
 
                 }
+                if (tbl_FutureBusinessPlan.TitleUrl == null)
+                {
+                    tbl_FutureBusinessPlan.TitleUrl = tbl_FutureBusinessPlan.FutureBusinessPlanTitle.Trim().Replace(" ", "-");
+                }
+                else
+                {
+                    tbl_FutureBusinessPlan.TitleUrl = tbl_FutureBusinessPlan.TitleUrl.Trim().Replace(" ", "-");
+                }
                 db.Tbl_FutureBusinessPlan.Add(tbl_FutureBusinessPlan);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -113,7 +121,10 @@ namespace HamAfarin.Areas.Admin.Controllers
                         Server.MapPath("/Images/FuturePlans/Thumb/" + tbl_FutureBusinessPlan.ImageName));
 
                 }
-
+                if (tbl_FutureBusinessPlan.TitleUrl == null)
+                {
+                    tbl_FutureBusinessPlan.TitleUrl = tbl_FutureBusinessPlan.FutureBusinessPlanTitle.Trim().Replace(" ", "-");
+                }
                 db.Entry(tbl_FutureBusinessPlan).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

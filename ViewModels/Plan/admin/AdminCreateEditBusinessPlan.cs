@@ -188,5 +188,24 @@ namespace ViewModels
         [DataType(DataType.MultilineText)]
         [AllowHtml]
         public string ReasonsExtendingPlan { get; set; }
+
+        [Display(Name = "تگ عنوان سئو")]
+        public string MetaTitle { get; set; }
+
+        [Display(Name = "تگ توضیحات سئو")]
+        public string MetaDescription { get; set; }
+
+        [Display(Name = "تگ توضیحات تصویر")]
+        public string ImageAlt { get; set; }
+
+        [Display(Name = "تگ کنونیکال")]
+        public string Canonical { get; set; }
+
+        [Display(Name = "آدرس عنوان")]
+        public string TitleUrl { get; set; }
+
+        [Display(Name = "کلمات کلیدی سئو(با , از هم جدا کنید)")]
+        public string SeoKey { get; set; }
+
     }
 }

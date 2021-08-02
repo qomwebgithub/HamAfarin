@@ -29,6 +29,16 @@
         @Html.HiddenFor(model => model.CompanyRegisterDate)
         @Html.HiddenFor(model => model.PreviousInvestorDate)
         @Html.HiddenFor(model => model.PreviousInvestorExpireDate)
+        @Html.HiddenFor(model => model.TitleUrl)
+
+        @*<br />
+
+            <div class="border border-primary">
+
+                <p>عنوان آدرس</p>
+                <p dir="ltr">www.hamafarin.com/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID/@Model.TitleUrl</p>
+            </div>
+            <br />*@
 
         @{ if (@Model.IsSuccessBussinessPlan == true)
             {
@@ -704,13 +714,53 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.MetaTitle, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MetaTitle)
+                @Html.ValidationMessageFor(model => model.MetaTitle)
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MetaDescription, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MetaDescription)
+                @Html.ValidationMessageFor(model => model.MetaDescription)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageAlt, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ImageAlt)
+                @Html.ValidationMessageFor(model => model.ImageAlt)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Canonical, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Canonical)
+                @Html.ValidationMessageFor(model => model.Canonical)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SeoKey, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SeoKey)
+                @Html.ValidationMessageFor(model => model.SeoKey)
+            </div>
+        </div>
+
         <div class="form-group" id="buttons">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="ثبت" class="btn btn-primary" />
                 @Html.ActionLink("بازگشت به فهرست", "Index")
             </div>
         </div>
-
 
     </div>
 }

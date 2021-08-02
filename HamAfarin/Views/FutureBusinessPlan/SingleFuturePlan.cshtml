@@ -1,9 +1,17 @@
 ﻿@model DataLayer.Tbl_FutureBusinessPlan
 @{
-    ViewBag.Title = "SingleFuturePlan";
+    ViewBag.Title = Model.MetaTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section Tags{
+    <meta name="keywords" content="@Model.SeoKey">
+    <meta name="description" content="@Model.MetaDescription" />
+    @if (string.IsNullOrEmpty(Model.Canonical) == false)
+    {
+        <link rel="canonical" href="@Model.Canonical" />
+    }
+}
 
 <!-- slider start -->
 @Html.Action("OtherPageSlider", "Slider", new { sliderPageId = (int)SliderPages.SINGLE_FURURE_PLAN })

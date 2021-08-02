@@ -164,7 +164,14 @@ namespace Hamafarin.Areas.Admin.Controllers
             });
             IMapper iMapper = config.CreateMapper();
             var tblBussinessPlans = iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(adminCreateEditBusinessPlan);
-
+            if (tblBussinessPlans.TitleUrl == null)
+            {
+                tblBussinessPlans.TitleUrl = tblBussinessPlans.Title.Trim().Replace(" ", "-");
+            }
+            else
+            {
+                tblBussinessPlans.TitleUrl = tblBussinessPlans.TitleUrl.Trim().Replace(" ", "-");
+            }
             tblBussinessPlans.IsSuccessBussinessPlan = false;
             db.Tbl_BussinessPlans.Add(tblBussinessPlans);
             db.SaveChanges();
@@ -371,6 +378,10 @@ namespace Hamafarin.Areas.Admin.Controllers
             });
             IMapper iMapper = config.CreateMapper();
             var tbl_BussinessPlans = iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(adminCreateEditBusinessPlan);
+            if (tbl_BussinessPlans.TitleUrl == null)
+            {
+                tbl_BussinessPlans.TitleUrl = tbl_BussinessPlans.Title.Trim().Replace(" ", "-");
+            }
             db.Entry(tbl_BussinessPlans).State = EntityState.Modified;
             db.SaveChanges();
             // کنترل گالری عکس

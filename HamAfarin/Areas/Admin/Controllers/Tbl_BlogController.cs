@@ -73,7 +73,14 @@ namespace Hamafarin.Areas.Admin.Controllers
                         Server.MapPath("/Images/BlogImages/Thumb/" + tbl_Blog.ImageName));
 
                 }
-                tbl_Blog.TitleUrl = tbl_Blog.TitleUrl.Trim().Replace(" ", "-");
+                if (tbl_Blog.TitleUrl == null)
+                {
+                    tbl_Blog.TitleUrl = tbl_Blog.Title.Trim().Replace(" ", "-");
+                }
+                else
+                {
+                    tbl_Blog.TitleUrl = tbl_Blog.TitleUrl.Trim().Replace(" ", "-");
+                }
                 db.Tbl_Blog.Add(tbl_Blog);
                 db.SaveChanges();
                 return RedirectToAction("Details/" + tbl_Blog.BlogID);
@@ -124,7 +131,10 @@ namespace Hamafarin.Areas.Admin.Controllers
                         Server.MapPath("/Images/BlogImages/Thumb/" + tbl_Blog.ImageName));
 
                 }
-
+                if (tbl_Blog.TitleUrl == null)
+                {
+                    tbl_Blog.TitleUrl = tbl_Blog.Title.Trim().Replace(" ", "-");
+                }
                 db.Entry(tbl_Blog).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details/" + tbl_Blog.BlogID);
