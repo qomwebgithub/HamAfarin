@@ -22,6 +22,9 @@ columns.Bound(item => @item.BussinessPlanID).Title("دستورات").Filterable(
             @Html.ActionLink("ویرایش", "Edit", new { id = @item.BussinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
             @Html.ActionLink("حذف", "Delete", new { id = @item.BussinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/Index/@item.BussinessPlanID">پرداخت ها</a>
+            <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/DraftsPayments/@item.BussinessPlanID">پرداخت های ناقص</a>
+            <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/SubmittedPayments/@item.BussinessPlanID">پرداخت های تایید نشده</a>
+            <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/UnSubmittedPayments/@item.BussinessPlanID">پرداخت های تایید شده</a>
 </text>).Width(200);
 
 })

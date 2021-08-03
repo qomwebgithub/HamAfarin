@@ -289,30 +289,73 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tbl_BusinessPlanPayment/SubmittedPayments
-        public ActionResult SubmittedPayments()
+        public ActionResult SubmittedPayments(int? id)
         {
-            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.IsPaid && p.IsConfirmedFromAdmin)
-                .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
-            return View(tbl_BusinessPlanPayment.ToList());
+            List<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment;
+            if (id == null)
+            {
+                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin)
+                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
+                    .Include(t => t.Tbl_BussinessPlans).ToList();
+            }
+            else
+            {
+                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin && p.BusinessPlan_id == id )
+                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
+                    .Include(t => t.Tbl_BussinessPlans).ToList();
+            }
+            return View(tbl_BusinessPlanPayment);
         }
+
         /// <summary>
         /// سرمایه گذاری های تایید نشده
         /// </summary>
         /// <returns></returns>
         // GET: Admin/Tbl_BusinessPlanPayment/UnSubmittedPayments
-        public ActionResult UnSubmittedPayments()
+        public ActionResult UnSubmittedPayments(int? id)
         {
-            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false)
-                .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
-            return View(tbl_BusinessPlanPayment.ToList());
+            List<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment;
+            if (id == null)
+            {
+                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false)
+                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users)
+                    .Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).ToList();
+            }
+            else
+            {
+                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false && p.BusinessPlan_id == id)
+                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users)
+                    .Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).ToList();
+            }
+            return View(tbl_BusinessPlanPayment);
         }
 
         // GET: Admin/Tbl_BusinessPlanPayment/DraftsPayments
-        public ActionResult DraftsPayments()
+        public ActionResult DraftsPayments(int? id)
         {
-            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.IsPaid == false)
-                .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
-            return View(tbl_BusinessPlanPayment.ToList());
+            List<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment;
+            if (id == null)
+            {
+                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid == false)
+                    .Include(t => t.Tbl_PaymentType)
+                    .Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
+                    .Include(t => t.Tbl_BussinessPlans).ToList();
+            }
+            else
+            {
+                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid == false && p.BusinessPlan_id == id)
+                    .Include(t => t.Tbl_PaymentType)
+                    .Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
+                    .Include(t => t.Tbl_BussinessPlans).ToList();
+            }
+            return View(tbl_BusinessPlanPayment);
+
         }
 
         [HttpPost]
