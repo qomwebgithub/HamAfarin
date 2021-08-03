@@ -238,7 +238,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                         massage = qSms.Message.Replace("@T", qBussinessPlan.Title);
                     }
 
-                    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == tbl_BusinessPlanPayment.PaymentUser_id);
                     (bool Success, string Message) result = oSms.AdpSendSms(qUser.MobileNumber, massage);
                 }
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
@@ -318,13 +318,16 @@ namespace HamAfarin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmedFromAdmin(int id, string payDate)
         {
-            Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
-            tbl_BusinessPlanPayment.IsConfirmedFromAdmin = true;
-            db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
-            await db.SaveChangesAsync();
             FaraboorsClass faraboors = new FaraboorsClass();
             (bool Success, string Message) result = await faraboors.ProjectFinancingProviderAsync(id, payDate);
-
+            if (result.Success)
+            {
+                Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
+                tbl_BusinessPlanPayment.PaymentStatus = 1;
+                tbl_BusinessPlanPayment.IsConfirmedFromAdmin = true;
+                db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+            }
             return Json(new { success = result.Success, message = result.Message });
         }
 

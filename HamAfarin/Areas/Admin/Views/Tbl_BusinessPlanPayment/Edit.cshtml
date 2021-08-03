@@ -19,6 +19,7 @@
         @Html.HiddenFor(model => model.CreateDate)
         @Html.HiddenFor(model => model.IsConfirmedFromAdmin)
         @Html.HiddenFor(model => model.InvoiceNumber)
+        @Html.HiddenFor(model => model.PaymentStatus)
 
         <div class="form-group">
             @Html.LabelFor(model => model.BusinessPlan_id, new { @class = "control-label col-md-2" })
@@ -46,7 +47,11 @@
 
         @if (Model.IsConfirmedFromAdmin == false)
         {
-            <a id="ConfirmAdmin" class="btn btn-primary text-white" onclick="confirmAdmin(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">تایید پرداخت توسط ادمین</a>
+            <div class="form-group">
+                <div class="col-md-10">
+                    <a id="ConfirmAdmin" class="btn btn-primary text-white" onclick="confirmAdmin(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">تایید پرداخت توسط ادمین</a>
+                </div>
+            </div>
         }
 
         <div class="container">
@@ -249,9 +254,10 @@
                             payDate: paidDateTime
                         },
                         success: function (data) {
+                            $('#IsConfirmedFromAdmin').val(true);
+                            $('#PaymentStatus').val(1);
                             if (data.success) {
                                 toastr.success(data.message);
-                                $('#IsConfirmedFromAdmin').val(true);
                             }
                             else {
                                 toastr.error(data.message);
@@ -262,9 +268,9 @@
             });
         }
 
-            //function confirmAdmin(id) {
-            //    $.get("/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id);
-            //}
+                        //function confirmAdmin(id) {
+                        //    $.get("/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id);
+                        //}
 
     </script>
 }
