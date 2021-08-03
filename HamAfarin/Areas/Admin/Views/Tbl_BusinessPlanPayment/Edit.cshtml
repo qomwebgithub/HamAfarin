@@ -245,6 +245,8 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $('#ConfirmAdmin').addClass("disabled");
+                    $('#IsConfirmedFromAdmin').val(true);
+                    $('#PaymentStatus').val(1);
                     const miladiDate = moment.from(date, 'fa', 'DD-MM-YYYY').format('YYYY-MM-DD');
                     const paidDateTime = miladiDate + "T" + time + ".000Z";
                     $.ajax({
@@ -255,8 +257,6 @@
                             payDate: paidDateTime
                         },
                         success: function (data) {
-                            $('#IsConfirmedFromAdmin').val(true);
-                            $('#PaymentStatus').val(1);
                             if (data.success) {
                                 toastr.success(data.message);
                             }
