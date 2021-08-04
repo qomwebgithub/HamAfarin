@@ -417,36 +417,27 @@
                                     <span class="text-warning"><i class="bi bi-clock"> @Model.PaymentStatus</i></span>
                                 }
                             </td>
-                            @if (Model.InvoiceNumber == null && Model.TransactionPaymentCode == null)
+                            @if (Model.TransactionPaymentCode == null)
                             {
                                 <td>کد پرداخت ندارد</td>
                             }
                             else
                             {
-                                if (Model.InvoiceNumber != null)
-                                {
-                                    <td>@Model.InvoiceNumber</td>
-
-                                }
-                                if (Model.TransactionPaymentCode != null)
-                                {
-                                    <td>@Model.TransactionPaymentCode</td>
-
-                                }
+                                <td>@Model.TransactionPaymentCode</td>
                             }
                             @*<td>
-            @if (Model.PaymentStatus == "انصراف")
-            {
-                <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
-            }
-            else
-            {
-                <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
-            }
-        </td>*@
+                                    @if (Model.PaymentStatus == "انصراف")
+                                    {
+                                        <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
+                                    }
+                                    else
+                                    {
+                                        <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
+                                    }
+                                </td>*@
                             @*<td>
-            <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
-        </td>*@
+                                    <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+                                </td>*@
                         </tr>
                     </tbody>
                 </table>
@@ -485,13 +476,13 @@
                     </tr>
                     <tr>
                         <td>شماره تراکنش/فیش بانکی</td>
-                        @if (Model.InvoiceNumber == null)
+                        @if (Model.TransactionPaymentCode == null)
                         {
                             <td class="text-left">کد پرداخت ندارد</td>
                         }
                         else
                         {
-                            <td class="text-left">@Model.InvoiceNumber</td>
+                            <td class="text-left">@Model.TransactionPaymentCode</td>
                         }
                     </tr>
                     @*<tr>
@@ -510,12 +501,12 @@
 
                     @*<tr>
 
-                        <td>چاپ</td>
+                            <td>چاپ</td>
 
-                        <td class="text-left">
-                            <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
-                        </td>
-                    </tr>*@
+                            <td class="text-left">
+                                <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+                            </td>
+                        </tr>*@
                 </tbody>
             </table>
             <div class="d-flex flex-row-reverse">
