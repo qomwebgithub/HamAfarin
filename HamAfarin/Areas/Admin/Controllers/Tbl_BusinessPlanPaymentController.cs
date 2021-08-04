@@ -27,16 +27,22 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_BusinessPlanPayment
         public ActionResult Index(int? id)
         {
-            if (id == null)
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayments = db.Tbl_BusinessPlanPayment;
+
+            if (id != null)
             {
-                var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
-                return View(tbl_BusinessPlanPayment.OrderByDescending(c => c.PaidDateTime).ToList());
+                tbl_BusinessPlanPayments = tbl_BusinessPlanPayments
+                    .Where(p => p.BusinessPlan_id == id);
             }
-            else
-            {
-                var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.BusinessPlan_id == id).Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
-                return View(tbl_BusinessPlanPayment.OrderByDescending(c => c.PaidDateTime).ToList());
-            }
+
+            tbl_BusinessPlanPayments = tbl_BusinessPlanPayments
+                .Include(t => t.Tbl_PaymentType)
+                .Include(t => t.Tbl_Users)
+                .Include(t => t.Tbl_Users1)
+                .Include(t => t.Tbl_BussinessPlans)
+                .OrderByDescending(c => c.PaidDateTime);
+
+            return View(tbl_BusinessPlanPayments.ToList());
         }
 
 
@@ -83,7 +89,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AdminCreateEditPaymentViewModel createPaymentModel,HttpPostedFileBase imgPaymentImageNameUploaded)
+        public ActionResult Create(AdminCreateEditPaymentViewModel createPaymentModel, HttpPostedFileBase imgPaymentImageNameUploaded)
         {
             if (imgPaymentImageNameUploaded != null && imgPaymentImageNameUploaded.IsImage())
             {
@@ -291,22 +297,23 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_BusinessPlanPayment/SubmittedPayments
         public ActionResult SubmittedPayments(int? id)
         {
-            List<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment;
-            if (id == null)
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                .Where(p => p.IsPaid && p.IsConfirmedFromAdmin);
+
+            if (id != null)
             {
-                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin)
-                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
-                    .Include(t => t.Tbl_BussinessPlans).ToList();
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                    .Where(p => p.BusinessPlan_id == id);
             }
-            else
-            {
-                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin && p.BusinessPlan_id == id )
-                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
-                    .Include(t => t.Tbl_BussinessPlans).ToList();
-            }
-            return View(tbl_BusinessPlanPayment);
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+
+            return View(tbl_BusinessPlanPayment.ToList());
         }
 
         /// <summary>
@@ -316,45 +323,44 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_BusinessPlanPayment/UnSubmittedPayments
         public ActionResult UnSubmittedPayments(int? id)
         {
-            List<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment;
-            if (id == null)
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                .Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false);
+
+            if (id != null)
             {
-                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false)
-                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users)
-                    .Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).ToList();
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                    .Where(p => p.BusinessPlan_id == id);
             }
-            else
-            {
-                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false && p.BusinessPlan_id == id)
-                    .Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users)
-                    .Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).ToList();
-            }
-            return View(tbl_BusinessPlanPayment);
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+
+            return View(tbl_BusinessPlanPayment.ToList());
         }
 
         // GET: Admin/Tbl_BusinessPlanPayment/DraftsPayments
         public ActionResult DraftsPayments(int? id)
         {
-            List<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment;
-            if (id == null)
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid == false);
+
+            if (id != null)
             {
-                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid == false)
-                    .Include(t => t.Tbl_PaymentType)
-                    .Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
-                    .Include(t => t.Tbl_BussinessPlans).ToList();
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                    .Where(p => p.BusinessPlan_id == id);
             }
-            else
-            {
-                tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid == false && p.BusinessPlan_id == id)
-                    .Include(t => t.Tbl_PaymentType)
-                    .Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1)
-                    .Include(t => t.Tbl_BussinessPlans).ToList();
-            }
-            return View(tbl_BusinessPlanPayment);
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+            return View(tbl_BusinessPlanPayment.ToList());
 
         }
 
@@ -374,7 +380,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             return Json(new { success = result.Success, message = result.Message });
         }
 
-        private (string date,string time) DateTimeFormating(DateTime? dateTime)
+        private (string date, string time) DateTimeFormating(DateTime? dateTime)
         {
             (string Date, string Time) dateTimeFixed;
 
