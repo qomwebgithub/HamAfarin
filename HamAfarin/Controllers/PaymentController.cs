@@ -577,8 +577,7 @@ namespace Hamafarin.Controllers
                             ViewBag.IsSuccess = true;
                             ViewBag.TransactionReferenceID = TransactionReferenceID;
 
-                            // 4 = سرمایه گذاری
-                            Tbl_Sms qSms = db.Tbl_Sms.Find(4); 
+                            Tbl_Sms qSms = db.Tbl_Sms.Find(SMSType.Investment); 
                             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
                             (bool Success, string Message) result = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
 
