@@ -4,7 +4,7 @@ namespace HamAfarin
 {
     public class FaraboorsJsonModel
     {
-        public int NationalID { get; set; }
+        public long NationalID { get; set; }
         public bool IsLegal { get; set; }
         public string FirstName { get; set; }
         public string LastNameOrCompanyName { get; set; }

@@ -77,7 +77,7 @@ namespace HamAfarin
 
                 FaraboorsJsonModel body = new FaraboorsJsonModel
                 {
-                    NationalID = int.Parse(qUserProfile.NationalCode),
+                    NationalID = long.Parse(qUserProfile.NationalCode),
                     IsLegal = qUser.IsLegal,
                     FirstName = qUserProfile.FirstName,
                     LastNameOrCompanyName = qUserProfile.LastName,
