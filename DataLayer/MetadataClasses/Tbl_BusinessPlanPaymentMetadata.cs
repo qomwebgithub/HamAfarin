@@ -36,6 +36,10 @@ namespace DataLayer
         [Display(Name = "تصویر واریزی")]
         public string PaymentImageName { get; set; }
 
+        [Display(Name = "تایید فرابورس")]
+        public bool IsConfirmedFromFaraboors { get; set; }
+        [Display(Name = "تاریخ تایید فرابورس")]
+        public DateTime? FaraboorsConfirmDate { get; set; }
     }
     [MetadataType(typeof(Tbl_BusinessPlanPaymentMetadata))]
     public partial class Tbl_BusinessPlanPayment

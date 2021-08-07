@@ -50,6 +50,12 @@ namespace ViewModels
         [Display(Name = "تاریخ تایید پرداخت")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public Nullable<System.DateTime> AdminCheckDate { get; set; }
+        [Display(Name = "تایید فرابورس")]
+        public bool IsConfirmedFromFaraboors { get; set; }
+        [Display(Name = "تاریخ تایید فرابورس")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime? FaraboorsConfirmDate { get; set; }
+
         public AdminOnlineDetilsPaymentViewModel OnlineDetails { get; set; }
     }
 }

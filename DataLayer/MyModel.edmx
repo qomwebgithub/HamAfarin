@@ -79,6 +79,8 @@
           <Property Name="PaymentImageName" Type="nvarchar" MaxLength="50" />
           <Property Name="PaymentStatus" Type="int" />
           <Property Name="AdminCheckDate" Type="datetime" />
+          <Property Name="IsConfirmedFromFaraboors" Type="bit" Nullable="false" />
+          <Property Name="FaraboorsConfirmDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Tbl_BusinessPlanQuestion">
           <Key>
@@ -1429,6 +1431,8 @@
           <Property Name="PaymentImageName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PaymentStatus" Type="Int32" />
           <Property Name="AdminCheckDate" Type="DateTime" Precision="3" />
+          <Property Name="IsConfirmedFromFaraboors" Type="Boolean" Nullable="false" />
+          <Property Name="FaraboorsConfirmDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_BussinessPlans" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_BussinessPlans" FromRole="Tbl_BusinessPlanPayment" ToRole="Tbl_BussinessPlans" />
           <NavigationProperty Name="Tbl_PaymentType" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_PaymentType" FromRole="Tbl_BusinessPlanPayment" ToRole="Tbl_PaymentType" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_Users" FromRole="Tbl_BusinessPlanPayment" ToRole="Tbl_Users" />
@@ -2491,6 +2495,8 @@
           <EntitySetMapping Name="Tbl_BusinessPlanPayment">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_BusinessPlanPayment">
               <MappingFragment StoreEntitySet="Tbl_BusinessPlanPayment">
+                <ScalarProperty Name="FaraboorsConfirmDate" ColumnName="FaraboorsConfirmDate" />
+                <ScalarProperty Name="IsConfirmedFromFaraboors" ColumnName="IsConfirmedFromFaraboors" />
                 <ScalarProperty Name="AdminCheckDate" ColumnName="AdminCheckDate" />
                 <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
                 <ScalarProperty Name="PaymentImageName" ColumnName="PaymentImageName" />
