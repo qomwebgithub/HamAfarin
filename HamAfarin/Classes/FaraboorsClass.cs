@@ -81,7 +81,7 @@ namespace HamAfarin
                     IsLegal = qUser.IsLegal,
                     FirstName = qUserProfile.FirstName,
                     LastNameOrCompanyName = qUserProfile.LastName,
-                    ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice,
+                    ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10,
                     BourseCode = qUserProfile.SejamCode,
                     PaymentDate = payDate,
                 };
