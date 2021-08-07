@@ -658,6 +658,7 @@
     <Content Include="Areas\Admin\Views\Tbl_Sms\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Sms\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Users\PaymentList.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Tickets\AnswerTicket.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">
@@ -2425,6 +2426,7 @@
     <Content Include="Views\Account\SejamLogin.cshtml" />
     <Content Include="Views\Blog\BlogPartial.cshtml" />
     <Content Include="Views\Shared\_CardBlog.cshtml" />
+    <Content Include="UploadFiles\Contracts\قراردادنهایی14000512.pdf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2450,6 +2452,7 @@
     <Folder Include="Resources\BusinessPlans\Report\" />
     <Folder Include="Resources\BusinessPlans\Slide\" />
     <Folder Include="UploadFiles\LegalFiles\" />
+    <Folder Include="UploadFiles\TicketFileUploads\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">

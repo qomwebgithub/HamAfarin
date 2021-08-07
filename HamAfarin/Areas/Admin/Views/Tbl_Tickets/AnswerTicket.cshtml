@@ -1,0 +1,62 @@
+﻿@model DataLayer.Tbl_Tickets
+@using Kendo.Mvc.UI
+@{
+    ViewBag.Title = "پاسخ " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+}
+
+<h2>پاسخ @Html.DisplayNameFor(model => model)</h2>
+
+@using (Html.BeginForm("Create", "Tbl_Tickets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Parent_id)
+        @Html.HiddenFor(model => model.Subject)
+
+        @{
+            DataLayer.Tbl_Users tbl_Users = ViewBag.User as DataLayer.Tbl_Users;
+            <div class="col-12 mx-1 my-4">
+                <span>ارسال تیکت به کاربر:</span><span>@tbl_Users.MobileNumber</span>
+            </div>
+        }
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Subject, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Subject, new { @class = "form-control" })
+                    <input readonly="readonly" value="@ViewBag.Subject" name="Subject" />
+
+                    @Html.ValidationMessageFor(model => model.Subject)
+                </div>
+            </div>*@
+
+        <div class="col-12 mx-1 my-4">
+            <span>موضوع:</span><span>@ViewBag.Subject</span>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Text, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Text, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Text)
+            </div>
+        </div>
+
+        <div class="card-body">
+            <label class="" for="Title">بارگیری فایل</label>
+            <div class="col-md-10">
+                @Html.Kendo().Upload().Name("attachTicketFileUpload").Multiple(true)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ایجاد" class="btn btn-primary" />
+                @Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    </div>
+}
+

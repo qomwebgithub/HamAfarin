@@ -19,12 +19,17 @@ namespace Hamafarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_Tickets
         public ActionResult Index()
         {
-            var tbl_Tickets = db.Tbl_Tickets.Where(t=>t.IsDelete!=true).Include(t => t.Tbl_Tickets2).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_Users2).Include(t => t.Tbl_Users3).Include(t => t.Tbl_Users4);
+            var tbl_Tickets = db.Tbl_Tickets
+                .Where(t => t.IsDelete != true)
+                .Include(t => t.Tbl_Tickets2)
+                .Include(t => t.Tbl_Users)
+                .Include(t => t.Tbl_Users1)
+                .Include(t => t.Tbl_Users2)
+                .Include(t => t.Tbl_Users3)
+                .Include(t => t.Tbl_Users4)
+                .OrderByDescending(t => t.CreateDateTime);
             return View(tbl_Tickets.ToList());
         }
-
-
-
 
         /// <summary>
         /// تیکت های چک نشده
@@ -32,16 +37,12 @@ namespace Hamafarin.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult UnCheckedTickets()
         {
-            List<Tbl_Tickets> qlstTickets= db.Tbl_Tickets
+            List<Tbl_Tickets> qlstTickets = db.Tbl_Tickets
                 .Where(t => t.IsDelete != true
-                &&t.IsAdminChecked!=true).OrderByDescending(q => q.TicketID).ToList();
-            
+                && t.IsAdminChecked != true).OrderByDescending(q => q.TicketID).ToList();
+
             return PartialView(qlstTickets);
         }
-
-
-
-
 
         /// <summary>
         /// نمایش تیکت
@@ -54,7 +55,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             //تیکت پدر
             Tbl_Tickets qTicket = db.Tbl_Tickets.Find(id);
 
@@ -67,10 +68,9 @@ namespace Hamafarin.Areas.Admin.Controllers
             List<Tbl_Tickets> qlstTickets = new List<Tbl_Tickets>();
             qlstTickets.Add(qTicket);
             qlstTickets.AddRange(db.Tbl_Tickets.Where(t => t.Parent_id == id));
-           
+
             return View(qlstTickets);
         }
-
 
         /// <summary>
         /// چک شدن تیکت توسط ادمین
@@ -88,10 +88,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
 
-
-
         // GET: Admin/Tbl_Tickets/Create
-
         /// <summary>
         /// ایجاد تیکت
         /// </summary>
@@ -100,15 +97,15 @@ namespace Hamafarin.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult Create(int? parentId)
         {
-            if(parentId!=null)
+            if (parentId != null)
             {
                 int quserId = db.Tbl_Tickets.Find(parentId).User_id.Value;
-                ViewBag.User =db.Tbl_Users.Find(quserId);
+                ViewBag.User = db.Tbl_Users.Find(quserId);
             }
 
             ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber");
 
-            return View(new Tbl_Tickets { Parent_id=parentId});
+            return View(new Tbl_Tickets { Parent_id = parentId });
         }
 
         // POST: Admin/Tbl_Tickets/Create
@@ -116,15 +113,15 @@ namespace Hamafarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Parent_id,User_id,Subject,Text")] Tbl_Tickets tbl_Tickets,HttpPostedFileBase attachTicketFileUpload)
+        public ActionResult Create([Bind(Include = "Parent_id,User_id,Subject,Text")] Tbl_Tickets tbl_Tickets, HttpPostedFileBase attachTicketFileUpload)
         {
             if (ModelState.IsValid)
             {
 
                 //ذخیره ی فایل آپلود شده
-                if(attachTicketFileUpload!=null)
+                if (attachTicketFileUpload != null)
                 {
-                    string strFileUploadName = Guid.NewGuid().ToString()+Path.GetExtension(attachTicketFileUpload.FileName);
+                    string strFileUploadName = Guid.NewGuid().ToString() + Path.GetExtension(attachTicketFileUpload.FileName);
 
                     attachTicketFileUpload.SaveAs(Server.MapPath(FileAddressesDirectoryPath.TicketFileUploadUrl(strFileUploadName)));
 
@@ -139,7 +136,7 @@ namespace Hamafarin.Areas.Admin.Controllers
 
 
                 //تغییر وضعیت تیکت پدر به باز بودن تیکت در صورتی که جوابی به تیکت داده شد
-                if (tbl_Tickets.Parent_id!=null)
+                if (tbl_Tickets.Parent_id != null)
                 {
                     db.Tbl_Tickets.Find(tbl_Tickets.Parent_id).IsClosed = false;
                 }
@@ -155,7 +152,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 if (tbl_Tickets.Parent_id == null)//درصورتی که تیکت ایجاد شده تیکت پدر بود
                     intGoToParentid = tbl_Tickets.TicketID;
 
-                return RedirectToAction("TicketDetails",new { id=intGoToParentid});
+                return RedirectToAction("TicketDetails", new { id = intGoToParentid });
             }
 
             ViewBag.Parent_id = new SelectList(db.Tbl_Tickets, "TicketID", "Subject", tbl_Tickets.Parent_id);
@@ -165,12 +162,8 @@ namespace Hamafarin.Areas.Admin.Controllers
         }
 
         // GET: Admin/Tbl_Tickets/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Tbl_Tickets tbl_Tickets = db.Tbl_Tickets.Find(id);
             if (tbl_Tickets == null)
             {
@@ -178,7 +171,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             }
             ViewBag.Parent_id = new SelectList(db.Tbl_Tickets, "TicketID", "Subject", tbl_Tickets.Parent_id);
             ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber", tbl_Tickets.User_id);
-       
+
             return View(tbl_Tickets);
         }
 
@@ -200,11 +193,11 @@ namespace Hamafarin.Areas.Admin.Controllers
                 {
 
                     //حذف فایل قبلی
-                    if(tbl_Tickets.AttachFileName!=null)
+                    if (tbl_Tickets.AttachFileName != null)
                     {
                         string strLastFilePath = Server.MapPath(FileAddressesDirectoryPath.TicketFileUploadUrl(tbl_Tickets.AttachFileName));
 
-                        if(System.IO.File.Exists(strLastFilePath))
+                        if (System.IO.File.Exists(strLastFilePath))
                         {
                             System.IO.File.Delete(strLastFilePath);
                         }
@@ -271,7 +264,7 @@ namespace Hamafarin.Areas.Admin.Controllers
 
 
             //db.Tbl_Tickets.Remove(tbl_Tickets);
-            
+
             ///حذف منطقی
             tbl_Tickets.IsDelete = true;
             tbl_Tickets.DeleteDateTime = DateTime.Now;
@@ -298,6 +291,57 @@ namespace Hamafarin.Areas.Admin.Controllers
 
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult AnswerTicket(int parentId)
+        {
+            Tbl_Tickets qTicket = db.Tbl_Tickets.FirstOrDefault(t => t.TicketID == parentId);
+
+            ViewBag.User = db.Tbl_Users.FirstOrDefault(u => u.UserID == qTicket.User_id);
+            ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber");
+            ViewBag.Subject = qTicket.Subject;
+
+            return View(new Tbl_Tickets { Parent_id = parentId, Subject = qTicket.Subject });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AnswerTicket([Bind(Include = "Parent_id,User_id,Subject,Text")] Tbl_Tickets tbl_Tickets, HttpPostedFileBase attachTicketFileUpload)
+        {
+            if (ModelState.IsValid)
+            {
+                //ذخیره ی فایل آپلود شده
+                if (attachTicketFileUpload != null)
+                {
+                    string strFileUploadName = Guid.NewGuid().ToString() + Path.GetExtension(attachTicketFileUpload.FileName);
+
+                    attachTicketFileUpload.SaveAs(Server.MapPath(FileAddressesDirectoryPath.TicketFileUploadUrl(strFileUploadName)));
+
+                    tbl_Tickets.AttachFileName = strFileUploadName;
+                }
+                tbl_Tickets.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                tbl_Tickets.CreateDateTime = DateTime.Now;
+                tbl_Tickets.UserCreate_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                tbl_Tickets.AdminCheckedDateTime = DateTime.Now;
+                tbl_Tickets.IsAdminChecked = true;
+                tbl_Tickets.AdminChecked_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+
+                db.Tbl_Tickets.Find(tbl_Tickets.Parent_id).IsClosed = false;
+
+
+                db.Tbl_Tickets.Add(tbl_Tickets);
+                db.SaveChanges();
+
+                //ریدایرکت به نمایش جزئیات تیکت با استفاده از آیدی تیکت پدر
+                int? intGoToParentid = tbl_Tickets.Parent_id;
+
+                return RedirectToAction("TicketDetails", new { id = intGoToParentid });
+            }
+
+            ViewBag.Parent_id = new SelectList(db.Tbl_Tickets, "TicketID", "Subject", tbl_Tickets.Parent_id);
+            ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber", tbl_Tickets.User_id);
+
+            return View(tbl_Tickets);
         }
 
         protected override void Dispose(bool disposing)

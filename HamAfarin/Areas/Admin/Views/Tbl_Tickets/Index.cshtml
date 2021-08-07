@@ -28,6 +28,7 @@ columns.Bound(model => model.Tbl_Users.MobileNumber);
 //columns.Bound(model => model.Tbl_Users4.MobileNumber);
 columns.Bound(item => @item.TicketID).Title("دستورات").Filterable(false).Groupable(false)
         .Template(@<text>
+									@Html.ActionLink("پاسخ", "AnswerTicket", new {parentId = @item.TicketID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("ویرایش", "Edit", new {id = @item.TicketID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("حذف", "Delete", new {id = @item.TicketID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
 									</text>).Width(200);
