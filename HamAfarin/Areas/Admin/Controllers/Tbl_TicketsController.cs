@@ -128,6 +128,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                     tbl_Tickets.AttachFileName = strFileUploadName;
                 }
 
+                tbl_Tickets.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
                 tbl_Tickets.CreateDateTime = DateTime.Now;
                 tbl_Tickets.UserCreate_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
                 tbl_Tickets.AdminCheckedDateTime = DateTime.Now;
