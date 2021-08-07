@@ -145,4 +145,71 @@
         </div>
     </div>
     <br />
+
+    @if (Model.IsConfirmedFromFaraboors == true)
+    {
+        <div class="card">
+            <div class="card-header">
+                @Html.DisplayNameFor(model => model.FaraboorsConfirmDate)
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.FaraboorsConfirmDate)
+                </p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                @Html.DisplayNameFor(model => model.IsConfirmedFromFaraboors)
+            </div>
+            <div class="card-body">
+                <div class="col-md-10">
+                    <a id="ConfirmFaraboors" class="btn btn-primary text-white" onclick="confirmFaraboors(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">ارسال پرداخت به فرابورس</a>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
 </div>
+
+@section Scripts{
+    <script>
+        function confirmFaraboors(id, date, time) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: 'آیا از تایید پرداخت مطمئن هستید؟',
+                showCancelButton: true,
+                confirmButtonText: `بله`,
+                cancelButtonText: 'خیر',
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#ConfirmFaraboors').addClass("disabled");
+                    const miladiDate = moment.from(date, 'fa', 'DD-MM-YYYY').format('YYYY-MM-DD');
+                    const paidDateTime = miladiDate + "T" + time + ".000Z";
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Tbl_BusinessPlanPayment/ConfirmFaraboors/" + id,
+                        data: {
+                            //example: payDate: "2021-07-14T11:48:27.974Z"
+                            payDate: paidDateTime
+                        },
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
+}

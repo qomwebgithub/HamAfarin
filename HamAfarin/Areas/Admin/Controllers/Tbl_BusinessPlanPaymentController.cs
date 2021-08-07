@@ -58,6 +58,11 @@ namespace HamAfarin.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            (string Date, string Time) dateTime = DateTimeFormating(tbl_BusinessPlanPayment.PaidDateTime);
+            ViewBag.PaymentDate = dateTime.Date;
+            ViewBag.PaymentTime = dateTime.Time;
+
             return View(tbl_BusinessPlanPayment);
         }
 
@@ -195,6 +200,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                 PaymentPrice = tbl_BusinessPlanPayment.PaymentPrice,
                 PaymentType_id = tbl_BusinessPlanPayment.PaymentType_id.Value,
                 PaymentImageName = tbl_BusinessPlanPayment.PaymentImageName,
+                IsConfirmedFromFaraboors = tbl_BusinessPlanPayment.IsConfirmedFromFaraboors,
+                FaraboorsConfirmDate = tbl_BusinessPlanPayment.FaraboorsConfirmDate
             };
             if (tbl_BusinessPlanPayment.PaymentType_id == 2)
             {
@@ -212,10 +219,6 @@ namespace HamAfarin.Areas.Admin.Controllers
                 };
                 adminCreateEditPayment.OnlineDetails = adminOnlineDetails;
             }
-
-            (string Date, string Time) dateTime = DateTimeFormating(tbl_BusinessPlanPayment.PaidDateTime);
-            ViewBag.PaymentDate = dateTime.Date;
-            ViewBag.PaymentTime = dateTime.Time;
 
             return View(adminCreateEditPayment);
         }
@@ -365,19 +368,19 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ConfirmedFromAdmin(int id, string payDate)
+        public async Task<ActionResult> ConfirmFaraboors(int id, string payDate)
         {
             FaraboorsClass faraboors = new FaraboorsClass();
-            (bool Success, string Message) result = await faraboors.ProjectFinancingProviderAsync(id, payDate);
-            if (result.Success)
+            (bool Success, string Message) apiResult = await faraboors.ProjectFinancingProviderAsync(id, payDate);
+            if (apiResult.Success)
             {
                 Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
-                tbl_BusinessPlanPayment.PaymentStatus = 1;
-                tbl_BusinessPlanPayment.IsConfirmedFromAdmin = true;
+                tbl_BusinessPlanPayment.IsConfirmedFromFaraboors = true;
+                tbl_BusinessPlanPayment.FaraboorsConfirmDate = DateTime.Now;
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }
-            return Json(new { success = result.Success, message = result.Message });
+            return Json(new { success = apiResult.Success, message = apiResult.Message });
         }
 
         private (string date, string time) DateTimeFormating(DateTime? dateTime)

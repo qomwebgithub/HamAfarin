@@ -17,10 +17,11 @@
         @Html.HiddenFor(model => model.PaymentImageName)
         @Html.HiddenFor(model => model.PaidDateTime)
         @Html.HiddenFor(model => model.CreateDate)
-        @Html.HiddenFor(model => model.IsConfirmedFromAdmin)
         @Html.HiddenFor(model => model.InvoiceNumber)
         @Html.HiddenFor(model => model.PaymentStatus)
         @Html.HiddenFor(model => model.AdminCheckDate)
+        @Html.HiddenFor(model => model.IsConfirmedFromFaraboors)
+        @Html.HiddenFor(model => model.FaraboorsConfirmDate)
 
         <div class="form-group">
             @Html.LabelFor(model => model.BusinessPlan_id, new { @class = "control-label col-md-2" })
@@ -38,20 +39,19 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.IsConfirmedFromAdmin, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.IsConfirmedFromAdmin)
-                    @Html.ValidationMessageFor(model => model.IsConfirmedFromAdmin)
-                </div>
-            </div>*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsConfirmedFromAdmin, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsConfirmedFromAdmin)
+                @Html.ValidationMessageFor(model => model.IsConfirmedFromAdmin)
+            </div>
+        </div>
 
-        @if (Model.IsConfirmedFromAdmin == false)
+        @if (Model.IsConfirmedFromFaraboors == true)
         {
-            <div class="form-group">
-                <div class="col-md-10">
-                    <a id="ConfirmAdmin" class="btn btn-primary text-white" onclick="confirmAdmin(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">تایید پرداخت توسط ادمین</a>
-                </div>
+            <div class="mr-3 my-3">
+                <span class="font-weight-normal">تاریخ تایید فرابورس: </span>
+                <span class="font-weight-normal">@Html.DisplayFor(model => model.FaraboorsConfirmDate)</span>
             </div>
         }
 
@@ -144,51 +144,45 @@
                         </div>
                     </div>
                     <div class="col-12 m-2">
-                        <div class="row">
-                            <div class="col-6 p-0">
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class=" mb-0" style="color: #81858b;">شناسه شاپرک</p>
-                                    <span class="font-weight-normal">@Model.OnlineDetails.ShaparakToken</span>
-                                </div>
-                                <div class="col-12 border-bottom border-left p-3">
-                                    <p class="mb-0" style="color: #81858b;">شناسه ارجاع</p>
-                                    <span class="font-weight-normal">@Model.OnlineDetails.TransactionReferenceID</span>
-                                </div>
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">شناسه ارجاع شاپرک</p>
-                                    <span class="font-weight-normal"> @Model.OnlineDetails.ShaparakCheckTransactionResult</span>
-                                </div>
-                            </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class=" mb-0" style="color: #81858b;">شناسه شاپرک</p>
+                            <span class="font-weight-normal">@Model.OnlineDetails.ShaparakToken</span>
+                        </div>
+                        <div class="col-12 border-bottom border-left p-3">
+                            <p class="mb-0" style="color: #81858b;">شناسه ارجاع</p>
+                            <span class="font-weight-normal">@Model.OnlineDetails.TransactionReferenceID</span>
+                        </div>
+                        <div class="col-12 border-left border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">شناسه ارجاع شاپرک</p>
+                            <span class="font-weight-normal"> @Model.OnlineDetails.ShaparakCheckTransactionResult</span>
+                        </div>
 
-                            <div class="col-6 p-0">
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">پرداخت نهایی شاپرک</p>
-                                    @if (Model.OnlineDetails.IsFinally == false)
-                                    {
-                                        <span class="font-weight-normal">پرداخت نهایی شاپرک ندارد</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="font-weight-normal">@Model.OnlineDetails.ShaparakVerifyPayment</span>
-                                    }
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">پرداخت نهایی شاپرک</p>
+                            @if (Model.OnlineDetails.IsFinally == false)
+                            {
+                                <span class="font-weight-normal">پرداخت نهایی شاپرک ندارد</span>
+                            }
+                            else
+                            {
+                                <span class="font-weight-normal">@Model.OnlineDetails.ShaparakVerifyPayment</span>
+                            }
 
-                                </div>
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">تاریخ ایجاد</p>
-                                    <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.OnlineDetails.CreateDate)</span>
-                                </div>
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">تاریخ نهایی</p>
-                                    @if (Model.OnlineDetails.IsFinally == false)
-                                    {
-                                        <span class="font-weight-normal">تاریخ نهایی ندارد</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.OnlineDetails.FinallyDate)</span>
-                                    }
-                                </div>
-                            </div>
+                        </div>
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">تاریخ ایجاد</p>
+                            <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.OnlineDetails.CreateDate)</span>
+                        </div>
+                        <div class="col-12 border-bottom p-3">
+                            <p class="mb-0" style="color: #81858b;">تاریخ نهایی</p>
+                            @if (Model.OnlineDetails.IsFinally == false)
+                            {
+                                <span class="font-weight-normal">تاریخ نهایی ندارد</span>
+                            }
+                            else
+                            {
+                                <span class="font-weight-normal">@string.Format("{0: yyyy/MM/dd}", Model.OnlineDetails.FinallyDate)</span>
+                            }
                         </div>
                     </div>
 
@@ -222,7 +216,6 @@
 
 @section Scripts{
 
-
     <script>
 
         $("#PaidDateTimeYMD").MdPersianDateTimePicker({
@@ -233,45 +226,6 @@
             englishNumber: false,
         });
 
-        function confirmAdmin(id, date, time) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'توجه',
-                text: 'آیا از تایید پرداخت مطمئن هستید؟',
-                showCancelButton: true,
-                confirmButtonText: `بله`,
-                cancelButtonText: 'خیر',
-                confirmButtonColor: '#d0aa45',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $('#ConfirmAdmin').addClass("disabled");
-                    $('#IsConfirmedFromAdmin').val(true);
-                    $('#PaymentStatus').val(1);
-                    const miladiDate = moment.from(date, 'fa', 'DD-MM-YYYY').format('YYYY-MM-DD');
-                    const paidDateTime = miladiDate + "T" + time + ".000Z";
-                    $.ajax({
-                        type: "POST",
-                        url: "/Admin/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id,
-                        data: {
-                            //payDate: "2021-07-14T11:48:27.974Z"
-                            payDate: paidDateTime
-                        },
-                        success: function (data) {
-                            if (data.success) {
-                                toastr.success(data.message);
-                            }
-                            else {
-                                toastr.error(data.message);
-                            }
-                        }
-                    });
-                }
-            });
-        }
-
-                        //function confirmAdmin(id) {
-                        //    $.get("/Tbl_BusinessPlanPayment/ConfirmedFromAdmin/" + id);
-                        //}
 
     </script>
 }
