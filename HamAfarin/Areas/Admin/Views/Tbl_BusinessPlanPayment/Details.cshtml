@@ -10,7 +10,10 @@
 <br />
 <div>
     <p>
-        @Html.ActionLink("ویرایش", "Edit", new { id = Model.PaymentID }, new { @class = "btn btn-info" }) |
+        @if (Model.IsConfirmedFromFaraboors == false)
+        {
+            @Html.ActionLink("ویرایش", "Edit", new { id = Model.PaymentID }, new { @class = "btn btn-info" }) <span>|</span>
+        }
         @Html.ActionLink("بازگشت به لیست", "Index")
     </p>
 
@@ -158,6 +161,19 @@
                 </p>
             </div>
         </div>
+        <br />
+
+        <div class="card">
+            <div class="card-header">
+                @Html.DisplayNameFor(model => model.FaraboorsResponse)
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    @Html.DisplayFor(model => model.FaraboorsResponse)
+                </p>
+            </div>
+        </div>
+        <br />
     }
     else
     {

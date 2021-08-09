@@ -55,6 +55,8 @@ namespace ViewModels
         [Display(Name = "تاریخ تایید فرابورس")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? FaraboorsConfirmDate { get; set; }
+        [Display(Name = "کد دریافتی از فرابورس")]
+        public string FaraboorsResponse { get; set; }
 
         public AdminOnlineDetilsPaymentViewModel OnlineDetails { get; set; }
     }

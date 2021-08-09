@@ -40,6 +40,8 @@ namespace DataLayer
         public bool IsConfirmedFromFaraboors { get; set; }
         [Display(Name = "تاریخ تایید فرابورس")]
         public DateTime? FaraboorsConfirmDate { get; set; }
+        [Display(Name = "کد دریافتی از فرابورس")]
+        public string FaraboorsResponse { get; set; }
     }
     [MetadataType(typeof(Tbl_BusinessPlanPaymentMetadata))]
     public partial class Tbl_BusinessPlanPayment

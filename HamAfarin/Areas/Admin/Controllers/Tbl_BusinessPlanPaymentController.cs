@@ -234,21 +234,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             {
                 if (tbl_BusinessPlanPayment.IsConfirmedFromAdmin)
                 {
-                    tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
-                    tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
-
-
-                    // 5 = تایید سرمایه گذاری توسط ادمین
-                    Tbl_Sms qSms = db.Tbl_Sms.Find(5);
-                    string massage = qSms.Message;
-                    if (qSms.Message.Contains("@T"))
-                    {
-                        Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == tbl_BusinessPlanPayment.BusinessPlan_id);
-                        massage = qSms.Message.Replace("@T", qBussinessPlan.Title);
-                    }
-
-                    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == tbl_BusinessPlanPayment.PaymentUser_id);
-                    (bool Success, string Message) result = oSms.AdpSendSms(qUser.MobileNumber, massage);
+                    ConfimPaymnetByAdmin(tbl_BusinessPlanPayment);
                 }
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 db.SaveChanges();
@@ -375,6 +361,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (apiResult.Success)
             {
                 Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
+                ConfimPaymnetByAdmin(tbl_BusinessPlanPayment);
                 tbl_BusinessPlanPayment.IsConfirmedFromFaraboors = true;
                 tbl_BusinessPlanPayment.FaraboorsConfirmDate = DateTime.Now;
                 tbl_BusinessPlanPayment.FaraboorsResponse = apiResult.Message;
@@ -414,6 +401,29 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
 
             return dateTimeFixed;
+        }
+
+        private void ConfimPaymnetByAdmin(Tbl_BusinessPlanPayment tbl_BusinessPlanPayment)
+        {
+            tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
+            tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
+
+            AdminConfimSendSMS(tbl_BusinessPlanPayment.PaymentUser_id, tbl_BusinessPlanPayment.BusinessPlan_id);
+        }
+
+        private void AdminConfimSendSMS(int? businessPlan_id, int? paymentUser_id)
+        {
+            // 5 = تایید سرمایه گذاری توسط ادمین
+            Tbl_Sms qSms = db.Tbl_Sms.Find(5);
+            string massage = qSms.Message;
+            if (qSms.Message.Contains("@T"))
+            {
+                Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == businessPlan_id);
+                massage = qSms.Message.Replace("@T", qBussinessPlan.Title);
+            }
+
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
+            (bool Success, string Message) smsResult = oSms.AdpSendSms(qUser.MobileNumber, massage);
         }
     }
 }
