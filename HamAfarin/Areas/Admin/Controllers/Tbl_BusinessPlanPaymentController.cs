@@ -377,6 +377,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
                 tbl_BusinessPlanPayment.IsConfirmedFromFaraboors = true;
                 tbl_BusinessPlanPayment.FaraboorsConfirmDate = DateTime.Now;
+                tbl_BusinessPlanPayment.FaraboorsResponse = apiResult.Message;
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 await db.SaveChangesAsync();
             }

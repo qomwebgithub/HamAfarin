@@ -40,6 +40,7 @@ namespace DataLayer
         public Nullable<System.DateTime> AdminCheckDate { get; set; }
         public bool IsConfirmedFromFaraboors { get; set; }
         public Nullable<System.DateTime> FaraboorsConfirmDate { get; set; }
+        public string FaraboorsResponse { get; set; }
     
         public virtual Tbl_BussinessPlans Tbl_BussinessPlans { get; set; }
         public virtual Tbl_PaymentType Tbl_PaymentType { get; set; }
