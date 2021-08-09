@@ -2276,7 +2276,6 @@
     <Compile Include="Classes\CheckNationalCode.cs" />
     <Compile Include="Classes\CheckPassword.cs" />
     <Compile Include="Classes\DataPost.cs" />
-    <Compile Include="Classes\Enums\SMSType.cs" />
     <Compile Include="Classes\Enums\SliderPages.cs" />
     <Compile Include="Classes\Enums\PaymentStatusType.cs" />
     <Compile Include="Classes\FaraboorsJsonModel.cs" />

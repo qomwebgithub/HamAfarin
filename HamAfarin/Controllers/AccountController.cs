@@ -75,7 +75,8 @@ namespace Hamafarin.Controllers
                         }
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
-                        Tbl_Sms qSms = db.Tbl_Sms.Find(SMSType.Login);
+                        // 1 = ورود
+                        Tbl_Sms qSms = db.Tbl_Sms.Find(1);
                         (bool Success, string Message) result = oSms.AdpSendSms(user.MobileNumber, qSms.Message);
 
                         if (user.Role_id == 1)
@@ -270,7 +271,8 @@ namespace Hamafarin.Controllers
                                 }
                                 else
                                 {
-                                    qSms = db.Tbl_Sms.Find(SMSType.SejamRegister);
+                                    // 3 = ثبت اطلاعات از سجام
+                                    qSms = db.Tbl_Sms.Find(3);
                                     smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
                                 }
                             }
@@ -286,7 +288,8 @@ namespace Hamafarin.Controllers
 
                         }
 
-                        qSms = db.Tbl_Sms.Find(SMSType.Register);
+                        // 2 = ثبت نام
+                        qSms = db.Tbl_Sms.Find(2);
                         smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
 
 

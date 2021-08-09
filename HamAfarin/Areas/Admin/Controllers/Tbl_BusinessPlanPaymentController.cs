@@ -237,7 +237,9 @@ namespace HamAfarin.Areas.Admin.Controllers
                     tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
                     tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
 
-                    Tbl_Sms qSms = db.Tbl_Sms.Find(SMSType.ConfirmInvestment);
+
+                    // 5 = تایید سرمایه گذاری توسط ادمین
+                    Tbl_Sms qSms = db.Tbl_Sms.Find(5);
                     string massage = qSms.Message;
                     if (qSms.Message.Contains("@T"))
                     {
