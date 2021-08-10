@@ -439,7 +439,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
             else
             {
-                dateTimeFixed.Time = lstPaidDateTime[2];
+                dateTimeFixed.Time = lstPaidDateTime[1];
             }
 
             return dateTimeFixed;
