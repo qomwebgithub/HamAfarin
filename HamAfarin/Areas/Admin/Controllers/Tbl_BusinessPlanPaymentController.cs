@@ -331,6 +331,48 @@ namespace HamAfarin.Areas.Admin.Controllers
             return View(tbl_BusinessPlanPayment.ToList());
         }
 
+        public ActionResult ConfirmedByFaraboors(int? id)
+        {
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                .Where(p => p.IsPaid && p.IsConfirmedFromFaraboors == true);
+
+            if (id != null)
+            {
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                    .Where(p => p.BusinessPlan_id == id);
+            }
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+
+            return View(tbl_BusinessPlanPayment.ToList());
+        }
+
+        public ActionResult NotConfirmedByFaraboors(int? id)
+        {
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                .Where(p => p.IsPaid && p.IsConfirmedFromFaraboors == false);
+
+            if (id != null)
+            {
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                    .Where(p => p.BusinessPlan_id == id);
+            }
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+
+            return View(tbl_BusinessPlanPayment.ToList());
+        }
+
         // GET: Admin/Tbl_BusinessPlanPayment/DraftsPayments
         public ActionResult DraftsPayments(int? id)
         {
