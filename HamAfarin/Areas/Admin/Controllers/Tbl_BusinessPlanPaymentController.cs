@@ -334,7 +334,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult ConfirmedByFaraboors(int? id)
         {
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                .Where(p => p.IsPaid && p.IsConfirmedFromFaraboors == true);
+                .Where(p => p.IsConfirmedFromFaraboors == true);
 
             if (id != null)
             {
