@@ -2428,7 +2428,6 @@
     <Content Include="Views\Account\SejamLogin.cshtml" />
     <Content Include="Views\Blog\BlogPartial.cshtml" />
     <Content Include="Views\Shared\_CardBlog.cshtml" />
-    <Content Include="UploadFiles\Contracts\قراردادنهایی14000512.pdf" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
