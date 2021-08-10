@@ -358,16 +358,16 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             FaraboorsClass faraboors = new FaraboorsClass();
             (bool Success, string Message) apiResult = await faraboors.ProjectFinancingProviderAsync(id, payDate);
+            Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
+            tbl_BusinessPlanPayment.FaraboorsResponse = apiResult.Message;
             if (apiResult.Success)
             {
-                Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
                 ConfimPaymnetByAdmin(tbl_BusinessPlanPayment);
                 tbl_BusinessPlanPayment.IsConfirmedFromFaraboors = true;
                 tbl_BusinessPlanPayment.FaraboorsConfirmDate = DateTime.Now;
-                tbl_BusinessPlanPayment.FaraboorsResponse = apiResult.Message;
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
-                await db.SaveChangesAsync();
             }
+            await db.SaveChangesAsync();
             return Json(new { success = apiResult.Success, message = apiResult.Message });
         }
 
