@@ -63,6 +63,8 @@ namespace ViewModels
         [Display(Name = "مدت زمان پویش تامین مالی")]
         public string FinancialDuration { get; set; }
         public string ImageName { get; set; }
+        [Display(Name = "قرارداد سرمایه گذاری")]
+        public string ContractFileName { get; set; }
 
     }
 }

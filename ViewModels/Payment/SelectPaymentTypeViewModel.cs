@@ -59,5 +59,7 @@ namespace ViewModels
         [Display(Name = "شماره فیش واریزی")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string TransactionPaymentCode { get; set; }
+        [Display(Name = "قرارداد سرمایه گذاری")]
+        public string ContractFileName { get; set; }
     }
 }

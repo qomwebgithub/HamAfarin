@@ -2448,6 +2448,7 @@
     <Folder Include="Images\Pages\Thumb\" />
     <Folder Include="Images\PaymentImages\" />
     <Folder Include="Images\SliderImages\" />
+    <Folder Include="Resources\BusinessPlans\Contract\" />
     <Folder Include="Resources\BusinessPlans\Letter\" />
     <Folder Include="Resources\BusinessPlans\Model\" />
     <Folder Include="Resources\BusinessPlans\NationalCard\" />

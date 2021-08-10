@@ -62,6 +62,7 @@ namespace Hamafarin.Controllers
                 selectPayment.Privacy = db.Tbl_Settings.FirstOrDefault().Privacy;
                 selectPayment.InvestorMobile = tbl_UserProfiles.MobileNumber;
                 selectPayment.InvestorNationalCode = tbl_UserProfiles.NationalCode;
+                selectPayment.ContractFileName = qBussinessPlans.ContractFileName;
                 // کل سرمایه گذاری شما
                 selectPayment.TotalInvestment = planService.GetInvsetmentUserOfPlan(db, id, myUserId);
                 // حداکثر امکان سرمایه گذاری شما

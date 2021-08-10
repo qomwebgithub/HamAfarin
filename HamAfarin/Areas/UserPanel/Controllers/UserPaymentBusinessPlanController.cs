@@ -145,6 +145,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.BusinessPlanPayment = qBusinessPlanPayment.PaymentPrice.Value;
             selectPayment.IsOverflowInvestment = tbl_BussinessPlans.IsOverflowInvestment;
             selectPayment.IsSuccessBussinessPlan = tbl_BussinessPlans.IsSuccessBussinessPlan;
+            selectPayment.ContractFileName = tbl_BussinessPlans.ContractFileName;
 
             //اگر پرداخت آنلاین باشد رکورد جزییات آن را دریافت میکنیم
             if (qBusinessPlanPayment.PaymentType_id == 2)
