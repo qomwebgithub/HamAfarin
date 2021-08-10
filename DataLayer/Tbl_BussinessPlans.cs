@@ -101,6 +101,7 @@ namespace DataLayer
         public string ImageAlt { get; set; }
         public string TitleUrl { get; set; }
         public string SeoKey { get; set; }
+        public string ContractFileName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_BusinessPlanGallery> Tbl_BusinessPlanGallery { get; set; }
