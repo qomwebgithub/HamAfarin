@@ -408,7 +408,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
             tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
 
-            AdminConfimSendSMS(tbl_BusinessPlanPayment.PaymentUser_id, tbl_BusinessPlanPayment.BusinessPlan_id);
+            AdminConfimSendSMS(tbl_BusinessPlanPayment.BusinessPlan_id, tbl_BusinessPlanPayment.PaymentUser_id);
         }
 
         private void AdminConfimSendSMS(int? businessPlan_id, int? paymentUser_id)
