@@ -182,12 +182,22 @@
                 @Html.DisplayNameFor(model => model.IsConfirmedFromFaraboors)
             </div>
             <div class="card-body">
-                <div class="col-md-10">
-                    <a id="ConfirmFaraboors" class="btn btn-primary text-white" onclick="confirmFaraboors(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">ارسال پرداخت به فرابورس</a>
-                </div>
+                @if (Model.IsConfirmedFromAdmin)
+                {
+                    <div class="col-md-10">
+                        <a id="ConfirmFaraboors" class="btn btn-primary text-white" onclick="confirmFaraboors(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">ارسال پرداخت به فرابورس</a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-10">
+                        <p>برای ارسال به فرابورس ادمین باید اول پرداخت را تایید کند</p>
+                    </div>
+                }
             </div>
         </div>
         <br />
+
     }
 </div>
 
