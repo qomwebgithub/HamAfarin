@@ -66,9 +66,11 @@ namespace Hamafarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AdminCreateEditBusinessPlan adminCreateEditBusinessPlan, HttpPostedFileBase imgInListPalns, HttpPostedFileBase imgInSinglePlan, HttpPostedFileBase[] GalleryPlan, HttpPostedFileBase imgLogo,
-           HttpPostedFileBase imgWarranty, HttpPostedFileBase imgNationalCard, HttpPostedFileBase letterFile, HttpPostedFileBase modelFile, HttpPostedFileBase slideFile, HttpPostedFileBase reportFile,
-            HttpPostedFileBase ideaFile)
+        public ActionResult Create(AdminCreateEditBusinessPlan adminCreateEditBusinessPlan, HttpPostedFileBase imgInListPalns,
+            HttpPostedFileBase imgInSinglePlan, HttpPostedFileBase[] GalleryPlan, HttpPostedFileBase imgLogo,
+            HttpPostedFileBase imgWarranty, HttpPostedFileBase imgNationalCard, HttpPostedFileBase letterFile,
+            HttpPostedFileBase modelFile, HttpPostedFileBase slideFile, HttpPostedFileBase reportFile,
+            HttpPostedFileBase ideaFile, HttpPostedFileBase contractFile)
         {
             ////////////****************/////////////////////////////
             // تبدیل تاریخ تولد از 
@@ -154,6 +156,13 @@ namespace Hamafarin.Areas.Admin.Controllers
                 adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = Guid.NewGuid().ToString() + Path.GetExtension(ideaFile.FileName);
                 ideaFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Idea/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
             }
+
+            if (contractFile != null)
+            {
+                adminCreateEditBusinessPlan.ContractFileName = Guid.NewGuid().ToString() + Path.GetExtension(contractFile.FileName);
+                contractFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
+            }
+
             adminCreateEditBusinessPlan.CreateDate = DateTime.Now;
             adminCreateEditBusinessPlan.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
@@ -235,9 +244,11 @@ namespace Hamafarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AdminCreateEditBusinessPlan adminCreateEditBusinessPlan, HttpPostedFileBase imgInListPalns, HttpPostedFileBase imgInSinglePlan, HttpPostedFileBase[] GalleryPlan, HttpPostedFileBase imgLogo,
-           HttpPostedFileBase imgWarranty, HttpPostedFileBase imgNationalCard, HttpPostedFileBase letterFile, HttpPostedFileBase modelFile, HttpPostedFileBase slideFile, HttpPostedFileBase reportFile,
-            HttpPostedFileBase ideaFile)
+        public ActionResult Edit(AdminCreateEditBusinessPlan adminCreateEditBusinessPlan, HttpPostedFileBase imgInListPalns,
+            HttpPostedFileBase imgInSinglePlan, HttpPostedFileBase[] GalleryPlan, HttpPostedFileBase imgLogo,
+            HttpPostedFileBase imgWarranty, HttpPostedFileBase imgNationalCard, HttpPostedFileBase letterFile,
+            HttpPostedFileBase modelFile, HttpPostedFileBase slideFile, HttpPostedFileBase reportFile,
+            HttpPostedFileBase ideaFile, HttpPostedFileBase contractFile)
         {
             ////////////****************/////////////////////////////
             // تبدیل تاریخ تولد از 
@@ -371,6 +382,17 @@ namespace Hamafarin.Areas.Admin.Controllers
                 adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = Guid.NewGuid().ToString() + Path.GetExtension(ideaFile.FileName);
                 ideaFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Idea/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
             }
+            
+            if (contractFile != null)
+            {
+                if (adminCreateEditBusinessPlan.ContractFileName != null)
+                {
+                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.ContractFileName));
+                }
+                adminCreateEditBusinessPlan.ContractFileName = Guid.NewGuid().ToString() + Path.GetExtension(contractFile.FileName);
+                contractFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.ContractFileName));
+            }
+
             //مپ کردن مدل طرح کاربری به طرح اصلی
             var config = new MapperConfiguration(cfg =>
             {

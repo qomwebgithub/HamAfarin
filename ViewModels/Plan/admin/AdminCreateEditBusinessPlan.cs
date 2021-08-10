@@ -203,6 +203,9 @@ namespace ViewModels
 
         [Display(Name = "آدرس عنوان")]
         public string TitleUrl { get; set; }
+        
+        [Display(Name = "قرارداد سرمایه گذاری")]
+        public string ContractFileName { get; set; }
 
         [Display(Name = "کلمات کلیدی سئو(با , از هم جدا کنید)")]
         public string SeoKey { get; set; }
