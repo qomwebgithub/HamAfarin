@@ -171,6 +171,9 @@ namespace ViewModels
         public Nullable<System.DateTime> CreateDate { get; set; }
         [Display(Name = "کد فرابورس")]
         public string CodeOTC { get; set; }
+
+        [Display(Name = "آی دی پروژه فرابورس")]
+        public string FaraboorsProjectId { get; set; }
         [Display(Name = "اطلاعات مالی")]
         [DataType(DataType.MultilineText)]
         [AllowHtml]
@@ -203,12 +206,12 @@ namespace ViewModels
 
         [Display(Name = "آدرس عنوان")]
         public string TitleUrl { get; set; }
-        
-        [Display(Name = "قرارداد سرمایه گذاری")]
-        public string ContractFileName { get; set; }
 
         [Display(Name = "کلمات کلیدی سئو(با , از هم جدا کنید)")]
         public string SeoKey { get; set; }
 
+        [Display(Name = "قرارداد سرمایه گذاری")]
+        public string ContractFileName { get; set; }
+        
     }
 }

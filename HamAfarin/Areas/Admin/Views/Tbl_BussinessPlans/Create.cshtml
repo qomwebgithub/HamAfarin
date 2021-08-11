@@ -578,6 +578,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.FaraboorsProjectId, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FaraboorsProjectId)
+                @Html.ValidationMessageFor(model => model.FaraboorsProjectId)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.FinancialInformationText, new { @class = "control-label col-12" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FinancialInformationText)
