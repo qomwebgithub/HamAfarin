@@ -201,6 +201,7 @@
           <Property Name="IsSuccessBussinessPlan" Type="bit" Nullable="false" />
           <Property Name="ReasonsForPlanFailure" Type="nvarchar(max)" />
           <Property Name="CodeOTC" Type="nvarchar(max)" />
+          <Property Name="FaraboorsProjectId" Type="nvarchar(max)" />
           <Property Name="FinancialInformationText" Type="nvarchar(max)" />
           <Property Name="ProgressReportText" Type="nvarchar(max)" />
           <Property Name="InvestorsText" Type="nvarchar(max)" />
@@ -1567,6 +1568,7 @@
           <Property Name="IsSuccessBussinessPlan" Type="Boolean" Nullable="false" />
           <Property Name="ReasonsForPlanFailure" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CodeOTC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FaraboorsProjectId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FinancialInformationText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ProgressReportText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="InvestorsText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -2588,6 +2590,7 @@
                 <ScalarProperty Name="InvestorsText" ColumnName="InvestorsText" />
                 <ScalarProperty Name="ProgressReportText" ColumnName="ProgressReportText" />
                 <ScalarProperty Name="FinancialInformationText" ColumnName="FinancialInformationText" />
+                <ScalarProperty Name="FaraboorsProjectId" ColumnName="FaraboorsProjectId" />
                 <ScalarProperty Name="CodeOTC" ColumnName="CodeOTC" />
                 <ScalarProperty Name="ReasonsForPlanFailure" ColumnName="ReasonsForPlanFailure" />
                 <ScalarProperty Name="IsSuccessBussinessPlan" ColumnName="IsSuccessBussinessPlan" />

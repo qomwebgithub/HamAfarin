@@ -91,6 +91,7 @@ namespace DataLayer
         public bool IsSuccessBussinessPlan { get; set; }
         public string ReasonsForPlanFailure { get; set; }
         public string CodeOTC { get; set; }
+        public string FaraboorsProjectId { get; set; }
         public string FinancialInformationText { get; set; }
         public string ProgressReportText { get; set; }
         public string InvestorsText { get; set; }
