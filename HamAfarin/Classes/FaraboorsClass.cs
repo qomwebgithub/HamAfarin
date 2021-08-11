@@ -20,35 +20,47 @@ namespace HamAfarin
     public class FaraboorsClass
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
-        public async Task<(bool Success, string Message)> GetProjectParticipationReportAsync()
+        public async Task<(bool Success, string Message)> GetProjectParticipationReportAsync(int id)
         {
             (bool Success, string Message) tokenResult;
 
+            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id);
+
             using (HttpClient client = new HttpClient())
             {
-                ////Real API
-                //client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+                //Real API
+                client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+                //string projectId = "914c43ac-e70a-44e6-aa3e-8a252997fb71";
 
+                string projectId = db.Tbl_BussinessPlans
+                    .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
+                    .Select(b => b.FaraboorsProjectId)
+                    .FirstOrDefault();
 
-                client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
+                string nationalID = db.Tbl_UserProfiles
+                    .Where(a => a.User_id == qBusinessPlanPayment.PaymentUser_id)
+                    .Select(u => u.NationalCode)
+                    .FirstOrDefault();
 
-                //Test API
-                string subUrl = "GetProjectParticipationReport?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe&projectId=3403cbaa-911b-44c3-af6f-de3c97367627&nationalID=1290485941";
-                
+                string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
+                var subUrl = "GetProjectParticipationReport?apiKey=" + apiKey + "&projectId=" + projectId + "&nationalID=" + nationalID;
+
+                ////Test API
+                //client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
+                //string subUrl = "GetProjectParticipationReport?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe&projectId=3403cbaa-911b-44c3-af6f-de3c97367627&nationalID=1290485941";
+
                 HttpResponseMessage response = await client.PostAsync(subUrl, null);
+                string responseContent = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
                     tokenResult = (true, responseContent);
-                    return tokenResult;
                 }
                 else
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
                     tokenResult = (false, responseContent);
-                    return tokenResult;
                 }
+                return tokenResult;
 
             }
         }
@@ -56,18 +68,22 @@ namespace HamAfarin
         public async Task<(bool Success, string Message)> ProjectFinancingProviderAsync(int id, string payDate)
         {
             (bool Success, string Message) tokenResult;
-
             Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id);
-            Tbl_BussinessPlans qBusinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id);
-            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(a => a.UserID == qBusinessPlanPayment.PaymentUser_id);
-            Tbl_UserProfiles qUserProfile = db.Tbl_UserProfiles.FirstOrDefault(a => a.User_id == qUser.UserID);
+            Tbl_UserProfiles qUserProfile = db.Tbl_UserProfiles.FirstOrDefault(a => a.User_id == qBusinessPlanPayment.PaymentUser_id);
+            bool isLegal = db.Tbl_Users
+               .Where(u => u.UserID == qBusinessPlanPayment.PaymentUser_id)
+               .Select(u => u.IsLegal)
+               .FirstOrDefault();
 
             using (HttpClient client = new HttpClient())
             {
                 //Real API
                 client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
-                //string projectId = qBusinessPlan.CodeOTC;
-                string projectId = "914c43ac-e70a-44e6-aa3e-8a252997fb71";
+                //string projectId = "914c43ac-e70a-44e6-aa3e-8a252997fb71";
+                string projectId = db.Tbl_BussinessPlans
+                    .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
+                    .Select(b => b.FaraboorsProjectId)
+                    .FirstOrDefault();
                 string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
                 var subUrl = projectId + "/projectfinancingprovider?apiKey=" + apiKey;
 
@@ -78,7 +94,7 @@ namespace HamAfarin
                 FaraboorsJsonModel body = new FaraboorsJsonModel
                 {
                     NationalID = long.Parse(qUserProfile.NationalCode),
-                    IsLegal = qUser.IsLegal,
+                    IsLegal = isLegal,
                     FirstName = qUserProfile.FirstName,
                     LastNameOrCompanyName = qUserProfile.LastName,
                     ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10,
@@ -101,10 +117,10 @@ namespace HamAfarin
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = await client.PostAsync(subUrl, content);
+                string responseContent = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
                     //Tbl_FaraboorsLog oFaraboorsException = new Tbl_FaraboorsLog()
                     //{
                     //    CreateDate = DateTime.Now,
@@ -117,11 +133,9 @@ namespace HamAfarin
                     //db.Tbl_FaraboorsLog.Add(oFaraboorsException);
                     //await db.SaveChangesAsync();
                     tokenResult = (true, responseContent);
-                    return tokenResult;
                 }
                 else
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
                     //Tbl_FaraboorsLog oFaraboorsException = new Tbl_FaraboorsLog()
                     //{
                     //    CreateDate = DateTime.Now,
@@ -134,8 +148,9 @@ namespace HamAfarin
                     //db.Tbl_FaraboorsLog.Add(oFaraboorsException);
                     //await db.SaveChangesAsync();
                     tokenResult = (false, responseContent);
-                    return tokenResult;
                 }
+                return tokenResult;
+
             }
         }
 
