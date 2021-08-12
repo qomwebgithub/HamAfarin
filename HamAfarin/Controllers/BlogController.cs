@@ -71,7 +71,7 @@ namespace HamAfarin.Controllers
         {
             List<BlogItemViewModel> lstBlog = new List<BlogItemViewModel>();
             List<Tbl_Blog> qlstBlog = db.Tbl_Blog.Where(b => b.IsActive && b.IsDeleted == false && b.ShowMainPage)
-                .OrderByDescending(b => b.CreateDate).ToList();
+                .OrderByDescending(b => b.CreateDate).Take(4).ToList();
             foreach (var item in qlstBlog)
             {
                 BlogItemViewModel blog = new BlogItemViewModel()
