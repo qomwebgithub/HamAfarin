@@ -430,9 +430,12 @@ namespace HamAfarin.Areas.Admin.Controllers
                 {
                     lstNumbers.Add(int.Parse(num));
                 }
-
+                
                 TimeSpan time = new TimeSpan(lstNumbers[0], lstNumbers[1], lstNumbers[2]);
-                time = time.Add(new TimeSpan(12, 0, 0));
+                if (lstNumbers[0] != 12)
+                {
+                    time = time.Add(new TimeSpan(12, 0, 0));
+                }
 
                 dateTimeFixed.Time = time.ToString();
 
