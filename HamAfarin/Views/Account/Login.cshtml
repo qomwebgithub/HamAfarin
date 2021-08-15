@@ -32,7 +32,7 @@
                     <div class="form-group mb-0">
                         <div class="col-md-12">
                             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "col-6 control-label pr-0" })
-                            <a href="#" class="pr-0 pl-0 float-left text-decoration-none" style="font-size:12px; border-bottom:1px dashed; text-align:left"> رمز عبور را فراموش کرده ام</a>
+                            <a href="/Account/ForgotPassword" class="pr-0 pl-0 float-left text-decoration-none" style="font-size:12px; border-bottom:1px dashed; text-align:left"> رمز عبور را فراموش کرده ام</a>
                         </div>
                         <div class="col-md-12">
                             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*کلمه عبور را وارد کنید" } })

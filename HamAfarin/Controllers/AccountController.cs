@@ -49,7 +49,6 @@ namespace Hamafarin.Controllers
                 model.MobileNumber = StringExtensions.Fa2En(model.MobileNumber);
                 Tbl_Users user = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == model.MobileNumber &&
                   u.Password == hashPassword);
-                Tbl_UserProfiles userProfiles;
 
                 if (user != null)
                 {
@@ -57,22 +56,7 @@ namespace Hamafarin.Controllers
                     {
                         //Request.UrlReferrer.Host()
                         // FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
-                        string strSetAuthCookie;
-                        userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
-                        if (user.HasSejam && userProfiles != null)
-                        {
-                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam + "," + userProfiles.FirstName + " " + userProfiles.LastName;
-
-                        }
-                        else
-                        {
-                            if (user.HasSejam && userProfiles == null)
-                            {
-                                user.HasSejam = false;
-                                db.SaveChanges();
-                            }
-                            strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam;
-                        }
+                        string strSetAuthCookie = SetCookieString(user);
                         FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
                         // 1 = ورود
@@ -240,90 +224,79 @@ namespace Hamafarin.Controllers
             //recaptcha
             //**************************************************///
             //**************************************************////
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
+                return View(verifySms);
+            }
+            if (string.IsNullOrEmpty(verifySms.SmsCode))
+            {
+                ModelState.AddModelError("SmsCode", "لطفا کد تاییدیه را وارد کنید");
+                return View(verifySms);
+            }
 
-                if (string.IsNullOrEmpty(verifySms.SmsCode) == false)
+            Tbl_Sms qSms;
+            (bool Success, string Message) smsResult;
+            // انگلیسی سازی عدد اس ام اس
+            verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
+            // پیدا کردن کابر از طریق توکن
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
+            if (qUser == null)
+            {
+                ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
+                return View(verifySms);
+            }
+            //اگر کاربر ادمین نبود
+            if (qUser.Role_id != 1)
+            {
+                // اگر کابر سجام داشت
+                if (qUser.HasSejam)
                 {
-                    verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
+                    oSejamClass = new SejamClass();
+                    bool VerifySejam = oSejamClass.VerifyUser(verifySms, out string Message);
 
-                    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
-
-                    Tbl_Sms qSms;
-                    string formatedMobileNumber;
-                    (bool Success, string Message) smsResult;
-
-                    if (qUser != null)
+                    if (VerifySejam == false)
                     {
-                        if (qUser.Role_id != 1)
-                        {
-                            if (qUser.HasSejam)
-                            {
-                                oSejamClass = new SejamClass();
-                                bool VerifySejam = oSejamClass.VerifyUser(verifySms, out string Message);
+                        ViewBag.profile = Message;
+                        ModelState.AddModelError("SmsCode", Message);
 
-                                if (VerifySejam == false)
-                                {
-                                    ViewBag.profile = Message;
-                                    ModelState.AddModelError("SmsCode", Message);
-
-                                    return View(verifySms);
-                                }
-                                else
-                                {
-                                    // 3 = ثبت اطلاعات از سجام
-                                    qSms = db.Tbl_Sms.Find(3);
-                                    smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
-                                }
-                            }
-                            else if (qUser.SmsCode != Convert.ToInt32(verifySms.SmsCode))
-                            {
-                                ModelState.AddModelError("SmsCode", "کد تایید اشتباه است");
-                                return View(verifySms);
-                            }
-
-                            qUser.SmsCode = 0;
-                            qUser.IsActive = true;
-                            db.SaveChanges();
-
-                        }
-
-                        // 2 = ثبت نام
-                        qSms = db.Tbl_Sms.Find(2);
-                        smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
-
-
-                        string strSetAuthCookie = qUser.UserID + "," + qUser.Role_id + "," + qUser.UserName + "," + qUser.MobileNumber;
-                        FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
-                        return Redirect("/UserPanel/UserProfile");
-
-                        //if (string.IsNullOrEmpty(verifySms.ReturnUrl) == false)
-                        //{
-                        //    return Redirect(verifySms.ReturnUrl);
-                        //}
-                        //else
-                        //{
-                        //    return Redirect("/UserPanel/UserProfile");
-                        //}
-
+                        return View(verifySms);
                     }
                     else
                     {
-                        ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
+                        // 3 = ثبت اطلاعات از سجام
+                        qSms = db.Tbl_Sms.Find(3);
+                        smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
                     }
-
                 }
-                else
+                else if (qUser.SmsCode != Convert.ToInt32(verifySms.SmsCode))
                 {
-                    ModelState.AddModelError("SmsCode", "VerifySmsViewModel is Empty");
+                    ModelState.AddModelError("SmsCode", "کد تایید اشتباه است");
+                    return View(verifySms);
                 }
-            }
-            else
-            {
-                ModelState.AddModelError("SmsCode", "Model State is Not valid");
+
+                qUser.UserToken = Guid.NewGuid().ToString();
+                qUser.SmsCode = 0;
+                qUser.IsActive = true;
+                db.SaveChanges();
+
             }
 
-            return View(verifySms);
+            // 2 = ثبت نام
+            qSms = db.Tbl_Sms.Find(2);
+            smsResult = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
+
+            string strSetAuthCookie = SetCookieString(qUser);
+            FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
+            return Redirect("/UserPanel/UserProfile");
+
+            //if (string.IsNullOrEmpty(verifySms.ReturnUrl) == false)
+            //{
+            //    return Redirect(verifySms.ReturnUrl);
+            //}
+            //else
+            //{
+            //    return Redirect("/UserPanel/UserProfile");
+            //}
         }
 
         public ActionResult SejamLogin(string ReturnUrl = "/")
@@ -453,5 +426,140 @@ namespace Hamafarin.Controllers
             (bool Success, string Message) kycOtpResulat = await oSejamClass.kycOtpHttpClientAsync(id);
             return Json(kycOtpResulat.Message, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(ForgotPasswordViewModel forgotPassword)
+        {
+
+            if (ModelState.IsValid == false)
+            {
+                return View();
+            }
+
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == forgotPassword.MobileNumber);
+
+            if (qUser == null)
+            {
+                ModelState.AddModelError("MobileNumber", "کاربر یافت نشد" + forgotPassword.MobileNumber);
+                return View(forgotPassword);
+            }
+
+            Random rndSmsCode = new Random();
+            int smsCode = rndSmsCode.Next(1000, 9999);
+            qUser.SmsCode = smsCode;
+            db.SaveChanges();
+            oSms.AdpSendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
+            return RedirectToAction("VerifyForgotPassword", new { id = qUser.UserToken });
+        }
+
+        public ActionResult VerifyForgotPassword(string id)
+        {
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == id);
+            if (qUser == null)
+            {
+                return HttpNotFound();
+            }
+            return View(new VerifySmsViewModel { UserToken = id });
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult VerifyForgotPassword(VerifySmsViewModel verifySms)
+        {
+            if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
+            {
+                ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
+                return View(verifySms);
+            }
+            if (ModelState.IsValid == false)
+            {
+                return View(verifySms);
+            }
+            if (string.IsNullOrEmpty(verifySms.SmsCode))
+            {
+                ModelState.AddModelError("SmsCode", "لطفا کد تاییدیه را وارد کنید");
+                return View(verifySms);
+            }
+            // انگلیسی سازی عدد اس ام اس
+            verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
+            // پیدا کردن کابر از طریق توکن
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
+            if (qUser == null)
+            {
+                ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
+                return View(verifySms);
+            }
+            if (qUser.SmsCode != Convert.ToInt32(verifySms.SmsCode))
+            {
+                ModelState.AddModelError("SmsCode", "کد تایید اشتباه است");
+                return View(verifySms);
+            }
+
+            qUser.UserToken = Guid.NewGuid().ToString();
+            // صفر کردن کد اس ام اس برای امنیت است تا کاربر با گویید وارد متد بعدی نشود
+            qUser.SmsCode = 0;
+            db.SaveChanges();
+            return RedirectToAction("ResetPassword", new { id = qUser.UserToken });
+        }
+
+        public ActionResult ResetPassword(string id)
+        {
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == id && u.SmsCode == 0);
+            if (qUser == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(new ResetPasswordViewModel { UserToken = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResetPassword(ResetPasswordViewModel resetPassword)
+        {
+            if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
+            {
+                ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
+                return View(resetPassword);
+            }
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == resetPassword.UserToken && u.SmsCode == 0);
+            if (ModelState.IsValid == false)
+            {
+                return View(resetPassword);
+            }
+            qUser.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(resetPassword.Password, "MD5");
+            qUser.UserToken = Guid.NewGuid().ToString();
+            db.SaveChanges();
+            return RedirectToAction("Login");
+        }
+
+        private string SetCookieString(Tbl_Users user)
+        {
+            string strSetAuthCookie;
+            Tbl_UserProfiles userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
+            if (user.HasSejam && userProfiles == null)
+            {
+                user.HasSejam = false;
+                db.SaveChanges();
+            }
+            if (user.HasSejam)
+            {
+                strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam + "," + userProfiles.FirstName + " " + userProfiles.LastName;
+            }
+            else
+            {
+                strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam;
+            }
+            return strSetAuthCookie;
+        }
+
+
     }
 }

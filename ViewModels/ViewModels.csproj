@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\ForgotPasswordViewModel.cs" />
+    <Compile Include="Account\ResetPasswordViewModel.cs" />
     <Compile Include="Blog\singleViewModel.cs" />
     <Compile Include="Common\DropDownViewModel.cs" />
     <Compile Include="Account\PersonLegalViewModel.cs" />
