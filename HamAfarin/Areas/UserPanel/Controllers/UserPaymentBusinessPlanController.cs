@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DataLayer;
 using Hamafarin;
+using Newtonsoft.Json;
 using PagedList;
 using ViewModels;
 
@@ -105,6 +106,11 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id); ;
             bool boolIsRequestedReturn = false;
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
+
+            
+            
+
+
             // تعداد روز های باقیمانده
             int qRemainingDay = planService.calculateRemainDay(tbl_BussinessPlans);
             string qRemainingText = qRemainingDay + " روز";
@@ -146,6 +152,20 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.IsOverflowInvestment = tbl_BussinessPlans.IsOverflowInvestment;
             selectPayment.IsSuccessBussinessPlan = tbl_BussinessPlans.IsSuccessBussinessPlan;
             selectPayment.ContractFileName = tbl_BussinessPlans.ContractFileName;
+
+
+
+            if (qBusinessPlanPayment.FaraboorsResponse != null)
+            {
+                if (qBusinessPlanPayment.FaraboorsResponse.Contains("TraceCode"))
+                {
+                    FaraboorsResponseJsonModel faraboorsResponse = JsonConvert
+                        .DeserializeObject<FaraboorsResponseJsonModel>(qBusinessPlanPayment.FaraboorsResponse);
+
+                    selectPayment.FaraboorsTraceCode = faraboorsResponse.TraceCode;
+
+                }
+            }
 
             //اگر پرداخت آنلاین باشد رکورد جزییات آن را دریافت میکنیم
             if (qBusinessPlanPayment.PaymentType_id == 2)
@@ -200,7 +220,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                     p.IsPaid)
                 .Select(p => p.PaymentPrice)
                 .Sum();
-            
+
             ViewBag.Notify = notify;
 
             return View(selectPayment);

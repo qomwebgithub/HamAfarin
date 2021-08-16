@@ -65,6 +65,8 @@ namespace ViewModels
         public string ImageName { get; set; }
         [Display(Name = "قرارداد سرمایه گذاری")]
         public string ContractFileName { get; set; }
+        [Display(Name = "کد رهگیری فرابورس")]
+        public string FaraboorsTraceCode { get; set; }
 
     }
 }

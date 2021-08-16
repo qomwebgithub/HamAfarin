@@ -407,6 +407,7 @@
                             <th scope="col">مبلغ (تومان)</th>
                             <th scope="col">تایید ادمین</th>
                             <th scope="col">شماره تراکنش /فیش بانکی</th>
+                            <th scope="col">کد پیگیری فرابورس</th>
                             @*<th scope="col">انصراف</th>*@
                             @*<th scope="col">چاپ</th>*@
                         </tr>
@@ -455,6 +456,14 @@
                             @*<td>
                                     <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
                                 </td>*@
+                            @if (Model.FaraboorsTraceCode == null)
+                            {
+                                <td>در فرابورس ثبت نشده است</td>
+                            }
+                            else
+                            {
+                                <td>@Model.FaraboorsTraceCode</td>
+                            }
                         </tr>
                     </tbody>
                 </table>
@@ -502,28 +511,40 @@
                             <td class="text-left">@Model.TransactionPaymentCode</td>
                         }
                     </tr>
+                    <tr>
+                        <td>کد پیگیری فرابورس</td>
+                       
+                        @if (Model.FaraboorsTraceCode == null)
+                        {
+                            <td>در فرابورس ثبت نشده است</td>
+                        }
+                        else
+                        {
+                            <td>@Model.FaraboorsTraceCode</td>
+                        }
+                    </tr>
                     @*<tr>
-                            <td>انصراف</td>
-                            <td class="text-left">
-                                @if (Model.PaymentStatus == "انصراف")
-                                {
-                                    <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-secondary " style="font-size:12px">انصراف</a>
-                                }
-                            </td>
-                        </tr>*@
+            <td>انصراف</td>
+            <td class="text-left">
+                @if (Model.PaymentStatus == "انصراف")
+                {
+                    <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
+                }
+                else
+                {
+                    <a class="btn btn-secondary " style="font-size:12px">انصراف</a>
+                }
+            </td>
+        </tr>*@
 
                     @*<tr>
 
-                            <td>چاپ</td>
+            <td>چاپ</td>
 
-                            <td class="text-left">
-                                <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
-                            </td>
-                        </tr>*@
+            <td class="text-left">
+                <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+            </td>
+        </tr>*@
                 </tbody>
             </table>
             <div class="d-flex flex-row-reverse">
