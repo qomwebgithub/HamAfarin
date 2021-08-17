@@ -26,7 +26,10 @@
         <div class="col-12 col-md-6">
             کاربر:@qParentTicket.Tbl_Users.MobileNumber
             <br />
-            <span>تاریخ ایجاد:</span>@qParentTicket.CreateDateTime
+            <span>تاریخ ایجاد:</span>@qParentTicket.CreateDateTime.Value.ToString("HH:mm:ss yyyy/MM/dd")
+            <br />
+            <span>موضوع: </span>@qParentTicket.Subject
+
         </div>
 
 
@@ -38,43 +41,38 @@
 <div class="container-fluid">
     <div class="col-12">
 
-        <a href="/UserPanel/Tickets/Create?parentId=@qParentTicket.TicketID" class="btn btn-info">
+        <a href="/UserPanel/Tickets/Create?parentId=@qParentTicket.TicketID" class="btn btn-orange">
             پاسخ
-            <br />
-            <span class="text-white fas fa-comment"></span>
         </a>
         <hr />
         @foreach (var item in Model)
         {
             <div class="col-12 col-md-12">
-                <div id="panel@(item.TicketID)" class="card text-white  @(item.IsUserChecked==false?"bg-danger":"bg-success")">
-                    <div class="card-header">
-                        @item.Subject  @if (item.AttachFileName != null)
+                <div id="panel@(item.TicketID)" class="card shadow-sm border-0">
+                    <div class="card-header border-0 @(item.UserCreate_id==1?"bg-orange text-white":"")">
+                        نویسنده: @(item.UserCreate_id==1?"ادمین":item.Tbl_Users.MobileNumber)
+
+                        <br />
+                        @if (item.AttachFileName != null)
                         {<span class="fas fa-paperclip"></span>}
 
-                        @(item.IsAdminChecked==false?"(در دست بررسی...)":"بررسی شده توسط مدیر سایت")"
+                        @*@(item.IsAdminChecked==false?"(در دست بررسی...)":"بررسی شده توسط مدیر سایت")*@
                     </div>
                     <div class="card-body">@item.Text</div>
 
-                    <div class="card-footer">
-                        @item.CreateDateTime|
+                    <div class="card-footer border-0">
+                        @item.CreateDateTime.Value.ToString("HH:mm:ss yyyy/MM/dd")
                         @if (item.AttachFileName != null)
                         {
                             <a href="@FileAddressesDirectoryPath.TicketFileDownloadUrl(item.AttachFileName)" class="btn btn-warning">دانلود فایل پیوست شده <span class="fas fa-download"></span></a>
                         }
 
-
                         @if (item.IsUserChecked == false)
                         {
-                            <button id="btnChecked@(item.TicketID)" onclick="checkedTicket(@item.TicketID)" class="btn btn-info">
+                            <button id="btnChecked@(item.TicketID)" onclick="checkedTicket(@item.TicketID)" class="btn btn-success">
                                 چک کردم
-                                <span class="fas fa-check"></span>
                             </button>
-
-
                         }
-
-
                     </div>
 
                 </div>
@@ -93,9 +91,7 @@
 <script>
     function checkedTicket(ticketId) {
 
-        $.post("/Employer/Tickets/TicketUserChecked/" + ticketId).done(function () {
-            $("#panel" + ticketId).removeClass("bg-danger");
-            $("#panel" + ticketId).addClass("bg-success");
+        $.post("/UserPanel/Tickets/TicketUserChecked/" + ticketId).done(function () {
             $("#btnChecked" + ticketId).hide();
         })
             .fail(function () {

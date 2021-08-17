@@ -301,6 +301,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             ViewBag.User = db.Tbl_Users.FirstOrDefault(u => u.UserID == qTicket.User_id);
             ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber");
             ViewBag.Subject = qTicket.Subject;
+            ViewBag.Text = qTicket.Text;
 
             return View(new Tbl_Tickets { Parent_id = parentId, Subject = qTicket.Subject });
         }
@@ -309,40 +310,43 @@ namespace Hamafarin.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AnswerTicket([Bind(Include = "Parent_id,User_id,Subject,Text")] Tbl_Tickets tbl_Tickets, HttpPostedFileBase attachTicketFileUpload)
         {
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid == false)
             {
-                //ذخیره ی فایل آپلود شده
-                if (attachTicketFileUpload != null)
-                {
-                    string strFileUploadName = Guid.NewGuid().ToString() + Path.GetExtension(attachTicketFileUpload.FileName);
+                ViewBag.Parent_id = new SelectList(db.Tbl_Tickets, "TicketID", "Subject", tbl_Tickets.Parent_id);
+                ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber", tbl_Tickets.User_id);
 
-                    attachTicketFileUpload.SaveAs(Server.MapPath(FileAddressesDirectoryPath.TicketFileUploadUrl(strFileUploadName)));
+                return View(tbl_Tickets);
+            }
+            
+            //ذخیره ی فایل آپلود شده
+            if (attachTicketFileUpload != null)
+            {
+                string strFileUploadName = Guid.NewGuid().ToString() + Path.GetExtension(attachTicketFileUpload.FileName);
 
-                    tbl_Tickets.AttachFileName = strFileUploadName;
-                }
-                tbl_Tickets.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
-                tbl_Tickets.CreateDateTime = DateTime.Now;
-                tbl_Tickets.UserCreate_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
-                tbl_Tickets.AdminCheckedDateTime = DateTime.Now;
-                tbl_Tickets.IsAdminChecked = true;
-                tbl_Tickets.AdminChecked_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                attachTicketFileUpload.SaveAs(Server.MapPath(FileAddressesDirectoryPath.TicketFileUploadUrl(strFileUploadName)));
 
-                db.Tbl_Tickets.Find(tbl_Tickets.Parent_id).IsClosed = false;
-
-
-                db.Tbl_Tickets.Add(tbl_Tickets);
-                db.SaveChanges();
-
-                //ریدایرکت به نمایش جزئیات تیکت با استفاده از آیدی تیکت پدر
-                int? intGoToParentid = tbl_Tickets.Parent_id;
-
-                return RedirectToAction("TicketDetails", new { id = intGoToParentid });
+                tbl_Tickets.AttachFileName = strFileUploadName;
             }
 
-            ViewBag.Parent_id = new SelectList(db.Tbl_Tickets, "TicketID", "Subject", tbl_Tickets.Parent_id);
-            ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "MobileNumber", tbl_Tickets.User_id);
+            tbl_Tickets.CreateDateTime = DateTime.Now;
+            tbl_Tickets.UserCreate_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            tbl_Tickets.AdminCheckedDateTime = DateTime.Now;
+            tbl_Tickets.IsAdminChecked = true;
+            tbl_Tickets.AdminChecked_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
-            return View(tbl_Tickets);
+            Tbl_Tickets qParentTicket = db.Tbl_Tickets.Find(tbl_Tickets.Parent_id);
+            tbl_Tickets.User_id = qParentTicket.User_id;
+            qParentTicket.IsClosed = false;
+            qParentTicket.IsAdminChecked = true;
+
+            db.Tbl_Tickets.Add(tbl_Tickets);
+            db.SaveChanges();
+
+            //ریدایرکت به نمایش جزئیات تیکت با استفاده از آیدی تیکت پدر
+            int? intGoToParentid = tbl_Tickets.Parent_id;
+
+            return RedirectToAction("TicketDetails", new { id = intGoToParentid });
         }
 
         protected override void Dispose(bool disposing)

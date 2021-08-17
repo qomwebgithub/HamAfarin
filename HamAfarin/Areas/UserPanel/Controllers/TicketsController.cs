@@ -23,9 +23,6 @@ namespace HamAfarin.Areas.UserPanel
             return View(tbl_Tickets.ToList());
         }
 
-
-
-
         /// <summary>
         /// تیکت های چک نشده کاربر
         /// </summary>
@@ -41,10 +38,6 @@ namespace HamAfarin.Areas.UserPanel
 
             return PartialView(qlstTickets);
         }
-
-
-
-
 
         /// <summary>
         /// نمایش تیکت
@@ -71,10 +64,8 @@ namespace HamAfarin.Areas.UserPanel
             qlstTickets.Add(qTicket);
             qlstTickets.AddRange(db.Tbl_Tickets.Where(t => t.Parent_id == id));
 
-            return View(qlstTickets.OrderByDescending(q => q.TicketID).ToList());
+            return View(qlstTickets.OrderBy(q => q.CreateDateTime).ToList());
         }
-
-
 
         /// <summary>
         /// چک شدن تیکت توسط کاربر
@@ -98,7 +89,6 @@ namespace HamAfarin.Areas.UserPanel
 
         }
 
-
         // GET: Admin/Tbl_Tickets/Create
 
         /// <summary>
@@ -116,9 +106,6 @@ namespace HamAfarin.Areas.UserPanel
 
             return View(new Tbl_Tickets { Parent_id = parentId, User_id = userId });
         }
-
-
-
 
         // POST: Admin/Tbl_Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -169,9 +156,6 @@ namespace HamAfarin.Areas.UserPanel
 
             return View(tbl_Tickets);
         }
-
-
-
 
         protected override void Dispose(bool disposing)
         {
