@@ -661,6 +661,7 @@
     <Content Include="Areas\Admin\Views\Tbl_Tickets\AnswerTicket.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\ConfirmedByFaraboors.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\NotConfirmedByFaraboors.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\OfflineDraftsPayments.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">
