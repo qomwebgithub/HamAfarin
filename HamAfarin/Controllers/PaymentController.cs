@@ -366,8 +366,6 @@ namespace Hamafarin.Controllers
             return sign;
         }
 
-
-
         [Authorize]
         public ActionResult OfflinePayment(int id = 0)
         {
@@ -534,14 +532,13 @@ namespace Hamafarin.Controllers
             return View(paymentOnlineViewModel);
         }
 
-
-
         public ActionResult VerifyPayment(string id)
         {
 
             try
             {
                 Tbl_PaymentOnlineDetils qPaymentOnline = db.Tbl_PaymentOnlineDetils.FirstOrDefault(p => p.PaymentDetilsID == id);
+                Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == qPaymentOnline.Payment_id);
                 if (qPaymentOnline != null)
                 {
 
@@ -573,6 +570,8 @@ namespace Hamafarin.Controllers
                         {
                             qPaymentOnline.ShaparakVerifyPayment = ShaparakRefNumber;
                             qPaymentOnline.IsFinally = true;
+                            qBusinessPlanPayment.TransactionPaymentCode = TransactionReferenceID;
+                            qBusinessPlanPayment.IsPaid = true;
                             qPaymentOnline.FinallyDate = DateTime.Now;
                             db.SaveChanges();
                             ViewBag.IsSuccess = true;
@@ -663,7 +662,6 @@ namespace Hamafarin.Controllers
             //    }
             return View();
         }
-
 
         private string ReadPaymentResult(string TransactionReferenceID)
         {

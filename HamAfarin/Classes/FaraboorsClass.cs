@@ -91,7 +91,7 @@ namespace HamAfarin
                 //client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
                 //string subUrl = "3403cbaa-911b-44c3-af6f-de3c97367627/projectfinancingprovider?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe";
 
-                FaraboorsJsonModel body = new FaraboorsJsonModel
+                FaraboorsReceiveJsonModel body = new FaraboorsReceiveJsonModel
                 {
                     NationalID = long.Parse(qUserProfile.NationalCode),
                     IsLegal = isLegal,

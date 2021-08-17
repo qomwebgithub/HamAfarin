@@ -2280,10 +2280,11 @@
     <Compile Include="Classes\DataPost.cs" />
     <Compile Include="Classes\Enums\SliderPages.cs" />
     <Compile Include="Classes\Enums\PaymentStatusType.cs" />
-    <Compile Include="Classes\FaraboorsJsonModel.cs" />
+    <Compile Include="Classes\JsonModel\FaraboorsReceiveJsonModel.cs" />
     <Compile Include="Classes\FileAddressesDirectoryPath.cs" />
     <Compile Include="Classes\Generator.cs" />
     <Compile Include="Classes\ImageResizer.cs" />
+    <Compile Include="Classes\JsonModel\FaraboorsResponseJsonModel.cs" />
     <Compile Include="Classes\MyRoleProvider.cs" />
     <Compile Include="Classes\CustomPasswordValidator.cs" />
     <Compile Include="Classes\PersianCulture.cs" />
