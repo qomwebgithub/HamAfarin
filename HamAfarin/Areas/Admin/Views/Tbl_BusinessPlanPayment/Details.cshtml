@@ -182,7 +182,7 @@
                 @Html.DisplayNameFor(model => model.IsConfirmedFromFaraboors)
             </div>
             <div class="card-body">
-                @if (Model.IsConfirmedFromAdmin)
+                @if (Model.IsConfirmedFromAdmin && Model.IsPaid)
                 {
                     <div class="col-md-10">
                         <a id="ConfirmFaraboors" class="btn btn-primary text-white" onclick="confirmFaraboors(@Model.PaymentID, '@ViewBag.PaymentDate', '@ViewBag.PaymentTime')">ارسال پرداخت به فرابورس</a>
