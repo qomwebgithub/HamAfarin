@@ -395,6 +395,28 @@ namespace HamAfarin.Areas.Admin.Controllers
 
         }
 
+        public ActionResult OfflineDraftsPayments(int? id)
+        {
+            //3 = offline
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                    .Where(p => p.IsPaid == false && p.PaymentType_id == 3);
+
+            if (id != null)
+            {
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                    .Where(p => p.BusinessPlan_id == id);
+            }
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+            return View(tbl_BusinessPlanPayment.ToList());
+
+        }
+
         [HttpPost]
         public async Task<ActionResult> ConfirmFaraboors(int id, string payDate)
         {
