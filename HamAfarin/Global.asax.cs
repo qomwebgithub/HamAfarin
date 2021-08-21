@@ -23,7 +23,7 @@ namespace HamAfarin
         }
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if (!Context.Request.IsSecureConnection)
+            if (!Context.Request.IsSecureConnection && Context.Request.Url.Host != "localhost")
                 Response.Redirect(Context.Request.Url.ToString().Replace("http:", "https:"));
 
             var persianCulture = new PersianCulture();
