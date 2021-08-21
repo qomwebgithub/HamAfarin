@@ -519,6 +519,8 @@
           <Property Name="IntroductionCompanyDescription" Type="nvarchar(max)" />
           <Property Name="IntroductionCompanyFullText" Type="nvarchar(max)" />
           <Property Name="InvestmentRole" Type="nvarchar(max)" />
+          <Property Name="FinancingPageBanner" Type="nvarchar(max)" />
+          <Property Name="InverstmentPageBanner" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_ShareHoldersCompany">
           <Key>
@@ -1911,6 +1913,8 @@
           <Property Name="IntroductionCompanyDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IntroductionCompanyFullText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="InvestmentRole" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FinancingPageBanner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InverstmentPageBanner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Tbl_ShareHoldersCompany">
           <Key>
@@ -2960,6 +2964,8 @@
           <EntitySetMapping Name="Tbl_Settings">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Settings">
               <MappingFragment StoreEntitySet="Tbl_Settings">
+                <ScalarProperty Name="InverstmentPageBanner" ColumnName="InverstmentPageBanner" />
+                <ScalarProperty Name="FinancingPageBanner" ColumnName="FinancingPageBanner" />
                 <ScalarProperty Name="InvestmentRole" ColumnName="InvestmentRole" />
                 <ScalarProperty Name="IntroductionCompanyFullText" ColumnName="IntroductionCompanyFullText" />
                 <ScalarProperty Name="IntroductionCompanyDescription" ColumnName="IntroductionCompanyDescription" />

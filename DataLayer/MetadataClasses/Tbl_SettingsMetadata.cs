@@ -92,6 +92,10 @@ namespace DataLayer
         [DataType(DataType.MultilineText)]
         [AllowHtml]
         public string IntroductionCompanyFullText { get; set; }
+        [Display(Name = " بنر متقاضی سرمایه")]
+        public string FinancingPageBanner { get; set; }
+        [Display(Name = "بنر سرمایه گذاری")]
+        public string InverstmentPageBanner { get; set; }
 
     }
 

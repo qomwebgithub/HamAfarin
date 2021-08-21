@@ -41,5 +41,7 @@ namespace DataLayer
         public string IntroductionCompanyDescription { get; set; }
         public string IntroductionCompanyFullText { get; set; }
         public string InvestmentRole { get; set; }
+        public string FinancingPageBanner { get; set; }
+        public string InverstmentPageBanner { get; set; }
     }
 }
