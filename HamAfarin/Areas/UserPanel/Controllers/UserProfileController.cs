@@ -40,7 +40,8 @@ namespace HamAfarin.Areas.UserPanel
             // Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
             int UserID = UserSetAuthCookie.GetUserID(User.Identity.Name);
             Tbl_UserProfiles qProfile = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == UserID);
-            if (qProfile == null)
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(p => p.UserID == UserID);
+            if (qProfile == null || qUser == null)
             {
                 return null;
             }
@@ -57,7 +58,7 @@ namespace HamAfarin.Areas.UserPanel
                 IsActive = qProfile.IsActive,
                 UserName = UserSetAuthCookie.GetUserName(User.Identity.Name),
                 Profile = profileViewModel,
-                IsLegal = false,
+                IsLegal = qUser.IsLegal,
                 strGender = qProfile.Gender,
                 PersonLegal = personLegalViewModel,
                 NationalCode = qProfile.NationalCode,

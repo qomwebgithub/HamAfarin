@@ -192,9 +192,9 @@
                             <div class="col-md-6">
                                
                             </div>
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.IsLegal, null, new { @class = "col-1" })
-                                @Html.LabelFor(model => model.IsLegal, null, new { @class = "col-11 mt-2" })
+                            <div class="col-md-12 row">
+                                @Html.CheckBoxFor(model => model.IsLegal, new { @class = "col-1 m-auto" })
+                                @Html.LabelFor(model => model.IsLegal, new { @class = "col-11 mt-2" })
                                 @Html.ValidationMessageFor(model => model.IsLegal)
                             </div>
                         </div>
