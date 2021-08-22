@@ -30,33 +30,25 @@ namespace Hamafarin.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tbl_Settings tbl_Settings, HttpPostedFileBase imgUp)
+        public ActionResult Edit(
+            Tbl_Settings tbl_Settings,
+            HttpPostedFileBase logo,
+            HttpPostedFileBase financingPageBanner,
+            HttpPostedFileBase inverstmentPageBanner)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
-
-                if (imgUp != null && imgUp.IsImage())
-                {
-                    if (tbl_Settings.SiteLogo != "no-photo.jpg" && tbl_Settings.SiteLogo != null)
-                    {
-                        System.IO.File.Delete(Server.MapPath("/Images/SettingImages/Image/" + tbl_Settings.SiteLogo));
-                        System.IO.File.Delete(Server.MapPath("/Images/SettingImages/Thumb/" + tbl_Settings.SiteLogo));
-                    }
-                    tbl_Settings.SiteLogo = Guid.NewGuid().ToString() + Path.GetExtension(imgUp.FileName);
-                    imgUp.SaveAs(Server.MapPath("/Images/SettingImages/Image/" + tbl_Settings.SiteLogo));
-
-                    ImageResizer img = new ImageResizer(500);
-                    img.Resize(Server.MapPath("/Images/SettingImages/Image/" + tbl_Settings.SiteLogo),
-                        Server.MapPath("/Images/SettingImages/Thumb/" + tbl_Settings.SiteLogo));
-
-                }
-
-                db.Entry(tbl_Settings).State = EntityState.Modified;
-
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(tbl_Settings);
             }
-            return View(tbl_Settings);
+
+            tbl_Settings.SiteLogo = SaveImage(logo, tbl_Settings.SiteLogo, true);
+            tbl_Settings.FinancingPageBanner = SaveImage(financingPageBanner, tbl_Settings.FinancingPageBanner, false);
+            tbl_Settings.InverstmentPageBanner = SaveImage(inverstmentPageBanner, tbl_Settings.InverstmentPageBanner, false);
+
+            db.Entry(tbl_Settings).State = EntityState.Modified;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public ActionResult EditFooter()
@@ -97,7 +89,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 tbl_Settings.RiskAlertStatementFullText = footerViewModel.RiskAlertStatementFullText;
                 db.SaveChanges();
                 ViewBag.success = true;
-                
+
             }
             return View(footerViewModel);
         }
@@ -138,6 +130,32 @@ namespace Hamafarin.Areas.Admin.Controllers
             db.SaveChanges();
 
             return View("IntroductionCompany", companyViewModel);
+        }
+
+        private string SaveImage(HttpPostedFileBase image, string imageName, bool hasThumbnail)
+        {
+            if (image == null || image.IsImage() == false)
+            {
+                return null;
+            }
+
+            if (imageName != "no-photo.jpg" && imageName != null)
+            {
+                System.IO.File.Delete(Server.MapPath("/Images/SettingImages/Image/" + imageName));
+                System.IO.File.Delete(Server.MapPath("/Images/SettingImages/Thumb/" + imageName));
+            }
+
+            string imageFileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+            image.SaveAs(Server.MapPath("/Images/SettingImages/Image/" + imageFileName));
+
+            if (hasThumbnail)
+            {
+                ImageResizer img = new ImageResizer(500);
+                img.Resize(Server.MapPath("/Images/SettingImages/Image/" + imageFileName),
+                    Server.MapPath("/Images/SettingImages/Thumb/" + imageFileName));
+            }
+
+            return imageFileName;
         }
 
     }

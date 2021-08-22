@@ -26,6 +26,8 @@ namespace HamAfarin.Controllers
         /// <returns></returns>
         public ActionResult InverstmentPage()
         {
+            Tbl_Settings tbl_Settings = db.Tbl_Settings.FirstOrDefault();
+            ViewBag.Image = tbl_Settings.InverstmentPageBanner;
             return View(db.Tbl_InvestmentHelp.FirstOrDefault());
         }
 
@@ -38,6 +40,8 @@ namespace HamAfarin.Controllers
         public ActionResult FinancingPage()
         {
             Tbl_CapitalApplicantHelp qCapial = db.Tbl_CapitalApplicantHelp.FirstOrDefault();
+            Tbl_Settings tbl_Settings = db.Tbl_Settings.FirstOrDefault();
+            ViewBag.Image = tbl_Settings.FinancingPageBanner;
             return View(qCapial);
         }
 
