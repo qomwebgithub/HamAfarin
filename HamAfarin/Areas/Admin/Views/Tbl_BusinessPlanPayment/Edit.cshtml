@@ -116,7 +116,7 @@
                 @Html.ValidationMessageFor(model => model.PaymentType_id)
             </div>
         </div>
-        @{ if (Model.PaymentType_id == 2)
+        @{ if (Model.PaymentType_id == 2 && Model.OnlineDetails != null)
             {
                 <div class="container">
                     <br />

@@ -206,18 +206,23 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (tbl_BusinessPlanPayment.PaymentType_id == 2)
             {
                 Tbl_PaymentOnlineDetils qOnlineDetails = db.Tbl_PaymentOnlineDetils.FirstOrDefault(d => d.Payment_id == tbl_BusinessPlanPayment.PaymentID);
-                AdminOnlineDetilsPaymentViewModel adminOnlineDetails = new AdminOnlineDetilsPaymentViewModel()
+                if (qOnlineDetails != null)
                 {
-                    PaymentDetilsID = qOnlineDetails.PaymentDetilsID,
-                    IsFinally = qOnlineDetails.IsFinally,
-                    ShaparakToken = qOnlineDetails.ShaparakToken,
-                    TransactionReferenceID = qOnlineDetails.TransactionReferenceID,
-                    ShaparakCheckTransactionResult = qOnlineDetails.ShaparakCheckTransactionResult,
-                    ShaparakVerifyPayment = qOnlineDetails.ShaparakVerifyPayment,
-                    CreateDate = qOnlineDetails.CreateDate,
-                    FinallyDate = qOnlineDetails.FinallyDate,
-                };
-                adminCreateEditPayment.OnlineDetails = adminOnlineDetails;
+                    AdminOnlineDetilsPaymentViewModel adminOnlineDetails = new AdminOnlineDetilsPaymentViewModel()
+                    {
+                        PaymentDetilsID = qOnlineDetails.PaymentDetilsID,
+                        IsFinally = qOnlineDetails.IsFinally,
+                        ShaparakToken = qOnlineDetails.ShaparakToken,
+                        TransactionReferenceID = qOnlineDetails.TransactionReferenceID,
+                        ShaparakCheckTransactionResult = qOnlineDetails.ShaparakCheckTransactionResult,
+                        ShaparakVerifyPayment = qOnlineDetails.ShaparakVerifyPayment,
+                        CreateDate = qOnlineDetails.CreateDate,
+                        FinallyDate = qOnlineDetails.FinallyDate,
+                    };
+
+                    adminCreateEditPayment.OnlineDetails = adminOnlineDetails;
+                }
+
             }
 
             return View(adminCreateEditPayment);
