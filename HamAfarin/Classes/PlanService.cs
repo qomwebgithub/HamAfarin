@@ -248,7 +248,7 @@ namespace HamAfarin
         /// <param name="db">بانک اطلاعاتی</param>
         /// <param name="paymentOnlineViewModel">مدل پرداخت</param>
         /// <returns>معتبر بودن یا نبودن و متن خروجی</returns>
-        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, Nullable<int> businessPlanID, Nullable<int> paymentPrice, Nullable<int> userId)
+        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, Nullable<int> businessPlanID, Nullable<int> paymentPrice, Nullable<int> userId,bool isLegal=false)
         {
             PaymentPriceValidation retValue = new PaymentPriceValidation();
             Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID);
@@ -257,7 +257,8 @@ namespace HamAfarin
 
             // سرمایه گذاری من در این طرح
             long qTotalMyInvestment = new PlanService().GetInvsetmentUserOfPlan(db, businessPlanID.Value, userId.Value);
-            if (paymentPrice + qTotalMyInvestment > MaximumInvestment)
+
+            if (paymentPrice + qTotalMyInvestment > MaximumInvestment && isLegal == false)
             {
                 retValue.Validation = false;
                 retValue.Error = "مبلغ وارد شده بیشتر از حداکثر میباشد";

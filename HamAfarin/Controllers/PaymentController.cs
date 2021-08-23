@@ -106,13 +106,15 @@ namespace Hamafarin.Controllers
                     // حداکثر مبلغ برای سرمایه گذاری
                     ViewBag.MaximumInvestment = MaximumInvestment;
 
+                    int currentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                    bool userIslegal = db.Tbl_Users.Where(x => x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
+
                     PaymentPriceValidation paymentPriceValidation = planService.ValidationPaymentPrice(db, selectPaymentTypeViewModel.BusinessPlanID,
-                        selectPaymentTypeViewModel.OnlinePaymentPrice, UserSetAuthCookie.GetUserID(User.Identity.Name));
+                        selectPaymentTypeViewModel.OnlinePaymentPrice, currentUserId, userIslegal);
                     if (paymentPriceValidation.Validation)
                     {
                         UserService userService = new UserService();
-                        int intCurrentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
-                        Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == intCurrentUserId);
+                        //Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == currentUserId);
 
                         Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = new Tbl_BusinessPlanPayment()
                         {
@@ -121,8 +123,8 @@ namespace Hamafarin.Controllers
                             IsConfirmedFromAdmin = false,
                             PaidDateTime = DateTime.Now,
                             CreateDate = DateTime.Now,
-                            CreateUser_id = intCurrentUserId,
-                            PaymentUser_id = intCurrentUserId,
+                            CreateUser_id = currentUserId,
+                            PaymentUser_id = currentUserId,
                             PaymentPrice = selectPaymentTypeViewModel.OnlinePaymentPrice,
                             PaymentType_id = 2,
                             AdminCheckDate = null,
@@ -267,7 +269,7 @@ namespace Hamafarin.Controllers
                     {
                         // سرمایه گذاری من در این طرح
                         ViewBag.TotalMyInvestmentInPlan = planService.GetInvsetmentUserOfPlan(db, selectPaymentTypeViewModel.BusinessPlanID
-                            , UserSetAuthCookie.GetUserID(User.Identity.Name));
+                            , currentUserId);
                         ModelState.AddModelError("OnlinePaymentPrice", paymentPriceValidation.Error.ToString());
                         return View(selectPaymentTypeViewModel);
                     }
@@ -286,8 +288,11 @@ namespace Hamafarin.Controllers
                     // حداکثر مبلغ برای سرمایه گذاری
                     ViewBag.MaximumInvestment = MaximumInvestment;
 
+                    int currentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                    bool userIslegal = db.Tbl_Users.Where(x => x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
+
                     PaymentPriceValidation paymentPriceValidation = planService.ValidationPaymentPrice(db, selectPaymentTypeViewModel.BusinessPlanID, selectPaymentTypeViewModel.OfflinePaymentPrice
-                        , UserSetAuthCookie.GetUserID(User.Identity.Name));
+                        , currentUserId, userIslegal);
 
                     if (paymentPriceValidation.Validation)
                     {
@@ -303,7 +308,6 @@ namespace Hamafarin.Controllers
                             return View(selectPaymentTypeViewModel);
                         }
                         UserService userService = new UserService();
-                        int intCurrentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
                         Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = new Tbl_BusinessPlanPayment()
                         {
@@ -312,8 +316,8 @@ namespace Hamafarin.Controllers
                             IsConfirmedFromAdmin = false,
                             PaidDateTime = DateTime.Now,
                             CreateDate = DateTime.Now,
-                            CreateUser_id = intCurrentUserId,
-                            PaymentUser_id = intCurrentUserId,
+                            CreateUser_id = currentUserId,
+                            PaymentUser_id = currentUserId,
                             TransactionPaymentCode = selectPaymentTypeViewModel.TransactionPaymentCode,
                             PaymentPrice = selectPaymentTypeViewModel.OfflinePaymentPrice,
                             PaymentType_id = 3,
@@ -331,7 +335,7 @@ namespace Hamafarin.Controllers
                     {
                         // سرمایه گذاری من در این طرح
                         ViewBag.TotalMyInvestmentInPlan = planService.GetInvsetmentUserOfPlan(db, selectPaymentTypeViewModel.BusinessPlanID
-                            , UserSetAuthCookie.GetUserID(User.Identity.Name));
+                            , currentUserId);
                         ModelState.AddModelError("OfflinePaymentPrice", paymentPriceValidation.Error.ToString());
                     }
                     if (imgPaymentImageNameUploaded != null) selectPaymentTypeViewModel.PaymentImageName = imgPaymentImageNameUploaded.FileName;
@@ -397,8 +401,11 @@ namespace Hamafarin.Controllers
                 // حداکثر مبلغ برای سرمایه گذاری
                 ViewBag.MaximumInvestment = MaximumInvestment;
 
+                int currentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                bool userIslegal = db.Tbl_Users.Where(x=>x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
+
                 PaymentPriceValidation paymentPriceValidation = planService.ValidationPaymentPrice(db, paymentOfflineViewModel.BusinessPlan_id, paymentOfflineViewModel.PaymentPrice
-                    , UserSetAuthCookie.GetUserID(User.Identity.Name));
+                    , currentUserId, userIslegal);
 
                 if (paymentPriceValidation.Validation)
                 {
@@ -414,7 +421,7 @@ namespace Hamafarin.Controllers
                         return View(paymentOfflineViewModel);
                     }
                     UserService userService = new UserService();
-                    int intCurrentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                    
 
                     Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = new Tbl_BusinessPlanPayment()
                     {
@@ -423,8 +430,8 @@ namespace Hamafarin.Controllers
                         IsConfirmedFromAdmin = false,
                         PaidDateTime = DateTime.Now,
                         CreateDate = DateTime.Now,
-                        CreateUser_id = intCurrentUserId,
-                        PaymentUser_id = intCurrentUserId,
+                        CreateUser_id = currentUserId,
+                        PaymentUser_id = currentUserId,
                         TransactionPaymentCode = paymentOfflineViewModel.TransactionPaymentCode,
                         PaymentPrice = paymentOfflineViewModel.PaymentPrice,
                         PaymentType_id = 3,
@@ -442,7 +449,7 @@ namespace Hamafarin.Controllers
                 {
                     // سرمایه گذاری من در این طرح
                     ViewBag.TotalMyInvestmentInPlan = planService.GetInvsetmentUserOfPlan(db, paymentOfflineViewModel.BusinessPlan_id.Value
-                        , UserSetAuthCookie.GetUserID(User.Identity.Name));
+                        , currentUserId);
                     ModelState.AddModelError("PaymentPrice", paymentPriceValidation.Error.ToString());
                 }
                 if (imgPaymentImageNameUploaded != null) paymentOfflineViewModel.PaymentImageName = imgPaymentImageNameUploaded.FileName;
@@ -480,12 +487,14 @@ namespace Hamafarin.Controllers
                 // حداکثر مبلغ برای سرمایه گذاری
                 ViewBag.MaximumInvestment = MaximumInvestment;
 
+                int currentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                bool userIslegal = db.Tbl_Users.Where(x => x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
+
                 PaymentPriceValidation paymentPriceValidation = planService.ValidationPaymentPrice(db, paymentOnlineViewModel.BusinessPlan_id,
-                    paymentOnlineViewModel.PaymentPrice, UserSetAuthCookie.GetUserID(User.Identity.Name));
+                    paymentOnlineViewModel.PaymentPrice, currentUserId, userIslegal);
                 if (paymentPriceValidation.Validation)
                 {
                     UserService userService = new UserService();
-                    int intCurrentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
                     Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = new Tbl_BusinessPlanPayment()
                     {
@@ -494,8 +503,8 @@ namespace Hamafarin.Controllers
                         IsConfirmedFromAdmin = false,
                         PaidDateTime = DateTime.Now,
                         CreateDate = DateTime.Now,
-                        CreateUser_id = intCurrentUserId,
-                        PaymentUser_id = intCurrentUserId,
+                        CreateUser_id = currentUserId,
+                        PaymentUser_id = currentUserId,
                         PaymentPrice = paymentOnlineViewModel.PaymentPrice,
                         PaymentType_id = 2,
                         IsDelete = false,
@@ -526,7 +535,7 @@ namespace Hamafarin.Controllers
                 {
                     // سرمایه گذاری من در این طرح
                     ViewBag.TotalMyInvestmentInPlan = planService.GetInvsetmentUserOfPlan(db, paymentOnlineViewModel.BusinessPlan_id.Value
-                        , UserSetAuthCookie.GetUserID(User.Identity.Name));
+                        , currentUserId);
                     ModelState.AddModelError("PaymentPrice", paymentPriceValidation.Error.ToString());
                 }
             }
