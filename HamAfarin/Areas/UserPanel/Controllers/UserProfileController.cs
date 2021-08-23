@@ -183,6 +183,9 @@ namespace HamAfarin.Areas.UserPanel
                         LegalFile = userProfile.PersonLegal.LegalFile
                     };
                     db.Tbl_PersonLegal.Add(personLegal);
+
+                    Tbl_Users tbl_Users = db.Tbl_Users.Find(userId);
+                    tbl_Users.IsLegal = true;
                 }
                 db.SaveChanges();
                 //به اکشن ایندکس ارسال میشود برای اعلام موفقیت آمیز بودن پروفایل
