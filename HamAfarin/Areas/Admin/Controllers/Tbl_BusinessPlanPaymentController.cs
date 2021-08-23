@@ -448,17 +448,17 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             dateTimeFixed.Date = lstPaidDateTime[0];
 
+            string[] lstTime = lstPaidDateTime[1].Split(':');
+
+            List<int> lstNumbers = new List<int>();
+            foreach (string num in lstTime)
+            {
+                lstNumbers.Add(int.Parse(num));
+            }
+            TimeSpan time = new TimeSpan(lstNumbers[0], lstNumbers[1], lstNumbers[2]);
+
             if (lstPaidDateTime[2].Contains("ب.ظ"))
             {
-                string[] lstTime = lstPaidDateTime[1].Split(':');
-
-                List<int> lstNumbers = new List<int>();
-                foreach (string num in lstTime)
-                {
-                    lstNumbers.Add(int.Parse(num));
-                }
-                
-                TimeSpan time = new TimeSpan(lstNumbers[0], lstNumbers[1], lstNumbers[2]);
                 if (lstNumbers[0] != 12)
                 {
                     time = time.Add(new TimeSpan(12, 0, 0));
@@ -469,7 +469,15 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
             else
             {
-                dateTimeFixed.Time = lstPaidDateTime[1];
+                if (lstNumbers[0] == 12)
+                {
+                    time = time.Subtract(new TimeSpan(12, 0, 0));
+                    dateTimeFixed.Time = time.ToString();
+                }
+                else
+                {
+                    dateTimeFixed.Time = lstPaidDateTime[1];
+                }
             }
 
             return dateTimeFixed;
