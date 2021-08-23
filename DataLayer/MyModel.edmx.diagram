@@ -6,19 +6,19 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f1cead1c01484a42b9052ebb560cf30d" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Blog" Width="1.5" PointX="5.25" PointY="66.5" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Blog" Width="1.5" PointX="5.25" PointY="59.5" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessLevels" Width="1.5" PointX="2.75" PointY="4.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanGallery" Width="1.5" PointX="13.5" PointY="33.25" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanPayment" Width="1.5" PointX="8.25" PointY="27.25" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanQuestion" Width="1.5" PointX="5.25" PointY="33.625" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlan_BussenessFields" Width="1.5" PointX="9" PointY="24.25" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanPayment" Width="1.5" PointX="5.25" PointY="27.25" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanQuestion" Width="1.5" PointX="8.25" PointY="28.625" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlan_BussenessFields" Width="1.5" PointX="9" PointY="40.25" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlan_BussinessTypes" Width="1.5" PointX="4.75" PointY="4.75" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlan_FinancialDuration" Width="1.5" PointX="9" PointY="37.25" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlan_FinancialDuration" Width="1.5" PointX="9" PointY="37.625" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlan_Status" Width="1.5" PointX="5.75" PointY="0.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_BussinessPlans" Width="1.5" PointX="11.25" PointY="21.25" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_CapitalApplicantHelp" Width="1.5" PointX="6.75" PointY="3.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_CommentPlan" Width="1.5" PointX="16.5" PointY="28.625" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_CompanyType" Width="1.5" PointX="9" PointY="34.625" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_CompanyType" Width="1.5" PointX="9" PointY="21.875" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_FutureBusinessPlan" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Galleries" Width="1.5" PointX="7.75" PointY="0.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Investable" Width="1.5" PointX="2.75" PointY="7.75" />
@@ -28,12 +28,12 @@
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Menu" Width="1.5" PointX="8.75" PointY="7.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_MenuPage" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_MenuType" Width="1.5" PointX="0.75" PointY="1.25" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_MonetaryUnits" Width="1.5" PointX="9" PointY="21" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_MonetaryUnits" Width="1.5" PointX="9" PointY="25.25" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Pages" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentOnlineDetils" Width="1.5" PointX="10.5" PointY="40.875" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentOnlineDetils" Width="1.5" PointX="7.5" PointY="32.875" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentReturned" Width="1.5" PointX="13.5" PointY="28.5" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentType" Width="1.5" PointX="6" PointY="16" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PersonLegal" Width="1.5" PointX="5.25" PointY="62.375" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentType" Width="1.5" PointX="3" PointY="24" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_PersonLegal" Width="1.5" PointX="5.25" PointY="19.125" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Roles" Width="1.5" PointX="0.75" PointY="29.25" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_SajamToken" Width="1.5" PointX="10.75" PointY="4.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_SejamException" Width="1.5" PointX="10.75" PointY="8.75" />
@@ -43,8 +43,8 @@
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Sliders" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Sms" Width="1.5" PointX="0.75" PointY="12.75" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_SmsLog" Width="1.5" PointX="2.75" PointY="12.75" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Tickets" Width="1.5" PointX="5.25" PointY="25.75" />
-        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" Width="1.5" PointX="5.25" PointY="19.125" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Tickets" Width="1.5" PointX="5.25" PointY="65" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" Width="1.5" PointX="5.25" PointY="53" />
         <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_Users" Width="1.5" PointX="3" PointY="26.875" />
         <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_Blog_Tbl_Users" />
         <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanGallery_Tbl_BussinessPlans" />
