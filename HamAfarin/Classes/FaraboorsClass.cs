@@ -70,6 +70,7 @@ namespace HamAfarin
             (bool Success, string Message) tokenResult;
             Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id);
             Tbl_UserProfiles qUserProfile = db.Tbl_UserProfiles.FirstOrDefault(a => a.User_id == qBusinessPlanPayment.PaymentUser_id);
+            Tbl_PersonLegal qPersonLegal = db.Tbl_PersonLegal.FirstOrDefault(p => p.User_id == qBusinessPlanPayment.PaymentUser_id);
             bool isLegal = db.Tbl_Users
                .Where(u => u.UserID == qBusinessPlanPayment.PaymentUser_id)
                .Select(u => u.IsLegal)
@@ -93,10 +94,10 @@ namespace HamAfarin
 
                 FaraboorsReceiveJsonModel body = new FaraboorsReceiveJsonModel
                 {
-                    NationalID = long.Parse(qUserProfile.NationalCode),
+                    NationalID = isLegal ? long.Parse(qPersonLegal.NationalId) : long.Parse(qUserProfile.NationalCode),
                     IsLegal = isLegal,
                     FirstName = qUserProfile.FirstName,
-                    LastNameOrCompanyName = qUserProfile.LastName,
+                    LastNameOrCompanyName = isLegal ? qPersonLegal.CompanyName : qUserProfile.LastName,
                     ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10,
                     BourseCode = qUserProfile.SejamCode,
                     PaymentDate = payDate,
