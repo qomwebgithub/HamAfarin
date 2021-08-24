@@ -96,7 +96,7 @@ namespace HamAfarin
                 {
                     NationalID = isLegal ? long.Parse(qPersonLegal.NationalId) : long.Parse(qUserProfile.NationalCode),
                     IsLegal = isLegal,
-                    FirstName = qUserProfile.FirstName,
+                    FirstName = isLegal ? "" : qUserProfile.FirstName,
                     LastNameOrCompanyName = isLegal ? qPersonLegal.CompanyName : qUserProfile.LastName,
                     ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10,
                     BourseCode = qUserProfile.SejamCode,
