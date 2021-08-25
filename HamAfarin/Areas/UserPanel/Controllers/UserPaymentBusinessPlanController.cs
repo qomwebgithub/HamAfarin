@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DataLayer;
@@ -8,6 +9,7 @@ using Hamafarin;
 using Newtonsoft.Json;
 using PagedList;
 using ViewModels;
+
 
 namespace HamAfarin.Areas.UserPanel.Controllers
 {
@@ -107,8 +109,8 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             bool boolIsRequestedReturn = false;
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
 
-            
-            
+
+
 
 
             // تعداد روز های باقیمانده
@@ -224,6 +226,20 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             ViewBag.Notify = notify;
 
             return View(selectPayment);
+        }
+
+        public async Task<ActionResult> ProjectParticipationPDF(int id)
+        {
+            FaraboorsClass faraboorsClass = new FaraboorsClass();
+            var apiResult = await faraboorsClass.GetProjectParticipationReportAsync(id);
+            if (apiResult.Success)
+            {
+                return new FileContentResult(apiResult.File, "application/pdf");
+            }
+            else
+            {
+                return View();
+            }
         }
 
     }

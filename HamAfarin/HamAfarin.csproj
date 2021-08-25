@@ -662,6 +662,7 @@
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\ConfirmedByFaraboors.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\NotConfirmedByFaraboors.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\OfflineDraftsPayments.cshtml" />
+    <Content Include="Areas\UserPanel\Views\UserPaymentBusinessPlan\ProjectParticipationPDF.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">
@@ -727,6 +728,7 @@
     <Content Include="Content\css\slides\js\splide.js" />
     <Content Include="Content\css\slides\js\splide.min.js" />
     <Content Include="Content\css\toastr.min.css" />
+    <Content Include="Content\css\waitMe.min.css" />
     <Content Include="Content\fonts\bootstarpicon\bootstrap-icons.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\fonts\svg\iransansdn.svg" />
@@ -841,6 +843,7 @@
     <Content Include="Content\js\owl.carousel.min.js" />
     <Content Include="Content\js\sweetalert2.all.min.js" />
     <Content Include="Content\js\toastr.min.js" />
+    <Content Include="Content\js\waitMe.min.js" />
     <Content Include="Content\js\wow.min.js" />
     <Content Include="Content\css\Site.css" />
     <Content Include="Content\PagedList.css" />
