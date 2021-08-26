@@ -582,7 +582,7 @@
                 @if (Model.IsProjectParticipationReady)
                 {
                     <div>
-                        <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID">چاپ گواهی شراکت</a>
+                        <a style="font-size:14px" id="CertificateRdy" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID">چاپ گواهی شراکت</a>
                     </div>
                 }
                 else
@@ -846,7 +846,7 @@
             }, 100);
         }
         $(function () {
-            $('#Certificate').click(function () {
+            $('#CertificateRdy').click(function () {
                 run_waitMe();
             });
 
