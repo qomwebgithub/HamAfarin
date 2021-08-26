@@ -68,10 +68,10 @@
 
 
 @*<div class="text-center overlay">
-    <div id="Spinner" class="spinner-border text-orange" role="status">
-        <span class="sr-only">درحال بارگذاری ...</span>
-    </div>
-</div>*@
+        <div id="Spinner" class="spinner-border text-orange" role="status">
+            <span class="sr-only">درحال بارگذاری ...</span>
+        </div>
+    </div>*@
 
 <body>
     <div class="container p-0">
@@ -579,12 +579,18 @@
                 <div class="mr-4">
                     <a style="font-size:14px" class="btn btn-orange user-payment-btn float-left" href="/Resources/BusinessPlans/Contract/@Model.ContractFileName" target="_blank">مشاهده قرارداد</a>
                 </div>
-                @*<div class="">
-                        <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" onclick="partnershipCertificate()">چاپ گواهی شراکت</a>
-                    </div>*@
-                <div class="">
-                    <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID">چاپ گواهی شراکت</a>
-                </div>
+                @if (Model.IsProjectParticipationReady)
+                {
+                    <div>
+                        <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID">چاپ گواهی شراکت</a>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" onclick="CertificatePopup()">چاپ گواهی شراکت</a>
+                    </div>
+                }
             </div>
         </section>
 
@@ -884,22 +890,22 @@
         //                showFile(data.message);
         //            }
         //            else {
-        //                sweetAlertCertificate();
+        //                CertificatePopup();
         //            }
         //        },
-        //        error: sweetAlertCertificate();
+        //        error: CertificatePopup();
         //    });
         //}
 
-        //function sweetAlertCertificate() {
-        //    Swal.fire({
-        //        icon: 'warning',
-        //        title: 'توجه',
-        //        text: "سرمایه گذار محترم پس از تکمیل موفق سرمایه طرح و تایید سازمان محترم فرابورس از طریق سامانه پیامکی هم آفرین به شما اطلاع رسانی می شود و گواهی شراکت قابل دانلود می گردد",
-        //        confirmButtonText: `قبول`,
-        //        confirmButtonColor: '#d0aa45',
-        //    });
-        //}
+        function CertificatePopup() {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: "سرمایه گذار محترم پس از تکمیل موفق سرمایه طرح و تایید سازمان محترم فرابورس از طریق سامانه پیامکی هم آفرین به شما اطلاع رسانی می شود و گواهی شراکت قابل دانلود می گردد",
+                confirmButtonText: `قبول`,
+                confirmButtonColor: '#d0aa45',
+            });
+        }
 
         function AlertInvestment(message) {
             Swal.fire({

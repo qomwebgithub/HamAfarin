@@ -67,6 +67,8 @@ namespace ViewModels
         public string ContractFileName { get; set; }
         [Display(Name = "کد رهگیری فرابورس")]
         public string FaraboorsTraceCode { get; set; }
+        [Display(Name = "گواهی شراکت")]
+        public bool IsProjectParticipationReady { get; set; }
 
     }
 }

@@ -18,6 +18,12 @@
             <div class="col-12">
             </div>
             <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.IsProjectParticipationReady)
+                @Html.LabelFor(model => model.IsProjectParticipationReady)
+
+                @Html.ValidationMessageFor(model => model.IsProjectParticipationReady)
+            </div>
+            <div class="col-md-10">
                 @Html.CheckBoxFor(model => model.IsActive, new { @checked = true })
                 @Html.LabelFor(model => model.IsActive)
 

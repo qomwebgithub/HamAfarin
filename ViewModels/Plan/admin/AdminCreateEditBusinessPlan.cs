@@ -212,6 +212,10 @@ namespace ViewModels
 
         [Display(Name = "قرارداد سرمایه گذاری")]
         public string ContractFileName { get; set; }
+        [Display(Name = "گواهی شراکت")]
+        public bool IsProjectParticipationReady { get; set; }
+
         
+
     }
 }

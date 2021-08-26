@@ -58,6 +58,14 @@
     }
 
     <div class="form-group">
+        @Html.LabelFor(model => model.IsProjectParticipationReady, new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IsProjectParticipationReady)
+            @Html.ValidationMessageFor(model => model.IsProjectParticipationReady)
+        </div>
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-4" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.IsActive)

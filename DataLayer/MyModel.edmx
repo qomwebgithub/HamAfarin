@@ -213,6 +213,7 @@
           <Property Name="TitleUrl" Type="nvarchar(max)" />
           <Property Name="SeoKey" Type="nvarchar(max)" />
           <Property Name="ContractFileName" Type="nvarchar(max)" />
+          <Property Name="IsProjectParticipationReady" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_CapitalApplicantHelp">
           <Key>
@@ -1582,6 +1583,7 @@
           <Property Name="TitleUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SeoKey" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContractFileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsProjectParticipationReady" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_BusinessPlanGallery" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanGallery_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanGallery" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanPayment" />
           <NavigationProperty Name="Tbl_BusinessPlanQuestion" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanQuestion_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanQuestion" />
@@ -2583,6 +2585,7 @@
           <EntitySetMapping Name="Tbl_BussinessPlans">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_BussinessPlans">
               <MappingFragment StoreEntitySet="Tbl_BussinessPlans">
+                <ScalarProperty Name="IsProjectParticipationReady" ColumnName="IsProjectParticipationReady" />
                 <ScalarProperty Name="ContractFileName" ColumnName="ContractFileName" />
                 <ScalarProperty Name="SeoKey" ColumnName="SeoKey" />
                 <ScalarProperty Name="TitleUrl" ColumnName="TitleUrl" />

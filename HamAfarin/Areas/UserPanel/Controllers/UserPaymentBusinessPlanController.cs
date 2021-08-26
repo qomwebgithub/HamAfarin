@@ -105,7 +105,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         {
             Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id);
             UserPaymentBusinessPlanSingleViewModel selectPayment = new UserPaymentBusinessPlanSingleViewModel();
-            Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id); ;
+            Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id);
             bool boolIsRequestedReturn = false;
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
 
@@ -154,8 +154,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.IsOverflowInvestment = tbl_BussinessPlans.IsOverflowInvestment;
             selectPayment.IsSuccessBussinessPlan = tbl_BussinessPlans.IsSuccessBussinessPlan;
             selectPayment.ContractFileName = tbl_BussinessPlans.ContractFileName;
-
-
+            selectPayment.IsProjectParticipationReady = tbl_BussinessPlans.IsProjectParticipationReady;
 
             if (qBusinessPlanPayment.FaraboorsResponse != null)
             {
