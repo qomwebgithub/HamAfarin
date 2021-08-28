@@ -1,7 +1,7 @@
 ﻿@model ViewModels.BusinessPlansItemViewModel
 
 
-<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 my-2" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true" >
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 my-2" data-aos="zoom-in" data-aos-duration="2000" data-aos-once="true">
     <div class="card">
         <a class="text-dark" href="/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID" style="text-decoration:none">
             <div class="">
@@ -25,22 +25,22 @@
                 <div class="dropdown-divider"></div>
                 <div class="">
                     <div class="col-12 text-left mt-4">
-                        @{ if (Model.RemainingTime == 0)
-                            {
-                                <strong class="small font-weight-bold text-danger">
-                                    روز پایانی - @Model.PercentageComplate%
-                                </strong> }
-                            else if (Model.RemainingTime < 0)
+                        @{ if (Model.RemainingTime < 0)
                             {
                                 <strong class="small font-weight-bold text-danger">
                                     زمان سرمایه گذاری به اتمام رسید  - @Model.PercentageComplate%
                                 </strong>
                             }
+                            else if (Model.RemainingTime <= 7)
+                            {
+                                <strong class="small font-weight-bold text-danger">
+                                    روز پایانی - @Model.PercentageComplate%
+                                </strong>
+                            }
                             else
                             {
                                 <strong class="small font-weight-bold">
-                                    @Model.RemainingTime روز - @Model.PercentageComplate%
-
+                                   @Model.RemainingTime روز - @Model.PercentageComplate%
                                 </strong>
                             }
                         }
