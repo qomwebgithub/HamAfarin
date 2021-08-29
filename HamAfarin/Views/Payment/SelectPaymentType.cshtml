@@ -242,7 +242,7 @@
 
             </div>
             <br />
-            <div id="paymentType" class="hidden">
+            <div id="paymentType">
 
                 <div class="col-sm p-0">
                     @*<p class="text-danger"> سرمایه گذاری</p>*@
@@ -439,11 +439,6 @@
     <script>
 
         $(document).ready(function () {
-            handleInvestmentRoles($("#InvestmentRoles").is(':checked'));
-            $('#InvestmentRoles').change(function () {
-                handleInvestmentRoles($(this).is(":checked"));
-            });
-
             if ($("#IsOnline").val().toLowerCase() == "true") {
                 document.getElementById("onlineRadio").checked = true;
                 document.getElementById("offlineRadio").checked = false;
@@ -462,17 +457,6 @@
             });
         });
 
-        function handleInvestmentRoles(checked) {
-
-            if (checked) {
-                $('#paymentType').show();
-                $('#btnSubmit').show();
-            }
-            else {
-                $('#paymentType').hide();
-                $('#btnSubmit').hide();
-            }
-        };
         function handlePaymentOnline(isOnlineRadio) {
             $("#IsOnline").val(true);
 
