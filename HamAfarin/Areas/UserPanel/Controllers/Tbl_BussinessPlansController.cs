@@ -37,7 +37,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                     Title = item.Title,
                     ImageNameInListPalns = item.ImageNameInListPalns,
                     IsActive = item.IsActive,
-                    TotalInvestmentPrice = StringExtensions.En2Fa(@Convert.ToDecimal(planService.GetRaisedPrice(db, item.BussinessPlanID)).ToString("#,##0")) + " تومان"
+                    TotalInvestmentPrice = StringExtensions.En2Fa(@Convert.ToDecimal(planService.GetGoalPrice(db, item.BussinessPlanID)).ToString("#,##0")) + " تومان"
 
                 });
             }
