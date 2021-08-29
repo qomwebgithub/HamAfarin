@@ -48,9 +48,9 @@ namespace Hamafarin.Controllers
             // تبدیل اعداد به انگلیسی
             string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(qActivePlans.AmountRequiredRoRaiseCapital);
             // مبلغ سرمایه گذاری planService
-            long intRaisedPrice = planService.GetGoalPrice(db, qActivePlans.BussinessPlanID);
+            long intGoalPrice = planService.GetGoalPrice(db, qActivePlans.BussinessPlanID);
             // مقدار درصد سرمایه گذاری شده
-            int qPercentageComplate = planService.GetPercentageInvestmentPlan(AmountRequiredRoRaiseCapital, intRaisedPrice);
+            int qPercentageComplate = planService.GetPercentageInvestmentPlan(AmountRequiredRoRaiseCapital, intGoalPrice);
             // تعداد سرمایه گذاران
             int qInvestorCount = planService.GetPlanInvestorCount(db, qActivePlans.BussinessPlanID);
             BusinessPlanSingleViewModel businessPlansItemViewModel = new BusinessPlanSingleViewModel()
@@ -62,7 +62,7 @@ namespace Hamafarin.Controllers
                 RemainingTime = qRemainingDay,
                 RemainingTimeText = qRemainingText,
                 PercentageComplate = qPercentageComplate,
-                PriceComplated = intRaisedPrice,
+                PriceComplated = intGoalPrice,
                 WidthPercentage = qPercentageComplate + "%",
                 InvestorCount = qInvestorCount,
                 MarketTarget = qActivePlans.MarketTarget,
