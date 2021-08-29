@@ -282,8 +282,8 @@ namespace HamAfarin
             //چک کردن بیش از صد در صد سرمایه گذاری
             if (!qBussinessPlans.IsOverflowInvestment)
             {
-                long raisedPrice = GetRaisedPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
-                if (paymentPrice > raisedPrice)
+                long totalPrice = GetRaisedPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
+                if (totalPrice >= long.Parse(qBussinessPlans.AmountRequiredRoRaiseCapital))
                 {
                     retValue.Validation = false;
                     retValue.Error = "امکان سرمایه گذاری بیشتر از ۱۰۰ درصد وجود ندارد";
