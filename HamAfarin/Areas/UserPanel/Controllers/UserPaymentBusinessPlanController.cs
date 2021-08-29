@@ -121,9 +121,9 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             // تبدیل اعداد به انگلیسی
             string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
             // مبلغ سرمایه گذاری planService
-            long intGoalPrice = planService.GetGoalPrice(db, tbl_BussinessPlans.BussinessPlanID);
+            long intRaisedPrice = planService.GetGoalPrice(db, tbl_BussinessPlans.BussinessPlanID);
             // مقدار درصد سرمایه گذاری شده
-            int qPercentageComplate = planService.GetPercentageInvestmentPlan(AmountRequiredRoRaiseCapital, intGoalPrice);
+            int qPercentageComplate = planService.GetPercentageInvestmentPlan(AmountRequiredRoRaiseCapital, intRaisedPrice);
             // تعداد سرمایه گذاران
             int qInvestorCount = planService.GetPlanInvestorCount(db, tbl_BussinessPlans.BussinessPlanID);
 
@@ -134,7 +134,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.ImageName = tbl_BussinessPlans.ImageNameInSinglePlan;
             selectPayment.BussinessName = tbl_BussinessPlans.Title;
             selectPayment.RemainingTime = qRemainingDay;
-            selectPayment.PriceComplated = intGoalPrice;
+            selectPayment.PriceComplated = intRaisedPrice;
             selectPayment.WidthPercentage = qPercentageComplate + "%";
             selectPayment.PercentageComplate = qPercentageComplate;
             selectPayment.InvestorCount = qInvestorCount;

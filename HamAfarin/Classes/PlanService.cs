@@ -173,9 +173,9 @@ namespace HamAfarin
             if (qBussinessPlan != null)
             {
                 // مبلغ سرمایه گذاری شده
-                long intGoalPrice = GetGoalPrice(db, qBussinessPlan.BussinessPlanID);
+                long intRaisedPrice = GetGoalPrice(db, qBussinessPlan.BussinessPlanID);
                 //اگر مبلغ سرمایه گذاری شده برای طرح کامل شده باشد
-                if (intGoalPrice >= long.Parse(qBussinessPlan.AmountRequiredRoRaiseCapital))
+                if (intRaisedPrice >= long.Parse(qBussinessPlan.AmountRequiredRoRaiseCapital))
                 {
                     if (qBussinessPlan.IsOverflowInvestment == false)
                     {
@@ -282,8 +282,8 @@ namespace HamAfarin
             //چک کردن بیش از صد در صد سرمایه گذاری
             if (qBussinessPlans.IsOverflowInvestment == false)
             {
-                long goalPrice = GetGoalPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
-                if (paymentPrice > goalPrice)
+                long raisedPrice = GetGoalPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
+                if (paymentPrice > raisedPrice)
                 {
                     retValue.Validation = false;
                     retValue.Error = "امکان سرمایه گذاری بیشتر از ۱۰۰ درصد وجود ندارد";
