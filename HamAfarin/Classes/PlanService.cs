@@ -146,7 +146,7 @@ namespace HamAfarin
         /// <param name="db">دیتابیس</param>
         /// <param name="id">شناسه طرح</param>
         /// <returns>مبلغ کل سرمایه گذاری شده</returns>
-        public long GetGoalPrice(HamAfarinDBEntities db, int id)
+        public long GetRaisedPrice(HamAfarinDBEntities db, int id)
         {
             List<Tbl_BusinessPlanPayment> qList = GetPlanSubmittedPaid(db, id);
             long? total = qList.Where(t => t.BusinessPlan_id == id).Sum(i => i.PaymentPrice);
@@ -173,7 +173,7 @@ namespace HamAfarin
             if (qBussinessPlan != null)
             {
                 // مبلغ سرمایه گذاری شده
-                long intRaisedPrice = GetGoalPrice(db, qBussinessPlan.BussinessPlanID);
+                long intRaisedPrice = GetRaisedPrice(db, qBussinessPlan.BussinessPlanID);
                 //اگر مبلغ سرمایه گذاری شده برای طرح کامل شده باشد
                 if (intRaisedPrice >= long.Parse(qBussinessPlan.AmountRequiredRoRaiseCapital))
                 {
@@ -280,9 +280,9 @@ namespace HamAfarin
                 return retValue;
             }
             //چک کردن بیش از صد در صد سرمایه گذاری
-            if (qBussinessPlans.IsOverflowInvestment == false)
+            if (!qBussinessPlans.IsOverflowInvestment)
             {
-                long raisedPrice = GetGoalPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
+                long raisedPrice = GetRaisedPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
                 if (paymentPrice > raisedPrice)
                 {
                     retValue.Validation = false;

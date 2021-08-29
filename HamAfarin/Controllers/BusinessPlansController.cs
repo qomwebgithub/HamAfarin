@@ -48,7 +48,7 @@ namespace Hamafarin.Controllers
             // تبدیل اعداد به انگلیسی
             string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(qActivePlans.AmountRequiredRoRaiseCapital);
             // مبلغ سرمایه گذاری planService
-            long intRaisedPrice = planService.GetGoalPrice(db, qActivePlans.BussinessPlanID);
+            long intRaisedPrice = planService.GetRaisedPrice(db, qActivePlans.BussinessPlanID);
             // مقدار درصد سرمایه گذاری شده
             int qPercentageComplate = planService.GetPercentageInvestmentPlan(AmountRequiredRoRaiseCapital, intRaisedPrice);
             // تعداد سرمایه گذاران
@@ -119,7 +119,7 @@ namespace Hamafarin.Controllers
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
-                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetGoalPrice(db, item.BussinessPlanID));
+                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
 
                 lstPlans.Add(new BusinessPlansItemViewModel()
@@ -159,7 +159,7 @@ namespace Hamafarin.Controllers
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
-                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetGoalPrice(db, item.BussinessPlanID));
+                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
 
                 lstPlans.Add(new BusinessPlansItemViewModel()
@@ -198,7 +198,7 @@ namespace Hamafarin.Controllers
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
-                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetGoalPrice(db, item.BussinessPlanID));
+                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
 
                 lstPlans.Add(new BusinessPlansItemViewModel()

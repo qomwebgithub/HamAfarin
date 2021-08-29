@@ -57,7 +57,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 string strBusinessPlanStatus = "درحال تامین سرمایه";
                 int qRemainingDay = planService.calculateRemainDay(item.Tbl_BussinessPlans);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(item.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital),
-                    planService.GetGoalPrice(db, item.Tbl_BussinessPlans.BussinessPlanID));
+                    planService.GetRaisedPrice(db, item.Tbl_BussinessPlans.BussinessPlanID));
 
                 if (qRemainingDay > 0)
                 {
@@ -121,7 +121,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             // تبدیل اعداد به انگلیسی
             string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
             // مبلغ سرمایه گذاری planService
-            long intRaisedPrice = planService.GetGoalPrice(db, tbl_BussinessPlans.BussinessPlanID);
+            long intRaisedPrice = planService.GetRaisedPrice(db, tbl_BussinessPlans.BussinessPlanID);
             // مقدار درصد سرمایه گذاری شده
             int qPercentageComplate = planService.GetPercentageInvestmentPlan(AmountRequiredRoRaiseCapital, intRaisedPrice);
             // تعداد سرمایه گذاران

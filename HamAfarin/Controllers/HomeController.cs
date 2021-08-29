@@ -79,7 +79,7 @@ namespace Hamafarin.Controllers
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
-                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetGoalPrice(db, item.BussinessPlanID));
+                int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
 
                 lstPlans.Add(new BusinessPlansItemViewModel()
