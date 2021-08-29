@@ -31,16 +31,22 @@
                                     زمان سرمایه گذاری به اتمام رسید  - @Model.PercentageComplate%
                                 </strong>
                             }
-                            else if (Model.RemainingTime <= 7)
+                            else if (Model.RemainingTime == 0)
                             {
                                 <strong class="small font-weight-bold text-danger">
                                     روز پایانی - @Model.PercentageComplate%
                                 </strong>
                             }
+                            else if (Model.RemainingTime <= 7)
+                            {
+                                <strong class="small font-weight-bold text-danger">
+                                    @Model.RemainingTime روز - @Model.PercentageComplate%
+                                </strong>
+                            }
                             else
                             {
                                 <strong class="small font-weight-bold">
-                                   @Model.RemainingTime روز - @Model.PercentageComplate%
+                                    @Model.RemainingTime روز - @Model.PercentageComplate%
                                 </strong>
                             }
                         }
