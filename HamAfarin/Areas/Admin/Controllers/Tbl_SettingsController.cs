@@ -39,13 +39,13 @@ namespace Hamafarin.Areas.Admin.Controllers
             if (ModelState.IsValid == false)
                 return View(tbl_Settings);
 
-            if (logo.IsImage() && logo != null)
+            if (logo != null && logo.IsImage())
                 tbl_Settings.SiteLogo = SaveImage(logo, tbl_Settings.SiteLogo, true);
 
-            if (financingPageBanner.IsImage() && financingPageBanner != null)
+            if (financingPageBanner != null && financingPageBanner.IsImage())
                 tbl_Settings.FinancingPageBanner = SaveImage(financingPageBanner, tbl_Settings.FinancingPageBanner, false);
 
-            if (inverstmentPageBanner.IsImage() && inverstmentPageBanner != null)
+            if (inverstmentPageBanner != null && inverstmentPageBanner.IsImage())
                 tbl_Settings.InverstmentPageBanner = SaveImage(inverstmentPageBanner, tbl_Settings.InverstmentPageBanner, false);
             
             db.Entry(tbl_Settings).State = EntityState.Modified;
