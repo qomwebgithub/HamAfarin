@@ -37,17 +37,20 @@ namespace Hamafarin.Areas.Admin.Controllers
             HttpPostedFileBase inverstmentPageBanner)
         {
             if (ModelState.IsValid == false)
-            {
                 return View(tbl_Settings);
-            }
 
-            tbl_Settings.SiteLogo = SaveImage(logo, tbl_Settings.SiteLogo, true);
-            tbl_Settings.FinancingPageBanner = SaveImage(financingPageBanner, tbl_Settings.FinancingPageBanner, false);
-            tbl_Settings.InverstmentPageBanner = SaveImage(inverstmentPageBanner, tbl_Settings.InverstmentPageBanner, false);
+            if (logo.IsImage() && logo != null)
+                tbl_Settings.SiteLogo = SaveImage(logo, tbl_Settings.SiteLogo, true);
 
+            if (financingPageBanner.IsImage() && financingPageBanner != null)
+                tbl_Settings.FinancingPageBanner = SaveImage(financingPageBanner, tbl_Settings.FinancingPageBanner, false);
+
+            if (inverstmentPageBanner.IsImage() && inverstmentPageBanner != null)
+                tbl_Settings.InverstmentPageBanner = SaveImage(inverstmentPageBanner, tbl_Settings.InverstmentPageBanner, false);
+            
             db.Entry(tbl_Settings).State = EntityState.Modified;
-
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -134,11 +137,6 @@ namespace Hamafarin.Areas.Admin.Controllers
 
         private string SaveImage(HttpPostedFileBase image, string imageName, bool hasThumbnail)
         {
-            if (image == null || image.IsImage() == false)
-            {
-                return null;
-            }
-
             if (imageName != "no-photo.jpg" && imageName != null)
             {
                 System.IO.File.Delete(Server.MapPath("/Images/SettingImages/Image/" + imageName));
