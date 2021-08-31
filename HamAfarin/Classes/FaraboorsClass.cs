@@ -29,25 +29,25 @@ namespace HamAfarin
             using (HttpClient client = new HttpClient())
             {
                 //Real API
-                //client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+                client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
                 //string projectId = "914c43ac-e70a-44e6-aa3e-8a252997fb71";
 
-                //string projectId = db.Tbl_BussinessPlans
-                //    .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
-                //    .Select(b => b.FaraboorsProjectId)
-                //    .FirstOrDefault();
+                string projectId = db.Tbl_BussinessPlans
+                    .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
+                    .Select(b => b.FaraboorsProjectId)
+                    .FirstOrDefault();
 
                 string nationalID = db.Tbl_UserProfiles
                     .Where(a => a.User_id == qBusinessPlanPayment.PaymentUser_id)
                     .Select(u => u.NationalCode)
                     .FirstOrDefault();
 
-                //string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
-                //var subUrl = "GetProjectParticipationReport?apiKey=" + apiKey + "&projectId=" + projectId + "&nationalID=" + nationalID;
+                string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
+                var subUrl = "GetProjectParticipationReport?apiKey=" + apiKey + "&projectId=" + projectId + "&nationalID=" + nationalID;
 
                 //Test API
-                client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
-                string subUrl = "GetProjectParticipationReport?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe&projectId=3403cbaa-911b-44c3-af6f-de3c97367627&nationalID=" + nationalID;
+                //client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
+                //string subUrl = "GetProjectParticipationReport?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe&projectId=3403cbaa-911b-44c3-af6f-de3c97367627&nationalID=" + nationalID;
 
                 HttpResponseMessage response = await client.PostAsync(subUrl, null);
                 byte[] responseContent = await response.Content.ReadAsByteArrayAsync();
