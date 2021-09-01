@@ -159,12 +159,15 @@ namespace HamAfarin
         /// <returns>زمان باقیمانده یا منقضی شده</returns>
         public int calculateRemainDay(Tbl_BussinessPlans item)
         {
-            TimeSpan difference = item.InvestmentExpireDate.Value - DateTime.Now;
+            DateTime date = DateTime.Now;
+
+            TimeSpan difference = item.InvestmentExpireDate.Value - date;
+            if (difference.TotalSeconds <= 0)
+                return -1;
 
             int finalBetweenDay = difference.Days;
-            if (finalBetweenDay >= 0)
-                return finalBetweenDay;
-            return -1;
+
+            return finalBetweenDay;
         }
 
         public bool IsAcceptInvestmentPlan(HamAfarinDBEntities db, int id)
@@ -248,7 +251,7 @@ namespace HamAfarin
         /// <param name="db">بانک اطلاعاتی</param>
         /// <param name="paymentOnlineViewModel">مدل پرداخت</param>
         /// <returns>معتبر بودن یا نبودن و متن خروجی</returns>
-        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, Nullable<int> businessPlanID, Nullable<int> paymentPrice, Nullable<int> userId,bool isLegal=false)
+        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, Nullable<int> businessPlanID, Nullable<int> paymentPrice, Nullable<int> userId, bool isLegal = false)
         {
             PaymentPriceValidation retValue = new PaymentPriceValidation();
             Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID);
