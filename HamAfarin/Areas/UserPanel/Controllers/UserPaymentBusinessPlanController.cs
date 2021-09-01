@@ -227,15 +227,27 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             return View(selectPayment);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param paymentID="id"></param>
+        /// <returns></returns>
         public async Task<ActionResult> ProjectParticipationPDF(int id)
         {
-            FaraboorsClass faraboorsClass = new FaraboorsClass();
-            var apiResult = await faraboorsClass.GetProjectParticipationReportAsync(id);
-            if (apiResult.Success)
+            try
             {
+                if (User.Identity.IsAuthenticated == false)
+                    return View();
+
+                FaraboorsClass faraboorsClass = new FaraboorsClass();
+                var apiResult = await faraboorsClass.GetProjectParticipationReportAsync(id, UserSetAuthCookie.GetUserID(User.Identity.Name));
+
+                if (apiResult.Success == false)
+                    return View();
+
                 return new FileContentResult(apiResult.File, "application/pdf");
             }
-            else
+            catch (Exception)
             {
                 return View();
             }

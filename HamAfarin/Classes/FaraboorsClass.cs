@@ -20,11 +20,18 @@ namespace HamAfarin
     public class FaraboorsClass
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
-        public async Task<(bool Success, byte[] File)> GetProjectParticipationReportAsync(int id)
+        public async Task<(bool Success, byte[] File)> GetProjectParticipationReportAsync(int id, int user)
         {
             (bool Success, byte[] File) tokenResult;
 
             Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id);
+
+            if (user != qBusinessPlanPayment.PaymentUser_id)
+            {
+                tokenResult.Success = false;
+                tokenResult.File = null;
+                return tokenResult;
+            }
 
             using (HttpClient client = new HttpClient())
             {
