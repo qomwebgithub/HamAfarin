@@ -8,38 +8,70 @@
 <h2>@ViewBag.Title</h2>
 
 @(Html.Kendo().Grid(Model)
-      .Name("Grid")
-      .Columns(columns =>
-          {
- columns.Bound(item => @item.BussinessPlanID).Title("تصویر").Filterable(false).Groupable(false)
-                            .Template(@<text>
-                                    <img class="thumbnail" src="/Images/BusinessPlans/Thumb/@item.ImageNameInListPalns" style="max-width: 150px" />
-                            </text>);
-columns.Bound(model => model.Title);
-columns.Bound(model => model.IsActive);
-columns.Bound(item => @item.BussinessPlanID).Title("دستورات").Filterable(false).Groupable(false)
-.Template(@<text>
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(item => @item.BussinessPlanID).Title("تصویر").Filterable(false).Groupable(false)
+        .Template(@<text>
+            <img class="thumbnail" src="/Images/BusinessPlans/Thumb/@item.ImageNameInListPalns" style="max-width: 150px" />
+            </text>);
+        columns.Bound(model => model.Title);
+        columns.Bound(model => model.IsActive).Width(80);
+        columns.Bound(item => @item.BussinessPlanID).Title("دستورات").Filterable(false).Groupable(false)
+        .Template(@<text>
             @Html.ActionLink("ویرایش", "Edit", new { id = @item.BussinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
             @Html.ActionLink("حذف", "Delete", new { id = @item.BussinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/Index/@item.BussinessPlanID">پرداخت ها</a>
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/DraftsPayments/@item.BussinessPlanID">پرداخت های ناقص</a>
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/SubmittedPayments/@item.BussinessPlanID">پرداخت های تایید شده</a>
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/UnSubmittedPayments/@item.BussinessPlanID">پرداخت های تایید نشده</a>
-</text>).Width(200);
+            <a id="SendSMS" class="btn btn-outline-danger btn-sm" onclick="confirmSendSMS(@item.BussinessPlanID)">پیامک گواهی</a>
+        </text>).Width(320);
 
-})
-.ToolBar(toolbar =>
-{
-toolbar.Custom().Action("Create", "Tbl_BussinessPlans").Text("افزودن");
+    })
+    .ToolBar(toolbar =>
+        {
+            toolbar.Custom().Action("Create", "Tbl_BussinessPlans").Text("افزودن");
+        }
+    )
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .DataSource(dataSource => dataSource
+    .Server()
+    .Model(model => model.Id(item => item.BussinessPlanID))
+)
+)
+@section Scripts {
+    <script>
+        function confirmSendSMS(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: 'آیا از ارسال پیامک گواهی شراکت به تمام سرمایه گذاران این طرح مطمئن هستید؟',
+                showCancelButton: true,
+                confirmButtonText: `بله`,
+                cancelButtonText: 'خیر',
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#SendSMS').addClass("disabled");
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Tbl_BussinessPlans/SendSMSCertificateReady/" + id,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                            }
+                            else {
+                                toastr.error(data.message);
+                            }
+                            $('#SendSMS').removeClass("disabled");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
 }
-)
-.Groupable()
-.Pageable()
-.Sortable()
-.Filterable()
-.DataSource(dataSource => dataSource
-.Server()
-
-.Model(model => model.Id(item => item.BussinessPlanID))
-)
-)

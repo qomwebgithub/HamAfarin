@@ -494,16 +494,15 @@ namespace HamAfarin.Areas.Admin.Controllers
         private void AdminConfimSendSMS(int? businessPlan_id, int? paymentUser_id)
         {
             // 5 = تایید سرمایه گذاری توسط ادمین
-            Tbl_Sms qSms = db.Tbl_Sms.Find(5);
-            string massage = qSms.Message;
-            if (qSms.Message.Contains("@T"))
+            string message = db.Tbl_Sms.Find(5).Message;
+            if (message.Contains("@T"))
             {
                 Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == businessPlan_id);
-                massage = qSms.Message.Replace("@T", qBussinessPlan.Title);
+                message = message.Replace("@T", qBussinessPlan.Title);
             }
 
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
-            (bool Success, string Message) smsResult = oSms.AdpSendSms(qUser.MobileNumber, massage);
+            (bool Success, string Message) smsResult = oSms.AdpSendSMS(qUser.MobileNumber, message);
         }
     }
 }

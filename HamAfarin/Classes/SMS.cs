@@ -72,9 +72,9 @@ namespace HamAfarin
             }
         }
 
-        public  (bool Success, string Message) AdpSendSms(string mobileNumber, string message)
+        public  (bool Success, string Message) AdpSendSMS(string mobileNumber, string message)
         {
-            mobileNumber = "98" + mobileNumber.Substring(1);
+            mobileNumber = FixMobileNumber(mobileNumber);
 
             (bool Success, string Message) tokenResult;
 
@@ -92,7 +92,7 @@ namespace HamAfarin
                     MobileNumber = mobileNumber,
                     Message = message,
                     ID = Guid.NewGuid().ToString(),
-                    Method = nameof(AdpSendSms)
+                    Method = nameof(AdpSendSMS)
                 };
                 db.Tbl_SmsLog.Add(oSmsException);
                 db.SaveChanges();
@@ -108,7 +108,7 @@ namespace HamAfarin
                     MobileNumber = mobileNumber,
                     Message = message,
                     ID = Guid.NewGuid().ToString(),
-                    Method = nameof(AdpSendSms)
+                    Method = nameof(AdpSendSMS)
                 };
                 db.Tbl_SmsLog.Add(oSmsException);
                 db.SaveChanges();
@@ -118,8 +118,10 @@ namespace HamAfarin
 
         }
 
-        public async Task<(bool Success, string Message)> AdpSendSmsAsync(string mobileNumber, string message)
+        public async Task<(bool Success, string Message)> AdpSendSMSAsync(string mobileNumber, string message)
         {
+            mobileNumber = FixMobileNumber(mobileNumber);
+
             (bool Success, string Message) tokenResult;
 
             using (HttpClient client = new HttpClient())
@@ -137,7 +139,7 @@ namespace HamAfarin
                         MobileNumber = mobileNumber,
                         Message = message,
                         ID = Guid.NewGuid().ToString(),
-                        Method = nameof(AdpSendSmsAsync)
+                        Method = nameof(AdpSendSMSAsync)
                     };
                     db.Tbl_SmsLog.Add(oSmsException);
                     await db.SaveChangesAsync();
@@ -154,7 +156,7 @@ namespace HamAfarin
                         MobileNumber = mobileNumber,
                         Message = message,
                         ID = Guid.NewGuid().ToString(),
-                        Method = nameof(AdpSendSmsAsync)
+                        Method = nameof(AdpSendSMSAsync)
                     };
                     db.Tbl_SmsLog.Add(oSmsException);
                     await db.SaveChangesAsync();
@@ -162,6 +164,29 @@ namespace HamAfarin
                     return tokenResult;
                 }
             }
+        }
+
+        private string FixMobileNumber(string mobileNumber)
+        {
+            if (mobileNumber.Contains(","))
+            {
+                string[] mobileNumbersArray = mobileNumber.Split(',');
+
+                List<string> lstFixedMobileNumbers = new List<string>();
+
+                foreach (string Number in mobileNumbersArray)
+                {
+                    lstFixedMobileNumbers.Add("98" + Number.Substring(1));
+                }
+
+                mobileNumber = String.Join(",", lstFixedMobileNumbers);
+            }
+            else
+            {
+                mobileNumber = "98" + mobileNumber.Substring(1);
+            }
+
+            return mobileNumber;
         }
     }
 }

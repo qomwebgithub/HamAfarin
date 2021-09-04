@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -22,6 +23,7 @@ namespace Hamafarin.Areas.Admin.Controllers
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
         UserService userService = new UserService();
+        SMS oSms = new SMS();
 
         // GET: Admin/Tbl_BussinessPlans
         public ActionResult Index()
@@ -382,7 +384,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = Guid.NewGuid().ToString() + Path.GetExtension(ideaFile.FileName);
                 ideaFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Idea/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
             }
-            
+
             if (contractFile != null)
             {
                 if (adminCreateEditBusinessPlan.ContractFileName != null)
@@ -473,6 +475,29 @@ namespace Hamafarin.Areas.Admin.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SendSMSCertificateReady(int id)
+        {
+            List<string> lstUserID = await db.Tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_Users)
+                .Where(p => p.BusinessPlan_id == id)
+                .Select(p => p.Tbl_Users.MobileNumber)
+                .Distinct()
+                .ToListAsync();
+            var mobileNumbers = String.Join(",",lstUserID);
+            Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(6);
+            string message = qSms.Message;
+            if (message.Contains("@T"))
+            {
+                Tbl_BussinessPlans qBussinessPlan = await db.Tbl_BussinessPlans.FirstOrDefaultAsync(b => b.BussinessPlanID == id);
+                message = message.Replace("@T", qBussinessPlan.Title);
+            }
+            (bool Success, string Message) smsResult = await oSms.AdpSendSMSAsync(mobileNumbers, message);
+
+            return Json(new { success = smsResult.Success, message = smsResult.Message });
+        }
+
         /// <summary>
         /// حذف تصویر از گالری
         /// </summary>

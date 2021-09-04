@@ -590,7 +590,7 @@ namespace Hamafarin.Controllers
                             // 4 = سرمایه گذاری
                             Tbl_Sms qSms = db.Tbl_Sms.Find(4); 
                             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                            (bool Success, string Message) result = oSms.AdpSendSms(qUser.MobileNumber, qSms.Message);
+                            (bool Success, string Message) result = oSms.AdpSendSMS(qUser.MobileNumber, qSms.Message);
 
                             return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
                         }
