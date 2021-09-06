@@ -310,38 +310,34 @@ namespace Hamafarin.Controllers
             //recaptcha
             //**************************************************///
             //**************************************************////
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid == false)
+                return View(SejamLogin);
+
+            oSejamClass = new SejamClass();
+            SejamLogin.NationalCode = StringExtensions.Fa2En(SejamLogin.NationalCode);
+
+            if (User.Identity.IsAuthenticated == false)
+                return Redirect("/LogOut");
+
+            if (oSejamClass.CheckNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)) == false)
             {
-
-
-                oSejamClass = new SejamClass();
-                SejamLogin.NationalCode = StringExtensions.Fa2En(SejamLogin.NationalCode);
-                if (User.Identity.IsAuthenticated == false)
-                {
-                    return Redirect("/LogOut");
-                }
-
-                if (oSejamClass.CheckNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)) == false)
-                {
-                    ModelState.AddModelError("NationalCode", "کد ملی وارد شده قبلا ثبت شده است ");
-                    return View(new SejamLoginViewModel { ReturnUrl = SejamLogin.ReturnUrl });
-                }
-
-                //در صورت استفاده از این متد اکشن را از حالت ای سینک خارج کنید
-                //bool boolSejamLogin = oSejamClass.LoginUser(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name), out string UserToken);
-
-                (bool Success, string UserToken) sejamLogin = await oSejamClass.LoginUserAsync(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name));
-
-                if (sejamLogin.Success)
-                {
-                    return RedirectToAction("VerifySms", new { id = sejamLogin.UserToken, ReturnUrl = SejamLogin.ReturnUrl });
-                }
-                ViewBag.Exemption = true;
-                ModelState.AddModelError("NationalCode", sejamLogin.UserToken);
-
+                ModelState.AddModelError("NationalCode", "کد ملی وارد شده قبلا ثبت شده است ");
                 return View(new SejamLoginViewModel { ReturnUrl = SejamLogin.ReturnUrl });
             }
-            return View(SejamLogin);
+
+            //در صورت استفاده از این متد اکشن را از حالت ای سینک خارج کنید
+            //bool boolSejamLogin = oSejamClass.LoginUser(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name), out string UserToken);
+
+            (bool Success, string UserToken) sejamLogin = await oSejamClass.LoginUserAsync(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name));
+
+            if (sejamLogin.Success)
+                return RedirectToAction("VerifySms", new { id = sejamLogin.UserToken, ReturnUrl = SejamLogin.ReturnUrl });
+
+            ViewBag.Exemption = true;
+            ModelState.AddModelError("NationalCode", sejamLogin.UserToken);
+
+            return View(new SejamLoginViewModel { ReturnUrl = SejamLogin.ReturnUrl });
         }
 
         bool IsUserNameExist(string username)

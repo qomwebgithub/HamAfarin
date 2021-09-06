@@ -160,44 +160,47 @@ namespace HamAfarin
                     loginResult = (false, "Empty");
                     return loginResult;
                 }
+
                 Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == UserID);
-                if (oUser != null)
+
+                if (oUser == null)
                 {
-                    loginResult = (true, oUser.UserToken);
+                    loginResult = (false, "کاربر یافت نشد");
+                    return loginResult;
+                }
 
-                    (bool Success, string Message) kycOtpResult = await kycOtpHttpClientAsync(uniqueIdentifier);
-                    if (kycOtpResult.Success)
-                    {
-                        oUser.HasSejam = true;
-                        db.SaveChanges();
+                loginResult = (true, oUser.UserToken);
 
-                        // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
-                        // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
-                        // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
-                        Tbl_SejamTempNationalCode qTempNationalCode = db.Tbl_SejamTempNationalCode.FirstOrDefault(s => s.NationalCode == uniqueIdentifier);
-                        if (qTempNationalCode != null)
-                        {
-                            qTempNationalCode.IsActive = false;
-                            db.SaveChanges();
-                        }
-
-                        Tbl_SejamTempNationalCode tempNationalCode = new Tbl_SejamTempNationalCode()
-                        {
-                            CreteDate = DateTime.Now,
-                            ID = Guid.NewGuid().ToString(),
-                            MobileNumber = oUser.MobileNumber,
-                            NationalCode = uniqueIdentifier,
-                            IsActive = true,
-                            User_id = oUser.UserID
-                        };
-                        db.Tbl_SejamTempNationalCode.Add(tempNationalCode);
-                        db.SaveChanges();
-                        return loginResult;
-                    }
+                (bool Success, string Message) kycOtpResult = await kycOtpHttpClientAsync(uniqueIdentifier);
+                if (kycOtpResult.Success == false)
+                {
                     loginResult = (false, kycOtpResult.Message);
                     return loginResult;
                 }
-                loginResult = (false, "کاربر یافت نشد");
+
+                // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
+                // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
+                // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
+                Tbl_SejamTempNationalCode qTempNationalCode = db.Tbl_SejamTempNationalCode.FirstOrDefault(s => s.NationalCode == uniqueIdentifier);
+                if (qTempNationalCode != null)
+                {
+                    qTempNationalCode.IsActive = false;
+                    db.SaveChanges();
+                }
+
+                oUser.HasSejam = true;
+
+                Tbl_SejamTempNationalCode tempNationalCode = new Tbl_SejamTempNationalCode()
+                {
+                    CreteDate = DateTime.Now,
+                    ID = Guid.NewGuid().ToString(),
+                    MobileNumber = oUser.MobileNumber,
+                    NationalCode = uniqueIdentifier,
+                    IsActive = true,
+                    User_id = oUser.UserID
+                };
+                db.Tbl_SejamTempNationalCode.Add(tempNationalCode);
+                db.SaveChanges();
                 return loginResult;
             }
             catch (Exception e)
