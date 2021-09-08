@@ -93,21 +93,22 @@ namespace Hamafarin.Controllers
 
         public ActionResult ActivePlans(string searchText, long lowestPrice, long highestPrice, int page = 1)
         {
-            long qhighestPrice = Convert.ToInt64(db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault());
-
-            if (!searchText.HasValue())
+            if (searchText.HasValue() == false)
                 searchText = "";
 
             if (highestPrice == 0)
+            {
+                long qhighestPrice = Convert.ToInt64(db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault());
                 highestPrice = qhighestPrice;
-
+            }
+                
             List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.AsEnumerable()
                 .Where(b => b.IsActive &&
-                b.IsDeleted == false &&
-                (Convert.ToInt64(b.MinimumAmountInvest)) >= lowestPrice &&
-                (Convert.ToInt64(b.MinimumAmountInvest)) <= highestPrice &&
-                b.InvestmentStartDate <= DateTime.Now &&
-                (b.Title.Contains(searchText) || b.BusinessPlanFeatures.Contains(searchText)))
+                    b.IsDeleted == false &&
+                    (Convert.ToInt64(b.MinimumAmountInvest)) >= lowestPrice &&
+                    (Convert.ToInt64(b.MinimumAmountInvest)) <= highestPrice &&
+                    b.InvestmentStartDate <= DateTime.Now &&
+                    (b.Title.Contains(searchText) || b.BusinessPlanFeatures.Contains(searchText)))
                 .OrderByDescending(b => b.BussinessPlanID).ToList();
 
 
