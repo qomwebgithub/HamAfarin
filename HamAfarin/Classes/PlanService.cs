@@ -161,6 +161,9 @@ namespace HamAfarin
         {
             DateTime date = DateTime.Now;
 
+            if (item.InvestmentExpireDate == null)
+                return 0;
+
             TimeSpan difference = item.InvestmentExpireDate.Value - date;
             if (difference.TotalSeconds <= 0)
                 return -1;
