@@ -168,6 +168,10 @@ namespace Hamafarin.Areas.Admin.Controllers
             adminCreateEditBusinessPlan.CreateDate = DateTime.Now;
             adminCreateEditBusinessPlan.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
+            // حذف فاصله های اضافی از اعداد
+            adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital = adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
+            adminCreateEditBusinessPlan.MinimumAmountInvest = adminCreateEditBusinessPlan.MinimumAmountInvest.Trim();
+
             //مپ کردن مدل طرح کاربری به طرح اصلی
             var config = new MapperConfiguration(cfg =>
             {
@@ -394,6 +398,10 @@ namespace Hamafarin.Areas.Admin.Controllers
                 adminCreateEditBusinessPlan.ContractFileName = Guid.NewGuid().ToString() + Path.GetExtension(contractFile.FileName);
                 contractFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.ContractFileName));
             }
+
+            // حذف فاصله های اضافی از اعداد
+            adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital = adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
+            adminCreateEditBusinessPlan.MinimumAmountInvest = adminCreateEditBusinessPlan.MinimumAmountInvest.Trim();
 
             //مپ کردن مدل طرح کاربری به طرح اصلی
             var config = new MapperConfiguration(cfg =>
