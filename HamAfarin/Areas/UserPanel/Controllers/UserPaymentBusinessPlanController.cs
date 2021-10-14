@@ -156,16 +156,13 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.ContractFileName = tbl_BussinessPlans.ContractFileName;
             selectPayment.IsProjectParticipationReady = tbl_BussinessPlans.IsProjectParticipationReady;
 
-            if (qBusinessPlanPayment.FaraboorsResponse != null)
+            if (qBusinessPlanPayment.FaraboorsResponse != null &&
+                qBusinessPlanPayment.FaraboorsResponse.Contains("TraceCode"))
             {
-                if (qBusinessPlanPayment.FaraboorsResponse.Contains("TraceCode"))
-                {
-                    FaraboorsResponseJsonModel faraboorsResponse = JsonConvert
-                        .DeserializeObject<FaraboorsResponseJsonModel>(qBusinessPlanPayment.FaraboorsResponse);
+                FaraboorsResponseJsonModel faraboorsResponse = JsonConvert
+                    .DeserializeObject<FaraboorsResponseJsonModel>(qBusinessPlanPayment.FaraboorsResponse);
 
-                    selectPayment.FaraboorsTraceCode = faraboorsResponse.TraceCode;
-
-                }
+                selectPayment.FaraboorsTraceCode = faraboorsResponse.TraceCode;
             }
 
             //اگر پرداخت آنلاین باشد رکورد جزییات آن را دریافت میکنیم
@@ -223,7 +220,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Sum();
 
             ViewBag.Notify = notify;
-
+           
             return View(selectPayment);
         }
 
