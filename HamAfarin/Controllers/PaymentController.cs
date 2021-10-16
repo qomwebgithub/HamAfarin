@@ -347,7 +347,7 @@ namespace Hamafarin.Controllers
                     return View(selectPaymentTypeViewModel);
                 }
             }
-            return View("SelectPaymentType/id=" + selectPaymentTypeViewModel);
+            return View("SelectPaymentType/" + selectPaymentTypeViewModel.BusinessPlanID);
         }
 
         public ActionResult Shaparak(string strTestResault)
