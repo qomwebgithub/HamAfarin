@@ -258,7 +258,7 @@ namespace HamAfarin
         {
             PaymentPriceValidation retValue = new PaymentPriceValidation();
             Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID);
-            int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+            long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
             //چک کردن حداکثر مبلغ
 
             // سرمایه گذاری من در این طرح
