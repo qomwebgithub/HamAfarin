@@ -28,7 +28,6 @@ namespace Hamafarin.Controllers
         ShaparakMessageEncoding ShaparakMessage = new ShaparakMessageEncoding();
         SMS oSms = new SMS();
 
-
         // GET: Payment
         [Authorize]
         public ActionResult SelectPaymentType(int id)
@@ -102,7 +101,7 @@ namespace Hamafarin.Controllers
 
                     // حداقل مبلغ برای سرمایه گذاری
                     ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
-                    int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+                    long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
                     // حداکثر مبلغ برای سرمایه گذاری
                     ViewBag.MaximumInvestment = MaximumInvestment;
 
@@ -148,6 +147,8 @@ namespace Hamafarin.Controllers
                         };
                         db.Tbl_PaymentOnlineDetils.Add(tbl_PaymentOnline);
                         decimal dclAmount = Convert.ToDecimal(tbl_BusinessPlanPayment.PaymentPrice) * 10;
+
+                        #region CommentRegion
                         // //int merchentCode = 4650168;  //کد پذیرنده
                         // //int terminalCode = 1837060; //کد ترمینال  
                         // string strInvoiceNumber = "\"" + tbl_BusinessPlanPayment.InvoiceNumber + "\"";
@@ -183,6 +184,7 @@ namespace Hamafarin.Controllers
                         // db.SaveChanges();
                         // Response.Redirect("https://pep.shaparak.ir/payment.aspx?n=" + strToken);
                         // return View(selectPaymentTypeViewModel);
+                        #endregion
 
                         string token = "";
                         string timeStamp = tbl_BusinessPlanPayment.CreateDate.Value.ToString("yyyy/MM/dd HH:mm:ss");
@@ -243,6 +245,7 @@ namespace Hamafarin.Controllers
 
                         return View(selectPaymentTypeViewModel);
 
+                        #region CommentRegion2
                         // return RedirectToAction("Shaparak", new { strTestResault = token });
 
                         //     return RedirectToAction("Shaparak", new { strTestResault = strTestResault });
@@ -264,6 +267,8 @@ namespace Hamafarin.Controllers
                         //}
                         //ViewBag.IsPaymentSuccess = true;
                         //return View("OnlinePayment");
+                        #endregion
+
                     }
                     else
                     {
@@ -284,7 +289,7 @@ namespace Hamafarin.Controllers
 
                     // حداقل مبلغ برای سرمایه گذاری
                     ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
-                    int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+                    long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
                     // حداکثر مبلغ برای سرمایه گذاری
                     ViewBag.MaximumInvestment = MaximumInvestment;
 
@@ -379,7 +384,7 @@ namespace Hamafarin.Controllers
             ViewBag.BusinessPlanId = id;
             // حداقل مبلغ برای سرمایه گذاری
             ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
-            int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+            long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
             // حداکثر مبلغ برای سرمایه گذاری
             ViewBag.MaximumInvestment = MaximumInvestment;
             // سرمایه گذاری من در این طرح
@@ -397,12 +402,12 @@ namespace Hamafarin.Controllers
 
                 // حداقل مبلغ برای سرمایه گذاری
                 ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
-                int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+                long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
                 // حداکثر مبلغ برای سرمایه گذاری
                 ViewBag.MaximumInvestment = MaximumInvestment;
 
                 int currentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
-                bool userIslegal = db.Tbl_Users.Where(x=>x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
+                bool userIslegal = db.Tbl_Users.Where(x => x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
 
                 PaymentPriceValidation paymentPriceValidation = planService.ValidationPaymentPrice(db, paymentOfflineViewModel.BusinessPlan_id, paymentOfflineViewModel.PaymentPrice
                     , currentUserId, userIslegal);
@@ -421,7 +426,7 @@ namespace Hamafarin.Controllers
                         return View(paymentOfflineViewModel);
                     }
                     UserService userService = new UserService();
-                    
+
 
                     Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = new Tbl_BusinessPlanPayment()
                     {
@@ -465,7 +470,7 @@ namespace Hamafarin.Controllers
             ViewBag.BusinessPlanId = id;
             // حداقل مبلغ برای سرمایه گذاری
             ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
-            int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+            long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
             // حداکثر مبلغ برای سرمایه گذاری
             ViewBag.MaximumInvestment = MaximumInvestment;
             // سرمایه گذاری من در این طرح
@@ -483,7 +488,7 @@ namespace Hamafarin.Controllers
 
                 // حداقل مبلغ برای سرمایه گذاری
                 ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
-                int MaximumInvestment = Convert.ToInt32((Convert.ToInt32(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
+                long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
                 // حداکثر مبلغ برای سرمایه گذاری
                 ViewBag.MaximumInvestment = MaximumInvestment;
 
@@ -544,26 +549,24 @@ namespace Hamafarin.Controllers
 
         public ActionResult VerifyPayment(string id)
         {
-
             try
             {
                 Tbl_PaymentOnlineDetils qPaymentOnline = db.Tbl_PaymentOnlineDetils.FirstOrDefault(p => p.PaymentDetilsID == id);
                 Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == qPaymentOnline.Payment_id);
                 if (qPaymentOnline != null)
                 {
-
                     string invoiceNumber = Request.QueryString["iN"];
                     string invoiceDate = Request.QueryString["iD"];
                     string TransactionReferenceID = Request.QueryString["tref"];
                     qPaymentOnline.TransactionReferenceID = TransactionReferenceID;
                     string strResult = ReadPaymentResult(TransactionReferenceID);
-
                     qPaymentOnline.ShaparakCheckTransactionResult = strResult;
+                    #region OldCode
                     //lblInvoiceNumber.Text = invoiceNumber;
                     //lblInvoiceDate.Text = invoiceDate;
                     //lblTransactionReferenceID.Text = TransactionReferenceID;
-                    db.SaveChanges();
-
+                    //db.SaveChanges();
+                    #endregion
                     if (!strResult.Contains("ReferenceNumber"))
                     {
                         // Response.Write("تراکنش  انجام نشد ");
@@ -588,13 +591,13 @@ namespace Hamafarin.Controllers
                             ViewBag.TransactionReferenceID = TransactionReferenceID;
 
                             // 4 = سرمایه گذاری
-                            Tbl_Sms qSms = db.Tbl_Sms.Find(4); 
+                            Tbl_Sms qSms = db.Tbl_Sms.Find(4);
                             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
                             (bool Success, string Message) result = oSms.AdpSendSMS(qUser.MobileNumber, qSms.Message);
 
                             return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
                         }
-
+                        #region OldCode
                         // lblResult.ForeColor = System.Drawing.Color.Green;
 
                         //lblTraceNumber.Text = res[1];
@@ -618,15 +621,14 @@ namespace Hamafarin.Controllers
 
                         //lblResult.Text = strResult;
                         //lblShaparak.Text = ShaparakRefNumber;
-
+                        #endregion
                     }
                 }
             }
             catch
             {
             }
-
-
+            #region OldCode
             //Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id);
 
 
@@ -670,6 +672,7 @@ namespace Hamafarin.Controllers
             //    {
             //        Response.Write("Invalid Input");
             //    }
+            #endregion
             return View();
         }
 
