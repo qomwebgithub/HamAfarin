@@ -50,10 +50,10 @@ namespace ViewModels
         public long MaximumInvestment { get; set; }
         [Display(Name = "مبلغ سرمایه گذاری")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public Nullable<int> OfflinePaymentPrice { get; set; }
+        public long? OfflinePaymentPrice { get; set; }
         [Display(Name = "مبلغ سرمایه گذاری شده)")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public Nullable<int> OnlinePaymentPrice { get; set; }
+        public long? OnlinePaymentPrice { get; set; }
         [Display(Name = "تصویر فیش واریزی")]
         public string PaymentImageName { get; set; }
         [Display(Name = "شماره فیش واریزی")]

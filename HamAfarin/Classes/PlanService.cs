@@ -254,7 +254,7 @@ namespace HamAfarin
         /// <param name="db">بانک اطلاعاتی</param>
         /// <param name="paymentOnlineViewModel">مدل پرداخت</param>
         /// <returns>معتبر بودن یا نبودن و متن خروجی</returns>
-        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, Nullable<int> businessPlanID, Nullable<int> paymentPrice, Nullable<int> userId, bool isLegal = false)
+        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, int? businessPlanID, long? paymentPrice, int? userId, bool isLegal = false)
         {
             PaymentPriceValidation retValue = new PaymentPriceValidation();
             Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID);
