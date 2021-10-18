@@ -27,7 +27,8 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_BusinessPlanPayment
         public ActionResult Index(int? id)
         {
-            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayments = db.Tbl_BusinessPlanPayment;
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayments = db.Tbl_BusinessPlanPayment
+                .Where(p => p.IsDelete == false);
 
             if (id != null)
             {
@@ -53,7 +54,8 @@ namespace HamAfarin.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Find(id);
+            Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                .FirstOrDefault(p => p.IsDelete == false && p.PaymentID == id);
             if (tbl_BusinessPlanPayment == null)
             {
                 return HttpNotFound();
@@ -292,7 +294,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult SubmittedPayments(int? id)
         {
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                .Where(p => p.IsPaid && p.IsConfirmedFromAdmin);
+                .Where(p => p.IsPaid && p.IsDelete == false && p.IsConfirmedFromAdmin);
 
             if (id != null)
             {
@@ -318,7 +320,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult UnSubmittedPayments(int? id)
         {
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                .Where(p => p.IsPaid && p.IsConfirmedFromAdmin == false);
+                .Where(p => p.IsPaid && p.IsDelete == false && p.IsConfirmedFromAdmin == false);
 
             if (id != null)
             {
@@ -360,7 +362,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult NotConfirmedByFaraboors(int? id)
         {
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                .Where(p => p.IsPaid && p.IsConfirmedFromFaraboors == false);
+                .Where(p => p.IsPaid && p.IsDelete == false && p.IsConfirmedFromFaraboors == false);
 
             if (id != null)
             {
@@ -382,7 +384,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult DraftsPayments(int? id)
         {
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid == false);
+                    .Where(p => p.IsPaid == false && p.IsDelete == false);
 
             if (id != null)
             {
@@ -404,7 +406,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             //3 = offline
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                    .Where(p => p.IsPaid == false && p.PaymentType_id == 3);
+                    .Where(p => p.IsPaid == false && p.IsDelete == false && p.PaymentType_id == 3);
 
             if (id != null)
             {
