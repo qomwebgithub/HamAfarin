@@ -220,7 +220,13 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Sum();
 
             ViewBag.Notify = notify;
-           
+
+            //if (notify)
+            //{
+            //    ViewBag.Time =
+            //    ViewBag.Date = 
+            //}
+
             return View(selectPayment);
         }
 
