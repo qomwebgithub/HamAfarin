@@ -14,7 +14,10 @@ namespace HamAfarin.Controllers
         // GET: FutureBusinessPlan
         public ActionResult HomeFuturePlans()
         {
-            return PartialView(db.Tbl_FutureBusinessPlan.Where(f => f.IsDeleted == false && f.IsActive == true).ToList());
+            return PartialView(db.Tbl_FutureBusinessPlan
+                .Where(f => f.IsDeleted == false && f.IsActive == true)
+                .OrderByDescending(f => f.CreateDate)
+                .ToList());
         }
 
         public ActionResult FuturePlans()
