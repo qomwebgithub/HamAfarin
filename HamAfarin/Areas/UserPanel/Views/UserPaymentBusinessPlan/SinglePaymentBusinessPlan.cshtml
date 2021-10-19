@@ -579,7 +579,7 @@
                 <div class="mr-4">
                     <a style="font-size:14px" class="btn btn-orange user-payment-btn float-left" href="/Resources/BusinessPlans/Contract/@Model.ContractFileName" target="_blank">مشاهده قرارداد</a>
                 </div>
-                @if (Model.IsProjectParticipationReady)
+                @if (Model.IsProjectParticipationReady && Model.PaymentStatusColorType == 1)
                 {
                     <div>
                         <a style="font-size:14px" id="CertificateRdy" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID" download="گواهی-شراکت.pdf">
@@ -901,6 +901,23 @@
         }
 
         if (@ViewBag.Notify.ToString().ToLower()) {
+            const miladiDate = moment.from(date, 'fa', 'DD-MM-YYYY').format('YYYY-MM-DD');
+            const paidDateTime = miladiDate + "T" + time + ".000Z";
+            $.ajax({
+                type: "POST",
+                url: "/Admin/Tbl_BusinessPlanPayment/ConfirmFaraboors/" + id,
+                data: {
+                    payDate: paidDateTime
+                },
+                success: function (data) {
+                    if (data.success) {
+                        toastr.success(data.message);
+                    }
+                    else {
+                        toastr.error(data.message);
+                    }
+                }
+            });
             Swal.fire({
                 icon: 'info',
                 title: 'توجه',
