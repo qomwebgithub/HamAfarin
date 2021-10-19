@@ -11,7 +11,7 @@ namespace ViewModels
     {
         [Display(Name = "میزان سرمایه های جذب شده")]
         public long AmountCapitalRaised { get; set; }
-        public int InvestmentablePlanCount { get; set; }
+        public int ActiveUsers { get; set; }
         public int InvestmentSuccessPlanCount { get; set; }
         public int InvestmentCountPerson { get; set; }
 

@@ -731,14 +731,14 @@ namespace Hamafarin.Controllers
         public ActionResult InvestmentSummary()
         {
             List<Tbl_BusinessPlanPayment> qPayments = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid).ToList();
-            int qInvestmentablePlanCount = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false).Count();
+            int qActiveUsers = db.Tbl_Users.Where(p => p.IsActive && p.IsDeleted == false).Count();
             long qAmountCapitalRaised = qPayments.Sum(p => p.PaymentPrice).Value;
             int qInvestmentCountPerson = qPayments.Select(p => p.PaymentUser_id).Distinct().Count();
             int qInvestmentSuccessPlanCount = db.Tbl_BussinessPlans.Where(p => p.IsSuccessBussinessPlan).Count();
             InvestmentSummaryeViewModel investmentSummaryeViewModel = new InvestmentSummaryeViewModel()
             {
                 AmountCapitalRaised = qAmountCapitalRaised,
-                InvestmentablePlanCount = qInvestmentablePlanCount,
+                ActiveUsers = qActiveUsers,
                 InvestmentCountPerson = qInvestmentCountPerson,
                 InvestmentSuccessPlanCount = qInvestmentSuccessPlanCount
 
