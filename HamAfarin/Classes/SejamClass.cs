@@ -100,9 +100,6 @@ namespace HamAfarin
                     UserToken = oUser.UserToken;
                     if (kycOtp(uniqueIdentifier, out string Message))
                     {
-                        oUser.HasSejam = true;
-                        db.SaveChanges();
-
                         // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
                         // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
                         // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
@@ -123,6 +120,7 @@ namespace HamAfarin
                             User_id = oUser.UserID
                         };
                         db.Tbl_SejamTempNationalCode.Add(tempNationalCode);
+                        oUser.HasSejam = true;
                         db.SaveChanges();
                         return true;
                     }
@@ -188,8 +186,6 @@ namespace HamAfarin
                     db.SaveChanges();
                 }
 
-                oUser.HasSejam = true;
-
                 Tbl_SejamTempNationalCode tempNationalCode = new Tbl_SejamTempNationalCode()
                 {
                     CreteDate = DateTime.Now,
@@ -200,6 +196,7 @@ namespace HamAfarin
                     User_id = oUser.UserID
                 };
                 db.Tbl_SejamTempNationalCode.Add(tempNationalCode);
+                oUser.HasSejam = true;
                 db.SaveChanges();
                 return loginResult;
             }
