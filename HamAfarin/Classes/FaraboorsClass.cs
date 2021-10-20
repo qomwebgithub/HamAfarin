@@ -57,15 +57,15 @@ namespace HamAfarin
                 //string subUrl = "GetProjectParticipationReport?apiKey=85d5ff91-0c4d-4142-beab-d734b72a40fe&projectId=3403cbaa-911b-44c3-af6f-de3c97367627&nationalID=" + nationalID;
 
                 HttpResponseMessage response = await client.PostAsync(subUrl, null);
-                byte[] responseContent = await response.Content.ReadAsByteArrayAsync();
 
                 if (response.IsSuccessStatusCode)
                 {
+                    byte[] responseContent = await response.Content.ReadAsByteArrayAsync();
                     tokenResult = (true, responseContent);
                 }
                 else
                 {
-                    tokenResult = (false, responseContent);
+                    tokenResult = (false, null);
                 }
                 return tokenResult;
 
