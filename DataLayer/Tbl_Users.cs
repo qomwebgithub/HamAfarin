@@ -23,6 +23,11 @@ namespace DataLayer
             this.Tbl_BusinessPlanQuestion = new HashSet<Tbl_BusinessPlanQuestion>();
             this.Tbl_BussinessPlans = new HashSet<Tbl_BussinessPlans>();
             this.Tbl_CommentPlan = new HashSet<Tbl_CommentPlan>();
+            this.Tbl_DepositToInvestors = new HashSet<Tbl_DepositToInvestors>();
+            this.Tbl_DepositToInvestors1 = new HashSet<Tbl_DepositToInvestors>();
+            this.Tbl_DepositToInvestorsDetails = new HashSet<Tbl_DepositToInvestorsDetails>();
+            this.Tbl_DepositToInvestorsDetails1 = new HashSet<Tbl_DepositToInvestorsDetails>();
+            this.Tbl_DepositToInvestorsDetails2 = new HashSet<Tbl_DepositToInvestorsDetails>();
             this.Tbl_PaymentReturned = new HashSet<Tbl_PaymentReturned>();
             this.Tbl_PersonLegal = new HashSet<Tbl_PersonLegal>();
             this.Tbl_Tickets = new HashSet<Tbl_Tickets>();
@@ -61,6 +66,16 @@ namespace DataLayer
         public virtual ICollection<Tbl_BussinessPlans> Tbl_BussinessPlans { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_CommentPlan> Tbl_CommentPlan { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DepositToInvestors> Tbl_DepositToInvestors { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DepositToInvestors> Tbl_DepositToInvestors1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DepositToInvestorsDetails> Tbl_DepositToInvestorsDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DepositToInvestorsDetails> Tbl_DepositToInvestorsDetails1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DepositToInvestorsDetails> Tbl_DepositToInvestorsDetails2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_PaymentReturned> Tbl_PaymentReturned { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -25,7 +25,6 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tbl_Blog> Tbl_Blog { get; set; }
         public virtual DbSet<Tbl_BusinessLevels> Tbl_BusinessLevels { get; set; }
         public virtual DbSet<Tbl_BusinessPlanGallery> Tbl_BusinessPlanGallery { get; set; }
@@ -39,6 +38,9 @@ namespace DataLayer
         public virtual DbSet<Tbl_CapitalApplicantHelp> Tbl_CapitalApplicantHelp { get; set; }
         public virtual DbSet<Tbl_CommentPlan> Tbl_CommentPlan { get; set; }
         public virtual DbSet<Tbl_CompanyType> Tbl_CompanyType { get; set; }
+        public virtual DbSet<Tbl_DepositToInvestors> Tbl_DepositToInvestors { get; set; }
+        public virtual DbSet<Tbl_DepositToInvestorsDetails> Tbl_DepositToInvestorsDetails { get; set; }
+        public virtual DbSet<Tbl_DepositTypes> Tbl_DepositTypes { get; set; }
         public virtual DbSet<Tbl_FutureBusinessPlan> Tbl_FutureBusinessPlan { get; set; }
         public virtual DbSet<Tbl_Galleries> Tbl_Galleries { get; set; }
         public virtual DbSet<Tbl_Investable> Tbl_Investable { get; set; }
