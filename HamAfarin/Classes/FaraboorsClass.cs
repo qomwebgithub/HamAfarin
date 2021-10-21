@@ -50,7 +50,7 @@ namespace HamAfarin
                     .FirstOrDefault();
 
                 string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
-                var subUrl = "GetProjectParticipationReport?apiKey=" + apiKey + "&projectId=" + projectId + "&nationalID=" + nationalID;
+                var subUrl = $"GetProjectParticipationReport?apiKey={apiKey}&projectId={projectId}&nationalID={nationalID}";
 
                 //Test API
                 //client.BaseAddress = new Uri("http://cfapitest.ifb.ir/projects/");
@@ -95,7 +95,7 @@ namespace HamAfarin
                         .Select(b => b.FaraboorsProjectId)
                         .FirstOrDefault();
                     string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
-                    var subUrl = projectId + "/projectfinancingprovider?apiKey=" + apiKey;
+                    var subUrl = $"{projectId}/projectfinancingprovider?apiKey={apiKey}";
 
                     #region FormatExample
                     // Test API
@@ -115,7 +115,6 @@ namespace HamAfarin
                     //    PaymentDate = "2021-07-14T11:48:27.974Z",
                     //};
                     #endregion
-
 
                     FaraboorsReceiveJsonModel body = new FaraboorsReceiveJsonModel
                     {
