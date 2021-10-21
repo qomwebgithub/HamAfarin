@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ViewModels
 {
-  public  class InvestmentSummaryeViewModel
+  public  class InvestmentSummaryViewModel
     {
         [Display(Name = "میزان سرمایه های جذب شده")]
         public long AmountCapitalRaised { get; set; }
