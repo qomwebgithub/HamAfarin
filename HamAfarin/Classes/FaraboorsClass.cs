@@ -33,21 +33,37 @@ namespace HamAfarin
                 return tokenResult;
             }
 
+            string projectId = db.Tbl_BussinessPlans
+                    .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
+                    .Select(b => b.FaraboorsProjectId)
+                    .FirstOrDefault();
+
+            bool isLegal = db.Tbl_Users
+               .Where(u => u.UserID == qBusinessPlanPayment.PaymentUser_id)
+               .Select(u => u.IsLegal)
+               .FirstOrDefault();
+
+            string nationalID;
+            if (isLegal)
+            {
+                nationalID = db.Tbl_PersonLegal
+                    .Where(p => p.User_id == qBusinessPlanPayment.PaymentUser_id)
+                    .Select(p => p.NationalId)
+                    .FirstOrDefault();
+            }
+            else
+            {
+                nationalID = db.Tbl_UserProfiles
+                    .Where(a => a.User_id == qBusinessPlanPayment.PaymentUser_id)
+                    .Select(u => u.NationalCode)
+                    .FirstOrDefault();
+            }
+
             using (HttpClient client = new HttpClient())
             {
                 //Real API
                 client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
                 //string projectId = "914c43ac-e70a-44e6-aa3e-8a252997fb71";
-
-                string projectId = db.Tbl_BussinessPlans
-                    .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
-                    .Select(b => b.FaraboorsProjectId)
-                    .FirstOrDefault();
-
-                string nationalID = db.Tbl_UserProfiles
-                    .Where(a => a.User_id == qBusinessPlanPayment.PaymentUser_id)
-                    .Select(u => u.NationalCode)
-                    .FirstOrDefault();
 
                 string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
                 var subUrl = $"GetProjectParticipationReport?apiKey={apiKey}&projectId={projectId}&nationalID={nationalID}";
