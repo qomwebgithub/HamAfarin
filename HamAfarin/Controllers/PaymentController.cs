@@ -735,15 +735,14 @@ namespace Hamafarin.Controllers
             long qAmountCapitalRaised = qPayments.Sum(p => p.PaymentPrice).Value;
             int qInvestmentCountPerson = qPayments.Select(p => p.PaymentUser_id).Distinct().Count();
             int qInvestmentSuccessPlanCount = db.Tbl_BussinessPlans.Where(p => p.IsSuccessBussinessPlan).Count();
-            InvestmentSummaryViewModel investmentSummaryeViewModel = new InvestmentSummaryViewModel()
+            InvestmentSummaryViewModel investmentSummaryViewModel = new InvestmentSummaryViewModel()
             {
                 AmountCapitalRaised = qAmountCapitalRaised,
                 ActiveUsers = qActiveUsers,
                 InvestmentCountPerson = qInvestmentCountPerson,
                 InvestmentSuccessPlanCount = qInvestmentSuccessPlanCount
-
             };
-            return PartialView(investmentSummaryeViewModel);
+            return PartialView(investmentSummaryViewModel);
         }
     }
 }
