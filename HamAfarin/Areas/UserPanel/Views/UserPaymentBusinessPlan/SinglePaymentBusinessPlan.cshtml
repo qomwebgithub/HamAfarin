@@ -854,6 +854,11 @@
                 button.children("span").remove();
                 button.append('<span class="sr - only">درحال بارگذاری </span>');
                 button.append('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+                setTimeout(function () {
+                    button.removeClass('disabled');
+                    button.children("span").remove();
+                    button.append('<span> چاپ گواهی شراکت</span>');
+                }, 10000);
             });
         });
 
