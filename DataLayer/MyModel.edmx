@@ -247,6 +247,7 @@
           <Property Name="DepositID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="IsPaid" Type="bit" Nullable="false" />
+          <Property Name="Plan_id" Type="int" />
           <Property Name="DepositType_id" Type="int" />
           <Property Name="YieldPercent" Type="float" />
           <Property Name="Description" Type="nvarchar(max)" />
@@ -885,6 +886,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_DepositToInvestors_Tbl_BussinessPlans">
+          <End Role="Tbl_BussinessPlans" Type="Self.Tbl_BussinessPlans" Multiplicity="0..1" />
+          <End Role="Tbl_DepositToInvestors" Type="Self.Tbl_DepositToInvestors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_BussinessPlans">
+              <PropertyRef Name="BussinessPlanID" />
+            </Principal>
+            <Dependent Role="Tbl_DepositToInvestors">
+              <PropertyRef Name="Plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_DepositToInvestors_Tbl_DepositTypes">
           <End Role="Tbl_DepositTypes" Type="Self.Tbl_DepositTypes" Multiplicity="0..1" />
           <End Role="Tbl_DepositToInvestors" Type="Self.Tbl_DepositToInvestors" Multiplicity="*" />
@@ -1249,6 +1262,10 @@
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_CommentPlan" EntitySet="Tbl_CommentPlan" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_DepositToInvestors_Tbl_BussinessPlans" Association="Self.FK_Tbl_DepositToInvestors_Tbl_BussinessPlans">
+            <End Role="Tbl_BussinessPlans" EntitySet="Tbl_BussinessPlans" />
+            <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_DepositToInvestors_Tbl_DepositTypes" Association="Self.FK_Tbl_DepositToInvestors_Tbl_DepositTypes">
             <End Role="Tbl_DepositTypes" EntitySet="Tbl_DepositTypes" />
             <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
@@ -1449,6 +1466,10 @@
           <AssociationSet Name="FK_Tbl_CommentPlan_Tbl_BussinessPlans" Association="webqomir_HamAfarinDBModel.FK_Tbl_CommentPlan_Tbl_BussinessPlans">
             <End Role="Tbl_BussinessPlans" EntitySet="Tbl_BussinessPlans" />
             <End Role="Tbl_CommentPlan" EntitySet="Tbl_CommentPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_DepositToInvestors_Tbl_BussinessPlans" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_BussinessPlans">
+            <End Role="Tbl_BussinessPlans" EntitySet="Tbl_BussinessPlans" />
+            <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_PaymentReturned_Tbl_BussinessPlans" Association="webqomir_HamAfarinDBModel.FK_Tbl_PaymentReturned_Tbl_BussinessPlans">
             <End Role="Tbl_BussinessPlans" EntitySet="Tbl_BussinessPlans" />
@@ -1757,6 +1778,7 @@
           <NavigationProperty Name="Tbl_MonetaryUnits" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BussinessPlans_Tbl_MonetaryUnits" FromRole="Tbl_BussinessPlans" ToRole="Tbl_MonetaryUnits" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BussinessPlans_Tbl_Users" FromRole="Tbl_BussinessPlans" ToRole="Tbl_Users" />
           <NavigationProperty Name="Tbl_CommentPlan" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_CommentPlan_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_CommentPlan" />
+          <NavigationProperty Name="Tbl_DepositToInvestors" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_DepositToInvestors" />
           <NavigationProperty Name="Tbl_PaymentReturned" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentReturned_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_PaymentReturned" />
         </EntityType>
         <EntityType Name="Tbl_CapitalApplicantHelp">
@@ -1806,6 +1828,7 @@
           <Property Name="DepositID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+          <Property Name="Plan_id" Type="Int32" />
           <Property Name="DepositType_id" Type="Int32" />
           <Property Name="YieldPercent" Type="Double" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1817,6 +1840,7 @@
           <Property Name="DeleteUser_id" Type="Int32" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <Property Name="TotalDeposit" Type="Int64" />
+          <NavigationProperty Name="Tbl_BussinessPlans" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_BussinessPlans" FromRole="Tbl_DepositToInvestors" ToRole="Tbl_BussinessPlans" />
           <NavigationProperty Name="Tbl_DepositTypes" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_DepositTypes" FromRole="Tbl_DepositToInvestors" ToRole="Tbl_DepositTypes" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_Users" FromRole="Tbl_DepositToInvestors" ToRole="Tbl_Users" />
           <NavigationProperty Name="Tbl_Users1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_Users1" FromRole="Tbl_DepositToInvestors" ToRole="Tbl_Users" />
@@ -2491,6 +2515,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_DepositToInvestors_Tbl_BussinessPlans">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_BussinessPlans" Role="Tbl_BussinessPlans" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_DepositToInvestors" Role="Tbl_DepositToInvestors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_BussinessPlans">
+              <PropertyRef Name="BussinessPlanID" />
+            </Principal>
+            <Dependent Role="Tbl_DepositToInvestors">
+              <PropertyRef Name="Plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_PaymentReturned_Tbl_BussinessPlans">
           <End Type="webqomir_HamAfarinDBModel.Tbl_BussinessPlans" Role="Tbl_BussinessPlans" Multiplicity="0..1" />
           <End Type="webqomir_HamAfarinDBModel.Tbl_PaymentReturned" Role="Tbl_PaymentReturned" Multiplicity="*" />
@@ -3011,6 +3047,7 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="YieldPercent" ColumnName="YieldPercent" />
                 <ScalarProperty Name="DepositType_id" ColumnName="DepositType_id" />
+                <ScalarProperty Name="Plan_id" ColumnName="Plan_id" />
                 <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="DepositID" ColumnName="DepositID" />

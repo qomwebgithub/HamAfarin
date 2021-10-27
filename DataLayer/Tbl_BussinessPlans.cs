@@ -21,6 +21,7 @@ namespace DataLayer
             this.Tbl_BusinessPlanPayment = new HashSet<Tbl_BusinessPlanPayment>();
             this.Tbl_BusinessPlanQuestion = new HashSet<Tbl_BusinessPlanQuestion>();
             this.Tbl_CommentPlan = new HashSet<Tbl_CommentPlan>();
+            this.Tbl_DepositToInvestors = new HashSet<Tbl_DepositToInvestors>();
             this.Tbl_PaymentReturned = new HashSet<Tbl_PaymentReturned>();
         }
     
@@ -118,6 +119,8 @@ namespace DataLayer
         public virtual Tbl_Users Tbl_Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_CommentPlan> Tbl_CommentPlan { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_DepositToInvestors> Tbl_DepositToInvestors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_PaymentReturned> Tbl_PaymentReturned { get; set; }
     }

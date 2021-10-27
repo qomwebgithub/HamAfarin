@@ -23,6 +23,7 @@ namespace DataLayer
         public int DepositID { get; set; }
         public bool IsDelete { get; set; }
         public bool IsPaid { get; set; }
+        public Nullable<int> Plan_id { get; set; }
         public Nullable<int> DepositType_id { get; set; }
         public Nullable<double> YieldPercent { get; set; }
         public string Description { get; set; }
@@ -35,6 +36,7 @@ namespace DataLayer
         public Nullable<System.DateTime> DeleteDate { get; set; }
         public Nullable<long> TotalDeposit { get; set; }
     
+        public virtual Tbl_BussinessPlans Tbl_BussinessPlans { get; set; }
         public virtual Tbl_DepositTypes Tbl_DepositTypes { get; set; }
         public virtual Tbl_Users Tbl_Users { get; set; }
         public virtual Tbl_Users Tbl_Users1 { get; set; }
