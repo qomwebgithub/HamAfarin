@@ -82,6 +82,10 @@
     <Compile Include="Blog\BlogItemViewModel.cs" />
     <Compile Include="Comment\UserCommentBusinessPlanList.cs" />
     <Compile Include="CustomPasswordValidator.cs" />
+    <Compile Include="Deposit\Admin\DepositTypeViewModel.cs" />
+    <Compile Include="Deposit\Admin\DepositToInvestorsViewModel.cs" />
+    <Compile Include="Deposit\Admin\PlanViewModel.cs" />
+    <Compile Include="Deposit\Admin\InvestorViewModel.cs" />
     <Compile Include="Payment\admin\AdminCreateEditPaymentViewModel.cs" />
     <Compile Include="Payment\admin\AdminOnlineDetilsPaymentViewModel.cs" />
     <Compile Include="Payment\admin\PaymentStatusViewModel.cs" />
