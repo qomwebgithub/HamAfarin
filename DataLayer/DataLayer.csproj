@@ -75,6 +75,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MetadataClasses\Tbl_BlogMetadata.cs" />
+    <Compile Include="MetadataClasses\Tbl_DepositTypesMetadata.cs" />
+    <Compile Include="MetadataClasses\Tbl_DepositToInvestorsMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_CapitalApplicantHelpMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_MenuTypeMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_MenuPageMetadata.cs" />
