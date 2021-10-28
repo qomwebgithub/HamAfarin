@@ -19,7 +19,6 @@ namespace DataLayer
         public Nullable<int> Deposit_id { get; set; }
         public Nullable<int> InvestorUser_id { get; set; }
         public Nullable<long> DepositAmount { get; set; }
-        public Nullable<int> CreateUser_id { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<int> DeleteUser_id { get; set; }
         public Nullable<System.DateTime> DeleteDate { get; set; }
@@ -27,6 +26,5 @@ namespace DataLayer
         public virtual Tbl_DepositToInvestors Tbl_DepositToInvestors { get; set; }
         public virtual Tbl_Users Tbl_Users { get; set; }
         public virtual Tbl_Users Tbl_Users1 { get; set; }
-        public virtual Tbl_Users Tbl_Users2 { get; set; }
     }
 }

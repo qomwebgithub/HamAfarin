@@ -269,7 +269,6 @@
           <Property Name="Deposit_id" Type="int" />
           <Property Name="InvestorUser_id" Type="int" />
           <Property Name="DepositAmount" Type="bigint" />
-          <Property Name="CreateUser_id" Type="int" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="DeleteUser_id" Type="int" />
           <Property Name="DeleteDate" Type="datetime" />
@@ -946,18 +945,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
-          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
-          <End Role="Tbl_DepositToInvestorsDetails" Type="Self.Tbl_DepositToInvestorsDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Tbl_DepositToInvestorsDetails">
-              <PropertyRef Name="CreateUser_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
           <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
           <End Role="Tbl_DepositToInvestorsDetails" Type="Self.Tbl_DepositToInvestorsDetails" Multiplicity="*" />
@@ -1282,10 +1269,6 @@
             <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users" Association="Self.FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
-            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
-            <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" Association="Self.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
@@ -1497,10 +1480,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_DepositToInvestors" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_DepositToInvestors">
             <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
-            <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
-            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
@@ -1855,14 +1834,12 @@
           <Property Name="Deposit_id" Type="Int32" />
           <Property Name="InvestorUser_id" Type="Int32" />
           <Property Name="DepositAmount" Type="Int64" />
-          <Property Name="CreateUser_id" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser_id" Type="Int32" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_DepositToInvestors" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_DepositToInvestors" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_DepositToInvestors" />
-          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
-          <NavigationProperty Name="Tbl_Users1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
-          <NavigationProperty Name="Tbl_Users2" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
+          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
+          <NavigationProperty Name="Tbl_Users1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
         </EntityType>
         <EntityType Name="Tbl_DepositTypes">
           <Key>
@@ -2298,9 +2275,8 @@
           <NavigationProperty Name="Tbl_CommentPlan" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_CommentPlan_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_CommentPlan" />
           <NavigationProperty Name="Tbl_DepositToInvestors" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestors" />
           <NavigationProperty Name="Tbl_DepositToInvestors1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestors" />
-          <NavigationProperty Name="Tbl_DepositToInvestorsDetails" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
-          <NavigationProperty Name="Tbl_DepositToInvestorsDetails1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
-          <NavigationProperty Name="Tbl_DepositToInvestorsDetails2" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
+          <NavigationProperty Name="Tbl_DepositToInvestorsDetails" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
+          <NavigationProperty Name="Tbl_DepositToInvestorsDetails1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
           <NavigationProperty Name="Tbl_PaymentReturned" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentReturned_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_PaymentReturned" />
           <NavigationProperty Name="Tbl_PersonLegal" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PersonLegal_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_PersonLegal" />
           <NavigationProperty Name="Tbl_Roles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Users_Tbl_Roles" FromRole="Tbl_Users" ToRole="Tbl_Roles" />
@@ -2608,18 +2584,6 @@
             </Principal>
             <Dependent Role="Tbl_DepositToInvestorsDetails">
               <PropertyRef Name="Deposit_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
-          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
-          <End Type="webqomir_HamAfarinDBModel.Tbl_DepositToInvestorsDetails" Role="Tbl_DepositToInvestorsDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Tbl_DepositToInvestorsDetails">
-              <PropertyRef Name="CreateUser_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3060,7 +3024,6 @@
                 <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
                 <ScalarProperty Name="DeleteUser_id" ColumnName="DeleteUser_id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateUser_id" ColumnName="CreateUser_id" />
                 <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
                 <ScalarProperty Name="InvestorUser_id" ColumnName="InvestorUser_id" />
                 <ScalarProperty Name="Deposit_id" ColumnName="Deposit_id" />
