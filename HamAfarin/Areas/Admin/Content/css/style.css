@@ -4065,3 +4065,13 @@ span.customSelect {
 body {
     direction: rtl;
 }
+
+.form-check {
+    padding-right: 1.25rem;
+    padding-left: unset;
+}
+
+.form-check-input {
+    margin-right: -1.25rem;
+    margin-left: unset;
+}

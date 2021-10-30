@@ -1,0 +1,205 @@
+﻿@model ViewModels.DepositToInvestorsViewModel
+
+@{
+    ViewBag.Title = "افزودن واریز به سرمایه گذاران";
+}
+
+<style>
+    #YieldPercent {
+        direction: ltr;
+    }
+
+    #Description {
+        max-width: none;
+    }
+
+    #Plan_id, #DepositType_id {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+</style>
+
+<h5 class="mb-4">@ViewBag.Title</h5>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.Plan_id, new { @class = "control-label col-md-4" })
+            @Html.DropDownListFor(m => m.Plan_id, new SelectList(Model.PlansList, "PlanID", "PlanName"), "انتخاب کنید...", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Plan_id)
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.DepositType_id, new { @class = "control-label col-md-4" })
+            @Html.DropDownListFor(m => m.DepositType_id, new SelectList(Model.DepositTypesList, "TypeID", "TypeName"), "انتخاب کنید...", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.DepositType_id)
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.YieldPercent)
+            @Html.EditorFor(model => model.YieldPercent, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.YieldPercent)
+        </div>
+        <div class="form-group col-md-3">
+            @Html.LabelFor(model => model.DepositDate)
+            <div class="input-group" style="direction:ltr">
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" id="depositDateYMD" type="button">انتخاب</button>
+                </div>
+                @Html.EditorFor(model => model.StringDepositDate, new { @class = "form-control" })
+            </div>
+            @Html.ValidationMessageFor(model => model.StringDepositDate, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description)
+        @Html.EditorFor(model => model.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Description)
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            @Html.EditorFor(model => model.IsPaid, new { htmlAttributes = new { @class = "form-check-input" } })
+            @Html.LabelFor(model => model.IsPaid, new { @class = "form-check-label" })
+            @Html.ValidationMessageFor(model => model.IsPaid)
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mb-3">تایید ادمین</button>
+}
+<table class="table" id="investors">
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>نام خانوادگی</th>
+            <th>موبایل</th>
+            <th>ش حساب شبا</th>
+            <th>مبلغ سرمایه گذاری</th>
+            <th>مبلغ واریزی</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+<div id="progress" class="text-center pb-3" style="display:none">
+    <p class="text-center">در حال بارگزاری اطلاعات ...</p>
+    <svg width="38" height="38" viewBox="0 0 38 38" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient x1="8.042%" y1="0%" x2="65.682%" y2="23.865%" id="a">
+                <stop stop-color="#d0aa45" stop-opacity="0" offset="0%" />
+                <stop stop-color="#d0aa45" stop-opacity=".631" offset="63.146%" />
+                <stop stop-color="#d0aa45" offset="100%" />
+            </linearGradient>
+        </defs>
+        <g fill="none" fill-rule="evenodd">
+            <g transform="translate(1 1)">
+                <path d="M36 18c0-9.94-8.06-18-18-18" id="Oval-2" stroke="url(#a)" stroke-width="2">
+                    <animateTransform attributeName="transform"
+                                      type="rotate"
+                                      from="0 18 18"
+                                      to="360 18 18"
+                                      dur="0.9s"
+                                      repeatCount="indefinite" />
+                </path>
+                <circle fill="#d0aa45" cx="36" cy="18" r="1">
+                    <animateTransform attributeName="transform"
+                                      type="rotate"
+                                      from="0 18 18"
+                                      to="360 18 18"
+                                      dur="0.9s"
+                                      repeatCount="indefinite" />
+                </circle>
+            </g>
+        </g>
+    </svg>
+</div>
+
+@section Scripts
+{
+    <script>
+        //تغییر درصد در هنگام تغییر نوع واریز
+        $('#DepositType_id').change(function () {
+            debugger;
+            const depositTypeId = $(DepositType_id).val();
+            if (depositTypeId === '2' || depositTypeId === '3') {
+                $('#YieldPercent').val('100');
+                tableChange();
+            } else {
+                $('#YieldPercent').val('0');
+                tableChange();
+            }
+        });
+
+        //لود جدول در هنگام لود صفحه با طرح انتخاب شده
+        $(function () {
+            const plan = parseInt($('#Plan_id').val());
+            if (plan) tableChange();
+        });
+
+        //لود جدول در هنگام تغییر طرح
+        $('#Plan_id').change(function () {
+            tableChange();
+        });
+
+        //لود جدول در هنگام تغییر درصد
+        $('#YieldPercent').change(function () {
+            debugger;
+            tableChange();
+        });
+
+        //تقویم برای انتخاب تاریخ
+        $("#depositDateYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#StringDepositDate",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+
+        //درخواست ایجکس
+        function ajaxRequest(id, percent) {
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Tbl_DepositToInvestors/DepositCalculation/' + id,
+                data: { "percent": percent },
+                success: function (data) {
+                    if (data != null) {
+                        makeTable(data);
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("appendData, " + xhr.status + ", " + thrownError);
+                },
+                beforeSend: function () {
+                    $("#progress").show();
+                },
+                complete: function () {
+                    $("#progress").hide();
+                    $(window).data('ajaxready', true);
+                },
+            });
+        }
+
+        //ساخت جدول
+        function makeTable(response) {
+            $(response).each(function (index, item) {
+                $('#investors tbody').append(
+                    '<tr><td>' + item.FirstName +
+                    '</td><td>' + item.LastName +
+                    '</td><td>' + item.MobileNumber +
+                    '</td><td>' + item.Shaba +
+                    '</td><td>' + item.TotalPaymentPrice.toLocaleString() +
+                    '</td><td>' + item.DepositAmount.toLocaleString() +
+                    '</td></tr>'
+                )
+            })
+        }
+
+        //بروزرسانی جدول در هنگام تغییر
+        function tableChange() {
+            const plan = parseInt($('#Plan_id').val());
+            const percent = parseFloat($('#YieldPercent').val());
+            $('#investors tbody').children("tr").remove();
+            if (plan) ajaxRequest(plan, percent);
+        }
+
+    </script>
+}

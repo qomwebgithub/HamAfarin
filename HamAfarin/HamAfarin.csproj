@@ -663,6 +663,9 @@
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\NotConfirmedByFaraboors.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\OfflineDraftsPayments.cshtml" />
     <Content Include="Areas\UserPanel\Views\UserPaymentBusinessPlan\ProjectParticipationPDF.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_DepositToInvestors\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_DepositToInvestors\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_DepositToInvestors\Details.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">
@@ -2268,6 +2271,7 @@
     <Compile Include="Areas\Admin\Controllers\Tbl_TicketsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_UserProfilesController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_UsersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Tbl_DepositToInvestorsController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\PaymentReturnedController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\Tbl_BusinessPlanPaymentController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\Tbl_BussinessPlansController.cs" />
@@ -2447,6 +2451,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\UserPanel\Models\" />
+    <Folder Include="Areas\UserPanel\Views\DepositToInvestors\" />
     <Folder Include="Content\js\slides\" />
     <Folder Include="Images\BusinessPlans\Logo\Image\" />
     <Folder Include="Images\BusinessPlans\Logo\Thumb\" />

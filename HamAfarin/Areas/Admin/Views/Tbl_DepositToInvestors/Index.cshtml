@@ -1,0 +1,36 @@
+﻿@model IEnumerable<DataLayer.Tbl_DepositToInvestors>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "لیست واریزی به سرمایه گذاران";
+}
+
+<div class="card-header">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+@(Html.Kendo().Grid(Model)
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.Tbl_BussinessPlans.Title);
+        columns.Bound(model => model.DepositDate);
+        columns.Bound(model => model.Tbl_DepositTypes.DepositTypeName);
+        columns.Bound(model => model.YieldPercent);
+        columns.Bound(model => model.TotalDeposit);
+        columns.Bound(model => model.Description);
+        columns.Bound(model => model.IsPaid);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Custom().Action("Create", "Tbl_DepositToInvestors").Text("افزودن");
+    })
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .DataSource(dataSource => dataSource
+        .Server()
+        .Model(model => model.Id(item => item.DepositID))
+    )
+)

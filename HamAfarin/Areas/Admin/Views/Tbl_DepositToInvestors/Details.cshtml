@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ViewModels.InvestorViewModel>
+
+@{
+    ViewBag.Title = "جزییات واریزی";
+}
+
+<h5 class="mb-4">@ViewBag.Title</h5>
+
+<table class="table" id="investors">
+    <thead>
+        <tr>
+            <th>نام</th>
+            <th>نام خانوادگی</th>
+            <th>موبایل</th>
+            <th>ش حساب شبا</th>
+            <th>مبلغ واریزی</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var investors in Model)
+        {
+            <tr>
+                <td>@investors.FirstName</td>
+                <td>@investors.LastName</td>
+                <td>@investors.MobileNumber</td>
+                <td>@investors.Shaba</td>
+                <td>@investors.DepositAmount.ToString("N0")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
