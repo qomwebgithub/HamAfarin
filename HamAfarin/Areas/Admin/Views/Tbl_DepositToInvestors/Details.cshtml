@@ -23,13 +23,27 @@
         {
             <tr>
                 <td>@index</td>
-                <td>@investors.FirstName</td>
-                <td>@investors.LastName</td>
+                @if (string.IsNullOrEmpty(investors.CompanyName))
+                {
+                    <td>@investors.FirstName</td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                @if (string.IsNullOrEmpty(investors.CompanyName))
+                {
+                    <td>@investors.LastName</td>
+                }
+                else
+                {
+                    <td>@investors.CompanyName</td>
+                }
                 <td>@investors.MobileNumber</td>
                 <td>@investors.Shaba</td>
                 <td>@investors.DepositAmount.ToString("N0")</td>
             </tr>
-            {index++;}
+            { index++; }
         }
     </tbody>
 </table>

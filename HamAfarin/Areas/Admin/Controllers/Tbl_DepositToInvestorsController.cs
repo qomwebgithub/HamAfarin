@@ -30,6 +30,9 @@ namespace HamAfarin.Areas.Admin.Controllers
                                          join UserProfiles in db.Tbl_UserProfiles
                                               on u.UserID equals UserProfiles.User_id into UserGroup
                                          from p in UserGroup.DefaultIfEmpty()
+                                         join PersonLegal in db.Tbl_PersonLegal
+                                              on u.UserID equals PersonLegal.User_id into LegalGroup
+                                         from l in LegalGroup.DefaultIfEmpty()
                                          join DepositToInvestorsDetails in db.Tbl_DepositToInvestorsDetails
                                               on p.User_id equals DepositToInvestorsDetails.InvestorUser_id into InvestorGroup
                                          from i in InvestorGroup.DefaultIfEmpty()
@@ -39,6 +42,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                                              UserID = u.UserID,
                                              FirstName = p.FirstName,
                                              LastName = p.LastName,
+                                             CompanyName = l.CompanyName,
                                              MobileNumber = p.MobileNumber,
                                              Shaba = p.AccountSheba,
                                              DepositAmount = (long)i.DepositAmount
@@ -53,7 +57,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             depositToInvestors.PlansList = db.Tbl_BussinessPlans
                 .Where(p => p.IsActive && p.IsDeleted == false)
-                .OrderByDescending(p=> p.CreateDate)
+                .OrderByDescending(p => p.CreateDate)
                 .Select(p => new PlanViewModel { PlanID = p.BussinessPlanID, PlanName = p.Title })
                 .ToList();
 
