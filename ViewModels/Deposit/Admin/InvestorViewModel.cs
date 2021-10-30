@@ -19,5 +19,6 @@ namespace ViewModels
         public string NationalId { get; set; }
         public string CompanyName { get; set; }
         public string CompanyId { get; set; }
+        public DateTime FirstPaymentDate { get; set; }
     }
 }

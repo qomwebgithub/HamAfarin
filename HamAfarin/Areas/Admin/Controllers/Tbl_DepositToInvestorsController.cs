@@ -173,9 +173,11 @@ namespace HamAfarin.Areas.Admin.Controllers
                     CompanyId = g.Select(a => a.Tbl_Users.Tbl_PersonLegal.Select(u => u.NationalId).FirstOrDefault()).FirstOrDefault(),
                     MobileNumber = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.MobileNumber).FirstOrDefault()).FirstOrDefault(),
                     Shaba = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.AccountSheba).FirstOrDefault()).FirstOrDefault(),
+                    FirstPaymentDate = (DateTime)g.Select(b => b.PaidDateTime).FirstOrDefault(),
                     TotalPaymentPrice = (long)g.Sum(b => b.PaymentPrice),
                     DepositAmount = (long)(percent / 100 * (decimal)g.Sum(b => b.PaymentPrice))
                 })
+                .OrderBy(g => g.FirstPaymentDate)
                 .ToList();
 
             return Json(listInvestorsViewModel, JsonRequestBehavior.AllowGet);
