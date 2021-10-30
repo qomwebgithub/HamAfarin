@@ -16,6 +16,8 @@ namespace ViewModels
         public string Shaba { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string NationalId { get; set; }
         public string CompanyName { get; set; }
+        public string CompanyId { get; set; }
     }
 }

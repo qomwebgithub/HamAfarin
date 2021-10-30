@@ -119,11 +119,6 @@ namespace HamAfarin.Areas.Admin.Controllers
                     .Select(g => new InvestorViewModel
                     {
                         UserID = (int)g.Key,
-                        FirstName = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.FirstName).FirstOrDefault()).FirstOrDefault(),
-                        LastName = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.LastName).FirstOrDefault()).FirstOrDefault(),
-                        MobileNumber = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.MobileNumber).FirstOrDefault()).FirstOrDefault(),
-                        Shaba = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.AccountSheba).FirstOrDefault()).FirstOrDefault(),
-                        TotalPaymentPrice = (long)g.Sum(b => b.PaymentPrice),
                         DepositAmount = (long)(depositToInvestors.YieldPercent / 100 * (decimal)g.Sum(b => b.PaymentPrice))
                     })
                     .ToList();
@@ -169,7 +164,9 @@ namespace HamAfarin.Areas.Admin.Controllers
                     UserID = (int)g.Key,
                     FirstName = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.FirstName).FirstOrDefault()).FirstOrDefault(),
                     LastName = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.LastName).FirstOrDefault()).FirstOrDefault(),
+                    NationalId = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.NationalCode).FirstOrDefault()).FirstOrDefault(),
                     CompanyName = g.Select(a => a.Tbl_Users.Tbl_PersonLegal.Select(u => u.CompanyName).FirstOrDefault()).FirstOrDefault(),
+                    CompanyId = g.Select(a => a.Tbl_Users.Tbl_PersonLegal.Select(u => u.NationalId).FirstOrDefault()).FirstOrDefault(),
                     MobileNumber = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.MobileNumber).FirstOrDefault()).FirstOrDefault(),
                     Shaba = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.AccountSheba).FirstOrDefault()).FirstOrDefault(),
                     TotalPaymentPrice = (long)g.Sum(b => b.PaymentPrice),

@@ -71,6 +71,7 @@
             <th>ردیف</th>
             <th>نام</th>
             <th>نام خانوادگی</th>
+            <th>کد ملی</th>
             <th>موبایل</th>
             <th>ش حساب شبا</th>
             <th>مبلغ سرمایه گذاری</th>
@@ -186,6 +187,7 @@
                     '<tr><td>' + (parseInt(index) + 1).toString() +
                     '</td><td>' + (item.CompanyName ? "" : item.FirstName) +
                     '</td><td>' + (item.CompanyName ? item.CompanyName : item.LastName) +
+                    '</td><td>' + (item.CompanyId ? item.CompanyId : item.NationalId) +
                     '</td><td>' + item.MobileNumber +
                     '</td><td>' + item.Shaba +
                     '</td><td>' + item.TotalPaymentPrice.toLocaleString() +
