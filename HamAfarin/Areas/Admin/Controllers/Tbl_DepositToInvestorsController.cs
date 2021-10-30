@@ -27,23 +27,23 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult Details(int id)
         {
             var listInvestorsViewModel = from u in db.Tbl_Users
-                       join UserProfiles in db.Tbl_UserProfiles
-                            on u.UserID equals UserProfiles.User_id into UserGroup
-                       from p in UserGroup.DefaultIfEmpty()
-                       join DepositToInvestorsDetails in db.Tbl_DepositToInvestorsDetails
-                            on p.User_id equals DepositToInvestorsDetails.InvestorUser_id into InvestorGroup
-                       from i in InvestorGroup.DefaultIfEmpty()
-                       where i.Deposit_id == id
-                       select new InvestorViewModel
-                       {
-                           UserID = u.UserID,
-                           FirstName = p.FirstName,
-                           LastName = p.LastName,
-                           MobileNumber = p.MobileNumber,
-                           Shaba = p.AccountSheba,
-                           DepositAmount = (long)i.DepositAmount
-                       };
-            
+                                         join UserProfiles in db.Tbl_UserProfiles
+                                              on u.UserID equals UserProfiles.User_id into UserGroup
+                                         from p in UserGroup.DefaultIfEmpty()
+                                         join DepositToInvestorsDetails in db.Tbl_DepositToInvestorsDetails
+                                              on p.User_id equals DepositToInvestorsDetails.InvestorUser_id into InvestorGroup
+                                         from i in InvestorGroup.DefaultIfEmpty()
+                                         where i.Deposit_id == id
+                                         select new InvestorViewModel
+                                         {
+                                             UserID = u.UserID,
+                                             FirstName = p.FirstName,
+                                             LastName = p.LastName,
+                                             MobileNumber = p.MobileNumber,
+                                             Shaba = p.AccountSheba,
+                                             DepositAmount = (long)i.DepositAmount
+                                         };
+
             return View(listInvestorsViewModel.ToList());
         }
 
@@ -53,6 +53,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             depositToInvestors.PlansList = db.Tbl_BussinessPlans
                 .Where(p => p.IsActive && p.IsDeleted == false)
+                .OrderByDescending(p=> p.CreateDate)
                 .Select(p => new PlanViewModel { PlanID = p.BussinessPlanID, PlanName = p.Title })
                 .ToList();
 
@@ -111,7 +112,9 @@ namespace HamAfarin.Areas.Admin.Controllers
             try
             {
                 List<InvestorViewModel> listInvestorsViewModel = db.Tbl_BusinessPlanPayment
-                    .Where(b => b.IsDelete == false && b.BusinessPlan_id == depositToInvestors.Plan_id)
+                    .Where(b => b.IsDelete == false &&
+                        b.BusinessPlan_id == depositToInvestors.Plan_id &&
+                        b.IsConfirmedFromFaraboors)
                     .GroupBy(c => c.PaymentUser_id)
                     .Select(g => new InvestorViewModel
                     {
@@ -157,7 +160,9 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult DepositCalculation(int id, decimal percent = 0)
         {
             List<InvestorViewModel> listInvestorsViewModel = db.Tbl_BusinessPlanPayment
-                .Where(b => b.IsDelete == false && b.BusinessPlan_id == id)
+                .Where(b => b.IsDelete == false &&
+                    b.BusinessPlan_id == id &&
+                    b.IsConfirmedFromFaraboors)
                 .GroupBy(c => c.PaymentUser_id)
                 .Select(g => new InvestorViewModel
                 {
