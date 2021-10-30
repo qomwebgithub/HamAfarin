@@ -123,8 +123,10 @@ namespace HamAfarin.Areas.Admin.Controllers
                     .Select(g => new InvestorViewModel
                     {
                         UserID = (int)g.Key,
+                        FirstPaymentDate = (DateTime)g.Select(b => b.PaidDateTime).FirstOrDefault(),
                         DepositAmount = (long)(depositToInvestors.YieldPercent / 100 * (decimal)g.Sum(b => b.PaymentPrice))
                     })
+                    .OrderBy(g => g.FirstPaymentDate)
                     .ToList();
 
                 var listTbl_DepositToInvestorsDetails = new List<Tbl_DepositToInvestorsDetails>();
