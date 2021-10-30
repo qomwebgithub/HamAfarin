@@ -183,15 +183,15 @@
         function makeTable(response) {
             $(response).each(function (index, item) {
                 $('#investors tbody').append(
-                    '<tr><td>' + (parseInt(index)+1).toString() +
-                    '</td><td>' + item.FirstName +
-                    '</td><td>' + item.LastName +
+                    '<tr><td>' + (parseInt(index) + 1).toString() +
+                    '</td><td>' + (item.CompanyName ? "" : item.FirstName) +
+                    '</td><td>' + (item.CompanyName ? item.CompanyName : item.LastName) +
                     '</td><td>' + item.MobileNumber +
                     '</td><td>' + item.Shaba +
                     '</td><td>' + item.TotalPaymentPrice.toLocaleString() +
                     '</td><td>' + item.DepositAmount.toLocaleString() +
                     '</td></tr>'
-                )
+                );
             })
         }
 
