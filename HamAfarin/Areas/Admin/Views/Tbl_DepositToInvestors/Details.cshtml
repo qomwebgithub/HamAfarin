@@ -9,6 +9,7 @@
 <table class="table" id="investors">
     <thead>
         <tr>
+            <th>ردیف</th>
             <th>نام</th>
             <th>نام خانوادگی</th>
             <th>موبایل</th>
@@ -17,15 +18,18 @@
         </tr>
     </thead>
     <tbody>
+        @{var index = 1; }
         @foreach (var investors in Model)
         {
             <tr>
+                <td>@index</td>
                 <td>@investors.FirstName</td>
                 <td>@investors.LastName</td>
                 <td>@investors.MobileNumber</td>
                 <td>@investors.Shaba</td>
                 <td>@investors.DepositAmount.ToString("N0")</td>
             </tr>
+            {index++;}
         }
     </tbody>
 </table>
