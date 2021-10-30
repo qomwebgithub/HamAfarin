@@ -68,6 +68,7 @@
 <table class="table" id="investors">
     <thead>
         <tr>
+            <th>ردیف</th>
             <th>نام</th>
             <th>نام خانوادگی</th>
             <th>موبایل</th>
@@ -182,7 +183,8 @@
         function makeTable(response) {
             $(response).each(function (index, item) {
                 $('#investors tbody').append(
-                    '<tr><td>' + item.FirstName +
+                    '<tr><td>' + (parseInt(index)+1).toString() +
+                    '</td><td>' + item.FirstName +
                     '</td><td>' + item.LastName +
                     '</td><td>' + item.MobileNumber +
                     '</td><td>' + item.Shaba +
