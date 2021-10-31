@@ -239,9 +239,15 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (tbl_BusinessPlanPayment.IsConfirmedFromAdmin)
+                bool oldIsConfirmedFromAdmin = db.Tbl_BusinessPlanPayment
+                    .Where(b => b.PaymentID == tbl_BusinessPlanPayment.PaymentID)
+                    .Select(b => b.IsConfirmedFromAdmin)
+                    .FirstOrDefault();
+                if (oldIsConfirmedFromAdmin == false && tbl_BusinessPlanPayment.IsConfirmedFromAdmin)
                 {
-                    ConfimPaymnetByAdmin(tbl_BusinessPlanPayment);
+                    tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
+                    tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
+                    AdminConfimSendSMS(tbl_BusinessPlanPayment.BusinessPlan_id, tbl_BusinessPlanPayment.PaymentUser_id);
                 }
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 db.SaveChanges();
@@ -433,7 +439,9 @@ namespace HamAfarin.Areas.Admin.Controllers
             tbl_BusinessPlanPayment.FaraboorsResponse = apiResult.Message;
             if (apiResult.Success)
             {
-                ConfimPaymnetByAdmin(tbl_BusinessPlanPayment);
+                tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
+                tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
+                AdminConfimSendSMS(tbl_BusinessPlanPayment.BusinessPlan_id, tbl_BusinessPlanPayment.PaymentUser_id);
                 tbl_BusinessPlanPayment.IsConfirmedFromFaraboors = true;
                 tbl_BusinessPlanPayment.FaraboorsConfirmDate = DateTime.Now;
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
@@ -483,14 +491,6 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
 
             return dateTimeFixed;
-        }
-
-        private void ConfimPaymnetByAdmin(Tbl_BusinessPlanPayment tbl_BusinessPlanPayment)
-        {
-            tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
-            tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
-
-            AdminConfimSendSMS(tbl_BusinessPlanPayment.BusinessPlan_id, tbl_BusinessPlanPayment.PaymentUser_id);
         }
 
         private void AdminConfimSendSMS(int? businessPlan_id, int? paymentUser_id)
