@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ViewModels.InvestorViewModel>
+﻿@model IEnumerable<DataLayer.View_DepositToInvestorsDetails>
 
 @{
     ViewBag.Title = "جزییات واریزی";
@@ -12,12 +12,14 @@
             <th>ردیف</th>
             <th>نام</th>
             <th>نام خانوادگی</th>
+            <th>کد ملی</th>
             <th>موبایل</th>
             <th>ش حساب شبا</th>
             <th>مبلغ واریزی</th>
         </tr>
     </thead>
     <tbody>
+
         @{var index = 1; }
         @foreach (var investors in Model)
         {
@@ -39,9 +41,17 @@
                 {
                     <td>@investors.CompanyName</td>
                 }
+                @if (string.IsNullOrEmpty(investors.NationalId))
+                {
+                    <td>@investors.NationalCode</td>
+                }
+                else
+                {
+                    <td>@investors.NationalId</td>
+                }
                 <td>@investors.MobileNumber</td>
-                <td>@investors.Shaba</td>
-                <td>@investors.DepositAmount.ToString("N0")</td>
+                <td>@investors.AccountSheba</td>
+                <td>@investors.DepositAmount.Value.ToString("N0")</td>
             </tr>
             { index++; }
         }

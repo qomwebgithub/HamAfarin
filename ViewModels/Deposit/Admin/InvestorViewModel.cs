@@ -13,7 +13,7 @@ namespace ViewModels
         public long TotalPaymentPrice { get; set; }
         public long DepositAmount { get; set; }
         public string MobileNumber { get; set; }
-        public string Shaba { get; set; }
+        public string Sheba { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string NationalId { get; set; }

@@ -20,6 +20,10 @@
         columns.Bound(model => model.TotalDeposit);
         columns.Bound(model => model.Description);
         columns.Bound(model => model.IsPaid);
+        columns.Bound(item => @item.DepositID).Title("دستورات").Filterable(false).Groupable(false)
+            .Template(@<text>
+                    @Html.ActionLink("جزییات", "Details", new { id = @item.DepositID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                </text>).Width(200).Width(100);
     })
     .ToolBar(toolbar =>
     {

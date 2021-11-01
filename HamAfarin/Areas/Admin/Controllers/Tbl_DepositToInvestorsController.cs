@@ -26,29 +26,33 @@ namespace HamAfarin.Areas.Admin.Controllers
 
         public ActionResult Details(int id)
         {
-            var listInvestorsViewModel = from u in db.Tbl_Users
-                                         join UserProfiles in db.Tbl_UserProfiles
-                                              on u.UserID equals UserProfiles.User_id into UserGroup
-                                         from p in UserGroup.DefaultIfEmpty()
-                                         join PersonLegal in db.Tbl_PersonLegal
-                                              on u.UserID equals PersonLegal.User_id into LegalGroup
-                                         from l in LegalGroup.DefaultIfEmpty()
-                                         join DepositToInvestorsDetails in db.Tbl_DepositToInvestorsDetails
-                                              on p.User_id equals DepositToInvestorsDetails.InvestorUser_id into InvestorGroup
-                                         from i in InvestorGroup.DefaultIfEmpty()
-                                         where i.Deposit_id == id
-                                         select new InvestorViewModel
-                                         {
-                                             UserID = u.UserID,
-                                             FirstName = p.FirstName,
-                                             LastName = p.LastName,
-                                             CompanyName = l.CompanyName,
-                                             MobileNumber = p.MobileNumber,
-                                             Shaba = p.AccountSheba,
-                                             DepositAmount = (long)i.DepositAmount
-                                         };
+            #region OldQueryBeforeDataBaseView
+            //جوین چهار جدول
+            //var listInvestorsViewModel = from u in db.Tbl_Users
+            //                             join UserProfiles in db.Tbl_UserProfiles
+            //                                  on u.UserID equals UserProfiles.User_id into UserGroup
+            //                             from p in UserGroup.DefaultIfEmpty()
+            //                             join PersonLegal in db.Tbl_PersonLegal
+            //                                  on u.UserID equals PersonLegal.User_id into LegalGroup
+            //                             from l in LegalGroup.DefaultIfEmpty()
+            //                             join DepositToInvestorsDetails in db.Tbl_DepositToInvestorsDetails
+            //                                  on p.User_id equals DepositToInvestorsDetails.InvestorUser_id into InvestorGroup
+            //                             from i in InvestorGroup.DefaultIfEmpty()
+            //                             where i.Deposit_id == id
+            //                             select new InvestorViewModel
+            //                             {
+            //                                 UserID = u.UserID,
+            //                                 FirstName = p.FirstName,
+            //                                 LastName = p.LastName,
+            //                                 CompanyName = l.CompanyName,
+            //                                 MobileNumber = p.MobileNumber,
+            //                                 Shaba = p.AccountSheba,
+            //                                 DepositAmount = (long)i.DepositAmount
+            //                             };
+            #endregion
 
-            return View(listInvestorsViewModel.ToList());
+            List<View_DepositToInvestorsDetails> listInvestorsViewModel = db.View_DepositToInvestorsDetails.Where(x => x.Deposit_id == id).ToList();
+            return View(listInvestorsViewModel);
         }
 
         public ActionResult Create()
@@ -95,12 +99,12 @@ namespace HamAfarin.Areas.Admin.Controllers
             int userIdentity = UserSetAuthCookie.GetUserID(User.Identity.Name);
             DateTime dateTimeNow = DateTime.Now;
 
-            var config = new MapperConfiguration(cfg =>
+            MapperConfiguration config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<DepositToInvestorsViewModel, Tbl_DepositToInvestors>();
             });
             IMapper iMapper = config.CreateMapper();
-            var tblDepositToInvestors = iMapper.Map<DepositToInvestorsViewModel, Tbl_DepositToInvestors>(depositToInvestors);
+            Tbl_DepositToInvestors tblDepositToInvestors = iMapper.Map<DepositToInvestorsViewModel, Tbl_DepositToInvestors>(depositToInvestors);
             tblDepositToInvestors.IsDelete = false;
             tblDepositToInvestors.CreateUser_id = userIdentity;
             tblDepositToInvestors.CreateDate = dateTimeNow;
@@ -129,7 +133,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     .OrderBy(g => g.FirstPaymentDate)
                     .ToList();
 
-                var listTbl_DepositToInvestorsDetails = new List<Tbl_DepositToInvestorsDetails>();
+                List<Tbl_DepositToInvestorsDetails> listTbl_DepositToInvestorsDetails = new List<Tbl_DepositToInvestorsDetails>();
                 foreach (InvestorViewModel investor in listInvestorsViewModel)
                 {
                     listTbl_DepositToInvestorsDetails.Add(new Tbl_DepositToInvestorsDetails()
@@ -174,7 +178,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     CompanyName = g.Select(a => a.Tbl_Users.Tbl_PersonLegal.Select(u => u.CompanyName).FirstOrDefault()).FirstOrDefault(),
                     CompanyId = g.Select(a => a.Tbl_Users.Tbl_PersonLegal.Select(u => u.NationalId).FirstOrDefault()).FirstOrDefault(),
                     MobileNumber = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.MobileNumber).FirstOrDefault()).FirstOrDefault(),
-                    Shaba = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.AccountSheba).FirstOrDefault()).FirstOrDefault(),
+                    Sheba = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.Select(u => u.AccountSheba).FirstOrDefault()).FirstOrDefault(),
                     FirstPaymentDate = (DateTime)g.Select(b => b.PaidDateTime).FirstOrDefault(),
                     TotalPaymentPrice = (long)g.Sum(b => b.PaymentPrice),
                     DepositAmount = (long)(percent / 100 * (decimal)g.Sum(b => b.PaymentPrice))
