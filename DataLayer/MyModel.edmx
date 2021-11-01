@@ -681,6 +681,24 @@
           <Property Name="RegisterDate" Type="datetime" />
           <Property Name="IsLegal" Type="bit" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_DepositToInvestorsDetails">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="MobileNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="AccountSheba" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepositAmount" Type="bigint" />
+          <Property Name="CompanyName" Type="nvarchar(max)" />
+          <Property Name="Plan_id" Type="int" />
+          <Property Name="Deposit_id" Type="int" />
+          <Property Name="NationalId" Type="nvarchar" MaxLength="50" />
+          <Property Name="NationalCode" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <Association Name="FK_Tbl_Blog_Tbl_Users">
           <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
           <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="*" />
@@ -1181,6 +1199,21 @@
           <EntitySet Name="Tbl_Tickets" EntityType="Self.Tbl_Tickets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="Self.Tbl_UserProfiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="View_DepositToInvestorsDetails" EntityType="Self.View_DepositToInvestorsDetails" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_DepositToInvestorsDetails].[UserID] AS [UserID], 
+    [View_DepositToInvestorsDetails].[FirstName] AS [FirstName], 
+    [View_DepositToInvestorsDetails].[LastName] AS [LastName], 
+    [View_DepositToInvestorsDetails].[MobileNumber] AS [MobileNumber], 
+    [View_DepositToInvestorsDetails].[AccountSheba] AS [AccountSheba], 
+    [View_DepositToInvestorsDetails].[DepositAmount] AS [DepositAmount], 
+    [View_DepositToInvestorsDetails].[CompanyName] AS [CompanyName], 
+    [View_DepositToInvestorsDetails].[Plan_id] AS [Plan_id], 
+    [View_DepositToInvestorsDetails].[Deposit_id] AS [Deposit_id], 
+    [View_DepositToInvestorsDetails].[NationalId] AS [NationalId], 
+    [View_DepositToInvestorsDetails].[NationalCode] AS [NationalCode]
+    FROM [dbo].[View_DepositToInvestorsDetails] AS [View_DepositToInvestorsDetails]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="Self.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1382,6 +1415,7 @@
           <EntitySet Name="Tbl_Tickets" EntityType="webqomir_HamAfarinDBModel.Tbl_Tickets" />
           <EntitySet Name="Tbl_UserProfiles" EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" />
           <EntitySet Name="Tbl_Users" EntityType="webqomir_HamAfarinDBModel.Tbl_Users" />
+          <EntitySet Name="View_DepositToInvestorsDetails" EntityType="webqomir_HamAfarinDBModel.View_DepositToInvestorsDetails" />
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -2286,6 +2320,22 @@
           <NavigationProperty Name="Tbl_Tickets3" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users3" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_Tickets4" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users4" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_UserProfiles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Profile_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_UserProfiles" />
+        </EntityType>
+        <EntityType Name="View_DepositToInvestorsDetails">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AccountSheba" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepositAmount" Type="Int64" />
+          <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Plan_id" Type="Int32" />
+          <Property Name="Deposit_id" Type="Int32" />
+          <Property Name="NationalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Tbl_Blog_Tbl_Users">
           <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
@@ -3464,6 +3514,23 @@
                 <ScalarProperty Name="HasSejam" ColumnName="HasSejam" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_DepositToInvestorsDetails">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.View_DepositToInvestorsDetails">
+              <MappingFragment StoreEntitySet="View_DepositToInvestorsDetails">
+                <ScalarProperty Name="NationalCode" ColumnName="NationalCode" />
+                <ScalarProperty Name="NationalId" ColumnName="NationalId" />
+                <ScalarProperty Name="Deposit_id" ColumnName="Deposit_id" />
+                <ScalarProperty Name="Plan_id" ColumnName="Plan_id" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="AccountSheba" ColumnName="AccountSheba" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
