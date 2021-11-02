@@ -136,14 +136,8 @@
             if (plan) tableChange();
         });
 
-        //لود جدول در هنگام تغییر طرح
-        $('#Plan_id').change(function () {
-            tableChange();
-        });
-
-        //لود جدول در هنگام تغییر درصد
-        $('#YieldPercent').change(function () {
-            debugger;
+        //لود جدول در هنگام تغییر طرح یا درصد
+        $('#Plan_id,#YieldPercent').change(function () {
             tableChange();
         });
 
