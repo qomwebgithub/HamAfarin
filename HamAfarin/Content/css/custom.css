@@ -366,7 +366,7 @@ h4 {
 }
 
 .loginIcon {
-    padding: 0;
+    padding: 0.25rem 0.75rem;
     box-shadow: none;
 }
 
@@ -969,10 +969,6 @@ table.table-bordered {
         border: 1px solid black;
     }
 
-.btn {
-    padding: 0.25rem 0.75rem;
-}
-
 .modal-investment {
     max-width: 700px;
 }
@@ -1076,3 +1072,10 @@ input, [type="password"] {
         }
 /*End UserPanelMenu*/
 
+.table .thead-dark th {
+    background-color: var(--orange);
+}
+
+.dataTables_filter label {
+    display: grid;
+}
