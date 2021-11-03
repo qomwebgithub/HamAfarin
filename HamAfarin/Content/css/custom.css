@@ -44,7 +44,7 @@ li.active > a, .nav-tabs .nav-link {
     background-color: var(--orange) !important;
     color: #fff !important;
     position: relative;
-    border-radius: 10px !important;
+    /*border-radius: 10px !important;*/
 }
 
     .btn-orange:hover {
@@ -190,8 +190,9 @@ p {
 }
 
 .btn-login-register {
-    width: 100px;
-    border: 3px solid !important;
+    border: 3px solid;
+    color: #b52c26;
+    margin: 0.5rem 0;
 }
 
 .btn-isLogined {
@@ -344,16 +345,6 @@ h4 {
     text-decoration: underline solid;
 }
 
-.login {
-    // display:none;
-    position: absolute;
-    left: 0;
-    z-index: 2;
-    background-color: white;
-    padding: 15px;
-    border-radius: 5px;
-}
-
 .space {
     margin: 10px 0;
     display: block;
@@ -420,18 +411,13 @@ h4 {
 
 .login a {
     border-color: #e5a822 !important;
-    /* width: auto; */
-    /* border: none !important; */
+    width: 100%;
 }
 
 .loginIcon a i {
     font-size: 20px;
     display: flex;
     color: #b52c26;
-}
-
-.btn-login-register {
-    width: 110px !important;
 }
 
 .addicon {
@@ -1009,10 +995,6 @@ input, [type="password"] {
     margin-right: 15px;
 }
 
-#accordionMenu {
-    max-width: 300px;
-}
-
 .panel-body {
     padding: 0;
 }
@@ -1039,7 +1021,7 @@ input, [type="password"] {
 
     .panel-default > .panel-heading a {
         display: block;
-        padding: 10px 15px;
+        padding: 10px 0;
         text-decoration: none;
     }
 
@@ -1078,4 +1060,12 @@ input, [type="password"] {
 
 .dataTables_filter label {
     display: grid;
+}
+
+.btn-user {
+    padding: 6px 14px 6px 7px;
+}
+
+.label-btn-user {
+    padding-top: 10px;
 }
