@@ -30,6 +30,36 @@ namespace HamAfarin.Areas.UserPanel.Controllers
 
             investmentsReport.InvestmentReportTypes.Add(new DepositTypeViewModel { TypeID = 4, TypeName = "سرمایه گذاری" });
 
+            investmentsReport.Investments = db.Tbl_DepositToInvestorsDetails
+                .Where(d => d.InvestorUser_id == userIdentity && d.Tbl_DepositToInvestors.IsPaid && d.IsDelete == false)
+                .Select(d => new InvestmentDetailViewModel
+                {
+                    TypeID = d.Tbl_DepositToInvestors.DepositType_id,
+                    TypeName = d.Tbl_DepositToInvestors.Tbl_DepositTypes.DepositTypeName,
+                    Date = d.Tbl_DepositToInvestors.DepositDate,
+                    Amount = d.DepositAmount,
+                    PlanID = d.Tbl_DepositToInvestors.Plan_id,
+                    PlanName = d.Tbl_DepositToInvestors.Tbl_BussinessPlans.Title,
+                })
+                .ToList();
+
+            List<InvestmentDetailViewModel> listPayments = db.Tbl_BusinessPlanPayment
+                .Where(b => b.PaymentUser_id == userIdentity && b.IsConfirmedFromFaraboors && b.IsDelete == false)
+                .Select(b => new InvestmentDetailViewModel
+                {
+                    TypeID = 4,
+                    TypeName = "سرمایه گذاری",
+                    Date = b.PaidDateTime,
+                    Amount = b.PaymentPrice,
+                    PlanID = b.BusinessPlan_id,
+                    PlanName = b.Tbl_BussinessPlans.Title,
+                })
+                .ToList();
+
+            investmentsReport.Investments.AddRange(listPayments);
+
+            investmentsReport.Investments = investmentsReport.Investments.OrderByDescending(i => i.Date).ToList();
+
             return View(investmentsReport);
         }
 
@@ -56,7 +86,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Select(b => new InvestmentDetailViewModel
                 {
                     TypeID = 4,
-                    TypeName = "سرمایه گذرای",
+                    TypeName = "سرمایه گذاری",
                     Date = b.PaidDateTime,
                     Amount = b.PaymentPrice,
                     PlanID = b.BusinessPlan_id,
@@ -76,12 +106,12 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 investment.DateString = investment.Date.Value.ToString("yyyy-MM-dd");
 
             listInvestments = listInvestments
-                .Select(i => new InvestmentDetailViewModel 
-                { 
-                    PlanName = i.PlanName,
+                .Select(i => new InvestmentDetailViewModel
+                {
+                    TypeName = i.TypeName,
                     Amount = i.Amount,
                     DateString = i.DateString,
-                    TypeName = i.TypeName,
+                    PlanName = i.PlanName,
                 })
                 .ToList();
 
