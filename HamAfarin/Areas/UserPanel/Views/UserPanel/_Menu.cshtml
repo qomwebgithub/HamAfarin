@@ -1,38 +1,30 @@
-﻿﻿<!-- sidebar menu start-->
-
-<ul class="feedlist mb-0">
-    <li class="p-3" style="font-size:16px">
+﻿<!-- sidebar menu start-->
+<ul class="feedlist mb-0 p-3">
+    <li style="font-size:16px">
         <a href="/UserPanel/UserProfile" style="text-decoration:none;color: #81858b;">
+            <i class="glyphicon glyphicon-user"></i>
             @if (UserSetAuthCookie.GetFullName(User.Identity.Name) != null)
             {
-                <i class="glyphicon glyphicon-user"></i>@UserSetAuthCookie.GetFullName(User.Identity.Name)
+                @UserSetAuthCookie.GetFullName(User.Identity.Name)
             }
             else
             {
-                <i class="glyphicon glyphicon-user"></i>@UserSetAuthCookie.GetMobileNumber(User.Identity.Name)
+                @UserSetAuthCookie.GetMobileNumber(User.Identity.Name)
             }
         </a>
     </li>
     @if (UserSetAuthCookie.GetHasSejam(User.Identity.Name) == false)
     {
-        <li class="pr-2 pl-2" style="font-size:16px">
-            <div class="col-12">
-                <a href="/Account/SejamLogin" class="btn btn-danger" style="background-color:#ff1654"> دریافت اطلاعات از سجام </a>
-            </div>
+        <li style="font-size:16px">
+            <a href="/Account/SejamLogin" class="btn btn-danger" style="background-color:#ff1654"> دریافت اطلاعات از سجام </a>
         </li>
     }
-
     @if (ViewBag.UserStatus != null)
     {
-        <li class="border-bottom pb-2 pr-2 pl-2">
-            <div class="col-12">
-                <a style="font-size:14px" href="/BusinessPlans" class="btn btn-orange">شروع سرمایه گذاری</a>
-            </div>
+        <li>
+            <a style="font-size:14px" href="/BusinessPlans" class="btn btn-orange">شروع سرمایه گذاری</a>
         </li>
     }
-
-    @*<li><a href="/UserPanel" class="link_active"><i class="glyphicon glyphicon-dashboard"></i> داشبورد </a></li>*@
-
     <li>
         <div class="panel-group" id="accordionMenu" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
@@ -46,67 +38,43 @@
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                     <div class="panel-body">
                         <ul class="nav">
-                            <li class="pr-3"><a href="/UserPanel/UserPaymentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>سرمایه گذاری من </a></li>
-                            <li class="pr-3"><a href="/UserPanel/InvestmentsReport" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>گزارش سرمایه گذاری ها </a></li>
-                            <li class="pr-3">
+                            <li><a href="/UserPanel/UserPaymentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>سرمایه گذاری من </a></li>
+                            <li><a href="/UserPanel/InvestmentsReport" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i> گزارش تراکنش ها</a></li>
+                            <li>
                                 <a href="/UserPanel/UserCommentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-comment"></i>نظرهای من </a>
                             </li>
-                            <li class="pr-3">
+                            <li>
                                 <a href="/UserPanel/UserQuestionBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-question-sign"></i>پرسش های من </a>
                             </li>
                             @if (UserSetAuthCookie.GetHasSejam(User.Identity.Name))
                             {
-                                <li class="pr-3">
+                                <li>
                                     <a href="/Account/SejamLogin" style="text-decoration:none;color: #81858b;">
                                         <i class="glyphicon glyphicon-user"></i>دریافت اطلاعات از سجام
                                     </a>
                                 </li>
                             }
-                            <li class="pr-3">
+                            <li>
                                 <a href="/UserPanel/UserProfile" style="text-decoration:none;color: #81858b;">
                                     <i class="glyphicon glyphicon-user"></i>اطلاعات کاربری
                                 </a>
                             </li>
-                            <li class="pr-3">
+                            <li>
                                 <a href="/UserPanel/UserProfile/ChangePassword" style="text-decoration:none;color: #81858b;">
                                     <i class="glyphicon glyphicon-lock"></i>تغییر رمز عبور
                                 </a>
                             </li>
-                            <li class="pr-3">
+                            <li>
                                 <a href="/UserPanel/Tickets" style="text-decoration:none;color: #81858b;">
                                     <i class="glyphicon glyphicon-envelope"></i>تیکت های پشتیبانی
                                 </a>
                             </li>
-                            <li class="pr-3"><a href="/LogOut" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-log-out"></i> خروج  </a></li>
+                            <li><a href="/LogOut" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-log-out"></i> خروج  </a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
     </li>
-
-    @*<li class="pr-3"><a href="/UserPanel/UserPaymentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>سرمایه گذاری من </a></li>
-        <li class="pr-3">
-            <a href="/UserPanel/UserCommentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-comment"></i>نظرهای من </a>
-        </li>
-        <li class="pr-3">
-            <a href="/UserPanel/UserQuestionBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-question-sign"></i>پرسش های من </a>
-        </li>
-        <li class="pr-3">
-            <a href="/UserPanel/UserProfile" style="text-decoration:none;color: #81858b;">
-                <i class="glyphicon glyphicon-user"></i>اطلاعات کاربری
-            </a>
-        </li>
-        <li class="pr-3">
-            <a href="/UserPanel/UserProfile/ChangePassword" style="text-decoration:none;color: #81858b;">
-                <i class="glyphicon glyphicon-lock"></i>تغییر رمز عبور
-            </a>
-        </li>
-        <li class="pr-3">
-            <a href="/UserPanel/Tickets" style="text-decoration:none;color: #81858b;">
-                <i class="glyphicon glyphicon-envelope"></i>تیکت های پشتیبانی
-            </a>
-        </li>
-        <li class="pr-3"><a href="/LogOut" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-log-out"></i> خروج  </a></li>*@
 </ul>
 
