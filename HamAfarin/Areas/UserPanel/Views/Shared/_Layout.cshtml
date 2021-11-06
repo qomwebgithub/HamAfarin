@@ -1,12 +1,9 @@
-﻿
-
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Style{
     <!--kendo-->
     <link href="~/Content/css/gly.css" rel="stylesheet" />
-
     @*<link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.common-nova.min.css" rel="stylesheet" type="text/css" />
         <link href="https://kendo.cdn.telerik.com/2020.3.1118/styles/kendo.nova.min.css" rel="stylesheet" type="text/css" />*@
     @*<link href="@Url.Content("~/Content/bootstrap.min.css")" rel="stylesheet" type="text/css" />*@
@@ -20,56 +17,27 @@
     <script defer src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
     <script defer src="~/Scripts/modernizr-2.8.3.js"></script>
     <script defer src="~/Areas/UserPanel/Content/js/popper.min.js"></script>
-
     <!--end kendo-->
     <link href="~/Areas/UserPanel/Content/css/jquery.md.bootstrap.datetimepicker.style.css" rel="stylesheet" />
-
     @RenderSection("Style", false)
 }
-<hr />
-@*<div class="col-12">
+<div class="employe_dashboard_wrapper jb_cover py-4">
+    <div class="container">
         <div class="row">
-            <div class="col-3">
-                @Html.Action("_Menu", "UserPanel")
+            <div class="col-lg-3 col-12">
+                <div class="card border-0 shadow" style="border-radius:8px">
+                        @Html.Action("_Menu", "UserPanel", new { area = "UserPanel" })
+                </div>
             </div>
-            <div class="col-9">
-                <div class="border border-dark">
+            <div class="col-lg-9 col-12 mr-0 card p-0 border-0 shadow" style="border-radius:8px">
+                <div class="card-body">
                     @RenderBody()
                 </div>
             </div>
         </div>
     </div>
-    @RenderSection("Scripts", false)*@
-
-
-<div class="employe_dashboard_wrapper jb_cover" style="background-color:#eaeded">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-12 col-sm-12 col-12 pl-0 pr-0">
-                <div class="col-lg-12">
-                    <div class="emp_dashboard_sidebar jb_cover bg-white card" style="border-radius:8px">
-                        <div class="emp_follow_link jb_cover">
-                            @Html.Action("_Menu", "UserPanel", new { area = "UserPanel" })
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-9 col-md-12 col-sm-12 col-12 mr-0 card p-0 mb-4" style="border-radius:8px">
-                <div class="browse_img_banner jb_cover">
-                    <div class="col-12 px-0">
-                        <div class="card-body">
-                            @RenderBody()
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="height:10px"></div>
-
 </div>
-@section Scripts{
 
+@section Scripts{
     @RenderSection("Scripts", false)
 }
