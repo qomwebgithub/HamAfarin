@@ -24,12 +24,12 @@
 <div class="employe_dashboard_wrapper jb_cover py-4">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-12">
-                <div class="card border-0 shadow" style="border-radius:8px">
+            <div class="col-lg-3 mb-4 col-12">
+                <div class="card border-0 shadow">
                         @Html.Action("_Menu", "UserPanel", new { area = "UserPanel" })
                 </div>
             </div>
-            <div class="col-lg-9 col-12 mr-0 card p-0 border-0 shadow" style="border-radius:8px">
+            <div class="col-lg-9 col-12 card p-0 border-0 shadow">
                 <div class="card-body">
                     @RenderBody()
                 </div>
