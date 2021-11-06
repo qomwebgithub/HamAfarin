@@ -11,15 +11,18 @@
         <div class="dropdown-menu login p-3" aria-labelledby="dropdownMenuButton">
             @if (User.Identity.IsAuthenticated)
             {
-                <a href="/UserPanel/UserProfile" class="btn btn-login-register">
-                    <i class="bi bi-person-check-fill"></i>
-                    @if (UserSetAuthCookie.GetRoleID(User.Identity.Name) == 1)
-                    {
+                if (UserSetAuthCookie.GetRoleID(User.Identity.Name) == 1)
+                {
+                    <a href="/Admin" class="btn btn-login-register">
+                        <i class="bi bi-person-check-fill"></i>
                         @UserSetAuthCookie.GetUserName(User.Identity.Name)
-                    }
-                    else
-                    {
-                        if (UserSetAuthCookie.GetFullName(User.Identity.Name) != null)
+                    </a>
+                }
+                else
+                {
+                    <a href="/UserPanel/UserProfile" class="btn btn-login-register">
+                        <i class="bi bi-person-check-fill"></i>
+                        @if (UserSetAuthCookie.GetFullName(User.Identity.Name) != null)
                         {
                             @UserSetAuthCookie.GetFullName(User.Identity.Name)
                         }
@@ -27,8 +30,8 @@
                         {
                             @UserSetAuthCookie.GetUserName(User.Identity.Name)
                         }
-                    }
-                </a>
+                    </a>
+                }
                 <a href="/LogOut" class="btn btn-login-register"><i class="bi bi-power"></i> خروج</a>
             }
             else
