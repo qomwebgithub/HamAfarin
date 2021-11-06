@@ -19,6 +19,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             List<Tbl_DepositToInvestors> listTbl_DepositToInvestors = db.Tbl_DepositToInvestors
                 .Where(d => d.IsDelete == false)
+                .OrderByDescending(d => d.CreateDate)
                 .ToList();
 
             return View(listTbl_DepositToInvestors);
