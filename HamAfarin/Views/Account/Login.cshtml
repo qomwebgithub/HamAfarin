@@ -6,15 +6,11 @@
 
 }
 
-<div class="col-12" style="background-color:#eaeded">
-    <div class="col-12">
-        <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 text-center">
-            <br />
-        </div>
-        <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 bg-white rounded-lg border-dark pl-0 pr-0" style="font-size:14px;">
-            <h5 class="text-center p-2  pt-3">ورود به هم آفرین</h5>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 bg-white rounded-lg border-dark my-4 p-0 shadow" style="font-size:14px;">
+            <h5 class="text-center p-2 pt-3">ورود به هم آفرین</h5>
             <hr />
-
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
@@ -39,32 +35,27 @@
                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
                     <div class="form-group mb-0">
                         <div class="col-12">
                             @captcha.RenderMarkup()
                             @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
                         </div>
                     </div>
-
-
                     <div class="form-group">
                         <div class="col-md-offset-3 col-12">
                             <input type="submit" value="ورود به سایت" class="btn btn-danger col-12" style="background-color:#ff1654" />
                         </div>
                     </div>
-
                     <div class="form-group pr-3">
                         <div class="form-check">
                             @Html.EditorFor(model => model.RememberMe, new { htmlAttributes = new { @class = "form-check-input", @type = "checkbox", @id = "rememberMe" } })
                             @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "form-check-label", @for = "rememberMe" })
                         </div>
                     </div>
-
                     <hr />
                     <div class="col-12">
                         <center>
-                            <p class="col-12 pb-3 font-size-small text-center">
+                            <p class="col-12 font-size-small text-center">
                                 کاربر جدید هستید؟ <a href="/Account/Register" class="text-info" style="border-bottom:1px dashed;">ثبت نام در هم آفرین</a>
                             </p>
                         </center>
@@ -79,9 +70,8 @@
                         </div>*@
                 </div>
             }
-
         </div>
-        <div style="height:20px"></div>
+
     </div>
 </div>
 @section scripts

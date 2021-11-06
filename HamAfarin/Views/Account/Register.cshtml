@@ -6,24 +6,18 @@
     var captcha = Html.Captcha("کد امنیتی جدید", "", 4, "لطفا کد امنیتی را وارد کنید", false);
 
 }
-<div class="col-12" style="background-color:#eaeded">
-    <div class="col-12">
-        <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 text-center">
-            <br />
-        </div>
-        <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 bg-white rounded-lg border-dark pl-0 pr-0" style="font-size:14px;">
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 bg-white rounded-lg border-dark my-4 p-0 shadow" style="font-size:14px;">
             <h5 class="text-center p-2 pt-3">ثبت نام در هم آفرین</h5>
             <hr />
             @if (ViewBag.IsSuccess == null)
             {
-
                 using (Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
-
                     <div class="col-12 pl-0 pr-0">
                         @Html.ValidationSummary(true)
-
                         <div class="form-group">
                             @Html.LabelFor(model => model.MobileNumber, new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
@@ -31,7 +25,6 @@
                                 @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
                         <div class="form-group">
                             @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
@@ -39,7 +32,6 @@
                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
                         <div class="form-group mb-0">
                             @Html.LabelFor(model => model.RePassword, new { @class = "control-label col-md-12" })
                             <div class="col-md-12">
@@ -47,14 +39,12 @@
                                 @Html.ValidationMessageFor(model => model.RePassword, "", new { @class = "text-danger" })
                             </div>
                         </div>
-
                         <div class="form-group mb-0">
                             <div class="col-12">
                                 @captcha.RenderMarkup()
                                 @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
                             </div>
                         </div>
-
                         <div class="form-group">
                             <div class="col-md-offset-3 col-12">
                                 <input type="submit" value="ارسال کد تائیدیه" class="btn btn-danger col-12" style="background-color:#ff1654" />
@@ -76,9 +66,7 @@
                                     </p>*@
                             </center>
                         </div>
-
                     </div>
-
                 }
             }
             else
@@ -94,9 +82,9 @@
                 </div>
             }
         </div>
-        <div style="height:20px"></div>
     </div>
 </div>
+
 @section scripts
 {
     @captcha.RenderScript()

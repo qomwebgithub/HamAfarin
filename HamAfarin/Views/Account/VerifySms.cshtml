@@ -8,108 +8,87 @@
 }
 @if (ViewBag.profile != null)
 {
-    <div class="col-12">
+    <div>
         @ViewBag.profile
     </div>
 }
 
-<div class="col-12" style="background-color:#eaeded">
-    <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 text-center">
-        <br />
-    </div>
-    <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 bg-white rounded-lg border-dark">
-        <h3 class="text-center m-2 p-2">کد فعالسازی</h3>
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.UserToken)
-            @Html.HiddenFor(m => m.ReturnUrl)
-
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 bg-white rounded-lg border-dark my-4 p-0 shadow" style="font-size:14px;">
+            <h3 class="text-center m-2 p-2">کد فعالسازی</h3>
             <hr />
-
-            <div class="col-12">
-
-                <div class="col-12 container">
-                    <div class="form-horizontal ">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="text-center">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <div class="form-group">
-                                        <div class="col-12">
-                                            @Html.EditorFor(model => model.SmsCode, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*کد ارسال شده را وارد کنید", @uifocus = "focus" } })
-                                            @Html.ValidationMessageFor(model => model.SmsCode, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div id="timeSms" style="font-size:12px">ارسال مجدد کد بعد از <span class="countdown text-danger"></span> دقیقه!</div>
-                                    <div id="SendSms" class="text-info" style="display:none;"> <a onclick="SendSms('@Model.UserToken')" href="#" style="border-bottom:1px dashed;">ارسال مجدد کد </a></div>
-                                    <div class="form-group mb-0">
-                                        <div class="col-12">
-                                            @captcha.RenderMarkup()
-                                            @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-3 col-12">
-                                            <input type="submit" value="تایید کد" class="btn btn-danger col-12" style="background-color:#ff1654" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.UserToken)
+                @Html.HiddenFor(m => m.ReturnUrl)
+                <div class="text-center">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-12">
+                            @Html.EditorFor(model => model.SmsCode, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*کد ارسال شده را وارد کنید", @uifocus = "focus" } })
+                            @Html.ValidationMessageFor(model => model.SmsCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div id="timeSms" style="font-size:12px">ارسال مجدد کد بعد از <span class="countdown text-danger"></span> دقیقه!</div>
+                    <div id="SendSms" class="text-info" style="display:none;"> <a onclick="SendSms('@Model.UserToken')" href="#" style="border-bottom:1px dashed;">ارسال مجدد کد </a></div>
+                    <div class="form-group mb-0">
+                        <div class="col-12">
+                            @captcha.RenderMarkup()
+                            @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-12">
+                            <input type="submit" value="تایید کد" class="btn btn-danger col-12" style="background-color:#ff1654" />
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-    <div style="height:20px"></div>
 </div>
 @section scripts
 {
     @captcha.RenderScript()
-}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        var timer2 = "2:01";
+        var interval = setInterval(function () {
+            var timer = timer2.split(':');
+            //by parsing integer, I avoid all extra string processing
+            var minutes = parseInt(timer[0], 10);
+            var seconds = parseInt(timer[1], 10);
+            --seconds;
+            minutes = (seconds < 0) ? --minutes : minutes;
+            if (minutes < 0) clearInterval(interval);
+            seconds = (seconds < 0) ? 59 : seconds;
+            seconds = (seconds < 10) ? '0' + seconds : seconds;
+            //minutes = (minutes < 10) ?  minutes : minutes;
+            $('.countdown').html(minutes + ':' + seconds);
+            timer2 = minutes + ':' + seconds;
+            if (seconds == 0 && minutes == 0) {
+                $('#timeSms').hide();
+                $('#SendSms').css("display", "");
+            }
+        }, 1000);
 
-    var timer2 = "2:01";
-    var interval = setInterval(function () {
-
-
-        var timer = timer2.split(':');
-        //by parsing integer, I avoid all extra string processing
-        var minutes = parseInt(timer[0], 10);
-        var seconds = parseInt(timer[1], 10);
-        --seconds;
-        minutes = (seconds < 0) ? --minutes : minutes;
-        if (minutes < 0) clearInterval(interval);
-        seconds = (seconds < 0) ? 59 : seconds;
-        seconds = (seconds < 10) ? '0' + seconds : seconds;
-        //minutes = (minutes < 10) ?  minutes : minutes;
-        $('.countdown').html(minutes + ':' + seconds);
-        timer2 = minutes + ':' + seconds;
-        if (seconds == 0 && minutes == 0) {
-            $('#timeSms').hide();
-            $('#SendSms').css("display", "");
-        }
-    }, 1000);
-
-    function SendSms(id) {
-        $('#SendSms').hide();
-        $.ajax({
-            url: "/Account/SendSms/" + id,
-            type: "Get"
-
-        }).done(function (resault) {
-            alert(resault.Message);
-            location.reload();
-            $('#timeSms').css("display", "");
+        function SendSms(id) {
             $('#SendSms').hide();
+            $.ajax({
+                url: "/Account/SendSms/" + id,
+                type: "Get"
 
-        });
-    }
+            }).done(function (resault) {
+                alert(resault.Message);
+                location.reload();
+                $('#timeSms').css("display", "");
+                $('#SendSms').hide();
 
-</script>
+            });
+        }
+    </script>
+}
+
 

@@ -6,66 +6,49 @@
     var captcha = Html.Captcha("کد امنیتی جدید", "", 4, "لطفا کد امنیتی را وارد کنید", false);
 
 }
-<div class="col-12" style="background-color:#eaeded">
-    <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 text-center">
-        <br />
-    </div>
-    <div class="col-12 col-lg-4 col-xl-4 col-md-8 col-sm-8 offset-md-2 offset-lg-4 offset-xl-4 offset-sm-2 bg-white rounded-lg border-dark">
-        <h3 class="text-center m-2 p-2">ورود از سجام</h3>
-
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(m => m.ReturnUrl)
-
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 bg-white rounded-lg border-dark my-4 p-0 shadow" style="font-size:14px;">
+            <h3 class="text-center m-2 p-2">ورود از سجام</h3>
             <hr />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ReturnUrl)
 
-            <div class="col-12">
-
-                <div class="col-12 container">
-                    <div class="form-horizontal ">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="text-center">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <div class="form-group">
-                                        <div class="col-12">
-                                            @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*کد ملی خود را وارد کنید", @uifocus = "focus", maxlength = "10" } })
-                                            @Html.ValidationMessageFor(model => model.NationalCode, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group mb-0">
-                                        <div class="col-12">
-                                            @captcha.RenderMarkup()
-                                            @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-offset-3 col-12">
-                                            <input type="submit" value="ورود" class="btn btn-danger col-12" style="background-color:#ff1654" />
-                                        </div>
-                                        <div class="col-md-offset-3 col-12 pt-5">
-                                            <a href="https://www.sejam.ir/" target="_blank">
-                                                در صورت عدم ثبت نام در سجام، اینجا کلیک کنید
-                                            </a>
-                                        </div>
-                                        <div class="col-md-offset-3 col-12 pt-3">
-                                            <a href="/UserPanel/UserProfile">
-                                                <i class="bi bi-arrow-left-circle-fill"> بازگشت</i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="text-center">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <div class="col-12">
+                            @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control ltr-text", @placeholder = "*کد ملی خود را وارد کنید", @uifocus = "focus", maxlength = "10" } })
+                            @Html.ValidationMessageFor(model => model.NationalCode, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group mb-0">
+                        <div class="col-12">
+                            @captcha.RenderMarkup()
+                            @Html.ValidationMessage(captcha.BuildInfo.InputElementId, new { @class = "error" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-12">
+                            <input type="submit" value="ورود" class="btn btn-danger col-12" style="background-color:#ff1654" />
+                        </div>
+                        <div class="col-md-offset-3 col-12 pt-5">
+                            <a href="https://www.sejam.ir/" target="_blank">
+                                در صورت عدم ثبت نام در سجام، اینجا کلیک کنید
+                            </a>
+                        </div>
+                        <div class="col-md-offset-3 col-12 pt-3">
+                            <a href="/UserPanel/UserProfile">
+                                <i class="bi bi-arrow-left-circle-fill"> بازگشت</i>
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-    <div style="height:20px"></div>
 </div>
 
 @section scripts
