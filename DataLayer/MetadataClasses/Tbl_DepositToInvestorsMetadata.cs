@@ -23,6 +23,7 @@ namespace DataLayer
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
         [Display(Name = "تاریخ واریز")]
+        [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
         public DateTime? DepositDate { get; set; }
         public int? CreateUser_id { get; set; }
         public DateTime? CreateDate { get; set; }
