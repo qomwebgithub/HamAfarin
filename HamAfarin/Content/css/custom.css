@@ -1069,3 +1069,16 @@ input, [type="password"] {
 .label-btn-user {
     padding-top: 10px;
 }
+
+.transaction-report p {
+    font-size: 13px;
+    margin: 0.5rem 0;
+}
+
+.color-golden {
+    color: #d0aa45;
+}
+
+.transaction-report-icon {
+    font-size: 22px;
+}
