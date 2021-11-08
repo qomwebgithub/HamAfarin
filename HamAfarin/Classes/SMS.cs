@@ -72,7 +72,7 @@ namespace HamAfarin
             }
         }
 
-        public  (bool Success, string Message) AdpSendSMS(string mobileNumber, string message)
+        public (bool Success, string Message) AdpSendSMS(string mobileNumber, string message)
         {
             mobileNumber = FixMobileNumber(mobileNumber);
 
@@ -128,7 +128,7 @@ namespace HamAfarin
             {
                 client.BaseAddress = new Uri("https://ws2.adpdigital.com/url/");
 
-                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress="+ mobileNumber + "&srcaddress=98200071072&body="+ message + "&unicode=1", null);
+                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&srcaddress=98200071072&body=" + message + "&unicode=1", null);
                 if (response.IsSuccessStatusCode)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
@@ -168,20 +168,24 @@ namespace HamAfarin
 
         private string FixMobileNumber(string mobileNumber)
         {
+            string countryCode = "98";
             if (mobileNumber.Contains(","))
             {
                 string[] mobileNumbersArray = mobileNumber.Split(',');
 
                 List<string> lstFixedMobileNumbers = new List<string>();
 
-                foreach (string Number in mobileNumbersArray)
+                foreach (string number in mobileNumbersArray)
                 {
-                    lstFixedMobileNumbers.Add("98" + Number.Substring(1));
+                    if (number.Substring(0, 2) == countryCode)
+                        lstFixedMobileNumbers.Add(number);
+                    else
+                        lstFixedMobileNumbers.Add("98" + number.Substring(1));
                 }
 
                 mobileNumber = String.Join(",", lstFixedMobileNumbers);
             }
-            else
+            else if (mobileNumber.Substring(0, 2) != countryCode)
             {
                 mobileNumber = "98" + mobileNumber.Substring(1);
             }
