@@ -487,13 +487,14 @@ namespace Hamafarin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> SendSMSCertificateReady(int id)
         {
-            List<string> lstUserID = await db.Tbl_BusinessPlanPayment
+            List<string> lstMobile = await db.Tbl_BusinessPlanPayment
                 .Include(p => p.Tbl_Users)
                 .Where(p => p.BusinessPlan_id == id && p.IsConfirmedFromFaraboors)
                 .Select(p => p.Tbl_Users.MobileNumber)
                 .Distinct()
                 .ToListAsync();
-            var mobileNumbers = String.Join(",",lstUserID);
+            var mobileNumbers = String.Join(",",lstMobile);
+            // 6 = صدور گواهی شراکت
             Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(6);
             string message = qSms.Message;
             if (message.Contains("@T"))
