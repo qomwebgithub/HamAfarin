@@ -7,12 +7,15 @@ using System.Web.Mvc;
 using ViewModels;
 using Common;
 using AutoMapper;
+using System.Threading.Tasks;
+using System.Data.Entity;
 
 namespace HamAfarin.Areas.Admin.Controllers
 {
     public class Tbl_DepositToInvestorsController : Controller
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
+        SMS oSms = new SMS();
 
         // GET: UserPanel/DepositToInvestors
         public ActionResult Index()
@@ -107,6 +110,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             IMapper iMapper = config.CreateMapper();
             Tbl_DepositToInvestors tblDepositToInvestors = iMapper.Map<DepositToInvestorsViewModel, Tbl_DepositToInvestors>(depositToInvestors);
             tblDepositToInvestors.IsDelete = false;
+            tblDepositToInvestors.IsPaid = false;
             tblDepositToInvestors.CreateUser_id = userIdentity;
             tblDepositToInvestors.CreateDate = dateTimeNow;
             if (tblDepositToInvestors.IsPaid)
@@ -188,6 +192,51 @@ namespace HamAfarin.Areas.Admin.Controllers
                 .ToList();
 
             return Json(listInvestorsViewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ConfirmDeposit(int id)
+        {
+            
+            List<string> mobileNumbersList = await db.Tbl_DepositToInvestorsDetails
+                .Join(db.Tbl_Users,
+                    d => d.InvestorUser_id,
+                    u => u.UserID,
+                    (deposit, user) => new { deposit, user })
+                .Join(db.Tbl_UserProfiles,
+                    c => c.user.UserID,
+                    p => p.User_id,
+                    (combinedEntry, profile) => new
+                    {
+                        Deposit_id = combinedEntry.deposit.Deposit_id,
+                        IsDelete = combinedEntry.deposit.IsDelete,
+                        Mobile = profile.MobileNumber
+                    })
+                .Where(f => f.Deposit_id == id && f.IsDelete == false)
+                .Select(f => f.Mobile)
+                .Distinct()
+                .ToListAsync();
+
+            string mobileNumbers = String.Join(",", mobileNumbersList);
+            // 9 = واریز
+            Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(9);
+            string message = qSms.Message;
+
+            //متن داینامیک پیاده سازی نشده است
+            //if (message.Contains("@T"))
+            //    message = message.Replace("@T", qTbl_DepositToInvestors.Tbl_BussinessPlans.Title);
+
+            (bool Success, string Message) smsResult = await oSms.AdpSendSMSAsync(mobileNumbers, message);
+
+            if (smsResult.Success)
+            {
+                Tbl_DepositToInvestors qTbl_DepositToInvestors = await db.Tbl_DepositToInvestors.FirstOrDefaultAsync(d => d.IsDelete == false && d.DepositID == id);
+                qTbl_DepositToInvestors.IsPaid = true;
+                await db.SaveChangesAsync();
+            }
+                
+
+            return Json(new { success = smsResult.Success, message = smsResult.Success ? "عملیات با موفقیت انجام شد" : smsResult.Message });
         }
 
         protected override void Dispose(bool disposing)

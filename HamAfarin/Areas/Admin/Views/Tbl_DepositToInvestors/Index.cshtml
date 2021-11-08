@@ -23,6 +23,10 @@
         columns.Bound(item => @item.DepositID).Title("دستورات").Filterable(false).Groupable(false)
             .Template(@<text>
                     @Html.ActionLink("جزییات", "Details", new { id = @item.DepositID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+                    @if (item.IsPaid == false)
+                    {
+                        <a id="confirm" class="btn btn-outline-danger btn-sm" onclick="confirmDeposit(@item.DepositID)">تایید پرداخت</a>
+                    }
                 </text>).Width(200).Width(100);
     })
     .ToolBar(toolbar =>
@@ -38,3 +42,38 @@
         .Model(model => model.Id(item => item.DepositID))
     )
 )
+
+@section Scripts {
+    <script>
+        function confirmDeposit(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: 'آیا از تایید تراکنش و ارسال پیامک به تمامی سرمایه گذاران این طرح مطمئن هستید؟',
+                showCancelButton: true,
+                confirmButtonText: `بله`,
+                cancelButtonText: 'خیر',
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const confirmBtn = $('#confirm');
+                    confirmBtn.addClass("disabled");
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Tbl_DepositToInvestors/ConfirmDeposit/" + id,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                confirmBtn.hide();
+                            }
+                            else {
+                                toastr.error(data.message);
+                                confirmBtn.removeClass("disabled");
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+}
