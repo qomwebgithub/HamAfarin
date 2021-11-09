@@ -9,6 +9,9 @@ using Common;
 using AutoMapper;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System.Data;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace HamAfarin.Areas.Admin.Controllers
 {
@@ -26,6 +29,71 @@ namespace HamAfarin.Areas.Admin.Controllers
                 .ToList();
 
             return View(listTbl_DepositToInvestors);
+        }
+
+        public FileResult ExcelReport(int id)
+        {
+            List<InvestorViewModel> depositProfileList = (
+                from u in db.Tbl_Users
+                join UserProfiles in db.Tbl_UserProfiles
+                    on u.UserID equals UserProfiles.User_id into UserGroup
+                from p in UserGroup.DefaultIfEmpty()
+                join PersonLegal in db.Tbl_PersonLegal
+                    on u.UserID equals PersonLegal.User_id into LegalGroup
+                from l in LegalGroup.DefaultIfEmpty()
+                join DepositToInvestorsDetails in db.Tbl_DepositToInvestorsDetails
+                    on p.User_id equals DepositToInvestorsDetails.InvestorUser_id into InvestorGroup
+                from i in InvestorGroup.DefaultIfEmpty()
+                where i.Deposit_id == id && i.IsDelete == false
+                select new InvestorViewModel
+                {
+                    UserID = u.UserID,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    CompanyName = l.CompanyName,
+                    NationalId = p.NationalCode,
+                    CompanyId = l.NationalId,
+                    MobileNumber = p.MobileNumber,
+                    Sheba = p.AccountSheba,
+                    DepositAmount = (long)i.DepositAmount
+                }
+            ).ToList();
+
+            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "مبلغ واریزی" };
+
+            DataTable dt = new DataTable("Grid");
+            foreach (var item in lstColumnsName)
+            {
+                dt.Columns.Add(item);
+            }
+
+            foreach (var item in depositProfileList)
+            {
+                dt.Rows.Add(
+                    item.CompanyName == null ? item.FirstName : "",
+                    item.CompanyName ?? item.LastName,
+                    item.CompanyId ?? item.NationalId,
+                    item.MobileNumber,
+                    item.Sheba,
+                    item.DepositAmount
+                );
+            }
+
+            string title = db.Tbl_DepositToInvestors
+                .Where(d => d.DepositID == id)
+                .Select(d => d.Tbl_BussinessPlans.Title)
+                .FirstOrDefault();
+
+            using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"فهرست واریزی برای  {title} ({DateTime.Now.ToString("yyyy-MM-dd")}).xlsx");
+                }
+            }
+
         }
 
         public ActionResult Details(int id)
@@ -197,7 +265,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmDeposit(int id)
         {
-            
+
             List<string> mobileNumbersList = await db.Tbl_DepositToInvestorsDetails
                 .Join(db.Tbl_Users,
                     d => d.InvestorUser_id,
@@ -234,7 +302,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 qTbl_DepositToInvestors.IsPaid = true;
                 await db.SaveChangesAsync();
             }
-                
+
 
             return Json(new { success = smsResult.Success, message = smsResult.Success ? "عملیات با موفقیت انجام شد" : smsResult.Message });
         }
