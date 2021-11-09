@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using ClosedXML.Excel;
 using Common;
 using DataLayer;
 using HamAfarin;
@@ -30,6 +31,58 @@ namespace Hamafarin.Areas.Admin.Controllers
         {
             var tbl_BussinessPlans = db.Tbl_BussinessPlans.Include(t => t.Tbl_BussinessPlan_BussenessFields).Include(t => t.Tbl_BussinessPlan_FinancialDuration).Include(t => t.Tbl_CompanyType).Include(t => t.Tbl_MonetaryUnits).Include(t => t.Tbl_Users);
             return View(tbl_BussinessPlans.OrderByDescending(c => c.CreateDate).ToList());
+        }
+
+        public FileResult ExcelReport(int id)
+        {
+            var investorsProfileList = db.Tbl_BusinessPlanPayment
+                .Where(b => b.IsDelete == false &&
+                    b.BusinessPlan_id == id &&
+                    b.IsConfirmedFromFaraboors)
+                .GroupBy(c => c.PaymentUser_id)
+                .Select(g => new
+                {
+                    UserID = (int)g.Key,
+                    Profile = g.Select(a => a.Tbl_Users.Tbl_UserProfiles.FirstOrDefault()).FirstOrDefault(),
+                    PersonLegal = g.Select(a => a.Tbl_Users.Tbl_PersonLegal.FirstOrDefault()).FirstOrDefault(),
+                    TotalPaymentPrice = (long)g.Sum(b => b.PaymentPrice),
+                })
+                .ToList();
+
+            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "کل سرمایه گذاری" };
+
+            DataTable dt = new DataTable("Grid");
+            foreach (var item in lstColumnsName)
+            {
+                dt.Columns.Add(item);
+            }
+
+            foreach (var item in investorsProfileList)
+            {
+                dt.Rows.Add(
+                    item.PersonLegal == null ? item.Profile.FirstName : "",
+                    item.PersonLegal == null ? item.Profile.LastName : item.PersonLegal.CompanyName,
+                    item.PersonLegal == null ? item.Profile.NationalCode : item.PersonLegal.NationalId ,
+                    item.Profile.MobileNumber,
+                    item.Profile.AccountSheba,
+                    item.TotalPaymentPrice
+                );
+            }
+
+            string title = db.Tbl_BussinessPlans
+                .Where(b => b.BussinessPlanID == id)
+                .Select(b => b.Title)
+                .FirstOrDefault();
+
+            using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"فهرست سرمایه گذاران  {title} ({DateTime.Now.ToString("yyyy-MM-dd")}).xlsx");
+                }
+            }
         }
 
         // GET: Admin/Tbl_BussinessPlans/Details/5
@@ -493,7 +546,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 .Select(p => p.Tbl_Users.MobileNumber)
                 .Distinct()
                 .ToListAsync();
-            var mobileNumbers = String.Join(",",lstMobile);
+            var mobileNumbers = String.Join(",", lstMobile);
             // 6 = صدور گواهی شراکت
             Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(6);
             string message = qSms.Message;

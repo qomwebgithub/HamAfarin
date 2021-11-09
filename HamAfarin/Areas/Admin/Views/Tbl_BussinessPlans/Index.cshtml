@@ -25,6 +25,7 @@
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/DraftsPayments/@item.BussinessPlanID">پرداخت های ناقص</a>
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/SubmittedPayments/@item.BussinessPlanID">پرداخت های تایید شده</a>
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/UnSubmittedPayments/@item.BussinessPlanID">پرداخت های تایید نشده</a>
+            <a href="@Url.Action("ExcelReport")/@item.BussinessPlanID" class="btn btn-sm btn-info">گزارش</a>
             <a id="SendSMS" class="btn btn-outline-danger btn-sm" onclick="confirmSendSMS(@item.BussinessPlanID)">پیامک گواهی</a>
         </text>).Width(320);
 
