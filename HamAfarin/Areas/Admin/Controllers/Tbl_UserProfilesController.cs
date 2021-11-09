@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using Common;
 using DataLayer;
 
@@ -18,8 +21,77 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_UserProfiles
         public ActionResult Index()
         {
-            var tbl_UserProfiles = db.Tbl_UserProfiles.Where(p=>p.IsDeleted == false).Include(t => t.Tbl_Users);
+            var tbl_UserProfiles = db.Tbl_UserProfiles.Where(p => p.IsDeleted == false).Include(t => t.Tbl_Users);
             return View(tbl_UserProfiles.ToList());
+        }
+
+        public FileResult ExcelReport(string startDate, string endDate)
+        {
+            var userProfileList = db.Tbl_UserProfiles
+                .Where(p => p.IsDeleted == false);
+
+            if (startDate.HasValue())
+            {
+                var date = StringExtensions.StringToDate(startDate);
+                userProfileList = userProfileList.Where(p => p.CreateDate >= date);
+            }
+            if (endDate.HasValue())
+            {
+                var date = StringExtensions.StringToDate(endDate);
+                userProfileList = userProfileList.Where(p => p.CreateDate <= date);
+            }
+
+            userProfileList = userProfileList.OrderBy(p => p.CreateDate);
+
+            List<string> lstColumnsName = new List<string>
+            {
+                "تاریخ ایجاد",
+                "موبایل",
+                "نام",
+                "نام خانوادگی",
+                "کد ملی",
+                "نام پدر",
+                "کد سجام",
+                "شماره کاربری",
+                "ش حساب شبا",
+                "ایمیل",
+                "تاریخ تولد",
+                "جنسیت",
+            };
+
+            DataTable dt = new DataTable("Grid");
+            foreach (var item in lstColumnsName)
+            {
+                dt.Columns.Add(item);
+            }
+
+            foreach (var item in userProfileList.ToList())
+            {
+                dt.Rows.Add(
+                    item.CreateDate,
+                    item.MobileNumber,
+                    item.FirstName,
+                    item.LastName,
+                    item.NationalCode,
+                    item.FatherName,
+                    item.SejamCode,
+                    item.AccountNumber,
+                    item.AccountSheba,
+                    item.Email,
+                    item.BirthDate,
+                    item.Gender
+                );
+            }
+
+            using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"فهرست پروفایل کاربران ({DateTime.Now.ToString("yyyy-MM-dd")}).xlsx");
+                }
+            }
         }
 
         // GET: Admin/Tbl_UserProfiles/Details/5
@@ -29,7 +101,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tbl_UserProfiles tbl_UserProfiles = db.Tbl_UserProfiles.FirstOrDefault(u=>u.User_id == id);
+            Tbl_UserProfiles tbl_UserProfiles = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == id);
             if (tbl_UserProfiles == null)
             {
                 return HttpNotFound();
@@ -125,7 +197,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Tbl_UserProfiles tbl_UserProfiles = db.Tbl_UserProfiles.FirstOrDefault(p=>p.ProfileID ==  id);
+            Tbl_UserProfiles tbl_UserProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.ProfileID == id);
             //  db.Tbl_UserProfiles.Remove(tbl_UserProfiles);
             tbl_UserProfiles.IsDeleted = true;
             db.SaveChanges();
