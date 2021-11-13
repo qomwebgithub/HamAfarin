@@ -78,7 +78,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     item.AccountNumber,
                     item.AccountSheba,
                     item.Email,
-                    item.BirthDate,
+                    item.BirthDate.Value.ToString("yyyy-MM-dd"),
                     item.Gender
                 );
             }
