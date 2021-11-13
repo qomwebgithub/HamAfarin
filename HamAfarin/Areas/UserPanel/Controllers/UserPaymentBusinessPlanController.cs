@@ -1,9 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Common;
 using DataLayer;
 using Hamafarin;
 using Newtonsoft.Json;
@@ -18,6 +24,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
         UserService userService = new UserService();
         PlanService planService = new PlanService();
+        SMS oSms = new SMS();
 
         // GET: UserPanel/UserPaymentBusinessPlan
         /// <summary>
@@ -108,10 +115,6 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id);
             bool boolIsRequestedReturn = false;
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
-
-
-
-
 
             // تعداد روز های باقیمانده
             int qRemainingDay = planService.calculateRemainDay(tbl_BussinessPlans);
@@ -221,12 +224,6 @@ namespace HamAfarin.Areas.UserPanel.Controllers
 
             ViewBag.Notify = notify;
 
-            //if (notify)
-            //{
-            //    ViewBag.Time =
-            //    ViewBag.Date = 
-            //}
-
             return View(selectPayment);
         }
 
@@ -256,5 +253,54 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
         }
 
+        public async Task<ActionResult> SendFaraboors(int id)
+        {
+            int userIdentity = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            int onlinePayment = 2;
+
+            Tbl_BusinessPlanPayment qBusinessPlanPayment = await db.Tbl_BusinessPlanPayment
+                .FirstOrDefaultAsync(
+                    b => b.PaymentID == id &&
+                    b.PaymentUser_id == userIdentity &&
+                    b.IsPaid &&
+                    b.PaymentType_id == onlinePayment &&
+                    b.IsDelete == false
+                );
+
+            if (qBusinessPlanPayment == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            //Date format example : "2021-07-14T11:48:27.974Z"
+            string date = qBusinessPlanPayment.PaidDateTime.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+
+            FaraboorsClass faraboorsClass = new FaraboorsClass();
+            var apiResult = await faraboorsClass.ProjectFinancingProviderAsync(id, date);
+            qBusinessPlanPayment.FaraboorsResponse = apiResult.Message;
+            if (apiResult.Success)
+            {
+                qBusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
+                qBusinessPlanPayment.IsConfirmedFromAdmin = true;
+                qBusinessPlanPayment.AdminCheckDate = DateTime.Now;
+                AdminConfimSendSMS(qBusinessPlanPayment.BusinessPlan_id, qBusinessPlanPayment.PaymentUser_id);
+                qBusinessPlanPayment.IsConfirmedFromFaraboors = true;
+                qBusinessPlanPayment.FaraboorsConfirmDate = DateTime.Now;
+            }
+            await db.SaveChangesAsync();
+            return Json(new { success = apiResult.Success, message = apiResult.Message });
+        }
+
+        private void AdminConfimSendSMS(int? businessPlan_id, int? paymentUser_id)
+        {
+            // 5 = تایید سرمایه گذاری توسط ادمین
+            string message = db.Tbl_Sms.Find(5).Message;
+            if (message.Contains("@T"))
+            {
+                Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == businessPlan_id);
+                message = message.Replace("@T", qBussinessPlan.Title);
+            }
+
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
+            (bool Success, string Message) smsResult = oSms.AdpSendSMS(qUser.MobileNumber, message);
+        }
     }
 }

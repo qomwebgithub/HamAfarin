@@ -26,9 +26,12 @@ namespace HamAfarin
             if (!Context.Request.IsSecureConnection && Context.Request.Url.Host != "localhost")
                 Response.Redirect(Context.Request.Url.ToString().Replace("http:", "https:"));
 
-            var persianCulture = new PersianCulture();
-            Thread.CurrentThread.CurrentCulture = persianCulture;
-            Thread.CurrentThread.CurrentUICulture = persianCulture;
+            if (Context.Request.AppRelativeCurrentExecutionFilePath.Contains("~/UserPanel/UserPaymentBusinessPlan/SendFaraboors") == false)
+            {
+                PersianCulture persianCulture = new PersianCulture();
+                Thread.CurrentThread.CurrentCulture = persianCulture;
+                Thread.CurrentThread.CurrentUICulture = persianCulture;
+            }
         }
 
         protected void Application_PostAuthorizeRequest()

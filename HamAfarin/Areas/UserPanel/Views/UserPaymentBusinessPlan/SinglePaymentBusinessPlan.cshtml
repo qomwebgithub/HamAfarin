@@ -905,6 +905,20 @@
             });
         }
 
+        if (@ViewBag.Notify.ToString().ToLower()) {
+            $.ajax({
+                type: "POST",
+                url: "/UserPanel/UserPaymentBusinessPlan/SendFaraboors/" + @Model.PaymentID,
+            });
+            Swal.fire({
+                icon: 'info',
+                title: 'توجه',
+                text: 'شما می توانید در هر زمانی با استفاده از دکمه چاپ قرارداد، قرارداد خود را دانلود یا چاپ نمایید.',
+                confirmButtonText: `باشه`,
+                confirmButtonColor: '#d0aa45',
+            })
+        }
+
         function inputCheck() {
             let button = document.querySelector("#CancelPaymentBtn");
             let input = document.querySelector("#CancelPaymentInput");
