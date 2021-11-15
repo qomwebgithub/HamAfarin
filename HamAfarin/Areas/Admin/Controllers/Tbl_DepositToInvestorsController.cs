@@ -12,6 +12,7 @@ using System.Data.Entity;
 using System.Data;
 using ClosedXML.Excel;
 using System.IO;
+using System.Globalization;
 
 namespace HamAfarin.Areas.Admin.Controllers
 {
@@ -162,9 +163,11 @@ namespace HamAfarin.Areas.Admin.Controllers
                 return View(depositToInvestors);
             }
 
+            depositToInvestors.YieldPercent = decimal.Parse(depositToInvestors.StringYieldPercent, CultureInfo.InvariantCulture);
+
             if (depositToInvestors.YieldPercent <= 0)
             {
-                ModelState.AddModelError("YieldPercent", "درصد واریز باید بزرگتر از 0 باشد");
+                ModelState.AddModelError("StringYieldPercent", "درصد واریز باید بزرگتر از 0 باشد");
                 return View(depositToInvestors);
             }
 

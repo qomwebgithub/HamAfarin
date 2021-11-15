@@ -36,9 +36,9 @@
             @Html.ValidationMessageFor(model => model.DepositType_id)
         </div>
         <div class="form-group col-md-3">
-            @Html.LabelFor(model => model.YieldPercent)
-            @Html.EditorFor(model => model.YieldPercent, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.YieldPercent)
+            @Html.LabelFor(model => model.StringYieldPercent)
+            @Html.EditorFor(model => model.StringYieldPercent, new { htmlAttributes = new { @class = "form-control", @style = "direction:ltr" } })
+            @Html.ValidationMessageFor(model => model.StringYieldPercent)
         </div>
         <div class="form-group col-md-3">
             @Html.LabelFor(model => model.DepositDate)
@@ -119,13 +119,12 @@
     <script>
         //تغییر درصد در هنگام تغییر نوع واریز
         $('#DepositType_id').change(function () {
-            debugger;
             const depositTypeId = $(DepositType_id).val();
             if (depositTypeId === '2' || depositTypeId === '3') {
-                $('#YieldPercent').val('100');
+                $('#StringYieldPercent').val('100');
                 tableChange();
             } else {
-                $('#YieldPercent').val('0');
+                $('#StringYieldPercent').val('0');
                 tableChange();
             }
         });
@@ -137,7 +136,7 @@
         });
 
         //لود جدول در هنگام تغییر طرح یا درصد
-        $('#Plan_id,#YieldPercent').change(function () {
+        $('#Plan_id,#StringYieldPercent').change(function () {
             tableChange();
         });
 
@@ -194,7 +193,7 @@
         //بروزرسانی جدول در هنگام تغییر
         function tableChange() {
             const plan = parseInt($('#Plan_id').val());
-            const percent = parseFloat($('#YieldPercent').val());
+            const percent = parseFloat($('#StringYieldPercent').val());
             $('#investors tbody').children("tr").remove();
             if (plan) ajaxRequest(plan, percent);
         }

@@ -21,7 +21,9 @@ namespace ViewModels
         public int DepositType_id { get; set; }
         [Display(Name = "درصد واریز")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:#.#}")]
+        [RegularExpression("[+-]?([0-9]*[.])?[0-9]+", ErrorMessage = "عدد می بایست طبیعی یا اعشاری باشد مثال 2.5 یا 2")]
+        public string StringYieldPercent { get; set; }
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:#.#}")]
         public decimal YieldPercent { get; set; }
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
