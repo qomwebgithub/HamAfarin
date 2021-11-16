@@ -57,6 +57,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                 "ایمیل",
                 "تاریخ تولد",
                 "جنسیت",
+                "استان",
+                "شهر",
             };
 
             DataTable dt = new DataTable("Grid");
@@ -79,7 +81,9 @@ namespace HamAfarin.Areas.Admin.Controllers
                     item.AccountSheba,
                     item.Email,
                     item.BirthDate.Value.ToString("yyyy-MM-dd"),
-                    item.Gender
+                    item.Gender,
+                    item.Province,
+                    item.City
                 );
             }
 
