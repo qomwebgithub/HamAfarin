@@ -33,6 +33,8 @@ namespace DataLayer
         public string Email { get; set; }
         public Nullable<System.DateTime> BirthDate { get; set; }
         public string Gender { get; set; }
+        public string Province { get; set; }
+        public string City { get; set; }
         public string PlaceOfIssue { get; set; }
         public string PlaceOfBirth { get; set; }
         public string SignitureFile { get; set; }

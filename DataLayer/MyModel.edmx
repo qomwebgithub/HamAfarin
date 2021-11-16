@@ -655,6 +655,8 @@
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="BirthDate" Type="datetime" />
           <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Province" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
           <Property Name="PlaceOfIssue" Type="nvarchar(max)" />
           <Property Name="PlaceOfBirth" Type="nvarchar(max)" />
           <Property Name="SignitureFile" Type="nvarchar(max)" />
@@ -963,6 +965,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_DepositToInvestorsDetails" Type="Self.Tbl_DepositToInvestorsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_DepositToInvestorsDetails">
+              <PropertyRef Name="InvestorUser_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
           <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
           <End Role="Tbl_DepositToInvestorsDetails" Type="Self.Tbl_DepositToInvestorsDetails" Multiplicity="*" />
@@ -972,18 +986,6 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Principal>
             <Dependent Role="Tbl_DepositToInvestorsDetails">
               <PropertyRef Name="DeleteUser_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users2">
-          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
-          <End Role="Tbl_DepositToInvestorsDetails" Type="Self.Tbl_DepositToInvestorsDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Tbl_DepositToInvestorsDetails">
-              <PropertyRef Name="InvestorUser_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1302,11 +1304,11 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" Association="Self.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
+          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users" Association="Self.FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" Association="Self.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2">
+          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" Association="Self.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
@@ -1516,11 +1518,11 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <End Role="Tbl_DepositToInvestors" EntitySet="Tbl_DepositToInvestors" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
+          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2">
+          <AssociationSet Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_DepositToInvestorsDetails" EntitySet="Tbl_DepositToInvestorsDetails" />
           </AssociationSet>
@@ -1872,8 +1874,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="DeleteUser_id" Type="Int32" />
           <Property Name="DeleteDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_DepositToInvestors" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_DepositToInvestors" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_DepositToInvestors" />
-          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
-          <NavigationProperty Name="Tbl_Users1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
+          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
+          <NavigationProperty Name="Tbl_Users1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_DepositToInvestorsDetails" ToRole="Tbl_Users" />
         </EntityType>
         <EntityType Name="Tbl_DepositTypes">
           <Key>
@@ -2275,6 +2277,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BirthDate" Type="DateTime" Precision="3" />
           <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Province" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PlaceOfIssue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PlaceOfBirth" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SignitureFile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -2309,8 +2313,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <NavigationProperty Name="Tbl_CommentPlan" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_CommentPlan_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_CommentPlan" />
           <NavigationProperty Name="Tbl_DepositToInvestors" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestors" />
           <NavigationProperty Name="Tbl_DepositToInvestors1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestors" />
-          <NavigationProperty Name="Tbl_DepositToInvestorsDetails" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
-          <NavigationProperty Name="Tbl_DepositToInvestorsDetails1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users2" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
+          <NavigationProperty Name="Tbl_DepositToInvestorsDetails" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
+          <NavigationProperty Name="Tbl_DepositToInvestorsDetails1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
           <NavigationProperty Name="Tbl_PaymentReturned" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentReturned_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_PaymentReturned" />
           <NavigationProperty Name="Tbl_PersonLegal" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PersonLegal_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_PersonLegal" />
           <NavigationProperty Name="Tbl_Roles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Users_Tbl_Roles" FromRole="Tbl_Users" ToRole="Tbl_Roles" />
@@ -2637,6 +2641,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_DepositToInvestorsDetails" Role="Tbl_DepositToInvestorsDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_DepositToInvestorsDetails">
+              <PropertyRef Name="InvestorUser_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users1">
           <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
           <End Type="webqomir_HamAfarinDBModel.Tbl_DepositToInvestorsDetails" Role="Tbl_DepositToInvestorsDetails" Multiplicity="*" />
@@ -2646,18 +2662,6 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Principal>
             <Dependent Role="Tbl_DepositToInvestorsDetails">
               <PropertyRef Name="DeleteUser_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Tbl_DepositToInvestorsDetails_Tbl_Users2">
-          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
-          <End Type="webqomir_HamAfarinDBModel.Tbl_DepositToInvestorsDetails" Role="Tbl_DepositToInvestorsDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Tbl_Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Tbl_DepositToInvestorsDetails">
-              <PropertyRef Name="InvestorUser_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3475,6 +3479,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="SignitureFile" ColumnName="SignitureFile" />
                 <ScalarProperty Name="PlaceOfBirth" ColumnName="PlaceOfBirth" />
                 <ScalarProperty Name="PlaceOfIssue" ColumnName="PlaceOfIssue" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
                 <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
