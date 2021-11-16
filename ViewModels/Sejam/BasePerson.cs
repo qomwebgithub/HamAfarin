@@ -20,12 +20,16 @@ namespace ViewModels
             privatePerson = jUser["privatePerson"];
             accounts = jUser["accounts"][0];
             tradingCodes = jUser["tradingCodes"][0];
+            province = (string)jUser["addresses"][0]["province"]["name"];
+            city = (string)jUser["addresses"][0]["city"]["name"];
         }
         public string mobile { get; set; }
         public string email { get; set; }
         public string uniqueIdentifier { get; set; }
         public string type { get; set; }
         public string status { get; set; }
+        public string province { get; set; }
+        public string city { get; set; }
         public PrivatePersonViewModel privatePerson { get; set; }
         public BankingAccountViewModel accounts { get; set; }
         public TradingCodeViewModel tradingCodes { get; set; }

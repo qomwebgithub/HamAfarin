@@ -372,6 +372,8 @@ namespace HamAfarin
                     oUserProfiles.IsDeleted = false;
                     //  oUserProfiles.strBirthDate = oBasePerson.privatePerson.birthDate;
                     oUserProfiles.MobileNumber = oBasePerson.mobile;
+                    oUserProfiles.Province = oBasePerson.province;
+                    oUserProfiles.City = oBasePerson.city;
                     oUserProfiles.ProfileNationalId = oBasePerson.privatePerson.shNumber;
                     oUserProfiles.AccountSheba = oBasePerson.accounts.sheba;
                     oUserProfiles.SejamCode = oBasePerson.tradingCodes.code;
@@ -394,6 +396,8 @@ namespace HamAfarin
                         IsDeleted = false,
                         // strBirthDate = oBasePerson.privatePerson.birthDate,
                         MobileNumber = oBasePerson.mobile,
+                        Province = oBasePerson.province,
+                        City = oBasePerson.city,
                         ProfileNationalId = oBasePerson.privatePerson.shNumber,
                         AccountSheba = oBasePerson.accounts.sheba,
                         SejamCode = oBasePerson.tradingCodes.code
@@ -420,7 +424,6 @@ namespace HamAfarin
                 db.SaveChanges();
                 return false;
             }
-            return false;
         }
 
         private DateTime StringToDate(string strBirthDate)
