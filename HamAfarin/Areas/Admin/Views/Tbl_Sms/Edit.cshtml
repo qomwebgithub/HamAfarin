@@ -19,7 +19,7 @@
     @Html.HiddenFor(model => model.EditDate)
 
     @* تایید سرمایه گذاری توسط ادمین=5 | صدور گواهی شراکت=6 *@
-    @if (Model.ID == 5 || Model.ID == 6)
+    @if (Model.ID == 5 || Model.ID == 6 || Model.ID == 9)
     {
         <h5>توجه: برای جای گذاری نام طرح از @@T استفاده کنید</h5>
     }

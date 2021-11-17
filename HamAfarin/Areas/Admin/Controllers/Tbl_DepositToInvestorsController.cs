@@ -60,9 +60,12 @@ namespace HamAfarin.Areas.Admin.Controllers
                 }
             ).ToList();
 
-            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "مبلغ واریزی" };
+            Tbl_DepositToInvestors deposit = db.Tbl_DepositToInvestors.FirstOrDefault(d => d.DepositID == id);
 
-            DataTable dt = new DataTable("Grid");
+            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "مبلغ واریزی", "تاریخ واریز", "نوع واریز", "درصد واریز", "کل مبلغ واریزی" };
+
+            DataTable dt = new DataTable("جزییات واریز");
+
             foreach (var item in lstColumnsName)
             {
                 dt.Columns.Add(item);
@@ -76,14 +79,13 @@ namespace HamAfarin.Areas.Admin.Controllers
                     item.CompanyId ?? item.NationalId,
                     item.MobileNumber,
                     item.Sheba,
-                    item.DepositAmount
+                    item.DepositAmount,
+                    deposit.DepositDate,
+                    deposit.Tbl_DepositTypes.DepositTypeName,
+                    deposit.YieldPercent,
+                    deposit.TotalDeposit
                 );
             }
-
-            string title = db.Tbl_DepositToInvestors
-                .Where(d => d.DepositID == id)
-                .Select(d => d.Tbl_BussinessPlans.Title)
-                .FirstOrDefault();
 
             using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
             {
@@ -91,7 +93,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 using (MemoryStream stream = new MemoryStream()) //using System.IO;  
                 {
                     wb.SaveAs(stream);
-                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"فهرست واریزی برای  {title} ({DateTime.Now.ToString("yyyy-MM-dd")}).xlsx");
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"فهرست واریزی برای  {deposit.Tbl_BussinessPlans.Title} ({DateTime.Now.ToString("yyyy-MM-dd")}).xlsx");
                 }
             }
 
@@ -268,7 +270,6 @@ namespace HamAfarin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> ConfirmDeposit(int id)
         {
-
             List<string> mobileNumbersList = await db.Tbl_DepositToInvestorsDetails
                 .Join(db.Tbl_Users,
                     d => d.InvestorUser_id,
@@ -289,23 +290,24 @@ namespace HamAfarin.Areas.Admin.Controllers
                 .ToListAsync();
 
             string mobileNumbers = String.Join(",", mobileNumbersList);
+
             // 9 = واریز
             Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(9);
             string message = qSms.Message;
 
-            //متن داینامیک پیاده سازی نشده است
-            //if (message.Contains("@T"))
-            //    message = message.Replace("@T", qTbl_DepositToInvestors.Tbl_BussinessPlans.Title);
+            Tbl_DepositToInvestors qTbl_DepositToInvestors = await db.Tbl_DepositToInvestors.FirstOrDefaultAsync(d => d.IsDelete == false && d.DepositID == id);
+            
+            //متن داینامیک
+            if (message.Contains("@T"))
+                message = message.Replace("@T", qTbl_DepositToInvestors.Tbl_BussinessPlans.Title);
 
             (bool Success, string Message) smsResult = await oSms.AdpSendSMSAsync(mobileNumbers, message);
 
             if (smsResult.Success)
             {
-                Tbl_DepositToInvestors qTbl_DepositToInvestors = await db.Tbl_DepositToInvestors.FirstOrDefaultAsync(d => d.IsDelete == false && d.DepositID == id);
                 qTbl_DepositToInvestors.IsPaid = true;
                 await db.SaveChangesAsync();
             }
-
 
             return Json(new { success = smsResult.Success, message = smsResult.Success ? "عملیات با موفقیت انجام شد" : smsResult.Message });
         }
