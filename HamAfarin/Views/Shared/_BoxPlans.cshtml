@@ -8,7 +8,7 @@
                 <img src="~/Images/BusinessPlans/Thumb/@Model.ImageName" style="height:200px; width:100%" class="card-img-top" alt="@Model.Title">
                 <div style="position: absolute;top: 2px;left: 2px;background-color:white; padding:2px; color:grey" class="small rounded" data-toggle="tooltip" data-placement="right" title="@Model.CodeOTC">
                     <i class="bi bi-plus-circle"></i>
-                    کد فرابورس طرح
+                    نماد فرابورس طرح
                 </div>
             </div>
             <div class="card-body">
@@ -28,7 +28,7 @@
                         @{ if (Model.RemainingTime < 0)
                             {
                                 <strong class="small font-weight-bold text-danger">
-                                    زمان سرمایه گذاری به اتمام رسید  - @Model.PercentageComplate%
+                                    با موفقیت تکمیل شد  - @Model.PercentageComplate%
                                 </strong>
                             }
                             else if (Model.RemainingTime == 0)

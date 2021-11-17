@@ -231,6 +231,12 @@
                                             به اتمام رسید
                                         </p>
                                     }
+                                    else if (Model.RemainingTime <= 7)
+                                    {
+                                        <p class="mb-0 small text-danger font-weight-bold text-center">
+                                            @Model.RemainingTime روز
+                                        </p>
+                                    }
                                     else
                                     {
                                         <p class="mb-0 small font-weight-bold text-center">
@@ -369,7 +375,7 @@
                             </div>
 
                             <div class="col-xl-9 ">
-                                <span class="text-orange d-block">تضامین :</span>
+                                <span class="text-orange d-block">وثایق:</span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
                                     اصل و سود سرمایه
                                 </strong>
