@@ -18,6 +18,7 @@ namespace DataLayer
         public bool IsDelete { get; set; }
         public Nullable<int> Deposit_id { get; set; }
         public Nullable<int> InvestorUser_id { get; set; }
+        public Nullable<long> InvestmentAmount { get; set; }
         public Nullable<long> DepositAmount { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<int> DeleteUser_id { get; set; }

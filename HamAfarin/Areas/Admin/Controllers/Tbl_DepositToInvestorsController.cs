@@ -56,13 +56,14 @@ namespace HamAfarin.Areas.Admin.Controllers
                     CompanyId = l.NationalId,
                     MobileNumber = p.MobileNumber,
                     Sheba = p.AccountSheba,
-                    DepositAmount = (long)i.DepositAmount
+                    DepositAmount = (long)i.DepositAmount,
+                    TotalPaymentPrice = (long)i.InvestmentAmount,
                 }
             ).ToList();
 
             Tbl_DepositToInvestors deposit = db.Tbl_DepositToInvestors.FirstOrDefault(d => d.DepositID == id);
 
-            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "مبلغ واریزی", "تاریخ واریز", "نوع واریز", "درصد واریز", "کل مبلغ واریزی" };
+            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "مبلغ واریزی", "تاریخ واریز", "نوع واریز", "درصد واریز", "کل مبلغ سرمایه گذاری" };
 
             DataTable dt = new DataTable("جزییات واریز");
 
@@ -83,7 +84,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     deposit.DepositDate,
                     deposit.Tbl_DepositTypes.DepositTypeName,
                     deposit.YieldPercent,
-                    deposit.TotalDeposit
+                    item.TotalPaymentPrice
                 );
             }
 
@@ -206,7 +207,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                     {
                         UserID = (int)g.Key,
                         FirstPaymentDate = (DateTime)g.Select(b => b.PaidDateTime).FirstOrDefault(),
-                        DepositAmount = (long)(depositToInvestors.YieldPercent / 100 * (decimal)g.Sum(b => b.PaymentPrice))
+                        TotalPaymentPrice = (long)g.Sum(b => b.PaymentPrice),
+                        DepositAmount = (long)(depositToInvestors.YieldPercent / 100 * (decimal)g.Sum(b => b.PaymentPrice)),
                     })
                     .OrderBy(g => g.FirstPaymentDate)
                     .ToList();
@@ -219,6 +221,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                         IsDelete = false,
                         Deposit_id = tblDepositToInvestors.DepositID,
                         InvestorUser_id = investor.UserID,
+                        InvestmentAmount = investor.TotalPaymentPrice,
                         DepositAmount = investor.DepositAmount,
                         CreateDate = dateTimeNow,
                     });

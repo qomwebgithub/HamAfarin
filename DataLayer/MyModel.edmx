@@ -268,6 +268,7 @@
           <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="Deposit_id" Type="int" />
           <Property Name="InvestorUser_id" Type="int" />
+          <Property Name="InvestmentAmount" Type="bigint" />
           <Property Name="DepositAmount" Type="bigint" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="DeleteUser_id" Type="int" />
@@ -1869,6 +1870,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="Deposit_id" Type="Int32" />
           <Property Name="InvestorUser_id" Type="Int32" />
+          <Property Name="InvestmentAmount" Type="Int64" />
           <Property Name="DepositAmount" Type="Int64" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="DeleteUser_id" Type="Int32" />
@@ -3079,6 +3081,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="DeleteUser_id" ColumnName="DeleteUser_id" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="DepositAmount" ColumnName="DepositAmount" />
+                <ScalarProperty Name="InvestmentAmount" ColumnName="InvestmentAmount" />
                 <ScalarProperty Name="InvestorUser_id" ColumnName="InvestorUser_id" />
                 <ScalarProperty Name="Deposit_id" ColumnName="Deposit_id" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
