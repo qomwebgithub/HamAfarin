@@ -289,7 +289,7 @@ namespace HamAfarin
             if (!qBussinessPlans.IsOverflowInvestment)
             {
                 long totalPrice = GetRaisedPrice(db, qBussinessPlans.BussinessPlanID) + paymentPrice.Value;
-                if (totalPrice >= long.Parse(qBussinessPlans.AmountRequiredRoRaiseCapital))
+                if (totalPrice > long.Parse(qBussinessPlans.AmountRequiredRoRaiseCapital))
                 {
                     retValue.Validation = false;
                     retValue.Error = "امکان سرمایه گذاری بیشتر از ۱۰۰ درصد وجود ندارد";
