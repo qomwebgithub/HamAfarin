@@ -300,7 +300,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
 
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
-            (bool Success, string Message) smsResult = oSms.AdpSendSMS(qUser.MobileNumber, message);
+            (bool Success, string Message) smsResult = oSms.SendSms(qUser.MobileNumber, message);
         }
     }
 }

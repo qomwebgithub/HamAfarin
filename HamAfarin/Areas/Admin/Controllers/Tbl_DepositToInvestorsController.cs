@@ -304,7 +304,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (message.Contains("@T"))
                 message = message.Replace("@T", qTbl_DepositToInvestors.Tbl_BussinessPlans.Title);
 
-            (bool Success, string Message) smsResult = await oSms.AdpSendSMSAsync(mobileNumbers, message);
+            (bool Success, string Message) smsResult = await oSms.SendSmsAsync(mobileNumbers, message);
 
             if (smsResult.Success)
             {

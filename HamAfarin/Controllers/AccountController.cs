@@ -70,7 +70,7 @@ namespace Hamafarin.Controllers
 
             // 1 = ورود
             Tbl_Sms qSms = db.Tbl_Sms.Find(1);
-            (bool Success, string Message) result = oSms.AdpSendSMS(user.MobileNumber, qSms.Message);
+            (bool Success, string Message) result = oSms.SendSms(user.MobileNumber, qSms.Message);
 
             return Redirect(ReturnUrl);
         }
@@ -142,7 +142,7 @@ namespace Hamafarin.Controllers
 
             ViewBag.IsSuccess = true;
 
-            oSms.AdpSendSMS(oUser.MobileNumber, oUser.SmsCode.ToString());
+            oSms.SendSms(oUser.MobileNumber, oUser.SmsCode.ToString());
 
             return RedirectToAction("VerifySms", new { id = oUser.UserToken });
 
@@ -177,7 +177,7 @@ namespace Hamafarin.Controllers
                     int smsCode = rndSmsCode.Next(1000, 9999);
                     qUser.SmsCode = smsCode;
                     db.SaveChanges();
-                    oSms.AdpSendSMS(qUser.MobileNumber, qUser.SmsCode.ToString());
+                    oSms.SendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
                 }
 
                 return Json(new { success = true, Message = Message }, JsonRequestBehavior.AllowGet);
@@ -257,7 +257,7 @@ namespace Hamafarin.Controllers
                     {
                         // 3 = ثبت اطلاعات از سجام
                         qSms = db.Tbl_Sms.Find(3);
-                        smsResult = oSms.AdpSendSMS(qUser.MobileNumber, qSms.Message);
+                        smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
                     }
                 }
                 else if (qUser.SmsCode != Convert.ToInt32(verifySms.SmsCode))
@@ -275,7 +275,7 @@ namespace Hamafarin.Controllers
 
             // 2 = ثبت نام
             qSms = db.Tbl_Sms.Find(2);
-            smsResult = oSms.AdpSendSMS(qUser.MobileNumber, qSms.Message);
+            smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
             string strSetAuthCookie = SetCookieString(qUser);
             FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
@@ -440,7 +440,7 @@ namespace Hamafarin.Controllers
             int smsCode = rndSmsCode.Next(1000, 9999);
             qUser.SmsCode = smsCode;
             db.SaveChanges();
-            oSms.AdpSendSMS(qUser.MobileNumber, qUser.SmsCode.ToString());
+            oSms.SendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
             return RedirectToAction("VerifyForgotPassword", new { id = qUser.UserToken });
         }
 

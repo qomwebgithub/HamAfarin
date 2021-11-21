@@ -555,7 +555,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 Tbl_BussinessPlans qBussinessPlan = await db.Tbl_BussinessPlans.FirstOrDefaultAsync(b => b.BussinessPlanID == id);
                 message = message.Replace("@T", qBussinessPlan.Title);
             }
-            (bool Success, string Message) smsResult = await oSms.AdpSendSMSAsync(mobileNumbers, message);
+            (bool Success, string Message) smsResult = await oSms.SendSmsAsync(mobileNumbers, message);
 
             return Json(new { success = smsResult.Success, message = smsResult.Message });
         }
