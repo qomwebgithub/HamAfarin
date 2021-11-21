@@ -41,7 +41,7 @@ namespace Hamafarin.Controllers
         {
             Tbl_BussinessPlans qActivePlans = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == id);
             // تعداد روز های باقیمانده
-            int qRemainingDay = planService.calculateRemainDay(qActivePlans);
+            int qRemainingDay = planService.CalculateRemainDay(qActivePlans.InvestmentExpireDate);
             string qRemainingText = qRemainingDay + " روز";
             if (qRemainingDay == -1)
                 qRemainingText = "پایان";
@@ -115,7 +115,7 @@ namespace Hamafarin.Controllers
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
-                int qRemainingDay = planService.calculateRemainDay(item);
+                int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
@@ -155,7 +155,7 @@ namespace Hamafarin.Controllers
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
-                int qRemainingDay = planService.calculateRemainDay(item);
+                int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
@@ -194,7 +194,7 @@ namespace Hamafarin.Controllers
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
-                int qRemainingDay = planService.calculateRemainDay(item);
+                int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";

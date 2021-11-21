@@ -62,7 +62,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                     strPaymentStatus = "در انتظار تایید";
                 }
                 string strBusinessPlanStatus = "درحال تامین سرمایه";
-                int qRemainingDay = planService.calculateRemainDay(item.Tbl_BussinessPlans);
+                int qRemainingDay = planService.CalculateRemainDay(item.Tbl_BussinessPlans.InvestmentExpireDate);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(item.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital),
                     planService.GetRaisedPrice(db, item.Tbl_BussinessPlans.BussinessPlanID));
 
@@ -117,7 +117,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
 
             // تعداد روز های باقیمانده
-            int qRemainingDay = planService.calculateRemainDay(tbl_BussinessPlans);
+            int qRemainingDay = planService.CalculateRemainDay(tbl_BussinessPlans.InvestmentExpireDate);
             string qRemainingText = qRemainingDay + " روز";
             if (qRemainingDay == -1)
                 qRemainingText = "پایان";

@@ -155,16 +155,16 @@ namespace HamAfarin
         /// <summary>
         /// محاسبه زمان باقیمانده طرح
         /// </summary>
-        /// <param name="item">ایتم طرح</param>
+        /// <param name="endDate">ایتم طرح</param>
         /// <returns>زمان باقیمانده یا منقضی شده</returns>
-        public int calculateRemainDay(Tbl_BussinessPlans item)
+        public int CalculateRemainDay(DateTime? endDate)
         {
-            DateTime date = DateTime.Now;
+            DateTime dateTimeNow = DateTime.Now;
 
-            if (item.InvestmentExpireDate == null)
+            if (endDate == null)
                 return 0;
 
-            TimeSpan difference = item.InvestmentExpireDate.Value - date;
+            TimeSpan difference = endDate.Value - dateTimeNow;
             if (difference.TotalSeconds <= 0)
                 return -1;
 

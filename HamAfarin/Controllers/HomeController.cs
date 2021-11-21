@@ -74,7 +74,7 @@ namespace Hamafarin.Controllers
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
-                int qRemainingDay = planService.calculateRemainDay(item);
+                int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";

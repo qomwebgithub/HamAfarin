@@ -35,7 +35,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             {
 
                 string strBusinessPlanStatus = "درحال تامین سرمایه";
-                int qRemainingDay = planService.calculateRemainDay(item.Tbl_BussinessPlans);
+                int qRemainingDay = planService.CalculateRemainDay(item.Tbl_BussinessPlans.InvestmentExpireDate);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(item.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital),
                     planService.GetRaisedPrice(db, item.Tbl_BussinessPlans.BussinessPlanID));
 

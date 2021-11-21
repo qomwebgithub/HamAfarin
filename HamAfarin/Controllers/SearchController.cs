@@ -20,7 +20,7 @@ namespace HamAfarin.Controllers
             List<BusinessPlansItemViewModel> listSearch = new List<BusinessPlansItemViewModel>();
             foreach (var item in qListSearch)
             {
-                int qRemainingDay = planService.calculateRemainDay(item);
+                int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
