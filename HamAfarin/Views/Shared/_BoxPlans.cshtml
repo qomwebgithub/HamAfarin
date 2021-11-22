@@ -25,7 +25,20 @@
                 <div class="dropdown-divider"></div>
                 <div class="">
                     <div class="col-12 text-left mt-4">
-                        @{ if (Model.RemainingTime < 0)
+                        @{
+                            if (Model.DaysUntilStart > 0)
+                            {
+                                <strong class="small font-weight-bold text-danger">
+                                    @Model.DaysUntilStart روز مانده تا شروع سرمایه گذاری
+                                </strong>
+                            }
+                            else if (Model.RemainingTime < 0)
+                            {
+                                <strong class="small font-weight-bold text-danger">
+                                    با موفقیت تکمیل شد  - @Model.PercentageComplate%
+                                </strong>
+                            }
+                            else if (Model.RemainingTime < 0)
                             {
                                 <strong class="small font-weight-bold text-danger">
                                     با موفقیت تکمیل شد  - @Model.PercentageComplate%

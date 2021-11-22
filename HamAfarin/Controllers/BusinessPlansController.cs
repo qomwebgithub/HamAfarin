@@ -40,11 +40,16 @@ namespace Hamafarin.Controllers
         public ActionResult SingleBusinessPlan(int id)
         {
             Tbl_BussinessPlans qActivePlans = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == id);
+
+            // تعداد روز های باقیمانده تا شروع
+            int daysUntilStart = planService.CalculateRemainDay(qActivePlans.InvestmentStartDate);
+
             // تعداد روز های باقیمانده
             int qRemainingDay = planService.CalculateRemainDay(qActivePlans.InvestmentExpireDate);
             string qRemainingText = qRemainingDay + " روز";
             if (qRemainingDay == -1)
                 qRemainingText = "پایان";
+
             // تبدیل اعداد به انگلیسی
             string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(qActivePlans.AmountRequiredRoRaiseCapital);
             // مبلغ سرمایه گذاری planService
@@ -59,6 +64,7 @@ namespace Hamafarin.Controllers
                 Title = qActivePlans.Title,
                 CompanyName = qActivePlans.CompanyName,
                 ImageName = qActivePlans.ImageNameInSinglePlan,
+                DaysUntilStart = daysUntilStart,
                 RemainingTime = qRemainingDay,
                 RemainingTimeText = qRemainingText,
                 PercentageComplate = qPercentageComplate,
@@ -107,7 +113,6 @@ namespace Hamafarin.Controllers
                     b.IsDeleted == false &&
                     (Convert.ToInt64(b.MinimumAmountInvest)) >= lowestPrice &&
                     (Convert.ToInt64(b.MinimumAmountInvest)) <= highestPrice &&
-                    b.InvestmentStartDate <= DateTime.Now &&
                     (b.Title.Contains(searchText) || b.BusinessPlanFeatures.Contains(searchText)))
                 .OrderByDescending(b => b.BussinessPlanID).ToList();
 
@@ -115,10 +120,15 @@ namespace Hamafarin.Controllers
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
-                int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
-                string qRemainingText = qRemainingDay + " روز";
-                if (qRemainingDay == -1)
-                    qRemainingText = "پایان";
+                // تعداد روز های باقیمانده تا شروع
+                int daysUntilStart = planService.CalculateRemainDay(item.InvestmentStartDate);
+
+                // تعداد روز های باقیمانده تا پایان
+                int daysUntilEnd = planService.CalculateRemainDay(item.InvestmentExpireDate);
+                string daysUntilEndText = daysUntilEnd + " روز";
+                if (daysUntilEnd == -1)
+                    daysUntilEndText = "پایان";
+
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
@@ -129,8 +139,9 @@ namespace Hamafarin.Controllers
                     Title = item.Title,
                     ShortDescription = item.ShortDescription,
                     ImageName = item.ImageNameInListPalns,
-                    RemainingTime = qRemainingDay,
-                    RemainingTimeText = qRemainingText,
+                    DaysUntilStart = daysUntilStart,
+                    RemainingTime = daysUntilEnd,
+                    RemainingTimeText = daysUntilEndText,
                     PercentageComplate = qPercentageComplate,
                     widthPercentage = qPercentageComplate + "%",
                     InvestorCount = qInvestorCount,

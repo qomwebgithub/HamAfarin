@@ -74,6 +74,10 @@ namespace Hamafarin.Controllers
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
+                // تعداد روز های باقیمانده تا شروع
+                int daysUntilStart = planService.CalculateRemainDay(item.InvestmentStartDate);
+
+                // تعداد روز های باقیمانده تا پایان
                 int qRemainingDay = planService.CalculateRemainDay(item.InvestmentExpireDate);
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
@@ -88,6 +92,7 @@ namespace Hamafarin.Controllers
                     Title = item.Title,
                     ShortDescription = item.ShortDescription,
                     ImageName = item.ImageNameInListPalns,
+                    DaysUntilStart = daysUntilStart,
                     RemainingTime = qRemainingDay,
                     RemainingTimeText = qRemainingText,
                     PercentageComplate = qPercentageComplate,

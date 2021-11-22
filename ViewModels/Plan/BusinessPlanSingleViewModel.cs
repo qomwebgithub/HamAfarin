@@ -24,6 +24,7 @@ namespace ViewModels
         public string BusinessPlanRisks { get; set; }
         [Display(Name = "مبلغ مورد نیاز برای جذب سرمایه به تومان")]
         public string AmountRequiredRoRaiseCapital { get; set; }
+        public int DaysUntilStart { get; set; }
         public int RemainingTime { get; set; }
         public string RemainingTimeText { get; set; }
         public string PercentageReturnInvestment { get; set; }

@@ -14,6 +14,7 @@ namespace ViewModels
         public string ImageName { get; set; }
         public string ShortDescription { get; set; }
         public string AmountRequiredRoRaiseCapital { get; set; }
+        public int DaysUntilStart { get; set; }
         public int RemainingTime { get; set; }
         public string RemainingTimeText { get; set; }
         public int PercentageComplate { get; set; }

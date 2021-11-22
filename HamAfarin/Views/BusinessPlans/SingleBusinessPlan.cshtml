@@ -108,7 +108,13 @@
                 <div class="row text-align-center">
                     <div class=" d-none d-md-flex align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3  justify-content-center">
                         <div id="btnSarmayeGozari">
-                            @if (Model.RemainingTime < 0)
+                            @if (Model.DaysUntilStart > 0)
+                            {
+                                <a class="btn btn-danger btn-lg" style="font-size: 15px;">
+                                    بزودی شروع میشه! <i class="bi bi-check2-circle"></i>
+                                </a>
+                            }
+                            else if (Model.RemainingTime < 0)
                             {
                                 if (Model.PercentageComplate >= 100)
                                 {
@@ -219,31 +225,24 @@
                             </div>
                             <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
                                 <span class="text-muted text-nowrap h6 small">زمان باقی مانده</span>
-                                @{ if (Model.RemainingTime == 0)
+                                <p class="mb-0 small @(Model.RemainingTime < 7 ? "": "text-danger") font-weight-bold text-center">
+                                    @if (Model.DaysUntilStart > 0)
                                     {
-                                        <p class="mb-0 small text-danger font-weight-bold text-center">
-                                            روز پایانی
-                                        </p>
+                                        @(Model.DaysUntilStart + " روز تا شروع")
                                     }
                                     else if (Model.RemainingTime < 0)
                                     {
-                                        <p class="mb-0 small text-danger font-weight-bold text-center">
-                                            به اتمام رسید
-                                        </p>
+                                        @("به اتمام رسید")
                                     }
-                                    else if (Model.RemainingTime <= 7)
+                                    else if (Model.RemainingTime == 0)
                                     {
-                                        <p class="mb-0 small text-danger font-weight-bold text-center">
-                                            @Model.RemainingTime روز
-                                        </p>
+                                        @("روز پایانی")
                                     }
                                     else
                                     {
-                                        <p class="mb-0 small font-weight-bold text-center">
-                                            @Model.RemainingTime روز
-                                        </p>
+                                        @(Model.RemainingTime +" روز")
                                     }
-                                }
+                                </p>
                             </div>
 
 
@@ -286,7 +285,13 @@
                             </div>
                             <div class="align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3 d-flex justify-content-center">
                                 <div class="d-block d-md-none" id="btnSarmayeGozari">
-                                    @if (Model.RemainingTime < 0)
+                                    @if (Model.DaysUntilStart > 0)
+                                    {
+                                        <a class="btn btn-danger btn-lg" style="font-size: 15px;">
+                                            بزودی شروع میشه! <i class="bi bi-check2-circle"></i>
+                                        </a>
+                                    }
+                                    else if (Model.RemainingTime < 0)
                                     {
                                         if (Model.PercentageComplate >= 100)
                                         {
@@ -314,7 +319,6 @@
                                             سرمایه گذاری میکنم <i class="bi bi-check2-circle"></i>
                                         </a>
                                     }
-
                                     else
                                     {
                                         <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه لازم برای این طرح تکمیل شده است. مشاهده و سرمایه گذاری در سایر طرح ها')">
@@ -863,7 +867,7 @@
             }
         }
 
-        function AlertInvestment(message) {
+        function AlertInvestment(message, redirect) {
 
             Swal.fire({
                 icon: 'warning',
@@ -872,7 +876,7 @@
                 confirmButtonText: `قبول`,
                 confirmButtonColor: '#d0aa45',
             }).then((result) => {
-                if (result.isConfirmed) {
+                if (result.isConfirmed && redirect) {
                     window.location.href = "/BusinessPlans";
                 }
             });
