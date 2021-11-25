@@ -62,10 +62,16 @@ namespace HamAfarin
         /// <param name="id">شناسه طرح</param>
         /// <param name="myUserId">شناسه کاربر</param>
         /// <returns></returns>
-        internal long GetInvsetmentUserOfPlan(HamAfarinDBEntities db, int id, int myUserId)
+        internal long TotalUserInvestmentForPlan(HamAfarinDBEntities db, int id, int myUserId)
         {
-            long? result = db.Tbl_BusinessPlanPayment.Where(p => p.BusinessPlan_id == id && p.IsConfirmedFromAdmin == true
-            && p.IsPaid == true && p.PaymentUser_id == myUserId).Sum(s => s.PaymentPrice);
+            long? result = db.Tbl_BusinessPlanPayment
+                .Where(p =>
+                    p.BusinessPlan_id == id &&
+                    p.IsConfirmedFromAdmin == true &&
+                    p.IsPaid == true &&
+                    p.PaymentUser_id == myUserId)
+                .Sum(s => s.PaymentPrice);
+
             if (result == null) return 0;
             return (long)result;
         }
@@ -254,7 +260,7 @@ namespace HamAfarin
         /// <param name="db">بانک اطلاعاتی</param>
         /// <param name="paymentOnlineViewModel">مدل پرداخت</param>
         /// <returns>معتبر بودن یا نبودن و متن خروجی</returns>
-        public PaymentPriceValidation ValidationPaymentPrice(HamAfarinDBEntities db, int? businessPlanID, long? paymentPrice, int? userId, bool isLegal = false)
+        public PaymentPriceValidation PaymentPriceValidation(HamAfarinDBEntities db, int? businessPlanID, long? paymentPrice, int? userId, bool isLegal = false)
         {
             PaymentPriceValidation retValue = new PaymentPriceValidation();
             Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID);
@@ -262,9 +268,9 @@ namespace HamAfarin
             //چک کردن حداکثر مبلغ
 
             // سرمایه گذاری من در این طرح
-            long qTotalMyInvestment = new PlanService().GetInvsetmentUserOfPlan(db, businessPlanID.Value, userId.Value);
+            long userTotalInvestment = new PlanService().TotalUserInvestmentForPlan(db, businessPlanID.Value, userId.Value);
 
-            if (paymentPrice + qTotalMyInvestment > MaximumInvestment && isLegal == false)
+            if (paymentPrice + userTotalInvestment > MaximumInvestment && isLegal == false)
             {
                 retValue.Validation = false;
                 retValue.Error = "مبلغ وارد شده بیشتر از حداکثر میباشد";
