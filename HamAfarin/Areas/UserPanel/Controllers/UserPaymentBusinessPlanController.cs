@@ -245,7 +245,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 if (apiResult.Success == false)
                     return View();
 
-                return new FileContentResult(apiResult.File, "application/pdf");
+                return File(apiResult.File, "application/pdf", "گواهی شراکت.pdf");
             }
             catch (Exception)
             {

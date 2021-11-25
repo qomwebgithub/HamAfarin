@@ -581,17 +581,13 @@
                 </div>
                 @if (Model.IsProjectParticipationReady && Model.PaymentStatusColorType == 1)
                 {
-                    <div>
-                        <a style="font-size:14px" id="CertificateRdy" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID" download="گواهی-شراکت.pdf">
-                            <span> چاپ گواهی شراکت</span>
-                        </a>
-                    </div>
+                    <a style="font-size:14px" id="CertificateRdy" class="btn btn-orange user-payment-btn float-left" href="/UserPanel/UserPaymentBusinessPlan/ProjectParticipationPDF/@Model.PaymentID">
+                        <span> چاپ گواهی شراکت</span>
+                    </a>
                 }
                 else
                 {
-                    <div>
-                        <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" onclick="CertificatePopup()">چاپ گواهی شراکت</a>
-                    </div>
+                    <a style="font-size:14px" id="Certificate" class="btn btn-orange user-payment-btn float-left" onclick="CertificatePopup()">چاپ گواهی شراکت</a>
                 }
             </div>
         </section>
