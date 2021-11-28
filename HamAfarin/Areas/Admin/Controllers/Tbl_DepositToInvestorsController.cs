@@ -63,7 +63,26 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             Tbl_DepositToInvestors deposit = db.Tbl_DepositToInvestors.FirstOrDefault(d => d.DepositID == id);
 
-            List<string> lstColumnsName = new List<string> { "نام", "نام خانوادگی", "کد ملی", "موبایل", "ش حساب شبا", "مبلغ واریزی", "تاریخ واریز", "نوع واریز", "درصد واریز", "کل مبلغ سرمایه گذاری" };
+            List<string> lstColumnsName = new List<string>
+            {
+                "شماره سپرده ی مبدا",
+                "شماره مشتری",
+                "مبلغ",
+                "کد بانک مقصد",
+                "نام و نام خانوادگی ذینفع",
+                "شرح تراکنش(بابت)",
+                "شبای مقصد",
+                "تاریخ ارسال",
+                "شناسه واریز(اختیاری)",
+                "نام",
+                "نام خانوادگی",
+                "کد ملی",
+                "موبایل",
+                "تاریخ واریز",
+                "نوع واریز",
+                "درصد واریز",
+                "کل مبلغ سرمایه گذاری"
+            };
 
             DataTable dt = new DataTable("جزییات واریز");
 
@@ -75,16 +94,23 @@ namespace HamAfarin.Areas.Admin.Controllers
             foreach (var item in depositProfileList)
             {
                 dt.Rows.Add(
-                    item.CompanyName == null ? item.FirstName : "",
+                    null,
+                    null,
+                    item.DepositAmount * 10,
+                    item.Sheba.Substring(5, 2),
+                    item.CompanyName ?? item.FirstName + " " + item.LastName,
+                    null,
+                    item.Sheba.Replace("IR", ""),
+                    null,
+                    null,
+                    item.CompanyName == null ? item.FirstName : null,
                     item.CompanyName ?? item.LastName,
                     item.CompanyId ?? item.NationalId,
                     item.MobileNumber,
-                    item.Sheba,
-                    item.DepositAmount,
-                    deposit.DepositDate,
+                    deposit.DepositDate.Value.ToString("yyyy/MM/dd"),
                     deposit.Tbl_DepositTypes.DepositTypeName,
                     deposit.YieldPercent,
-                    item.TotalPaymentPrice
+                    item.TotalPaymentPrice * 10
                 );
             }
 
@@ -299,7 +325,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             string message = qSms.Message;
 
             Tbl_DepositToInvestors qTbl_DepositToInvestors = await db.Tbl_DepositToInvestors.FirstOrDefaultAsync(d => d.IsDelete == false && d.DepositID == id);
-            
+
             //متن داینامیک
             if (message.Contains("@T"))
                 message = message.Replace("@T", qTbl_DepositToInvestors.Tbl_BussinessPlans.Title);
