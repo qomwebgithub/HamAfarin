@@ -1,7 +1,7 @@
 ﻿﻿@model ViewModels.BusinessPlanSingleViewModel
 
 @{
-    ViewBag.Title = Model.MetaTitle;
+    ViewBag.Title = Model.MetaTitle ?? Model.Title;
 }
 
 @section Tags{
@@ -85,7 +85,7 @@
 
 <!-- banner start -->
 <section class="container-fluid mt-0 p-0">
-    <img src="~/Images/BusinessPlans/Image/@Model.ImageName" class="hamafarin-slider w-100" style="max-height:350px;" />
+    <img src="~/Images/BusinessPlans/Image/@Model.ImageName" alt="@Model.ImageAlt" class="hamafarin-slider w-100" style="max-height:350px;" />
     <div class="col-12 d-sm-none" style="height:70px"></div>
 </section>
 

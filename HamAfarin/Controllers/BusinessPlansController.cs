@@ -89,6 +89,11 @@ namespace Hamafarin.Controllers
                 ProgressReportText = qActivePlans.ProgressReportText,
                 IsOverflowInvestment = qActivePlans.IsOverflowInvestment,
                 IsSuccessBussinessPlan = qActivePlans.IsSuccessBussinessPlan,
+                MetaTitle = qActivePlans.MetaTitle,
+                MetaDescription = qActivePlans.MetaDescription,
+                Canonical = qActivePlans.Canonical,
+                ImageAlt = qActivePlans.ImageAlt,
+                SeoKey = qActivePlans.SeoKey,
             };
 
             //اجازه ی سرمایه گذاری
@@ -107,7 +112,7 @@ namespace Hamafarin.Controllers
                 long qhighestPrice = Convert.ToInt64(db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault());
                 highestPrice = qhighestPrice;
             }
-                
+
             List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.AsEnumerable()
                 .Where(b => b.IsActive &&
                     b.IsDeleted == false &&
