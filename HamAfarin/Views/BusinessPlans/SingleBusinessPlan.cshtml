@@ -14,7 +14,7 @@
 }
 
 <style>
-    #accordion {
+    #myTabContent {
         padding-top: 7rem;
     }
 
@@ -103,9 +103,9 @@
 <section class="container-fluid bg-light">
     <div class="container-xl container-lg position-relative">
         <div class="row d-flex justify-content-center">
-            <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 center-panel" data-aos="fade-up" data-aos-once="true" style="margin-bottom: -50px;">
+            <div class="col-10 center-panel" data-aos="fade-up" data-aos-once="true" style="margin-bottom: -50px;">
                 <div class="row text-align-center">
-                    <div class=" d-none d-md-flex align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3  justify-content-center">
+                    <div class=" d-none d-md-flex align-items-center col-12 col-sm-3  justify-content-center">
                         <div id="btnSarmayeGozari">
                             @if (Model.DaysUntilStart > 0)
                             {
@@ -149,9 +149,9 @@
                             }
                         </div>
                     </div>
-                    <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                    <div class="col-12 col-sm-9">
                         @*دونسخه موجود در مبایل و دکستاپ*@
-                        <div class=" d-none d-md-block col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                        <div class=" d-none d-md-block col-12">
                             <div class="mt-1 float-right text-right">
                                 <span class="d-block text-muted text-nowrap h6 small">
                                     مبلغ هدف (تومان)
@@ -170,7 +170,7 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="mb-3 mb-md-0 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 my-2">
+                        <div class="mb-3 mb-md-0 col-12 my-2">
                             <div class="progress flex-row-reverse">
                                 @{ if (Model.PercentageComplate == 100)
                                     {
@@ -198,7 +198,7 @@
                         <div class="row">
                             <div class="offset-xl-1 offset-lg-1"></div>
                             @*دونسخه موجود در مبایل و دکستاپ*@
-                            <div class="mb-3 mb-md-0 d-block d-md-none col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center text-align-center">
+                            <div class="mb-3 mb-md-0 d-block d-md-none col-6 col-md-3 col-lg-2 border-left text-center text-align-center">
                                 <span class="d-block text-muted text-nowrap h6 small">
                                     مبلغ هدف (تومان)
                                 </span>
@@ -206,7 +206,7 @@
                                     @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
                                 </strong>
                             </div>
-                            <div class="mb-3 mb-md-0 d-block d-md-none d-sm-block col-xl-2 col-6 col-sm-6 col-lg-2 border-left text-align-center">
+                            <div class="mb-3 mb-md-0 d-block d-md-none d-sm-block col-6 col-lg-2 border-left text-align-center">
                                 <span class="d-block text-muted text-nowrap h6 small">
                                     سرمایه تامین شده (تومان)
                                 </span>
@@ -214,7 +214,7 @@
                                     @Model.PriceComplated.ToString("#,##0")
                                 </strong>
                             </div>
-                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+                            <div class="mb-3 mb-md-0 col-6 col-md-3 col-lg-2 border-left text-center">
                                 <span class="text-muted text-nowrap h6 small">زمان باقی مانده</span>
                                 <p class="mb-0 small @(Model.RemainingTime < 7 ? "": "text-danger") font-weight-bold text-center">
                                     @if (Model.DaysUntilStart > 0)
@@ -235,31 +235,31 @@
                                     }
                                 </p>
                             </div>
-                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
+                            <div class="mb-3 mb-md-0 col-6 col-md-3 col-lg-2 border-left text-center">
                                 <span class="text-muted h6 small">پیش بینی سود</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.PercentageReturnInvestment%
                                 </p>
                             </div>
-                            <div class="d-none d-sm-block col-xl-2 col-6 col-sm-6 col-lg-2 border-left">
+                            <div class="d-none d-sm-block col-6 col-lg-2 border-left">
                                 <span class="text-muted text-nowrap h6 small text-center">علاقه مندان طرح</span>
                                 <p class="small font-weight-bold text-center">
                                     @Model.InvestorCount نفر
                                 </p>
                             </div>
-                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left">
+                            <div class="mb-3 mb-md-0 col-6 col-md-3 col-lg-2 border-left">
                                 <span class=" text-muted text-nowrap h6 small text-center">سرمایه گذاران</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.InvestorCount نفر
                                 </p>
                             </div>
-                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2">
+                            <div class="mb-3 mb-md-0 col-6 col-md-3 col-lg-2">
                                 <span class="text-muted text-nowrap h6 small text-center">درصد تامین شده</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.PercentageComplate%
                                 </p>
                             </div>
-                            <div class="align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3 d-flex justify-content-center">
+                            <div class="align-items-center col-12 col-sm-3 d-flex justify-content-center">
                                 <div class="d-block d-md-none" id="btnSarmayeGozari">
                                     @if (Model.DaysUntilStart > 0)
                                     {
@@ -307,7 +307,7 @@
                     </div>
                 </div>
             </div>
-            <div class="center-panel-container col-xl-10 col-12 col-sm-10 col-md-10 col-lg-10 mt-1 pr-5 mr-md-5" data-aos="zoom-in" data-aos-once="true">
+            <div class="center-panel-container col-12 col-sm-10 pr-5 mr-md-5" data-aos="zoom-in" data-aos-once="true">
                 @*<div class="d-block d-sm-none" style="height:120px">
                     </div>*@
                 <div class="row row-icons">
@@ -316,7 +316,7 @@
                             <div class="col-xl-3 border-md-left d-flex infor">
                                 <img src="~/Content/img/file.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
                             </div>
-                            <div class="col-xl-9  ">
+                            <div class="col-xl-9">
                                 <span class="text-orange d-block">نام شرکت : </span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;"> @Model.CompanyName</strong>
                                 <div class="image-icon" style="margin-top:16px">
@@ -343,7 +343,7 @@
                             <div class="col-xl-3 border-md-left d-flex infor">
                                 <img src="~/Content/img/zemanat.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
                             </div>
-                            <div class="col-xl-9 ">
+                            <div class="col-xl-9">
                                 <span class="text-orange d-block">وثایق:</span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
                                     اصل و سود سرمایه
@@ -364,7 +364,7 @@
                             <div class="col-xl-3 border-md-left d-flex infor">
                                 <img src="~/Content/img/clock.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
                             </div>
-                            <div class="col-xl-9 ">
+                            <div class="col-xl-9">
                                 <span class="text-orange d-block">مدت طرح: </span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
                                     @Model.FinancialDuration
@@ -386,14 +386,10 @@
 <section class="w-100 font-weight-bold container-tab ">
     <div class="w-100 stickyNav_container">
         <ul class="nav nav-tabs d-flex justify-content-center shadow p-md-3 mb-md-2 bg-white rounded stickyNav" id="myTab" role="tablist" data-aos="fade-down">
-            <div id="btnSarmayeGozariInMenu">
-            </div>
-            <div class="col-12 d-sm-none" id="btnSarmayeGozariInMenu">
-            </div>
-            @*<li class="nav-item ml-4">
-                    <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                       aria-controls="home" aria-selected="true">معرفی طرح</a>
-                </li>*@
+            <li id="btnSarmayeGozariInMenu">
+            </li>
+            <li class="col-12 d-sm-none" id="btnSarmayeGozariInMenu">
+            </li>
             <li class="nav-item px-2">
                 <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
                    aria-controls="home" aria-selected="true">معرفی طرح</a>
@@ -420,172 +416,143 @@
             </li>
         </ul>
     </div>
-    <div class="col-12 px-0" role="tablist" data-aos="fade-down">
-        <div class="col-12 col-sm-10 offset-sm-1 bg-white">
-            <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
-                <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div id="accordion">
-                        <div class="col-12 col-sm-10 offset-sm-1">
-                            <div id="headercollapse1">
-                                <div class="text-center">
-                                    <h1 class="h3 font-weight-bold">@Model.Title</h1>
+    <div class="col-12 col-sm-10 offset-sm-1 bg-white px-0" role="tablist" data-aos="fade-down">
+        <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
+            <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div id="accordion">
+                    <div class="col-12 col-sm-10 offset-sm-1">
+                        <div id="headercollapse1">
+                            <div class="text-center">
+                                <h1 class="h3 font-weight-bold">@Model.Title</h1>
+                            </div>
+                            <a class="card-link mr-5" data-toggle="collapse" href="#collapse1">
+                                <h5 class="font-weight-bold text-dark font-size-normal">
+                                    <i class="bi bi-plus text-dark mx-2"></i>ویژگی های طرح
+                                </h5>
+                            </a>
+                        </div>
+                        <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
+                            @if (!String.IsNullOrEmpty(Model.VideoFileName))
+                            {
+                                <div width="300" class="d-flex justify-content-md-start justify-content-start mb-4" id="video">
+                                    <video width="300" controls id="Tvideo">
+                                        <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
+                                        مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
+                                    </video>
                                 </div>
-                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse1">
-                                    <h5 class="font-weight-bold text-dark font-size-normal">
-                                        <i class="bi bi-plus text-dark mx-2"></i>ویژگی های طرح
-                                    </h5>
-                                </a>
-                            </div>
-                            <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
-                                @if (!String.IsNullOrEmpty(Model.VideoFileName))
-                                {
-                                    <div width="300" class="d-flex justify-content-md-start justify-content-start mb-4" id="video">
-                                        <video width="300" controls id="Tvideo">
-                                            <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
-                                            مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
-                                        </video>
-                                    </div>
-                                }
-                                <p class="figure-caption text-muted pt-1">
-                                    @Html.Raw(@Model.BusinessPlanFeatures)
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-12 offset-lg-1">
-                            <div id="headercollapse2" class="">
-                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse2">
-                                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> بازار هدف و مزیت های رقابتی</h5>
-                                </a>
-                            </div>
-                            <div id="collapse2" class="collapse mr-md-5" data-parent="#accordion">
-                                <p class="figure-caption text-muted pt-1">
-                                    @Html.Raw(@Model.MarketTarget)
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-10 offset-lg-1">
-                            <div id="headercollapse3" class="">
-                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse3">
-                                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
-                                </a>
-                            </div>
-                            <div id="collapse3" class="collapse mr-md-5" data-parent="#accordion">
-                                <p class="figure-caption text-muted pt-1">
-                                    @Html.Raw(@Model.BusinessPlanRisks)
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-10 offset-lg-1 mb-5">
-                            <div id="headercollapse4" class="">
-                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse4">
-                                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> گالری</h5>
-                                </a>
-                            </div>
-                            <div id="collapse4" class="collapse mr-md-5" data-parent="#accordion">
-                                <p class="figure-caption text-muted pt-1">
-                                    @Html.Action("GalleryPlan", Model.BussinessPlanID)
-                                </p>
-                            </div>
+                            }
+                            <p class="figure-caption text-muted pt-1">
+                                @Html.Raw(@Model.BusinessPlanFeatures)
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade mr-md-5 p-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div class="col-12 d-sm-none" style="height:20px"></div>
-                    @Html.Raw(@Model.FinancialInformationText)
-
-                </div>
-                <div class="tab-pane fade p-md-5 mr-md-5 p-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div class="col-12 d-sm-none" style="height:30px"></div>
-                    @Html.Raw(@Model.ProgressReportText)
-
-                </div>
-                <div class="tab-pane fade mr-md-5 p-md-5" id="investment" role="tabpanel" aria-labelledby="investment-tab">
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div class="col-12 d-sm-none" style="height:30px"></div>
-                    @Html.Raw(@Model.InvestorsText)
-                </div>
-                <div class="tab-pane fade mr-md-5 p-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
-                    <br />
-                    <br />
-                    <br />
-                    <div class="container">
-                        <div class="row" id="showCommentList">
-                            <div class="col-12 d-sm-none" style="height:30px"></div>
-                            @Html.Action("ShowCommentsOfPlan", "Comment", Model.BussinessPlanID)
+                    <div class="col-12 offset-lg-1">
+                        <div id="headercollapse2" class="">
+                            <a class="card-link mr-5" data-toggle="collapse" href="#collapse2">
+                                <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> بازار هدف و مزیت های رقابتی</h5>
+                            </a>
+                        </div>
+                        <div id="collapse2" class="collapse mr-md-5" data-parent="#accordion">
+                            <p class="figure-caption text-muted pt-1">
+                                @Html.Raw(@Model.MarketTarget)
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog col-4">
-                        <div class="modal-content">
-                            <div class="col-12 pt-4">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <span class="col-10" style="font-size:16px">
-                                            نظر خود را در مورد طرح مطرح کنید
-                                        </span>
-                                        <div class="col-2">
-                                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-body pt-0" id="myModalBody">
-                                ...
-                            </div>
+                    <div class="col-10 offset-lg-1">
+                        <div id="headercollapse3" class="">
+                            <a class="card-link mr-5" data-toggle="collapse" href="#collapse3">
+                                <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
+                            </a>
+                        </div>
+                        <div id="collapse3" class="collapse mr-md-5" data-parent="#accordion">
+                            <p class="figure-caption text-muted pt-1">
+                                @Html.Raw(@Model.BusinessPlanRisks)
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane fade mr-md-5 p-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
-                    <br />
-                    <br />
-                    <br />
-                    <div class="container">
-                        <div class="row" id="showQuestionList">
-                            <div class="col-12 d-sm-none" style="height:30px"></div>
-                            @Html.Action("ShowQuestionsOfPlan", "Question", Model.BussinessPlanID)
+                    <div class="col-10 offset-lg-1 mb-5">
+                        <div id="headercollapse4" class="">
+                            <a class="card-link mr-5" data-toggle="collapse" href="#collapse4">
+                                <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> گالری</h5>
+                            </a>
+                        </div>
+                        <div id="collapse4" class="collapse mr-md-5" data-parent="#accordion">
+                            <p class="figure-caption text-muted pt-1">
+                                @Html.Action("GalleryPlan", Model.BussinessPlanID)
+                            </p>
                         </div>
                     </div>
-                </div>
-                <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog col-4">
-                        <div class="modal-content">
-                            <div class="col-12 pt-4">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <span class="col-10" style="font-size:16px">
-                                            پرسش خود را در مورد طرح مطرح کنید
-                                        </span>
-                                        <div class="col-2">
-                                            <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-body pt-0" id="addQuestionBody">
-                                ...
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-offset-2">
                 </div>
             </div>
-        </div>
-        <div class="col-md-2">
+            <div class="tab-pane fade mr-md-5 px-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+                @Html.Raw(@Model.FinancialInformationText)
+            </div>
+            <div class="tab-pane fade mr-md-5 px-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                @Html.Raw(@Model.ProgressReportText)
+            </div>
+            <div class="tab-pane fade mr-md-5 px-md-5" id="investment" role="tabpanel" aria-labelledby="investment-tab">
+                @Html.Raw(@Model.InvestorsText)
+            </div>
+            <div class="tab-pane fade mr-md-5 px-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+                <div class="container">
+                    <div class="row" id="showCommentList">
+                        @Html.Action("ShowCommentsOfPlan", "Comment", Model.BussinessPlanID)
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog col-4">
+                    <div class="modal-content">
+                        <div class="col-12 pt-4">
+                            <div class="col-12">
+                                <div class="row">
+                                    <span class="col-10" style="font-size:16px">
+                                        نظر خود را در مورد طرح مطرح کنید
+                                    </span>
+                                    <div class="col-2">
+                                        <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body pt-0" id="myModalBody">
+                            ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade mr-md-5 px-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                <div class="container">
+                    <div class="row" id="showQuestionList">
+                        @Html.Action("ShowQuestionsOfPlan", "Question", Model.BussinessPlanID)
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog col-4">
+                    <div class="modal-content">
+                        <div class="col-12 pt-4">
+                            <div class="col-12">
+                                <div class="row">
+                                    <span class="col-10" style="font-size:16px">
+                                        پرسش خود را در مورد طرح مطرح کنید
+                                    </span>
+                                    <div class="col-2">
+                                        <button type="button" class="close col-9 float-left" data-dismiss="modal">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body pt-0" id="addQuestionBody">
+                            ...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-offset-2">
+            </div>
         </div>
     </div>
 </section>
