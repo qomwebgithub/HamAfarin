@@ -5,7 +5,6 @@
 }
 
 @section Tags{
-
     <meta name="keywords" content="@Model.SeoKey">
     <meta name="description" content="@Model.MetaDescription" />
     @if (string.IsNullOrEmpty(Model.Canonical) == false)
@@ -15,6 +14,10 @@
 }
 
 <style>
+    #accordion {
+        padding-top: 7rem;
+    }
+
     #time-3-icon {
         fill: orange;
     }
@@ -82,13 +85,11 @@
     }
 </style>
 
-
 <!-- banner start -->
 <section class="container-fluid mt-0 p-0">
     <img src="~/Images/BusinessPlans/Image/@Model.ImageName" alt="@Model.ImageAlt" class="hamafarin-slider w-100" style="max-height:350px;" />
     <div class="col-12 d-sm-none" style="height:70px"></div>
 </section>
-
 <!-- banner end -->
 <!-- Modal -->
 <div class="modal fade" id="WarranyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -98,13 +99,11 @@
         </div>
     </div>
 </div>
-
 <!-- after banner start -->
 <section class="container-fluid bg-light">
     <div class="container-xl container-lg position-relative">
         <div class="row d-flex justify-content-center">
             <div class="col-10 col-sm-10 col-md-10 col-lg-10 col-xl-10 center-panel" data-aos="fade-up" data-aos-once="true" style="margin-bottom: -50px;">
-
                 <div class="row text-align-center">
                     <div class=" d-none d-md-flex align-items-center col-12 col-lg-3 col-md-3 col-sm-3 col-xl-3  justify-content-center">
                         <div id="btnSarmayeGozari">
@@ -142,7 +141,6 @@
                                     سرمایه گذاری میکنم <i class="bi bi-check2-circle"></i>
                                 </a>
                             }
-
                             else
                             {
                                 <a class="btn btn-orange btn-lg" style="font-size: 15px;" onclick="AlertInvestment('سرمایه لازم برای این طرح تکمیل شده است. مشاهده و سرمایه گذاری در سایر طرح ها')">
@@ -150,9 +148,7 @@
                                 </a>
                             }
                         </div>
-
                     </div>
-
                     <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xl-9">
                         @*دونسخه موجود در مبایل و دکستاپ*@
                         <div class=" d-none d-md-block col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -183,12 +179,10 @@
                                     }
                                     else if (Model.PercentageComplate > 100)
                                     {
-
                                         int up100 = @Model.PercentageComplate - 100;
                                         string strUp100 = up100 + "%";
                                         <div class="progress-bar outer" role="progressbar" style="background-color:#3b9c59 ;width: @Model.WidthPercentage"
                                              aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100">
-
                                             <div class="progress-bar inner" role="progressbar" style="background-color:#3b6659 ;width: @strUp100"
                                                  aria-valuenow="@Model.PercentageComplate" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
@@ -201,11 +195,9 @@
                                 }
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="offset-xl-1 offset-lg-1"></div>
                             @*دونسخه موجود در مبایل و دکستاپ*@
-
                             <div class="mb-3 mb-md-0 d-block d-md-none col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center text-align-center">
                                 <span class="d-block text-muted text-nowrap h6 small">
                                     مبلغ هدف (تومان)
@@ -214,7 +206,6 @@
                                     @Convert.ToDecimal(Model.AmountRequiredRoRaiseCapital).ToString("#,##0")
                                 </strong>
                             </div>
-
                             <div class="mb-3 mb-md-0 d-block d-md-none d-sm-block col-xl-2 col-6 col-sm-6 col-lg-2 border-left text-align-center">
                                 <span class="d-block text-muted text-nowrap h6 small">
                                     سرمایه تامین شده (تومان)
@@ -244,40 +235,25 @@
                                     }
                                 </p>
                             </div>
-
-
-
                             <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left text-center">
-
                                 <span class="text-muted h6 small">پیش بینی سود</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.PercentageReturnInvestment%
                                 </p>
                             </div>
-
-                            <div class=" d-none d-sm-block col-xl-2 col-6 col-sm-6
-                                col-lg-2 border-left
-
-                                ">
+                            <div class="d-none d-sm-block col-xl-2 col-6 col-sm-6 col-lg-2 border-left">
                                 <span class="text-muted text-nowrap h6 small text-center">علاقه مندان طرح</span>
                                 <p class="small font-weight-bold text-center">
                                     @Model.InvestorCount نفر
                                 </p>
                             </div>
-
-
-                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left
-
-                                ">
+                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2 border-left">
                                 <span class=" text-muted text-nowrap h6 small text-center">سرمایه گذاران</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.InvestorCount نفر
                                 </p>
                             </div>
-
-                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2
-
-                                ">
+                            <div class="mb-3 mb-md-0 col-xl-2 col-6 col-sm-6 col-md-3 col-lg-2">
                                 <span class="text-muted text-nowrap h6 small text-center">درصد تامین شده</span>
                                 <p class="mb-0 small font-weight-bold text-center">
                                     @Model.PercentageComplate%
@@ -326,31 +302,23 @@
                                         </a>
                                     }
                                 </div>
-
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
             <div class="center-panel-container col-xl-10 col-12 col-sm-10 col-md-10 col-lg-10 mt-1 pr-5 mr-md-5" data-aos="zoom-in" data-aos-once="true">
                 @*<div class="d-block d-sm-none" style="height:120px">
-
                     </div>*@
                 <div class="row row-icons">
-
                     <div class="col-4 " data-aos="fade-up" data-aos-once="true">
                         <div class="row">
                             <div class="col-xl-3 border-md-left d-flex infor">
                                 <img src="~/Content/img/file.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
-
                             </div>
-
                             <div class="col-xl-9  ">
                                 <span class="text-orange d-block">نام شرکت : </span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;"> @Model.CompanyName</strong>
-
                                 <div class="image-icon" style="margin-top:16px">
                                     <div class="row" style="padding-right:15px;">
                                         <a onclick="CopyToClipboard()" class="pl-2">
@@ -362,7 +330,6 @@
                                         <a href="@Model.BussinessInstagramAddress" class="pl-2" target="_blank">
                                             <img src="~/Content/img/instagram.png" style="width:25px" />
                                         </a>
-
                                         <a href="@Model.BussinessWebSiteAddress" class="pl-2" target="_blank">
                                             <img src="~/Content/img/world-wide-web.png" style="width:25px" />
                                         </a>
@@ -371,60 +338,44 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-4 " data-aos="flip-up" data-aos-once="true">
                         <div class="row">
                             <div class="col-xl-3 border-md-left d-flex infor">
                                 <img src="~/Content/img/zemanat.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
                             </div>
-
                             <div class="col-xl-9 ">
                                 <span class="text-orange d-block">وثایق:</span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
                                     اصل و سود سرمایه
                                 </strong>
                                 <div style="margin-top:16px">
-
                                     @{ if (Model.ImageNameWarranty != null && Model.ImageNameWarranty != "" && !Model.ImageNameWarranty.Contains("no-photo"))
                                         {
                                             <a class="d-none d-sm-block" onclick="ShowWarranty('@Model.ImageNameWarranty')" href="#">
                                                 <img class="" src="~/Content/img/zemanatname.svg" style="width:25px" />
                                             </a>
                                         }}
-
-
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div class="col-4 " data-aos="fade-up" data-aos-once="true">
                         <div class="row">
                             <div class="col-xl-3 border-md-left d-flex infor">
                                 <img src="~/Content/img/clock.svg" style="max-width:50px;height: 50px;margin-top: 5px" />
-
                             </div>
-
                             <div class="col-xl-9 ">
                                 <span class="text-orange d-block">مدت طرح: </span>
                                 <strong class="d-block bi bi-grid-fill font-weight-bold" style="font-size:18px;">
                                     @Model.FinancialDuration
                                 </strong>
-
-
                             </div>
                         </div>
                     </div>
-
                     @*<div class="d-none d-sm-block" style="height:220px">
-
                         </div>
-
                         <div class="d-block d-sm-none" style="height:250px">
-
                         </div>*@
-
                 </div>
             </div>
         </div>
@@ -432,36 +383,21 @@
 </section>
 <!-- after banner end -->
 <!-- center nav start -->
-
-
-
-
-
-
 <section class="w-100 font-weight-bold container-tab ">
     <div class="w-100 stickyNav_container">
-
-
-
         <ul class="nav nav-tabs d-flex justify-content-center shadow p-md-3 mb-md-2 bg-white rounded stickyNav" id="myTab" role="tablist" data-aos="fade-down">
             <div id="btnSarmayeGozariInMenu">
-
             </div>
             <div class="col-12 d-sm-none" id="btnSarmayeGozariInMenu">
-
             </div>
             @*<li class="nav-item ml-4">
-
                     <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
                        aria-controls="home" aria-selected="true">معرفی طرح</a>
                 </li>*@
-
             <li class="nav-item px-2">
-
                 <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
                    aria-controls="home" aria-selected="true">معرفی طرح</a>
             </li>
-
             <li class="nav-item px-2">
                 <a class="nav-link stickyNav-item text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab"
                    aria-controls="financial" aria-selected="false">اطلاعات مالی</a>
@@ -470,12 +406,10 @@
                 <a class="nav-link stickyNav-item text-dark font-weight-bold" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                    aria-controls="contact" aria-selected="false">گزارش پیشرفت</a>
             </li>
-
             <li class="nav-item px-2">
                 <a class="nav-link stickyNav-item text-dark font-weight-bold" id="investment-tab" data-toggle="tab" href="#investment" role="tab"
                    aria-controls="investment" aria-selected="false">سرمایه گذاران</a>
             </li>
-
             <li class="nav-item px-2">
                 <a class="nav-link stickyNav-item text-dark font-weight-bold" id="comment-tab" data-toggle="tab" href="#comment" role="tab"
                    aria-controls="comment" aria-selected="false">نظرات</a>
@@ -485,142 +419,77 @@
                    aria-controls="faq" aria-selected="false">پرسش و پاسخ</a>
             </li>
         </ul>
-
     </div>
-
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-0" role="tablist" data-aos="fade-down">
-
-
-        <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5 pr-0">
-
-
-
+    <div class="col-12 px-0" role="tablist" data-aos="fade-down">
+        <div class="col-12 col-sm-10 offset-sm-1 bg-white">
             <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
                 <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <br />
-                    <br />
-
-
-                    <div>
-                        @*@if (!String.IsNullOrEmpty(Model.VideoFileName))
-                            {
-                                <center>
-                                    <video height="400">
-
-
-                                        <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
-
-
-                                        <source src="mov_bbb.ogg" type="video/ogg">
-                                        مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
-                                    </video>
-                                </center>
-                            }*@
-
-                        <div class="" id="accordion">
-
-
-                            <div class="col-12 col-sm-10 offset-lg-1">
-                                <div id="headercollapse1" class="">
-                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse1">
-                                        <h5 class="font-weight-bold text-dark mt-5 font-size-normal">
-                                            <i class="bi bi-plus text-dark mx-2"></i>ویژگی های طرح
-                                        </h5>
-                                    </a>
+                    <div id="accordion">
+                        <div class="col-12 col-sm-10 offset-sm-1">
+                            <div id="headercollapse1">
+                                <div class="text-center">
+                                    <h1 class="h3 font-weight-bold">@Model.Title</h1>
                                 </div>
-                                <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
-                                    @if (!String.IsNullOrEmpty(Model.VideoFileName))
-                                    {
-                                        <div width="300" class="d-flex justify-content-md-start justify-content-start mb-4" id="video">
-                                            <video width="300" controls id="Tvideo">
-                                                <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
-                                                مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
-                                            </video>
-                                            @*<div id="Vshadow">
-
-                                                </div>*@
-                                        </div>
-                                    }
-                                    <p class="figure-caption text-muted pt-1">
-
-                                        @Html.Raw(@Model.BusinessPlanFeatures)
-
-                                    </p>
-
-
-                                </div>
+                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse1">
+                                    <h5 class="font-weight-bold text-dark font-size-normal">
+                                        <i class="bi bi-plus text-dark mx-2"></i>ویژگی های طرح
+                                    </h5>
+                                </a>
                             </div>
-
-                            <div class="col-12 offset-lg-1">
-                                <div id="headercollapse2" class="">
-                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse2">
-
-                                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> بازار هدف و مزیت های رقابتی</h5>
-                                    </a>
-
-                                </div>
-                                <div id="collapse2" class="collapse mr-md-5" data-parent="#accordion">
-
-                                    <p class="figure-caption text-muted pt-1">
-
-                                        @Html.Raw(@Model.MarketTarget)
-
-                                    </p>
-                                </div>
+                            <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
+                                @if (!String.IsNullOrEmpty(Model.VideoFileName))
+                                {
+                                    <div width="300" class="d-flex justify-content-md-start justify-content-start mb-4" id="video">
+                                        <video width="300" controls id="Tvideo">
+                                            <source src="/Resources/BusinessPlans/Idea/@Model.VideoFileName" type="video/mp4">
+                                            مرورگر شما پخش فایل ویدیویی را پشتیبانی نمی کند
+                                        </video>
+                                    </div>
+                                }
+                                <p class="figure-caption text-muted pt-1">
+                                    @Html.Raw(@Model.BusinessPlanFeatures)
+                                </p>
                             </div>
-
-                            <div class="col-10 offset-lg-1">
-                                <div id="headercollapse3" class="">
-                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse3">
-
-                                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
-                                    </a>
-
-                                </div>
-                                <div id="collapse3" class="collapse mr-md-5" data-parent="#accordion">
-
-                                    <p class="figure-caption text-muted pt-1">
-
-                                        @Html.Raw(@Model.BusinessPlanRisks)
-
-                                    </p>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-10 offset-lg-1 mb-5">
-                                <div id="headercollapse4" class="">
-                                    <a class="card-link mr-5" data-toggle="collapse" href="#collapse4">
-
-                                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> گالری</h5>
-                                    </a>
-
-                                </div>
-                                <div id="collapse4" class="collapse mr-md-5" data-parent="#accordion">
-
-                                    <p class="figure-caption text-muted pt-1">
-
-                                        @Html.Action("GalleryPlan", Model.BussinessPlanID)
-
-                                    </p>
-                                </div>
-                            </div>
-
-
-
                         </div>
-
-
-
+                        <div class="col-12 offset-lg-1">
+                            <div id="headercollapse2" class="">
+                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse2">
+                                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> بازار هدف و مزیت های رقابتی</h5>
+                                </a>
+                            </div>
+                            <div id="collapse2" class="collapse mr-md-5" data-parent="#accordion">
+                                <p class="figure-caption text-muted pt-1">
+                                    @Html.Raw(@Model.MarketTarget)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-10 offset-lg-1">
+                            <div id="headercollapse3" class="">
+                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse3">
+                                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
+                                </a>
+                            </div>
+                            <div id="collapse3" class="collapse mr-md-5" data-parent="#accordion">
+                                <p class="figure-caption text-muted pt-1">
+                                    @Html.Raw(@Model.BusinessPlanRisks)
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-10 offset-lg-1 mb-5">
+                            <div id="headercollapse4" class="">
+                                <a class="card-link mr-5" data-toggle="collapse" href="#collapse4">
+                                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> گالری</h5>
+                                </a>
+                            </div>
+                            <div id="collapse4" class="collapse mr-md-5" data-parent="#accordion">
+                                <p class="figure-caption text-muted pt-1">
+                                    @Html.Action("GalleryPlan", Model.BussinessPlanID)
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
-
-
                 </div>
-
                 <div class="tab-pane fade mr-md-5 p-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
-
                     <br />
                     <br />
                     <br />
@@ -629,8 +498,6 @@
                     @Html.Raw(@Model.FinancialInformationText)
 
                 </div>
-
-
                 <div class="tab-pane fade p-md-5 mr-md-5 p-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <br />
                     <br />
@@ -640,9 +507,7 @@
                     @Html.Raw(@Model.ProgressReportText)
 
                 </div>
-
                 <div class="tab-pane fade mr-md-5 p-md-5" id="investment" role="tabpanel" aria-labelledby="investment-tab">
-
                     <br />
                     <br />
                     <br />
@@ -650,9 +515,6 @@
                     <div class="col-12 d-sm-none" style="height:30px"></div>
                     @Html.Raw(@Model.InvestorsText)
                 </div>
-
-
-
                 <div class="tab-pane fade mr-md-5 p-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                     <br />
                     <br />
@@ -664,8 +526,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog col-4">
@@ -685,29 +545,20 @@
                             <div class="modal-body pt-0" id="myModalBody">
                                 ...
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="tab-pane fade mr-md-5 p-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                     <br />
                     <br />
                     <br />
-
                     <div class="container">
                         <div class="row" id="showQuestionList">
-
                             <div class="col-12 d-sm-none" style="height:30px"></div>
                             @Html.Action("ShowQuestionsOfPlan", "Question", Model.BussinessPlanID)
-
                         </div>
                     </div>
                 </div>
-
-
                 <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
                      aria-hidden="true">
                     <div class="modal-dialog col-4">
@@ -727,62 +578,30 @@
                             <div class="modal-body pt-0" id="addQuestionBody">
                                 ...
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="col-md-offset-2">
-
                 </div>
             </div>
-
-
-
         </div>
-
-
         <div class="col-md-2">
-
         </div>
-
     </div>
-
-
 </section>
 <!-- center nav end -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="w-100" style="background-color:#f5f6f8">
     <div class="col-12">
         <div class="col-12 col-sm-8 col-lg-offset-2 pt-2 pb-5 container">
             <h4 class="">
                 <img src="~/Content/img/risk.png" style="width:70px" />
-
                 بیانیه ریسک
-
             </h4>
-
             <div class="col-12">
                 <p>
                     @ViewBag.RiskAlertStatement
                 </p>
             </div>
-
             <div class="row float-left text-left ml-5">
                 <a href="/RiskAlertStatement" class="btn btn-orange btn-lg " style="font-size: 15px;">
                     ادامه
@@ -792,19 +611,10 @@
         </div>
     </div>
 </section>
-
-
-
-
 <!-- attention banner end -->
-<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
-
-
-
-
-<script src="~/Scripts/modal.js"></script>
 @section Scripts{
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/modal.js"></script>
     @*<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script>
@@ -813,10 +623,7 @@
                 var vPos = $(window).scrollTop();
                 var totalH = $('.stickyNav_container').offset().top;
                 var finalSize = totalH - vPos;
-
                 var btnSarmayeGozari = $("#btnSarmayeGozari").html();
-
-
 
                 if (finalSize <= 0) {
                     $('.stickyNav').css({
@@ -830,15 +637,10 @@
                         'position': 'static'
                     })
                     $('.stickyNav').removeClass('w-100');
-
                     $("#btnSarmayeGozariInMenu").html("");
                 }
             });
         });
-    </script>
-
-
-    <script>
 
         function CopyToClipboard() {
             var textToCopy = window.location.href;
@@ -868,7 +670,6 @@
         }
 
         function AlertInvestment(message, redirect) {
-
             Swal.fire({
                 icon: 'warning',
                 title: 'توجه',
@@ -893,13 +694,12 @@
                 url: "/Comment/AddComment/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
                 type: "Get"
             }).done(function (result) {
-                 $("#myModalLabel").html("نظر خود را ثبت کنید");
+                $("#myModalLabel").html("نظر خود را ثبت کنید");
                 $("#myModalBody").html(result);
                 $("#addCommentModal").modal();
-
-       $(".modal-backdrop").each(function(){
-    $(this).removeClass("modal-backdrop");
-       });
+                $(".modal-backdrop").each(function(){
+                    $(this).removeClass("modal-backdrop");
+                });
             });
         }
 
@@ -908,40 +708,29 @@
                 url: "/Question/AddQuestion/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
                 type: "Get"
             }).done(function (result) {
-                                $("#addQuestionLabel").html("پرسش خود را مطرح کنید");
+                $("#addQuestionLabel").html("پرسش خود را مطرح کنید");
                 $("#addQuestionBody").html(result);
                 $("#addQuestionModal").modal();
-
                 $(".modal-backdrop").each(function () {
-
-
-    $(this).removeClass("modal-backdrop");
-  });
-
+                    $(this).removeClass("modal-backdrop");
+                });
             });
         }
 
         function Success() {
-
             $("#addCommentModal").modal('hide');
             $("#addQuestionModal").modal('hide');
-
         }
 
         function showAlert(message) {
             alert(message);
-
         }
-    </script>
-    <script>
+
         function GoToElement(elementId) {
             $("#" + elementId).addClass("show mt-5");
-
             document.getElementById("header" + elementId).scrollIntoView();
-
             //location.href("#"+elementId);
         }
     </script>
-
 }
 
