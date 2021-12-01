@@ -11,5 +11,7 @@ namespace ViewModels
         public List<PlanViewModel> PlansList { get; set; }
         public List<DepositTypeViewModel> InvestmentReportTypes { get; set; }
         public List<InvestmentDetailViewModel> Investments { get; set; }
+        public string DepositUrl { get; set; }
+        public string PaymentUrl { get; set; }
     }
 }

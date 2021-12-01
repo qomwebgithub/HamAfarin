@@ -667,6 +667,7 @@
     <Content Include="Areas\Admin\Views\Tbl_DepositToInvestors\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_DepositToInvestors\Details.cshtml" />
     <Content Include="Areas\UserPanel\Views\InvestmentsReport\Index.cshtml" />
+    <Content Include="Areas\UserPanel\Views\InvestmentsReport\DepositDetails.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">
@@ -2289,6 +2290,7 @@
     <Compile Include="Classes\CheckContentImage.cs" />
     <Compile Include="Classes\CheckNationalCode.cs" />
     <Compile Include="Classes\CheckPassword.cs" />
+    <Compile Include="Classes\ControllerExtensions.cs" />
     <Compile Include="Classes\DataPost.cs" />
     <Compile Include="Classes\Enums\SliderPages.cs" />
     <Compile Include="Classes\Enums\PaymentStatusType.cs" />

@@ -1,7 +1,9 @@
 ﻿using DataLayer;
+using HamAfarin.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ViewModels;
@@ -34,6 +36,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Where(d => d.InvestorUser_id == userIdentity && d.Tbl_DepositToInvestors.IsPaid && d.IsDelete == false)
                 .Select(d => new InvestmentDetailViewModel
                 {
+                    ID = "d" + d.DepositDetailID.ToString(),
                     TypeID = d.Tbl_DepositToInvestors.DepositType_id,
                     TypeName = d.Tbl_DepositToInvestors.Tbl_DepositTypes.DepositTypeName,
                     Date = d.Tbl_DepositToInvestors.DepositDate,
@@ -47,6 +50,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Where(b => b.PaymentUser_id == userIdentity && b.IsConfirmedFromFaraboors && b.IsDelete == false)
                 .Select(b => new InvestmentDetailViewModel
                 {
+                    ID = "p" + b.PaymentID.ToString(),
                     TypeID = 4,
                     TypeName = "سرمایه گذاری",
                     Date = b.PaidDateTime,
@@ -60,7 +64,44 @@ namespace HamAfarin.Areas.UserPanel.Controllers
 
             investmentsReport.Investments = investmentsReport.Investments.OrderByDescending(i => i.Date).ToList();
 
+            investmentsReport.DepositUrl = $"/{nameof(UserPanel)}/{nameof(InvestmentsReportController).ControllerName()}/{nameof(DepositDetails)}/";
+            investmentsReport.PaymentUrl = $"/{nameof(UserPanel)}/{nameof(UserPaymentBusinessPlanController).ControllerName()}/{nameof(UserPaymentBusinessPlanController.SinglePaymentBusinessPlan)}/";
             return View(investmentsReport);
+        }
+
+        public ActionResult DepositDetails(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            int userIdentity = UserSetAuthCookie.GetUserID(User.Identity.Name);
+
+            var investmentDetailViewModel = db.Tbl_DepositToInvestorsDetails
+                .Where(d =>
+                    d.DepositDetailID == id &&
+                    d.InvestorUser_id == userIdentity &&
+                    d.Tbl_DepositToInvestors.IsPaid &&
+                    d.IsDelete == false)
+                .Select(d => new InvestmentDetailViewModel
+                {
+                    TypeName = d.Tbl_DepositToInvestors.Tbl_DepositTypes.DepositTypeName,
+                    Amount = d.DepositAmount,
+                    PlanName = d.Tbl_DepositToInvestors.Tbl_BussinessPlans.Title,
+                    Date = d.Tbl_DepositToInvestors.DepositDate,
+                    Description = d.Tbl_DepositToInvestors.Description,
+                })
+                .FirstOrDefault();
+
+            if (investmentDetailViewModel == null)
+                return HttpNotFound();
+
+            investmentDetailViewModel.DateString = investmentDetailViewModel.Date.Value.ToString("yyyy/MM/dd");
+            investmentDetailViewModel.Sheba = db.Tbl_UserProfiles
+                .Where(d => d.User_id == userIdentity)
+                .Select(d => d.AccountSheba)
+                .FirstOrDefault();
+
+            return View(investmentDetailViewModel);
         }
 
         [HttpGet]
@@ -72,6 +113,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Where(d => d.InvestorUser_id == userIdentity && d.Tbl_DepositToInvestors.IsPaid && d.IsDelete == false)
                 .Select(d => new InvestmentDetailViewModel
                 {
+                    ID = "d" + d.DepositDetailID.ToString(),
                     TypeID = d.Tbl_DepositToInvestors.DepositType_id,
                     TypeName = d.Tbl_DepositToInvestors.Tbl_DepositTypes.DepositTypeName,
                     Date = d.Tbl_DepositToInvestors.DepositDate,
@@ -85,6 +127,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Where(b => b.PaymentUser_id == userIdentity && b.IsConfirmedFromFaraboors && b.IsDelete == false)
                 .Select(b => new InvestmentDetailViewModel
                 {
+                    ID = "p" + b.PaymentID.ToString(),
                     TypeID = 4,
                     TypeName = "سرمایه گذاری",
                     Date = b.PaidDateTime,
@@ -108,6 +151,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             listInvestments = listInvestments
                 .Select(i => new InvestmentDetailViewModel
                 {
+                    ID = i.ID,
                     TypeName = i.TypeName,
                     Amount = i.Amount,
                     DateString = i.DateString,
@@ -117,7 +161,6 @@ namespace HamAfarin.Areas.UserPanel.Controllers
 
             return Json(new { data = listInvestments }, JsonRequestBehavior.AllowGet);
         }
-
 
         protected override void Dispose(bool disposing)
         {

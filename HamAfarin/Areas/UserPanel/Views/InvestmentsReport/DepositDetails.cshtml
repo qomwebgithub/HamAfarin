@@ -1,0 +1,76 @@
+﻿@model ViewModels.InvestmentDetailViewModel
+
+@{
+    ViewBag.Title = "چزییات واریزی";
+}
+
+<h2>جزییات واریزی</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal row">
+        <dd class="col-12 col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.TypeName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.TypeName)
+                </dd>
+            </dl>
+        </dd>
+        <dd class="col-12 col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Amount)
+                </dd>
+            </dl>
+        </dd>
+        <dd class="col-12 col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.PlanName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.PlanName)
+                </dd>
+            </dl>
+        </dd>
+        <dd class="col-12 col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Sheba)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Sheba)
+                </dd>
+            </dl>
+        </dd>
+        <dd class="col-12 col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.DateString)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.DateString)
+                </dd>
+            </dl>
+        </dd>
+        <dd class="col-12 col-md-6">
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </dl>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("بازگشت", "Index")
+</p>
