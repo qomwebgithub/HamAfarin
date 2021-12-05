@@ -23,7 +23,8 @@ columns.Bound(model => model.Tbl_Users.UserName);
 columns.Bound(model => model.Tbl_BussinessPlans.Title);
             columns.Bound(item => @item.PaymentID).Title("دستورات").Filterable(false).Groupable(false)
                     .Template(@<text>
-                @Html.ActionLink("جزییات", "Details", new { id = @item.PaymentID }, new { @class = "btn btn-info" })
+                @Html.ActionLink("جزییات", "Details", "Tbl_BusinessPlanPayment", new { id = @item.PaymentID }, new { @class = "btn btn-info" })
+
                 @Html.ActionLink("حذف", "Delete", new { id = @item.PaymentID }, new { @class = "btn btn-danger" })
                 <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_UserProfiles/Details/@item.PaymentUser_id">اطلاعات سرمایه گذار</a>
 
