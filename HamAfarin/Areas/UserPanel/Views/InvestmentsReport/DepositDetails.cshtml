@@ -1,10 +1,19 @@
 ﻿@model ViewModels.InvestmentDetailViewModel
 
 @{
-    ViewBag.Title = "چزییات واریزی";
+    ViewBag.Title = "جزییات واریزی";
 }
 
-<h2>جزییات واریزی</h2>
+@section Style
+{
+    <style>
+        dt {
+            color: var(--orange);
+        }
+    </style>
+}
+
+<h2>@ViewBag.Title</h2>
 
 <div>
     <hr />
