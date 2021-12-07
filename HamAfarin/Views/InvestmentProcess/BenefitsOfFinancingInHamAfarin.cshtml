@@ -331,20 +331,4 @@
 
 </div>
 
-
-<script>
-
-    function GoToElement(elementId) {
-
-        //document.getElementById("header" + elementId).scrollIntoView();
-
-        $(document).ready(function () {
-
-            $('html, body').animate({
-                scrollTop: $("#header" + elementId).offset().top
-            }, 2000);
-        });
-        //location.href("#"+elementId);
-    }
-
-</script>
+<script src="~/Content/js/views/investment-process/investment-process.js"></script>
