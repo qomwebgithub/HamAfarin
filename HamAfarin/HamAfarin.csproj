@@ -854,6 +854,7 @@
     <Content Include="Content\js\views\home\menu.js" />
     <Content Include="Content\js\views\investment-help\investment-help.js" />
     <Content Include="Content\js\views\investment-process\investment-process.js" />
+    <Content Include="Content\js\views\menu-page\menu-page.js" />
     <Content Include="Content\js\waitMe.min.js" />
     <Content Include="Content\js\wow.min.js" />
     <Content Include="Content\css\Site.css" />
