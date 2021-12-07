@@ -850,6 +850,7 @@
     <Content Include="Content\js\owl.carousel.min.js" />
     <Content Include="Content\js\sweetalert2.all.min.js" />
     <Content Include="Content\js\toastr.min.js" />
+    <Content Include="Content\js\views\account\account.js" />
     <Content Include="Content\js\waitMe.min.js" />
     <Content Include="Content\js\wow.min.js" />
     <Content Include="Content\css\Site.css" />
