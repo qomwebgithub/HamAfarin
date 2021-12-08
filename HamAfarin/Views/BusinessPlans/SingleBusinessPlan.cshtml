@@ -1,4 +1,4 @@
-﻿﻿@model ViewModels.BusinessPlanSingleViewModel
+﻿@model ViewModels.BusinessPlanSingleViewModel
 
 @{
     ViewBag.Title = Model.MetaTitle ?? Model.Title;
@@ -16,6 +16,7 @@
 <style>
     #myTabContent {
         padding-top: 7rem;
+        padding-bottom: 2rem;
     }
 
     #time-3-icon {
@@ -417,7 +418,7 @@
         </ul>
     </div>
     <div class="col-12 col-sm-10 offset-sm-1 bg-white px-0" role="tablist" data-aos="fade-down">
-        <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
+        <div class="tab-content" id="myTabContent">
             <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div id="accordion">
                     <div class="col-12 col-sm-10 offset-sm-1">
@@ -431,7 +432,7 @@
                                 </h5>
                             </a>
                         </div>
-                        <div id="collapse1" class="collapse mr-md-5 show" data-parent="#accordion">
+                        <div id="collapse1" class="collapse show" data-parent="#accordion">
                             @if (!String.IsNullOrEmpty(Model.VideoFileName))
                             {
                                 <div width="300" class="d-flex justify-content-md-start justify-content-start mb-4" id="video">
@@ -446,37 +447,37 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-12 offset-lg-1">
+                    <div class="col-12 col-sm-10 offset-sm-1">
                         <div id="headercollapse2" class="">
                             <a class="card-link mr-5" data-toggle="collapse" href="#collapse2">
                                 <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> بازار هدف و مزیت های رقابتی</h5>
                             </a>
                         </div>
-                        <div id="collapse2" class="collapse mr-md-5" data-parent="#accordion">
+                        <div id="collapse2" class="collapse" data-parent="#accordion">
                             <p class="figure-caption text-muted pt-1">
                                 @Html.Raw(@Model.MarketTarget)
                             </p>
                         </div>
                     </div>
-                    <div class="col-10 offset-lg-1">
+                    <div class="col-12 col-sm-10 offset-sm-1">
                         <div id="headercollapse3" class="">
                             <a class="card-link mr-5" data-toggle="collapse" href="#collapse3">
                                 <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
                             </a>
                         </div>
-                        <div id="collapse3" class="collapse mr-md-5" data-parent="#accordion">
+                        <div id="collapse3" class="collapse" data-parent="#accordion">
                             <p class="figure-caption text-muted pt-1">
                                 @Html.Raw(@Model.BusinessPlanRisks)
                             </p>
                         </div>
                     </div>
-                    <div class="col-10 offset-lg-1 mb-5">
+                    <div class="col-12 col-sm-10 offset-sm-1">
                         <div id="headercollapse4" class="">
                             <a class="card-link mr-5" data-toggle="collapse" href="#collapse4">
                                 <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> گالری</h5>
                             </a>
                         </div>
-                        <div id="collapse4" class="collapse mr-md-5" data-parent="#accordion">
+                        <div id="collapse4" class="collapse" data-parent="#accordion">
                             <p class="figure-caption text-muted pt-1">
                                 @Html.Action("GalleryPlan", Model.BussinessPlanID)
                             </p>
@@ -484,16 +485,16 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade mr-md-5 px-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+            <div class="tab-pane fade px-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
                 @Html.Raw(@Model.FinancialInformationText)
             </div>
-            <div class="tab-pane fade mr-md-5 px-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="tab-pane fade px-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                 @Html.Raw(@Model.ProgressReportText)
             </div>
-            <div class="tab-pane fade mr-md-5 px-md-5" id="investment" role="tabpanel" aria-labelledby="investment-tab">
+            <div class="tab-pane fade px-md-5" id="investment" role="tabpanel" aria-labelledby="investment-tab">
                 @Html.Raw(@Model.InvestorsText)
             </div>
-            <div class="tab-pane fade mr-md-5 px-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
+            <div class="tab-pane fade px-md-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                 <div class="container">
                     <div class="row" id="showCommentList">
                         @Html.Action("ShowCommentsOfPlan", "Comment", Model.BussinessPlanID)
@@ -522,7 +523,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade mr-md-5 px-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+            <div class="tab-pane fade px-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                 <div class="container">
                     <div class="row" id="showQuestionList">
                         @Html.Action("ShowQuestionsOfPlan", "Question", Model.BussinessPlanID)
