@@ -851,6 +851,8 @@
     <Content Include="Content\js\sweetalert2.all.min.js" />
     <Content Include="Content\js\toastr.min.js" />
     <Content Include="Content\js\views\account\account.js" />
+    <Content Include="Content\js\views\business-plans\index.js" />
+    <Content Include="Content\js\views\business-plans\single-business-plan.js" />
     <Content Include="Content\js\views\custom.js" />
     <Content Include="Content\js\views\home\menu.js" />
     <Content Include="Content\js\views\investment-help\investment-help.js" />
