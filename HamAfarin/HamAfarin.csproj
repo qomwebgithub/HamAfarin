@@ -2463,7 +2463,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\UserPanel\Models\" />
-    <Folder Include="Content\js\slides\" />
     <Folder Include="Images\BusinessPlans\Logo\Image\" />
     <Folder Include="Images\BusinessPlans\Logo\Thumb\" />
     <Folder Include="Images\InvestmentProcess\Image\" />

@@ -31,12 +31,10 @@
                     </div>
                 }
             </div>
-            <div class="row">
-                @foreach (var item in Model.Tbl_CommentPlan1)
-                {
-                    @Html.Partial("_BoxComment", item);
-                }
-            </div>
+            @foreach (var item in Model.Tbl_CommentPlan1)
+            {
+                @Html.Partial("_BoxComment", item);
+            }
         </div>
     </div>
 }
