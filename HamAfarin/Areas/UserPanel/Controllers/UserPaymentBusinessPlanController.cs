@@ -112,7 +112,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         {
             Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id);
             UserPaymentBusinessPlanSingleViewModel selectPayment = new UserPaymentBusinessPlanSingleViewModel();
-            Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id);
+            Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id && p.IsActive && p.IsDeleted == false);
             bool boolIsRequestedReturn = false;
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
 
@@ -295,7 +295,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             string message = db.Tbl_Sms.Find(5).Message;
             if (message.Contains("@T"))
             {
-                Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == businessPlan_id);
+                Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == businessPlan_id && b.IsActive && b.IsDeleted == false);
                 message = message.Replace("@T", qBussinessPlan.Title);
             }
 

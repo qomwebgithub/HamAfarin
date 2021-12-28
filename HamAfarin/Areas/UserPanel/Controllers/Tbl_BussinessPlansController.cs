@@ -51,7 +51,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.Find(id);
+            Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == id && p.IsActive && p.IsDeleted == false);
             if (tbl_BussinessPlans == null)
             {
                 return HttpNotFound();
@@ -190,7 +190,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         {
             int myUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
             //لیست طرح های من
-            List<Tbl_BussinessPlans> qMyPlans = db.Tbl_BussinessPlans.Where(p => p.User_id == myUserId && p.IsDeleted == false).ToList();
+            List<Tbl_BussinessPlans> qMyPlans = db.Tbl_BussinessPlans.Where(p => p.User_id == myUserId && p.IsActive && p.IsDeleted == false).ToList();
 
             //لیست پلن های پرداختی
             List<Tbl_BusinessPlanPayment> qPaymentPlans = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid).ToList();
@@ -229,7 +229,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         /// <returns>لیست سرمایه گذری های یک طرح</returns>
         public ActionResult PlanPayments(int id)
         {
-            ViewBag.Title = db.Tbl_BussinessPlans.FirstOrDefault(b => id == b.BussinessPlanID).Title;
+            ViewBag.Title = db.Tbl_BussinessPlans.Where(b => id == b.BussinessPlanID && b.IsActive && b.IsDeleted == false).Select(b => b.Title).FirstOrDefault();
             var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).Where(t => t.BusinessPlan_id == id);
             return View(tbl_BusinessPlanPayment.ToList());
         }

@@ -29,7 +29,7 @@ namespace Hamafarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_BussinessPlans
         public ActionResult Index()
         {
-            var tbl_BussinessPlans = db.Tbl_BussinessPlans.Include(t => t.Tbl_BussinessPlan_BussenessFields).Include(t => t.Tbl_BussinessPlan_FinancialDuration).Include(t => t.Tbl_CompanyType).Include(t => t.Tbl_MonetaryUnits).Include(t => t.Tbl_Users);
+            var tbl_BussinessPlans = db.Tbl_BussinessPlans.Include(t => t.Tbl_BussinessPlan_BussenessFields).Include(t => t.Tbl_BussinessPlan_FinancialDuration).Include(t => t.Tbl_CompanyType).Include(t => t.Tbl_MonetaryUnits).Include(t => t.Tbl_Users).Where(t => t.IsDeleted == false);
             return View(tbl_BussinessPlans.OrderByDescending(c => c.CreateDate).ToList());
         }
 

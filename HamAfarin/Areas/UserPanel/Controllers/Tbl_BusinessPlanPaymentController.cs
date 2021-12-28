@@ -23,7 +23,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         [Route("BusinessPlan/{id}/Index")]
         public ActionResult Index(int id)
         {
-            ViewBag.Title = db.Tbl_BussinessPlans.FirstOrDefault(b => id == b.BussinessPlanID).Title;
+            ViewBag.Title = db.Tbl_BussinessPlans.Where(b => id == b.BussinessPlanID && b.IsActive && b.IsDeleted == false).Select(b => b.Title).FirstOrDefault();
             var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Include(t => t.Tbl_BussinessPlans).Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Where(p => p.BusinessPlan_id == id);
             return View(tbl_BusinessPlanPayment.ToList());
         }

@@ -181,7 +181,7 @@ namespace HamAfarin
 
         public bool IsAcceptInvestmentPlan(HamAfarinDBEntities db, int id)
         {
-            Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == id);
+            Tbl_BussinessPlans qBussinessPlan = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == id && p.IsActive && p.IsDeleted == false);
             if (qBussinessPlan != null)
             {
                 // مبلغ سرمایه گذاری شده
@@ -263,7 +263,7 @@ namespace HamAfarin
         public PaymentPriceValidation PaymentPriceValidation(HamAfarinDBEntities db, int? businessPlanID, long? paymentPrice, int? userId, bool isLegal = false)
         {
             PaymentPriceValidation retValue = new PaymentPriceValidation();
-            Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID);
+            Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == businessPlanID && p.IsActive && p.IsDeleted == false);
             long MaximumInvestment = Convert.ToInt64((Convert.ToInt64(qBussinessPlans.AmountRequiredRoRaiseCapital) / 100) * qBussinessPlans.MaximumInvestmentPercentage);
             //چک کردن حداکثر مبلغ
 

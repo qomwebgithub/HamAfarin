@@ -16,7 +16,7 @@ namespace HamAfarin.Controllers
         public ActionResult Index(String q)
         {
             List<Tbl_BussinessPlans> qListSearch = new List<Tbl_BussinessPlans>();
-            qListSearch.AddRange(db.Tbl_BussinessPlans.Where(p => p.Title.Contains(q)).ToList());
+            qListSearch.AddRange(db.Tbl_BussinessPlans.Where(p => p.Title.Contains(q) && p.IsActive && p.IsDeleted == false).ToList());
             List<BusinessPlansItemViewModel> listSearch = new List<BusinessPlansItemViewModel>();
             foreach (var item in qListSearch)
             {

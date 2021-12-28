@@ -32,7 +32,7 @@ namespace Hamafarin.Controllers
             Tbl_UserProfiles qUserProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == UserID);
             if (qUserProfiles != null && qUserProfiles.IsActive)
             {
-                Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == id);
+                Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == id && p.IsActive && p.IsDeleted == false);
 
                 if (qBussinessPlans == null)
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
@@ -102,7 +102,7 @@ namespace Hamafarin.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == selectPaymentTypeViewModel.BusinessPlanID);
+                    Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == selectPaymentTypeViewModel.BusinessPlanID && p.IsActive && p.IsDeleted == false);
 
                     // حداقل مبلغ برای سرمایه گذاری
                     ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
@@ -221,7 +221,7 @@ namespace Hamafarin.Controllers
                 ModelState.Remove("OnlinePaymentPrice");
                 if (ModelState.IsValid)
                 {
-                    Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == selectPaymentTypeViewModel.BusinessPlanID);
+                    Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == selectPaymentTypeViewModel.BusinessPlanID && p.IsActive && p.IsDeleted == false);
 
                     // حداقل مبلغ برای سرمایه گذاری
                     ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
