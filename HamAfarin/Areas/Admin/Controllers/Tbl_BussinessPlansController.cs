@@ -62,7 +62,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 dt.Rows.Add(
                     item.PersonLegal == null ? item.Profile.FirstName : "",
                     item.PersonLegal == null ? item.Profile.LastName : item.PersonLegal.CompanyName,
-                    item.PersonLegal == null ? item.Profile.NationalCode : item.PersonLegal.NationalId ,
+                    item.PersonLegal == null ? item.Profile.NationalCode : item.PersonLegal.NationalId,
                     item.Profile.MobileNumber,
                     item.Profile.AccountSheba,
                     item.TotalPaymentPrice
@@ -273,14 +273,13 @@ namespace Hamafarin.Areas.Admin.Controllers
         public ActionResult Edit(int? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+
             Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.Find(id);
+
             if (tbl_BussinessPlans == null)
-            {
                 return HttpNotFound();
-            }
+
             ViewBag.BussinessField_id = new SelectList(db.Tbl_BussinessPlan_BussenessFields, "BussinessFieldID", "BussinessFieldTitle", tbl_BussinessPlans.BussinessField_id);
             ViewBag.FinancialDuration_id = new SelectList(db.Tbl_BussinessPlan_FinancialDuration, "FinancialDurationID", "FinancialDurationTitle", tbl_BussinessPlans.FinancialDuration_id);
             ViewBag.CompanyType_id = new SelectList(db.Tbl_CompanyType, "CompanyTypeID", "CompanyTypeTitle", tbl_BussinessPlans.CompanyType_id);
@@ -295,6 +294,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             var adminCreateEditBusinessPlan = iMapper.Map<Tbl_BussinessPlans, AdminCreateEditBusinessPlan>(tbl_BussinessPlans);
             List<Tbl_BusinessPlanGallery> qGallery = db.Tbl_BusinessPlanGallery.Where(g => g.BusinessPlan_id == adminCreateEditBusinessPlan.BussinessPlanID).ToList();
             adminCreateEditBusinessPlan.GalleryPlan = qGallery;
+            ViewBag.Video = adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName;
             return View(adminCreateEditBusinessPlan);
         }
 
@@ -314,161 +314,91 @@ namespace Hamafarin.Areas.Admin.Controllers
             // string
             // به
             // datetime
-            if (string.IsNullOrEmpty(adminCreateEditBusinessPlan.strInvestmentStartDate) == false)
-            {
-                adminCreateEditBusinessPlan.InvestmentStartDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentStartDate);
-            }
-            if (string.IsNullOrEmpty(adminCreateEditBusinessPlan.strInvestmentExpireDate) == false)
-            {
-                adminCreateEditBusinessPlan.InvestmentExpireDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentExpireDate);
-            }
-            if (string.IsNullOrEmpty(adminCreateEditBusinessPlan.strCompanyRegisterDate) == false)
-            {
-                adminCreateEditBusinessPlan.CompanyRegisterDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strCompanyRegisterDate);
-            }
-            if (string.IsNullOrEmpty(adminCreateEditBusinessPlan.strPreviousInvestorDate) == false)
-            {
-                adminCreateEditBusinessPlan.PreviousInvestorDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorDate);
-            }
-            if (string.IsNullOrEmpty(adminCreateEditBusinessPlan.strPreviousInvestorExpireDate) == false)
-            {
-                adminCreateEditBusinessPlan.PreviousInvestorExpireDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorExpireDate);
-            }
 
-            if (imgWarranty != null && imgWarranty.IsImage())
-            {
-                if (adminCreateEditBusinessPlan.ImageNameWarranty != null && adminCreateEditBusinessPlan.ImageNameWarranty != "no-photo.jpg")
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Warranty/" + adminCreateEditBusinessPlan.ImageNameWarranty));
-                }
-                adminCreateEditBusinessPlan.ImageNameWarranty = Guid.NewGuid().ToString() + Path.GetExtension(imgWarranty.FileName);
-                imgWarranty.SaveAs(Server.MapPath("/Resources/BusinessPlans/Warranty/" + adminCreateEditBusinessPlan.ImageNameWarranty));
-            }
+            adminCreateEditBusinessPlan.InvestmentStartDate = 
+                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentStartDate) ??
+                adminCreateEditBusinessPlan.InvestmentStartDate;
 
-            if (imgInSinglePlan != null && imgInSinglePlan.IsImage())
-            {
-                if (adminCreateEditBusinessPlan.ImageNameInSinglePlan != "no-photo.jpg")
-                {
-                    System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInSinglePlan));
-                    System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Thumb/" + adminCreateEditBusinessPlan.ImageNameInSinglePlan));
-                }
-                adminCreateEditBusinessPlan.ImageNameInSinglePlan = Guid.NewGuid().ToString() + Path.GetExtension(imgInSinglePlan.FileName);
-                imgInSinglePlan.SaveAs(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInSinglePlan));
+            adminCreateEditBusinessPlan.InvestmentExpireDate =
+                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentExpireDate) ??
+                adminCreateEditBusinessPlan.InvestmentExpireDate;
 
-                ImageResizer img = new ImageResizer(500);
-                img.Resize(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInSinglePlan),
-                    Server.MapPath("/Images/BusinessPlans/Thumb/" + adminCreateEditBusinessPlan.ImageNameInSinglePlan));
+            adminCreateEditBusinessPlan.CompanyRegisterDate =
+                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strCompanyRegisterDate) ??
+                adminCreateEditBusinessPlan.CompanyRegisterDate;
 
-            }
+            adminCreateEditBusinessPlan.PreviousInvestorDate =
+                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorDate) ??
+                adminCreateEditBusinessPlan.PreviousInvestorDate;
 
-            if (imgInListPalns != null && imgInListPalns.IsImage())
-            {
-                if (adminCreateEditBusinessPlan.ImageNameInListPalns != "no-photo.jpg")
-                {
-                    System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInListPalns));
-                    System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Thumb/" + adminCreateEditBusinessPlan.ImageNameInListPalns));
-                }
-                adminCreateEditBusinessPlan.ImageNameInListPalns = Guid.NewGuid().ToString() + Path.GetExtension(imgInListPalns.FileName);
-                imgInListPalns.SaveAs(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInListPalns));
+            adminCreateEditBusinessPlan.PreviousInvestorExpireDate =
+                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorExpireDate) ??
+                adminCreateEditBusinessPlan.PreviousInvestorExpireDate;
 
-                ImageResizer img = new ImageResizer(500);
-                img.Resize(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInListPalns),
-                    Server.MapPath("/Images/BusinessPlans/Thumb/" + adminCreateEditBusinessPlan.ImageNameInListPalns));
 
-            }
-            if (imgLogo != null && imgLogo.IsImage())
-            {
-                if (adminCreateEditBusinessPlan.BussinessLogoImageName != "no-photo.jpg")
-                {
-                    System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Logo/Image/" + adminCreateEditBusinessPlan.BussinessLogoImageName));
-                    System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Logo/Thumb/" + adminCreateEditBusinessPlan.BussinessLogoImageName));
-                }
-                adminCreateEditBusinessPlan.BussinessLogoImageName = Guid.NewGuid().ToString() + Path.GetExtension(imgLogo.FileName);
-                imgLogo.SaveAs(Server.MapPath("/Images/BusinessPlans/Logo/Image/" + adminCreateEditBusinessPlan.BussinessLogoImageName));
+            adminCreateEditBusinessPlan.ImageNameWarranty =
+                SaveNewImage(imgWarranty, adminCreateEditBusinessPlan.ImageNameWarranty,
+                    "/Resources/BusinessPlans/Warranty/");
 
-                ImageResizer img = new ImageResizer(500);
-                img.Resize(Server.MapPath("/Images/BusinessPlans/Logo/Image/" + adminCreateEditBusinessPlan.BussinessLogoImageName),
-                    Server.MapPath("/Images/BusinessPlans/Logo/Thumb/" + adminCreateEditBusinessPlan.BussinessLogoImageName));
+            adminCreateEditBusinessPlan.ImageNameInSinglePlan = SaveNewImage(
+                imgInSinglePlan, adminCreateEditBusinessPlan.ImageNameInSinglePlan,
+                "/Images/BusinessPlans/Image/", "/Images/BusinessPlans/Thumb/");
 
-            }
+            adminCreateEditBusinessPlan.ImageNameInListPalns = SaveNewImage(
+                imgInListPalns, adminCreateEditBusinessPlan.ImageNameInListPalns,
+                "/Images/BusinessPlans/Image/", "/Images/BusinessPlans/Thumb/");
 
-            if (letterFile != null)
-            {
-                if (adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName != null)
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Letter/" + adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName));
-                }
-                adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName = Guid.NewGuid().ToString() + Path.GetExtension(letterFile.FileName);
-                letterFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Letter/" + adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName));
-            }
+            adminCreateEditBusinessPlan.BussinessLogoImageName = SaveNewImage(
+                imgLogo, adminCreateEditBusinessPlan.BussinessLogoImageName,
+                "/Images/BusinessPlans/Logo/Image/", "/Images/BusinessPlans/Logo/Thumb/");
+            
 
-            if (modelFile != null)
-            {
-                if (adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName != null)
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Model/" + adminCreateEditBusinessPlan.BussinessModelFileName));
-                }
-                adminCreateEditBusinessPlan.BussinessModelFileName = Guid.NewGuid().ToString() + Path.GetExtension(modelFile.FileName);
-                modelFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Model/" + adminCreateEditBusinessPlan.BussinessModelFileName));
-            }
+            adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName = SaveNewFile(
+                letterFile, adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName,
+                "/Resources/BusinessPlans/Letter/");
 
-            if (slideFile != null)
-            {
-                if (adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName != null)
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Slide/" + adminCreateEditBusinessPlan.SlideShowPresentationFileName));
-                }
-                adminCreateEditBusinessPlan.SlideShowPresentationFileName = Guid.NewGuid().ToString() + Path.GetExtension(slideFile.FileName);
-                slideFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Slide/" + adminCreateEditBusinessPlan.SlideShowPresentationFileName));
-            }
+            adminCreateEditBusinessPlan.BussinessModelFileName = SaveNewFile(
+                modelFile, adminCreateEditBusinessPlan.BussinessModelFileName,
+                "/Resources/BusinessPlans/Model/");
 
-            if (reportFile != null)
-            {
-                if (adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName != null)
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Report/" + adminCreateEditBusinessPlan.DocumentsAndReportsFileName));
-                }
-                adminCreateEditBusinessPlan.DocumentsAndReportsFileName = Guid.NewGuid().ToString() + Path.GetExtension(reportFile.FileName);
-                reportFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Report/" + adminCreateEditBusinessPlan.DocumentsAndReportsFileName));
-            }
+            adminCreateEditBusinessPlan.SlideShowPresentationFileName = SaveNewFile(
+                slideFile, adminCreateEditBusinessPlan.SlideShowPresentationFileName,
+                "/Resources/BusinessPlans/Slide/");
 
-            if (ideaFile != null)
-            {
-                if (adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName != null)
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Idea/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
-                }
-                adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = Guid.NewGuid().ToString() + Path.GetExtension(ideaFile.FileName);
-                ideaFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Idea/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
-            }
+            adminCreateEditBusinessPlan.DocumentsAndReportsFileName = SaveNewFile(
+                reportFile, adminCreateEditBusinessPlan.DocumentsAndReportsFileName,
+                "/Resources/BusinessPlans/Report/");
 
-            if (contractFile != null)
-            {
-                if (adminCreateEditBusinessPlan.ContractFileName != null)
-                {
-                    System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.ContractFileName));
-                }
-                adminCreateEditBusinessPlan.ContractFileName = Guid.NewGuid().ToString() + Path.GetExtension(contractFile.FileName);
-                contractFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.ContractFileName));
-            }
+            adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = SaveNewFile(
+                ideaFile, adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName,
+                "/Resources/BusinessPlans/Idea/");
+
+            adminCreateEditBusinessPlan.ContractFileName = SaveNewFile(
+                contractFile, adminCreateEditBusinessPlan.ContractFileName,
+                "/Resources/BusinessPlans/Contract/");
 
             // حذف فاصله های اضافی از اعداد
-            adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital = adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
+            adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital = 
+                adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
+
             adminCreateEditBusinessPlan.MinimumAmountInvest = adminCreateEditBusinessPlan.MinimumAmountInvest.Trim();
 
             //مپ کردن مدل طرح کاربری به طرح اصلی
-            var config = new MapperConfiguration(cfg =>
+            MapperConfiguration config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>();
             });
             IMapper iMapper = config.CreateMapper();
-            var tbl_BussinessPlans = iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(adminCreateEditBusinessPlan);
+
+            Tbl_BussinessPlans tbl_BussinessPlans = 
+                iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(adminCreateEditBusinessPlan);
+
             if (tbl_BussinessPlans.TitleUrl == null)
-            {
                 tbl_BussinessPlans.TitleUrl = tbl_BussinessPlans.Title.Trim().Replace(" ", "-");
-            }
+
             db.Entry(tbl_BussinessPlans).State = EntityState.Modified;
             db.SaveChanges();
+
             // کنترل گالری عکس
             if (GalleryPlan != null && GalleryPlan.Any())
             {
@@ -480,6 +410,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                     ImageResizer img = new ImageResizer(500);
                     img.Resize(Server.MapPath("/Images/BusinessPlans/Image/" + imageName),
                         Server.MapPath("/Images/BusinessPlans/Thumb/" + imageName));
+
                     db.Tbl_BusinessPlanGallery.Add(new Tbl_BusinessPlanGallery()
                     {
                         BusinessPlan_id = tbl_BussinessPlans.BussinessPlanID,
@@ -487,17 +418,33 @@ namespace Hamafarin.Areas.Admin.Controllers
                         IsActive = true,
                         IsDelete = false
                     });
-
                 }
 
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.BussinessField_id = new SelectList(db.Tbl_BussinessPlan_BussenessFields, "BussinessFieldID", "BussinessFieldTitle", adminCreateEditBusinessPlan.BussinessField_id);
-            ViewBag.FinancialDuration_id = new SelectList(db.Tbl_BussinessPlan_FinancialDuration, "FinancialDurationID", "FinancialDurationTitle", adminCreateEditBusinessPlan.FinancialDuration_id);
-            ViewBag.CompanyType_id = new SelectList(db.Tbl_CompanyType, "CompanyTypeID", "CompanyTypeTitle", adminCreateEditBusinessPlan.CompanyType_id);
-            ViewBag.MonetaryUnit_id = new SelectList(db.Tbl_MonetaryUnits, "MonetaryUnitID", "MonetaryUnitTitle", adminCreateEditBusinessPlan.MonetaryUnit_id);
-            ViewBag.User_id = new SelectList(db.Tbl_Users, "UserID", "UserName", adminCreateEditBusinessPlan.User_id);
+
+            ViewBag.BussinessField_id = new SelectList(
+                db.Tbl_BussinessPlan_BussenessFields, "BussinessFieldID",
+                "BussinessFieldTitle", adminCreateEditBusinessPlan.BussinessField_id);
+
+            ViewBag.FinancialDuration_id = new SelectList(
+                db.Tbl_BussinessPlan_FinancialDuration, "FinancialDurationID",
+                "FinancialDurationTitle", adminCreateEditBusinessPlan.FinancialDuration_id);
+
+            ViewBag.CompanyType_id = new SelectList(
+                db.Tbl_CompanyType, "CompanyTypeID", "CompanyTypeTitle",
+                adminCreateEditBusinessPlan.CompanyType_id);
+
+            ViewBag.MonetaryUnit_id = new SelectList(
+                db.Tbl_MonetaryUnits, "MonetaryUnitID", "MonetaryUnitTitle",
+                adminCreateEditBusinessPlan.MonetaryUnit_id);
+
+            ViewBag.User_id = new SelectList(
+                db.Tbl_Users, "UserID", "UserName", adminCreateEditBusinessPlan.User_id);
+
+            ViewBag.Video = adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName;
+
             return View(adminCreateEditBusinessPlan);
         }
 
@@ -566,7 +513,7 @@ namespace Hamafarin.Areas.Admin.Controllers
         /// <param name="id">شناسه تصویر در گالری</param>
         public void DeleteImageGallery(int id)
         {
-            var qGallery = db.Tbl_BusinessPlanGallery.Find(id);
+            Tbl_BusinessPlanGallery qGallery = db.Tbl_BusinessPlanGallery.Find(id);
             System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Image/" + qGallery.ImageName));
             System.IO.File.Delete(Server.MapPath("/Images/BusinessPlans/Thumb/" + qGallery.ImageName));
             db.Tbl_BusinessPlanGallery.Remove(qGallery);
@@ -579,11 +526,57 @@ namespace Hamafarin.Areas.Admin.Controllers
         /// <param name="id">شناسه ویدیو</param>
         public void DeleteVideo(int id)
         {
-            var qBussinessPlans = db.Tbl_BussinessPlans.Find(id);
+            Tbl_BussinessPlans qBussinessPlans = db.Tbl_BussinessPlans.Find(id);
             System.IO.File.Delete(Server.MapPath("/Resources/BusinessPlans/Idea/" + qBussinessPlans.IntroductionIdeaVideoFileName));
             qBussinessPlans.IntroductionIdeaVideoFileName = null;
             db.Entry(qBussinessPlans).State = EntityState.Modified;
             db.SaveChanges();
+        }
+
+        private string SaveNewFile(HttpPostedFileBase file, string oldFileName, string path)
+        {
+            if (file == null)
+                return oldFileName;
+
+            if (oldFileName != null)
+                System.IO.File.Delete(Server.MapPath(path + oldFileName));
+
+            string newFileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+            file.SaveAs(Server.MapPath(path + newFileName));
+            return newFileName;
+        }
+
+        private string SaveNewImage(HttpPostedFileBase image, string oldImageName, string path)
+        {
+            if (image == null || image.IsImage() == false)
+                return oldImageName;
+
+            if (oldImageName != null && oldImageName != "no-photo.jpg")
+                System.IO.File.Delete(Server.MapPath(path + oldImageName));
+
+            string newImageName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+            image.SaveAs(Server.MapPath(path + newImageName));
+            return newImageName;
+        }
+
+        private string SaveNewImage(HttpPostedFileBase image, string oldImageName, string path, string thumbpath, int thumbSize = 500)
+        {
+            if (image == null || image.IsImage() == false)
+                return oldImageName;
+
+            if (oldImageName != null && oldImageName != "no-photo.jpg")
+            {
+                System.IO.File.Delete(Server.MapPath(path + oldImageName));
+                System.IO.File.Delete(Server.MapPath(thumbpath + oldImageName));
+            }
+            string newImageName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+            image.SaveAs(Server.MapPath(path + newImageName));
+
+            ImageResizer img = new ImageResizer(thumbSize);
+            img.Resize(Server.MapPath(path + newImageName),
+                Server.MapPath(thumbpath + newImageName));
+
+            return newImageName;
         }
 
         protected override void Dispose(bool disposing)
