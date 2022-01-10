@@ -26,13 +26,13 @@ namespace Hamafarin.Controllers
 
             //اجازه ی سرمایه گذاری
             ViewBag.RiskAlertStatement = db.Tbl_Settings.FirstOrDefault().RiskAlertStatement;
-            ViewBag.ActivePlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate <= DateTime.Now).Count();
-            ViewBag.PastPlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate > DateTime.Now).Count();
+            ViewBag.ActivePlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false).Count();
+            //ViewBag.PastPlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate > DateTime.Now).Count();
             ViewBag.FuturePlanCount = db.Tbl_FutureBusinessPlan.Where(f => f.IsDeleted == false && f.IsActive == true).Count();
             // برای دریافت حداکثر مبلغ سرمایه گذاری برای استفاده در فیلتر قیمت
             ViewBag.MaximumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault();
             // برای دریافت حداکثر مبلغ سرمایه گذاری برای استفاده در فیلتر قیمت
-            ViewBag.MinimumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderBy(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault();
+            ViewBag.MinimumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).Min(p => p.MinimumAmountInvest).FirstOrDefault();
 
             return View();
         }

@@ -1,8 +1,6 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "فرصت های سرمایه گذاری";
 }
-
 
 <!-- slider start -->
 @Html.Action("Sliders", "Home")
@@ -323,7 +321,6 @@
 
 @section Modal{
     <div id="filter-box" style="display:none">
-
         <div id="filter-selector">
             <button class="btn btn-danger close" id="close-btn"><i class="bi bi-x d-flex"></i></button>
             <div class="p-5">
@@ -342,23 +339,15 @@
             </div>
             <button onclick="search()" class="btn btn-orange" id="F-btn">فیلتر</button>
         </div>
-
         <div class="close" id="filter-closer">
-
         </div>
-
     </div>
 }
-
 <section class="w-100 font-weight-bold container-tab ">
-
     <div class="w-100 stickyNav_container">
-
         <ul class="nav nav-tabs d-flex shadow p-3 mb-2 bg-white rounded stickyNav" id="myTab" role="tablist">
             <div class="container d-flex flex-column flex-md-row">
-
                 <li class="nav-item ml-md-4 text-align-center mod" id="active-idea" style="">
-
                     <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="all-tab" data-toggle="tab" href="#all" role="tab"
                        aria-controls="all" aria-selected="true">طرح های فعال(@ViewBag.ActivePlanCount)</a>
                 </li>
@@ -370,7 +359,6 @@
                         <a class="nav-link stickyNav-item text-dark font-weight-bold" id="past-tab" data-toggle="tab" href="#past" role="tab"
                            aria-controls="past" aria-selected="false">طرح های گذشته(@ViewBag.PastPlanCount)</a>
                     </li>*@
-
                 <li class="nav-item mr-md-5  mt-2  mt-md-0 not-li mod" style="height: 40px;">
                     <!-- Actual search box -->
                     <div class="form-group has-search d-flex">
@@ -379,7 +367,6 @@
                         <input id="search_box" type="text" class="form-control" placeholder="جستجو در عنوان و توضیحات طرح">
                         <button class="btn d-none" id="filter-btn"><i class="bi bi-funnel d-flex"></i></button>
                     </div>
-
                 </li>
                 <li class="mr-2 mt-2">
                     <a class="stickyNav-item text-dark font-weight-bold">
@@ -389,23 +376,15 @@
                 </li>
             </div>
         </ul>
-
     </div>
-
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-0">
-
-
         <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5">
-
-
-
             <div class="tab-content mr-md-5 pl-md-3" id="myTabContent">
                 <div class="tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <br />
                     <br />
                     <br />
                     <div class="col-12 d-sm-none" style="height:90px"></div>
-
                     <div>
                         <div id="list-plans" class="row py-2">
                             @*@Html.Action("ActivePlans", "BusinessPlans")*@
@@ -415,58 +394,31 @@
                         <p class="text-center">در حال بارگزاری اطلاعات ...</p>
                         <div class="loadingCricle m-auto"></div>
                     </div>
-
-
-
                 </div>
                 <div class="tab-pane fade" id="future" role="tabpanel" aria-labelledby="future-tab">
-
                     <br />
                     <br />
                     <br />
-
-
                     <div id="future-result" class="row py-2">
-
                         @Html.Action("FuturePlans", "FutureBusinessPlan")
-
                     </div>
-
                 </div>
-
-
                 <div class="tab-pane fade" id="past" role="tabpanel" aria-labelledby="past-tab">
                     <br />
                     <br />
                     <br />
-
-
                     <div id="past-result" class="row py-2">
-
                         @Html.Action("PastPlans", "BusinessPlans")
-
-
-
                     </div>
-
                 </div>
-
                 <div class="tab-pane fade mr-5 p-5" id="search" role="tabpanel" aria-labelledby="search-tab">
-
                     <br />
                     <br />
                     <br />
-
-
                     <div id="list-active-plans" class="row py-2">
-
                         @Html.Partial("ActivePlans")
-
                     </div>
                 </div>
-
-
-
                 <div class="tab-pane fade mr-5 p-5" id="comment" role="tabpanel" aria-labelledby="comment-tab">
                     <br />
                     <br />
@@ -477,8 +429,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">
                     <div class="modal-dialog col-4">
@@ -498,13 +448,9 @@
                             <div class="modal-body pt-0" id="myModalBody">
                                 ...
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="tab-pane fade mr-5 p-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                     <br />
                     <br />
@@ -515,8 +461,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <div class="modal fade" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="addQuestionLabel"
                      aria-hidden="true">
                     <div class="modal-dialog col-4">
@@ -536,33 +480,18 @@
                             <div class="modal-body pt-0" id="addQuestionBody">
                                 ...
                             </div>
-
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="col-md-offset-2">
 
                 </div>
             </div>
-
-
-
         </div>
-
-
         <div class="col-md-2">
-
         </div>
-
     </div>
-
-
 </section>
-
-
 <!-- active items end -->
 <!-- attention banner start -->
 <section id="risk" class="w-100" style="background-color:#f5f6f8">
@@ -570,17 +499,13 @@
         <div class="col-12 col-sm-8 col-lg-offset-2 pt-2 pb-5 container">
             <h4 class="">
                 <img src="~/Content/img/risk.png" style="width:70px" />
-
                 بیانیه ریسک
-
             </h4>
-
             <div class="col-12">
                 <p>
                     @ViewBag.RiskAlertStatement
                 </p>
             </div>
-
             <div class="row float-left text-left ml-5">
                 <a href="/RiskAlertStatement" class="btn btn-orange btn-lg " style="font-size: 15px;">
                     ادامه
@@ -590,10 +515,8 @@
         </div>
     </div>
 </section>
-
 <!-- attention banner end -->
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-
 @section Scripts{
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Content/js/range.slider.js"></script>
