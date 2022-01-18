@@ -264,7 +264,8 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                     b.PaymentUser_id == userIdentity &&
                     b.IsPaid &&
                     b.PaymentType_id == onlinePayment &&
-                    b.IsDelete == false
+                    b.IsDelete == false &&
+                    b.IsConfirmedFromFaraboors == false
                 );
 
             if (qBusinessPlanPayment == null)
