@@ -698,6 +698,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\aos.css" />
     <Content Include="Content\css\awesome.css" />
+    <Content Include="Content\css\bootstrap-fileinput.css" />
     <Content Include="Content\css\bootstrap-theme.min.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\bootstrap.min.css" />
@@ -837,6 +838,7 @@
     <Content Include="Content\img\zemanatname.png" />
     <Content Include="Content\img\zemanatname.svg" />
     <Content Include="Content\js\aos.js" />
+    <Content Include="Content\js\bootstrap-fileinput.min.js" />
     <Content Include="Content\js\bootstrap.bundle.js" />
     <Content Include="Content\js\bootstrap.bundle.min.js" />
     <Content Include="Content\js\bootstrap.js" />
@@ -2300,22 +2302,23 @@
     <Compile Include="Classes\CheckNationalCode.cs" />
     <Compile Include="Classes\CheckPassword.cs" />
     <Compile Include="Classes\ControllerExtensions.cs" />
+    <Compile Include="Classes\CustomPasswordValidator.cs" />
     <Compile Include="Classes\DataPost.cs" />
-    <Compile Include="Classes\Enums\SliderPages.cs" />
     <Compile Include="Classes\Enums\PaymentStatusType.cs" />
-    <Compile Include="Classes\JsonModel\FaraboorsReceiveJsonModel.cs" />
+    <Compile Include="Classes\Enums\SliderPages.cs" />
+    <Compile Include="Classes\FaraboorsClass.cs" />
     <Compile Include="Classes\FileAddressesDirectoryPath.cs" />
     <Compile Include="Classes\Generator.cs" />
     <Compile Include="Classes\ImageResizer.cs" />
+    <Compile Include="Classes\JsonModel\FaraboorsReceiveJsonModel.cs" />
     <Compile Include="Classes\JsonModel\FaraboorsResponseJsonModel.cs" />
     <Compile Include="Classes\MyRoleProvider.cs" />
-    <Compile Include="Classes\CustomPasswordValidator.cs" />
     <Compile Include="Classes\PersianCulture.cs" />
-    <Compile Include="Classes\FaraboorsClass.cs" />
+    <Compile Include="Classes\PlanService.cs" />
     <Compile Include="Classes\SejamClass.cs" />
     <Compile Include="Classes\ShaparakMessageEncoding.cs" />
     <Compile Include="Classes\SMS.cs" />
-    <Compile Include="Classes\StringExtensions.cs" />
+    <Compile Include="Classes\UserService.cs" />
     <Compile Include="Classes\UserSetAuthCookie.cs" />
     <Compile Include="Connected Services\ZarinPal\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -2342,8 +2345,6 @@
     </Compile>
     <Compile Include="Models\PaymentPriceValidation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Classes\PlanService.cs" />
-    <Compile Include="Classes\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

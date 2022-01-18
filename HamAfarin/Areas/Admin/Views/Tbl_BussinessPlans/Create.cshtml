@@ -42,7 +42,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageNameInListPalns, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("imgInListPalns")
+                @Html.Kendo().Upload().Name("ImageInListPalnsFile")
                 @Html.ValidationMessageFor(model => model.ImageNameInListPalns)
             </div>
         </div>
@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageNameInSinglePlan, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("imgInSinglePlan")
+                @Html.Kendo().Upload().Name("ImageInSinglePlanFile")
                 @Html.ValidationMessageFor(model => model.ImageNameInSinglePlan)
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="Title">گالری تصاویر</label>
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("GalleryPlan").Multiple(true)
+                @Html.Kendo().Upload().Name("GalleryPlanFiles").Multiple(true)
             </div>
         </div>
 
@@ -73,7 +73,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BussinessLogoImageName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("imgLogo")
+                @Html.Kendo().Upload().Name("ImageLogoFile")
                 @Html.ValidationMessageFor(model => model.BussinessLogoImageName)
             </div>
         </div>
@@ -109,16 +109,10 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text cursor-pointer btn btn-success" id="InvestmentStartDateYMD">انتخاب تاریخ شروع</span>
-                            <label id="showDate_class" class="m-3">
-                                @*@Html.DisplayFor(model => model.dtBrithDateYMD)*@
-                            </label>
                         </div>
                     </div>
-
-                    <input type="text" id="strInvestmentStartDate" name="strInvestmentStartDate">
-
+                    @Html.EditorFor(model => model.strInvestmentStartDate)
                     @Html.ValidationMessageFor(model => model.strInvestmentStartDate, null, new { @class = "text-danger" })
-
                 </div>
             </div>
         </div>
@@ -130,13 +124,11 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text cursor-pointer btn btn-success" id="InvestmentExpireDateYMD">انتخاب تاریخ پایان</span>
-                            <label id="showDate_class" class="m-3">
-                                @*@Html.DisplayFor(model => model.dtBrithDateYMD)*@
-                            </label>
+
                         </div>
                     </div>
 
-                    <input type="text" id="strInvestmentExpireDate" name="strInvestmentExpireDate">
+                    @Html.EditorFor(model => model.strInvestmentExpireDate)
 
                     @Html.ValidationMessageFor(model => model.strInvestmentExpireDate, null, new { @class = "text-danger" })
 
@@ -163,7 +155,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageNameWarranty, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("imgWarranty")
+                @Html.Kendo().Upload().Name("ImageWarrantyFile")
                 @Html.ValidationMessageFor(model => model.ImageNameWarranty)
             </div>
         </div>
@@ -183,16 +175,11 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text cursor-pointer btn btn-success" id="CompanyRegisterDateYMD">انتخاب تاریخ</span>
-                            <label id="showDate_class" class="m-3">
-                                @*@Html.DisplayFor(model => model.dtBrithDateYMD)*@
-                            </label>
+
                         </div>
                     </div>
-
-                    <input type="text" id="strCompanyRegisterDate" name="strCompanyRegisterDate">
-
+                    @Html.EditorFor(model => model.strCompanyRegisterDate)
                     @Html.ValidationMessageFor(model => model.strCompanyRegisterDate, null, new { @class = "text-danger" })
-
                 </div>
             </div>
         </div>
@@ -248,7 +235,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CompanyAgentNationalCardImageName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("imgNationalCard")
+                @Html.Kendo().Upload().Name("ImageNationalCardFile")
                 @Html.ValidationMessageFor(model => model.CompanyAgentNationalCardImageName)
             </div>
         </div>
@@ -256,7 +243,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CompanyIntroductionLetterFileName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("letterFile")
+                @Html.Kendo().Upload().Name("LetterFile")
                 @Html.ValidationMessageFor(model => model.CompanyIntroductionLetterFileName)
             </div>
         </div>
@@ -380,7 +367,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.BussinessModelFileName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("modelFile")
+                @Html.Kendo().Upload().Name("ModelFile")
                 @Html.ValidationMessageFor(model => model.BussinessModelFileName)
             </div>
         </div>
@@ -388,7 +375,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.IntroductionIdeaVideoFileName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("ideaFile")
+                @Html.Kendo().Upload().Name("IdeaFile")
                 @Html.ValidationMessageFor(model => model.IntroductionIdeaVideoFileName)
             </div>
         </div>
@@ -420,7 +407,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SlideShowPresentationFileName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("slideFile")
+                @Html.Kendo().Upload().Name("SlideFile")
                 @Html.ValidationMessageFor(model => model.SlideShowPresentationFileName)
             </div>
         </div>
@@ -428,7 +415,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DocumentsAndReportsFileName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("reportFile")
+                @Html.Kendo().Upload().Name("ReportFile")
                 @Html.ValidationMessageFor(model => model.DocumentsAndReportsFileName)
             </div>
         </div>
@@ -524,16 +511,10 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text cursor-pointer btn btn-success" id="PreviousInvestorDateYMD">انتخاب تاریخ</span>
-                            <label id="showDate_class" class="m-3">
-                                @*@Html.DisplayFor(model => model.dtBrithDateYMD)*@
-                            </label>
                         </div>
                     </div>
-
-                    <input type="text" id="strPreviousInvestorDate" name="strPreviousInvestorDate">
-
+                    @Html.EditorFor(model => model.strPreviousInvestorDate)
                     @Html.ValidationMessageFor(model => model.strPreviousInvestorDate, null, new { @class = "text-danger" })
-
                 </div>
             </div>
         </div>
@@ -545,16 +526,10 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text cursor-pointer btn btn-success" id="PreviousInvestorExpireDateYMD">انتخاب تاریخ</span>
-                            <label id="showDate_class" class="m-3">
-                                @*@Html.DisplayFor(model => model.dtBrithDateYMD)*@
-                            </label>
                         </div>
                     </div>
-
-                    <input type="text" id="strPreviousInvestorExpireDate" name="strPreviousInvestorExpireDate">
-
+                    @Html.EditorFor(model => model.strPreviousInvestorExpireDate)
                     @Html.ValidationMessageFor(model => model.strPreviousInvestorExpireDate, null, new { @class = "text-danger" })
-
                 </div>
             </div>
         </div>
@@ -618,7 +593,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ContractFileName, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.Kendo().Upload().Name("contractFile")
+                @Html.Kendo().Upload().Name("ContractFile")
                 @Html.ValidationMessageFor(model => model.ContractFileName)
             </div>
         </div>
@@ -656,14 +631,6 @@
                 @Html.ValidationMessageFor(model => model.Canonical)
             </div>
         </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => model.TitleUrl, new { @class = "control-label col-12" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.TitleUrl)
-                    @Html.ValidationMessageFor(model => model.TitleUrl)
-                </div>
-            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.SeoKey, new { @class = "control-label col-12" })

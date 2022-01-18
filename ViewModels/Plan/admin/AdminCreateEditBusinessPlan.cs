@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.WebPages;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ViewModels
@@ -17,7 +19,7 @@ namespace ViewModels
         [Display(Name = "فعال")]
         public bool IsActive { get; set; }
         [Display(Name = "کاربر")]
-        public Nullable<int> User_id { get; set; }
+        public int? User_id { get; set; }
         [Display(Name = "عنوان(نمایش در سایت)")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string Title { get; set; }
@@ -40,29 +42,41 @@ namespace ViewModels
         [Display(Name = "(توضیحات کاربر برای مدیر)توضیح مختصر")]
         public string BussinessSummaryDescription { get; set; }
         [Display(Name = "زمینه کسب و کار")]
-        public Nullable<int> BussinessField_id { get; set; }
+        public int? BussinessField_id { get; set; }
         [Display(Name = "تاریخ شروع سرمایه گذاری")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         //[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public Nullable<System.DateTime> InvestmentStartDate { get; set; }
+        public DateTime? InvestmentStartDate { get; set; }
         [Display(Name = "تاریخ شروع سرمایه گذاری")]
-        public string strInvestmentStartDate { get; set; }
+        public string strInvestmentStartDate
+        {
+            get => InvestmentStartDate?.ToString("yyyy-MM-dd");
+            set { InvestmentStartDate = Common.StringExtensions.StringToDate(value); }
+        }
         [Display(Name = "تاریخ پایان سرمایه گذاری")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public Nullable<System.DateTime> InvestmentExpireDate { get; set; }
+        public DateTime? InvestmentExpireDate { get; set; }
         [Display(Name = "تاریخ پایان سرمایه گذاری")]
-        public string strInvestmentExpireDate { get; set; }
+        public string strInvestmentExpireDate
+        {
+            get => InvestmentExpireDate?.ToString("yyyy-MM-dd");
+            set { InvestmentExpireDate = Common.StringExtensions.StringToDate(value); }
+        }
         [Display(Name = "نام شرکت")]
         public string CompanyName { get; set; }
         [Display(Name = "نوع شرکت")]
-        public Nullable<int> CompanyType_id { get; set; }
+        public int? CompanyType_id { get; set; }
         [Display(Name = "شماره ثبت شرکت")]
         public string CompanyRegisterCode { get; set; }
         [Display(Name = "تاریخ ثبت شرکت")]
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
-        public Nullable<System.DateTime> CompanyRegisterDate { get; set; } 
+        public DateTime? CompanyRegisterDate { get; set; }
         [Display(Name = "تاریخ ثبت شرکت")]
-        public string strCompanyRegisterDate { get; set; }
+        public string strCompanyRegisterDate
+        {
+            get => CompanyRegisterDate?.ToString("yyyy-MM-dd");
+            set { CompanyRegisterDate = Common.StringExtensions.StringToDate(value); }
+        }
         [Display(Name = "شناسنامه ملی شرکت")]
         public string CompanyNationalCertificateCode { get; set; }
         [Display(Name = "کد اقتصادی")]
@@ -86,7 +100,7 @@ namespace ViewModels
         [Display(Name = "شهر شرکت")]
         public string CompanyCity { get; set; }
         [Display(Name = "مدت زمان پویش تامین مالی")]
-        public Nullable<int> FinancialDuration_id { get; set; }
+        public int? FinancialDuration_id { get; set; }
         [Display(Name = "آیا آدرس ثبتی شرکت با آدرس محل فعالیت تفاوت دارد؟")]
         public bool IsDifferentActiveAddressWithRegisterAddress { get; set; }
         [Display(Name = "آدرس محل فعالیت")]
@@ -128,12 +142,12 @@ namespace ViewModels
         public string DocumentsAndReportsFileName { get; set; }
         [Display(Name = "حداکثر درصد برای سرمایه گذاری")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public Nullable<int> MaximumInvestmentPercentage { get; set; }
+        public int? MaximumInvestmentPercentage { get; set; }
         [Display(Name = "حداقل مبلغ برای سرمایه گذاری")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string MinimumAmountInvest { get; set; }
         [Display(Name = "واحد پول")]
-        public Nullable<int> MonetaryUnit_id { get; set; }
+        public int? MonetaryUnit_id { get; set; }
         [Display(Name = "مبلغ مورد نیاز برای جذب سرمایه به تومان")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public string AmountRequiredRoRaiseCapital { get; set; }
@@ -151,24 +165,32 @@ namespace ViewModels
         public string PreviousInvestorType { get; set; }
         [Display(Name = "نرخ بازگشت سرمایه به درصد")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        public Nullable<int> PercentageReturnInvestment { get; set; }
+        public int? PercentageReturnInvestment { get; set; }
         [Display(Name = "تاریخ سرمایه گذاری قبلی")]
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
-        public Nullable<System.DateTime> PreviousInvestorDate { get; set; }
+        public DateTime? PreviousInvestorDate { get; set; }
         [Display(Name = "تاریخ سرمایه گذاری قبلی")]
-        public string strPreviousInvestorDate { get; set; }
+        public string strPreviousInvestorDate
+        {
+            get => PreviousInvestorDate?.ToString("yyyy-MM-dd");
+            set { PreviousInvestorDate = Common.StringExtensions.StringToDate(value); }
+        }
         [Display(Name = "پایان اعتبار سرمایه گذاری قبلی")]
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
-        public Nullable<System.DateTime> PreviousInvestorExpireDate { get; set; }
+        public DateTime? PreviousInvestorExpireDate { get; set; }
         [Display(Name = "پایان اعتبار سرمایه گذاری قبلی")]
-        public string strPreviousInvestorExpireDate { get; set; }
+        public string strPreviousInvestorExpireDate
+        {
+            get => PreviousInvestorExpireDate?.ToString("yyyy-MM-dd");
+            set { PreviousInvestorExpireDate = Common.StringExtensions.StringToDate(value); }
+        }
         [Display(Name = "متن ویژگی های طرح")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [DataType(DataType.MultilineText)]
         [AllowHtml]
         public string BusinessPlanFeatures { get; set; }
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
-        public Nullable<System.DateTime> CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         [Display(Name = "کد فرابورس")]
         public string CodeOTC { get; set; }
 
@@ -214,8 +236,18 @@ namespace ViewModels
         public string ContractFileName { get; set; }
         [Display(Name = "گواهی شراکت")]
         public bool IsProjectParticipationReady { get; set; }
-
-        
+        public HttpPostedFileBase ImageInListPalnsFile { get; set; }
+        public HttpPostedFileBase ImageInSinglePlanFile { get; set; }
+        public HttpPostedFileBase[] GalleryPlanFiles { get; set; }
+        public HttpPostedFileBase ImageLogoFile { get; set; }
+        public HttpPostedFileBase ImageWarrantyFile { get; set; }
+        public HttpPostedFileBase ImageNationalCardFile { get; set; }
+        public HttpPostedFileBase LetterFile { get; set; }
+        public HttpPostedFileBase ModelFile { get; set; }
+        public HttpPostedFileBase SlideFile { get; set; }
+        public HttpPostedFileBase ReportFile { get; set; }
+        public HttpPostedFileBase IdeaFile { get; set; }
+        public HttpPostedFileBase ContractFile { get; set; }
 
     }
 }

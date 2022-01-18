@@ -121,109 +121,71 @@ namespace Hamafarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AdminCreateEditBusinessPlan adminCreateEditBusinessPlan, HttpPostedFileBase imgInListPalns,
-            HttpPostedFileBase imgInSinglePlan, HttpPostedFileBase[] GalleryPlan, HttpPostedFileBase imgLogo,
-            HttpPostedFileBase imgWarranty, HttpPostedFileBase imgNationalCard, HttpPostedFileBase letterFile,
-            HttpPostedFileBase modelFile, HttpPostedFileBase slideFile, HttpPostedFileBase reportFile,
-            HttpPostedFileBase ideaFile, HttpPostedFileBase contractFile)
+        public ActionResult Create(AdminCreateEditBusinessPlan upsertBusinessPlan)
         {
+            if (ModelState.IsValid == false)
+                return View(upsertBusinessPlan);
+
             ////////////****************/////////////////////////////
             // تبدیل تاریخ تولد از 
             // string
             // به
             // datetime
-            adminCreateEditBusinessPlan.InvestmentStartDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentStartDate);
-            adminCreateEditBusinessPlan.InvestmentExpireDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentExpireDate);
-            adminCreateEditBusinessPlan.CompanyRegisterDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strCompanyRegisterDate);
-            adminCreateEditBusinessPlan.PreviousInvestorDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorDate);
-            adminCreateEditBusinessPlan.PreviousInvestorExpireDate = StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorExpireDate);
+            //upsertBusinessPlan.InvestmentStartDate = StringExtensions.StringToDate(upsertBusinessPlan.strInvestmentStartDate);
+            //upsertBusinessPlan.InvestmentExpireDate = StringExtensions.StringToDate(upsertBusinessPlan.strInvestmentExpireDate);
+            //upsertBusinessPlan.CompanyRegisterDate = StringExtensions.StringToDate(upsertBusinessPlan.strCompanyRegisterDate);
+            //upsertBusinessPlan.PreviousInvestorDate = StringExtensions.StringToDate(upsertBusinessPlan.strPreviousInvestorDate);
+            //upsertBusinessPlan.PreviousInvestorExpireDate = StringExtensions.StringToDate(upsertBusinessPlan.strPreviousInvestorExpireDate);
             ////////////****************/////////////////////////////
 
-            adminCreateEditBusinessPlan.ImageNameInListPalns = "no-photo.jpg";
-            if (imgInListPalns != null && imgInListPalns.IsImage())
-            {
-                adminCreateEditBusinessPlan.ImageNameInListPalns = Guid.NewGuid().ToString() + Path.GetExtension(imgInListPalns.FileName);
-                imgInListPalns.SaveAs(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInListPalns));
+            upsertBusinessPlan.ImageNameWarranty =
+                SaveNewImage(upsertBusinessPlan.ImageWarrantyFile, upsertBusinessPlan.ImageNameWarranty,
+                    "/Resources/BusinessPlans/Warranty/");
 
-                ImageResizer img = new ImageResizer(500);
-                img.Resize(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInListPalns),
-                    Server.MapPath("/Images/BusinessPlans/Thumb/" + adminCreateEditBusinessPlan.ImageNameInListPalns));
+            upsertBusinessPlan.ImageNameInSinglePlan = SaveNewImage(
+                upsertBusinessPlan.ImageInSinglePlanFile, upsertBusinessPlan.ImageNameInSinglePlan,
+                "/Images/BusinessPlans/Image/", "/Images/BusinessPlans/Thumb/");
 
-            }
+            upsertBusinessPlan.ImageNameInListPalns = SaveNewImage(
+                upsertBusinessPlan.ImageInListPalnsFile, upsertBusinessPlan.ImageNameInListPalns,
+                "/Images/BusinessPlans/Image/", "/Images/BusinessPlans/Thumb/");
 
-            adminCreateEditBusinessPlan.ImageNameInSinglePlan = "no-photo.jpg";
-            if (imgInSinglePlan != null && imgInSinglePlan.IsImage())
-            {
-                adminCreateEditBusinessPlan.ImageNameInSinglePlan = Guid.NewGuid().ToString() + Path.GetExtension(imgInSinglePlan.FileName);
-                imgInSinglePlan.SaveAs(Server.MapPath("/Images/BusinessPlans/Image/" + adminCreateEditBusinessPlan.ImageNameInSinglePlan));
+            upsertBusinessPlan.BussinessLogoImageName = SaveNewImage(
+                upsertBusinessPlan.ImageLogoFile, upsertBusinessPlan.BussinessLogoImageName,
+                "/Images/BusinessPlans/Logo/Image/", "/Images/BusinessPlans/Logo/Thumb/");
 
-            }
 
-            if (imgLogo != null && imgLogo.IsImage())
-            {
-                adminCreateEditBusinessPlan.BussinessLogoImageName = Guid.NewGuid().ToString() + Path.GetExtension(imgLogo.FileName);
-                imgLogo.SaveAs(Server.MapPath("/Images/BusinessPlans/Logo/Image/" + adminCreateEditBusinessPlan.BussinessLogoImageName));
+            upsertBusinessPlan.CompanyIntroductionLetterFileName = SaveNewFile(
+                upsertBusinessPlan.LetterFile, upsertBusinessPlan.CompanyIntroductionLetterFileName,
+                "/Resources/BusinessPlans/Letter/");
 
-                ImageResizer img = new ImageResizer(500);
-                img.Resize(Server.MapPath("/Images/BusinessPlans/Logo/Image/" + adminCreateEditBusinessPlan.BussinessLogoImageName),
-                    Server.MapPath("/Images/BusinessPlans/Logo/Thumb/" + adminCreateEditBusinessPlan.BussinessLogoImageName));
+            upsertBusinessPlan.BussinessModelFileName = SaveNewFile(
+                upsertBusinessPlan.ModelFile, upsertBusinessPlan.BussinessModelFileName,
+                "/Resources/BusinessPlans/Model/");
 
-            }
-            // ذخیره عکس ضمانت نامه
-            if (imgWarranty != null && imgWarranty.IsImage())
-            {
-                adminCreateEditBusinessPlan.ImageNameWarranty = Guid.NewGuid().ToString() + Path.GetExtension(imgWarranty.FileName);
-                imgWarranty.SaveAs(Server.MapPath("/Resources/BusinessPlans/Warranty/" + adminCreateEditBusinessPlan.ImageNameWarranty));
-            }
+            upsertBusinessPlan.SlideShowPresentationFileName = SaveNewFile(
+                upsertBusinessPlan.SlideFile, upsertBusinessPlan.SlideShowPresentationFileName,
+                "/Resources/BusinessPlans/Slide/");
 
-            if (imgNationalCard != null && imgNationalCard.IsImage())
-            {
-                adminCreateEditBusinessPlan.CompanyAgentNationalCardImageName = Guid.NewGuid().ToString() + Path.GetExtension(imgNationalCard.FileName);
-                imgNationalCard.SaveAs(Server.MapPath("/Resources/BusinessPlans/NationalCard/" + adminCreateEditBusinessPlan.CompanyAgentNationalCardImageName));
-            }
+            upsertBusinessPlan.DocumentsAndReportsFileName = SaveNewFile(
+                upsertBusinessPlan.ReportFile, upsertBusinessPlan.DocumentsAndReportsFileName,
+                "/Resources/BusinessPlans/Report/");
 
-            if (letterFile != null)
-            {
-                adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName = Guid.NewGuid().ToString() + Path.GetExtension(letterFile.FileName);
-                letterFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Letter/" + adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName));
-            }
+            upsertBusinessPlan.IntroductionIdeaVideoFileName = SaveNewFile(
+                upsertBusinessPlan.IdeaFile, upsertBusinessPlan.IntroductionIdeaVideoFileName,
+                "/Resources/BusinessPlans/Idea/");
 
-            if (modelFile != null)
-            {
-                adminCreateEditBusinessPlan.BussinessModelFileName = Guid.NewGuid().ToString() + Path.GetExtension(modelFile.FileName);
-                modelFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Model/" + adminCreateEditBusinessPlan.BussinessModelFileName));
-            }
+            upsertBusinessPlan.ContractFileName = SaveNewFile(
+                upsertBusinessPlan.ContractFile, upsertBusinessPlan.ContractFileName,
+                "/Resources/BusinessPlans/Contract/");
 
-            if (slideFile != null)
-            {
-                adminCreateEditBusinessPlan.SlideShowPresentationFileName = Guid.NewGuid().ToString() + Path.GetExtension(slideFile.FileName);
-                slideFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Slide/" + adminCreateEditBusinessPlan.SlideShowPresentationFileName));
-            }
 
-            if (reportFile != null)
-            {
-                adminCreateEditBusinessPlan.DocumentsAndReportsFileName = Guid.NewGuid().ToString() + Path.GetExtension(reportFile.FileName);
-                reportFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Report/" + adminCreateEditBusinessPlan.DocumentsAndReportsFileName));
-            }
-
-            if (ideaFile != null)
-            {
-                adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = Guid.NewGuid().ToString() + Path.GetExtension(ideaFile.FileName);
-                ideaFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Idea/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
-            }
-
-            if (contractFile != null)
-            {
-                adminCreateEditBusinessPlan.ContractFileName = Guid.NewGuid().ToString() + Path.GetExtension(contractFile.FileName);
-                contractFile.SaveAs(Server.MapPath("/Resources/BusinessPlans/Contract/" + adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName));
-            }
-
-            adminCreateEditBusinessPlan.CreateDate = DateTime.Now;
-            adminCreateEditBusinessPlan.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            upsertBusinessPlan.CreateDate = DateTime.Now;
+            upsertBusinessPlan.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
             // حذف فاصله های اضافی از اعداد
-            adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital = adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
-            adminCreateEditBusinessPlan.MinimumAmountInvest = adminCreateEditBusinessPlan.MinimumAmountInvest.Trim();
+            upsertBusinessPlan.AmountRequiredRoRaiseCapital = upsertBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
+            upsertBusinessPlan.MinimumAmountInvest = upsertBusinessPlan.MinimumAmountInvest.Trim();
 
             //مپ کردن مدل طرح کاربری به طرح اصلی
             var config = new MapperConfiguration(cfg =>
@@ -231,7 +193,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 cfg.CreateMap<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>();
             });
             IMapper iMapper = config.CreateMapper();
-            var tblBussinessPlans = iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(adminCreateEditBusinessPlan);
+            var tblBussinessPlans = iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(upsertBusinessPlan);
             if (tblBussinessPlans.TitleUrl == null)
             {
                 tblBussinessPlans.TitleUrl = tblBussinessPlans.Title.Trim().Replace(" ", "-");
@@ -244,9 +206,9 @@ namespace Hamafarin.Areas.Admin.Controllers
             db.Tbl_BussinessPlans.Add(tblBussinessPlans);
             db.SaveChanges();
             // کنترل گالری عکس
-            if (GalleryPlan != null && GalleryPlan.Any())
+            if (upsertBusinessPlan.GalleryPlanFiles != null && upsertBusinessPlan.GalleryPlanFiles.Any())
             {
-                foreach (HttpPostedFileBase item in GalleryPlan)
+                foreach (HttpPostedFileBase item in upsertBusinessPlan.GalleryPlanFiles)
                 {
                     string imageName = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
                     item.SaveAs(Server.MapPath("/Images/BusinessPlans/Image/" + imageName));
@@ -261,7 +223,6 @@ namespace Hamafarin.Areas.Admin.Controllers
                         IsActive = true,
                         IsDelete = false
                     });
-
                 }
             }
 
@@ -303,95 +264,62 @@ namespace Hamafarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(AdminCreateEditBusinessPlan adminCreateEditBusinessPlan, HttpPostedFileBase imgInListPalns,
-            HttpPostedFileBase imgInSinglePlan, HttpPostedFileBase[] GalleryPlan, HttpPostedFileBase imgLogo,
-            HttpPostedFileBase imgWarranty, HttpPostedFileBase imgNationalCard, HttpPostedFileBase letterFile,
-            HttpPostedFileBase modelFile, HttpPostedFileBase slideFile, HttpPostedFileBase reportFile,
-            HttpPostedFileBase ideaFile, HttpPostedFileBase contractFile)
+        public ActionResult Edit(AdminCreateEditBusinessPlan upsertBusinessPlan)
         {
-            ////////////****************/////////////////////////////
-            // تبدیل تاریخ تولد از 
-            // string
-            // به
-            // datetime
-
-            adminCreateEditBusinessPlan.InvestmentStartDate = 
-                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentStartDate) ??
-                adminCreateEditBusinessPlan.InvestmentStartDate;
-
-            adminCreateEditBusinessPlan.InvestmentExpireDate =
-                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strInvestmentExpireDate) ??
-                adminCreateEditBusinessPlan.InvestmentExpireDate;
-
-            adminCreateEditBusinessPlan.CompanyRegisterDate =
-                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strCompanyRegisterDate) ??
-                adminCreateEditBusinessPlan.CompanyRegisterDate;
-
-            adminCreateEditBusinessPlan.PreviousInvestorDate =
-                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorDate) ??
-                adminCreateEditBusinessPlan.PreviousInvestorDate;
-
-            adminCreateEditBusinessPlan.PreviousInvestorExpireDate =
-                StringExtensions.StringToDate(adminCreateEditBusinessPlan.strPreviousInvestorExpireDate) ??
-                adminCreateEditBusinessPlan.PreviousInvestorExpireDate;
-
-
-            adminCreateEditBusinessPlan.ImageNameWarranty =
-                SaveNewImage(imgWarranty, adminCreateEditBusinessPlan.ImageNameWarranty,
+            upsertBusinessPlan.ImageNameWarranty =
+                SaveNewImage(upsertBusinessPlan.ImageWarrantyFile, upsertBusinessPlan.ImageNameWarranty,
                     "/Resources/BusinessPlans/Warranty/");
 
-            adminCreateEditBusinessPlan.ImageNameInSinglePlan = SaveNewImage(
-                imgInSinglePlan, adminCreateEditBusinessPlan.ImageNameInSinglePlan,
+            upsertBusinessPlan.ImageNameInSinglePlan = SaveNewImage(
+                upsertBusinessPlan.ImageInSinglePlanFile, upsertBusinessPlan.ImageNameInSinglePlan,
                 "/Images/BusinessPlans/Image/", "/Images/BusinessPlans/Thumb/");
 
-            adminCreateEditBusinessPlan.ImageNameInListPalns = SaveNewImage(
-                imgInListPalns, adminCreateEditBusinessPlan.ImageNameInListPalns,
+            upsertBusinessPlan.ImageNameInListPalns = SaveNewImage(
+                upsertBusinessPlan.ImageInListPalnsFile, upsertBusinessPlan.ImageNameInListPalns,
                 "/Images/BusinessPlans/Image/", "/Images/BusinessPlans/Thumb/");
 
-            adminCreateEditBusinessPlan.BussinessLogoImageName = SaveNewImage(
-                imgLogo, adminCreateEditBusinessPlan.BussinessLogoImageName,
+            upsertBusinessPlan.BussinessLogoImageName = SaveNewImage(
+                upsertBusinessPlan.ImageLogoFile, upsertBusinessPlan.BussinessLogoImageName,
                 "/Images/BusinessPlans/Logo/Image/", "/Images/BusinessPlans/Logo/Thumb/");
-            
 
-            adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName = SaveNewFile(
-                letterFile, adminCreateEditBusinessPlan.CompanyIntroductionLetterFileName,
+
+            upsertBusinessPlan.CompanyIntroductionLetterFileName = SaveNewFile(
+                upsertBusinessPlan.LetterFile, upsertBusinessPlan.CompanyIntroductionLetterFileName,
                 "/Resources/BusinessPlans/Letter/");
 
-            adminCreateEditBusinessPlan.BussinessModelFileName = SaveNewFile(
-                modelFile, adminCreateEditBusinessPlan.BussinessModelFileName,
+            upsertBusinessPlan.BussinessModelFileName = SaveNewFile(
+                upsertBusinessPlan.ModelFile, upsertBusinessPlan.BussinessModelFileName,
                 "/Resources/BusinessPlans/Model/");
 
-            adminCreateEditBusinessPlan.SlideShowPresentationFileName = SaveNewFile(
-                slideFile, adminCreateEditBusinessPlan.SlideShowPresentationFileName,
+            upsertBusinessPlan.SlideShowPresentationFileName = SaveNewFile(
+                upsertBusinessPlan.SlideFile, upsertBusinessPlan.SlideShowPresentationFileName,
                 "/Resources/BusinessPlans/Slide/");
 
-            adminCreateEditBusinessPlan.DocumentsAndReportsFileName = SaveNewFile(
-                reportFile, adminCreateEditBusinessPlan.DocumentsAndReportsFileName,
+            upsertBusinessPlan.DocumentsAndReportsFileName = SaveNewFile(
+                upsertBusinessPlan.ReportFile, upsertBusinessPlan.DocumentsAndReportsFileName,
                 "/Resources/BusinessPlans/Report/");
 
-            adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName = SaveNewFile(
-                ideaFile, adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName,
+            upsertBusinessPlan.IntroductionIdeaVideoFileName = SaveNewFile(
+                upsertBusinessPlan.IdeaFile, upsertBusinessPlan.IntroductionIdeaVideoFileName,
                 "/Resources/BusinessPlans/Idea/");
 
-            adminCreateEditBusinessPlan.ContractFileName = SaveNewFile(
-                contractFile, adminCreateEditBusinessPlan.ContractFileName,
+            upsertBusinessPlan.ContractFileName = SaveNewFile(
+                upsertBusinessPlan.ContractFile, upsertBusinessPlan.ContractFileName,
                 "/Resources/BusinessPlans/Contract/");
 
             // حذف فاصله های اضافی از اعداد
-            adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital = 
-                adminCreateEditBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
+            upsertBusinessPlan.AmountRequiredRoRaiseCapital =
+                upsertBusinessPlan.AmountRequiredRoRaiseCapital.Trim();
 
-            adminCreateEditBusinessPlan.MinimumAmountInvest = adminCreateEditBusinessPlan.MinimumAmountInvest.Trim();
+            upsertBusinessPlan.MinimumAmountInvest = upsertBusinessPlan.MinimumAmountInvest.Trim();
 
             //مپ کردن مدل طرح کاربری به طرح اصلی
             MapperConfiguration config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>();
-            });
+            { cfg.CreateMap<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(); });
             IMapper iMapper = config.CreateMapper();
 
-            Tbl_BussinessPlans tbl_BussinessPlans = 
-                iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(adminCreateEditBusinessPlan);
+            Tbl_BussinessPlans tbl_BussinessPlans =
+                iMapper.Map<AdminCreateEditBusinessPlan, Tbl_BussinessPlans>(upsertBusinessPlan);
 
             if (tbl_BussinessPlans.TitleUrl == null)
                 tbl_BussinessPlans.TitleUrl = tbl_BussinessPlans.Title.Trim().Replace(" ", "-");
@@ -400,9 +328,9 @@ namespace Hamafarin.Areas.Admin.Controllers
             db.SaveChanges();
 
             // کنترل گالری عکس
-            if (GalleryPlan != null && GalleryPlan.Any())
+            if (upsertBusinessPlan.GalleryPlanFiles != null && upsertBusinessPlan.GalleryPlanFiles.Any())
             {
-                foreach (HttpPostedFileBase item in GalleryPlan)
+                foreach (HttpPostedFileBase item in upsertBusinessPlan.GalleryPlanFiles)
                 {
                     string imageName = Guid.NewGuid().ToString() + Path.GetExtension(item.FileName);
                     item.SaveAs(Server.MapPath("/Images/BusinessPlans/Image/" + imageName));
@@ -426,26 +354,27 @@ namespace Hamafarin.Areas.Admin.Controllers
 
             ViewBag.BussinessField_id = new SelectList(
                 db.Tbl_BussinessPlan_BussenessFields, "BussinessFieldID",
-                "BussinessFieldTitle", adminCreateEditBusinessPlan.BussinessField_id);
+                "BussinessFieldTitle", upsertBusinessPlan.BussinessField_id);
 
             ViewBag.FinancialDuration_id = new SelectList(
                 db.Tbl_BussinessPlan_FinancialDuration, "FinancialDurationID",
-                "FinancialDurationTitle", adminCreateEditBusinessPlan.FinancialDuration_id);
+                "FinancialDurationTitle", upsertBusinessPlan.FinancialDuration_id);
 
             ViewBag.CompanyType_id = new SelectList(
                 db.Tbl_CompanyType, "CompanyTypeID", "CompanyTypeTitle",
-                adminCreateEditBusinessPlan.CompanyType_id);
+                upsertBusinessPlan.CompanyType_id);
 
             ViewBag.MonetaryUnit_id = new SelectList(
                 db.Tbl_MonetaryUnits, "MonetaryUnitID", "MonetaryUnitTitle",
-                adminCreateEditBusinessPlan.MonetaryUnit_id);
+                upsertBusinessPlan.MonetaryUnit_id);
 
             ViewBag.User_id = new SelectList(
-                db.Tbl_Users, "UserID", "UserName", adminCreateEditBusinessPlan.User_id);
+                db.Tbl_Users, "UserID", "UserName", upsertBusinessPlan.User_id);
 
-            ViewBag.Video = adminCreateEditBusinessPlan.IntroductionIdeaVideoFileName;
+            ViewBag.Video = upsertBusinessPlan.IntroductionIdeaVideoFileName;
 
-            return View(adminCreateEditBusinessPlan);
+            ModelState.Clear();
+            return View(upsertBusinessPlan);
         }
 
         public void DoSuccessPlan(int id)
