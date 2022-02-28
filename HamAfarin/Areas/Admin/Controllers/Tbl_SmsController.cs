@@ -25,7 +25,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_Sms
         public async Task<ActionResult> Index()
         {
-            List<Tbl_Sms> tbl_Sms = await db.Tbl_Sms.ToListAsync();
+            List<Tbl_Sms> tbl_Sms = await db.Tbl_Sms.OrderByDescending(s => s.ID).ToListAsync();
             return View(tbl_Sms);
         }
 

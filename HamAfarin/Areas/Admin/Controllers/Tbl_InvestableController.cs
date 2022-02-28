@@ -20,7 +20,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_Investable
         public ActionResult Index()
         {
-            return View(db.Tbl_Investable.ToList());
+            return View(db.Tbl_Investable.OrderByDescending(i => i.CreateDate).ToList());
         }
 
         // GET: Admin/Tbl_Investable/Details/5

@@ -21,7 +21,8 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_UserProfiles
         public ActionResult Index()
         {
-            var tbl_UserProfiles = db.Tbl_UserProfiles.Where(p => p.IsDeleted == false).Include(t => t.Tbl_Users);
+            var tbl_UserProfiles = db.Tbl_UserProfiles.Where(p => p.IsDeleted == false)
+                .Include(t => t.Tbl_Users);
             return View(tbl_UserProfiles.ToList());
         }
 

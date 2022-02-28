@@ -17,7 +17,8 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_Menu
         public ActionResult Index()
         {
-            return View(db.Tbl_Menu.Where(p=>p.IsDelete == false).OrderByDescending(c => c.CreateDate).ToList());
+            return View(db.Tbl_Menu.Where(p=>p.IsDelete == false)
+                .OrderByDescending(c => c.CreateDate).ToList());
         }
 
         // GET: Admin/Tbl_Menu/Details/5

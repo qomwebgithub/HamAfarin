@@ -17,7 +17,9 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_BusinessPlanQuestion
         public ActionResult Index()
         {
-            var tbl_BusinessPlanQuestion = db.Tbl_BusinessPlanQuestion.Include(t => t.Tbl_BusinessPlanQuestion2).Include(t => t.Tbl_BussinessPlans).Include(t => t.Tbl_Users);
+            var tbl_BusinessPlanQuestion = db.Tbl_BusinessPlanQuestion
+                .Include(t => t.Tbl_BusinessPlanQuestion2).Include(t => t.Tbl_BussinessPlans)
+                .Include(t => t.Tbl_Users).OrderByDescending(t=>t.CreateDate);
             return View(tbl_BusinessPlanQuestion.ToList());
         }
 

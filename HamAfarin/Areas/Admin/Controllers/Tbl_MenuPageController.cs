@@ -19,7 +19,8 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             ViewBag.MenuTypeTitle = db.Tbl_MenuType.Find(id).Title;
             ViewBag.MenuTypeID = id;
-            var tbl_MenuPage = db.Tbl_MenuPage.Where(m => m.MenuType_id == id && m.IsDelete == false).Include(t => t.Tbl_MenuType);
+            var tbl_MenuPage = db.Tbl_MenuPage.Where(m => m.MenuType_id == id && m.IsDelete == false)
+                .Include(t => t.Tbl_MenuType).OrderByDescending(m => m.CreateDate);
             return View(tbl_MenuPage.ToList());
         }
 
@@ -64,7 +65,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 tbl_MenuPage.Title.Trim();
                 db.Tbl_MenuPage.Add(tbl_MenuPage);
                 db.SaveChanges();
-                return RedirectToAction("Index",new { id=tbl_MenuPage.MenuType_id});
+                return RedirectToAction("Index", new { id = tbl_MenuPage.MenuType_id });
             }
 
             ViewBag.Page_id = new SelectList(db.Tbl_Pages, "PageID", "UrlTitle");

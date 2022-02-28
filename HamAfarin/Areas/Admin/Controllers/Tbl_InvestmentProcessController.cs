@@ -19,7 +19,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_InvestmentProcess
         public ActionResult Index()
         {
-            return View(db.Tbl_InvestmentProcess.ToList());
+            return View(db.Tbl_InvestmentProcess.OrderByDescending(i => i.CreateDate).ToList());
         }
 
         // GET: Admin/Tbl_InvestmentProcess/Details/5
@@ -52,7 +52,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 tbl_Investment.IsDeleted = false;
                 tbl_Investment.CreateDate = DateTime.Now;
                 tbl_Investment.ImageName = "no-photo.jpg";

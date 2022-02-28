@@ -20,7 +20,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/ExportImportExcel
         public ActionResult Index()
         {
-            var insuranceCertificate = db.Tbl_Users.ToList();
+            var insuranceCertificate = db.Tbl_Users.OrderByDescending(u => u.RegisterDate).ToList();
             return View(insuranceCertificate);
         }
 

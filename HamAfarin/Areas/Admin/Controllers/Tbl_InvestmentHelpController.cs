@@ -18,10 +18,10 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_InvestmentHelp/Details/5
         public ActionResult Index()
         {
-            return View(db.Tbl_InvestmentHelp.FirstOrDefault());
+            return View(db.Tbl_InvestmentHelp.OrderByDescending(i => i.CreateDate).FirstOrDefault());
         }
 
-       
+
         // GET: Admin/Tbl_InvestmentHelp/Edit/5
         public ActionResult Edit()
         {

@@ -19,7 +19,8 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_Pages
         public ActionResult Index()
         {
-            return View(db.Tbl_Pages.Where(p=>p.IsDelete == false).OrderByDescending(c => c.CreateDate).ToList());
+            return View(db.Tbl_Pages.Where(p=>p.IsDelete == false)
+                .OrderByDescending(c => c.CreateDate).ToList());
         }
 
         // GET: Admin/Tbl_Pages/Details/5

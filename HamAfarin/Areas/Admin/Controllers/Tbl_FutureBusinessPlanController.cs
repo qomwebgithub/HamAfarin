@@ -20,7 +20,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_FutureBusinessPlan
         public ActionResult Index()
         {
-            return View(db.Tbl_FutureBusinessPlan.ToList());
+            return View(db.Tbl_FutureBusinessPlan.OrderByDescending(t => t.CreateDate).ToList());
         }
 
         // GET: Admin/Tbl_FutureBusinessPlan/Details/5

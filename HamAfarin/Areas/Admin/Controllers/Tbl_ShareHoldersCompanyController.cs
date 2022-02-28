@@ -20,7 +20,8 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_ShareHoldersCompany
         public ActionResult Index()
         {
-            return View(db.Tbl_ShareHoldersCompany.Where(s => s.IsDelete == false).ToList());
+            return View(db.Tbl_ShareHoldersCompany.Where(s => s.IsDelete == false)
+                .OrderByDescending(s => s.CreateDate).ToList());
         }
 
         // GET: Admin/Tbl_ShareHoldersCompany/Details/5

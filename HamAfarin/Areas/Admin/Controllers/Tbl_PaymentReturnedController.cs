@@ -17,7 +17,9 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_PaymentReturned
         public ActionResult Index()
         {
-            var tbl_PaymentReturned = db.Tbl_PaymentReturned.Include(t => t.Tbl_BusinessPlanPayment).Include(t => t.Tbl_BussinessPlans).Include(t => t.Tbl_Users);
+            var tbl_PaymentReturned = db.Tbl_PaymentReturned.Include(t => t.Tbl_BusinessPlanPayment)
+                .Include(t => t.Tbl_BussinessPlans).Include(t => t.Tbl_Users)
+                .OrderByDescending(b => b.CreateDate);
             return View(tbl_PaymentReturned.ToList());
         }
 
