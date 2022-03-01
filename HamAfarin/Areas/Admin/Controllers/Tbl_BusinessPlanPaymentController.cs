@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using ClosedXML.Excel;
 using Common;
 using DataLayer;
 using Hamafarin;
@@ -342,6 +343,75 @@ namespace HamAfarin.Areas.Admin.Controllers
                 .OrderByDescending(t => t.PaidDateTime);
 
             return View(tbl_BusinessPlanPayment.ToList());
+        }
+
+        public FileResult ExcelReport(string startDate, string endDate)
+        {
+            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                .Where(p => p.IsPaid && p.IsDelete == false && p.IsConfirmedFromAdmin == false);
+
+            if (startDate.HasValue())
+            {
+                var date = StringExtensions.StringToDate(startDate);
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment.Where(p => p.CreateDate >= date);
+            }
+            if (endDate.HasValue())
+            {
+                var date = StringExtensions.StringToDate(endDate);
+                tbl_BusinessPlanPayment = tbl_BusinessPlanPayment.Where(p => p.CreateDate <= date);
+            }
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment.OrderBy(p => p.CreateDate);
+
+            List<string> lstColumnsName = new List<string>
+            {
+                "تاریخ ایجاد",
+                "نام طرح",
+                "پرداخت",
+                "تاریخ پرداخت",
+                "تایید ادمین",
+                "نام کاربری",
+                "کد تراکنش",
+                "مبلغ",
+                "نام تصویر فیش",
+                "تایید فرابورس",
+                "تاریخ فرابورس",
+                "پاسخ فرابورس"
+            };
+
+            DataTable dt = new DataTable("Grid");
+            foreach (var item in lstColumnsName)
+            {
+                dt.Columns.Add(item);
+            }
+
+            foreach (var item in tbl_BusinessPlanPayment.ToList())
+            {
+                dt.Rows.Add(
+                    item.CreateDate.Value.ToString("yyyy-MM-dd"),
+                    item.Tbl_BussinessPlans.Title,
+                    item.IsPaid,
+                    item.PaidDateTime.Value.ToString("yyyy-MM-dd"),
+                    item.IsConfirmedFromAdmin,
+                    item.Tbl_Users1.UserName,
+                    item.TransactionPaymentCode,
+                    item.PaymentPrice,
+                    item.PaymentImageName,
+                    item.IsConfirmedFromFaraboors,
+                    item.FaraboorsConfirmDate.Value.ToString("yyyy-MM-dd"),
+                    item.FaraboorsResponse
+                );
+            }
+
+            using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", $"فهرست پروفایل کاربران ({DateTime.Now.ToString("yyyy-MM-dd")}).xlsx");
+                }
+            }
         }
 
         public ActionResult ConfirmedByFaraboors(int? id)
