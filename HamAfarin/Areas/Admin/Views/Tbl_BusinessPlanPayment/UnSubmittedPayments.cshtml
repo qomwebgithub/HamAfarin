@@ -7,6 +7,31 @@
 
 <h2>@ViewBag.Title</h2>
 
+<div class="form-row">
+    <div class="form-group col-md-3">
+        <label class="sr-only" for="startDate">تاریخ شروع</label>
+        <div class="input-group" style="direction:ltr">
+            <div class="input-group-prepend">
+                <button class="btn btn-primary" id="startDateYMD" type="button">انتخاب</button>
+            </div>
+            <input id="startDate" type="text" class="form-control" name="startDate" placeholder="تاریخ شروع" />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <label class="sr-only" for="endDate">تاریخ پایان</label>
+        <div class="input-group" style="direction:ltr">
+            <div class="input-group-prepend">
+                <button class="btn btn-primary" id="endDateYMD" type="button">انتخاب</button>
+            </div>
+            <input id="endDate" type="text" class="form-control" name="endDate" placeholder="تاریخ پایان" />
+        </div>
+    </div>
+    <div class="form-group col-md-3">
+        <a class="btn btn-primary text-white mb-2" onclick="excelReport()">گزارش</a>
+    </div>
+</div>
+<iframe id="downloadIframe" style="display:none;"></iframe>
+
 @(Html.Kendo().Grid(Model)
       .Name("Grid")
       .Columns(columns =>
@@ -49,3 +74,28 @@ toolbar.Custom().Action("Create", "Tbl_BusinessPlanPayment").Text("افزودن"
 .Model(model => model.Id(item => item.PaymentID))
 )
 )
+
+@section scripts{
+    <script>
+        function excelReport() {
+            const start = $('#startDate').val();
+            const end = $('#endDate').val();
+            const url = '/Admin/Tbl_BusinessPlanPayment/ExcelReport?startDate=' + start + '&endDate=' + end;
+            document.getElementById('downloadIframe').src = url;
+        }
+        $("#startDateYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#startDate",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+        $("#endDateYMD").MdPersianDateTimePicker({
+            targetTextSelector: "#endDate",
+            textFormat: "yyyy-MM-dd",
+            isGregorian: false,
+            modalMode: false,
+            englishNumber: false,
+        });
+    </script>
+}

@@ -388,17 +388,17 @@ namespace HamAfarin.Areas.Admin.Controllers
             foreach (var item in tbl_BusinessPlanPayment.ToList())
             {
                 dt.Rows.Add(
-                    item.CreateDate.Value.ToString("yyyy-MM-dd"),
+                    item.CreateDate?.ToString("yyyy-MM-dd"),
                     item.Tbl_BussinessPlans.Title,
                     item.IsPaid,
-                    item.PaidDateTime.Value.ToString("yyyy-MM-dd"),
+                    item.PaidDateTime?.ToString("yyyy-MM-dd"),
                     item.IsConfirmedFromAdmin,
                     item.Tbl_Users1.UserName,
                     item.TransactionPaymentCode,
                     item.PaymentPrice,
                     item.PaymentImageName,
                     item.IsConfirmedFromFaraboors,
-                    item.FaraboorsConfirmDate.Value.ToString("yyyy-MM-dd"),
+                    item.FaraboorsConfirmDate?.ToString("yyyy-MM-dd"),
                     item.FaraboorsResponse
                 );
             }
