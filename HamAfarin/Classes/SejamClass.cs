@@ -61,7 +61,7 @@ namespace HamAfarin
                     }
                 }
             }
-            tokenResult = (false, "Token Error");
+            tokenResult = (false, "خطا در ارتباط با سجام");
             return tokenResult;
         }
 
