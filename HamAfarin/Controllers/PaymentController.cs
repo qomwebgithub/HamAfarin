@@ -204,6 +204,7 @@ namespace Hamafarin.Controllers
 
                         db.SaveChanges();
 
+                        ViewBag.Massage = "فعلا ارتباط با درگاه مقدور نمی باشد";
                         return View(selectPaymentTypeViewModel);
                     }
                     else
@@ -375,7 +376,7 @@ namespace Hamafarin.Controllers
         private string GetSign(string data)
         {
             var rsa = new RSACryptoServiceProvider();
-            rsa.FromXmlString("<RSAKeyValue><Modulus>qoZGKuUmTHFIBZAqScJt4FNPfS9FdAdVKgH+597MhP1gRVPNa040ZGJmOG1nj0X3rozgyyjkCGNlsqtVUnxhEzczJPku/plaAf62clGACp7o54cFCwYOc1mA5fql/nWOLvB6SQGd8WHXubaadU7+v0LMFA6VvdD8TYlzKdPowu8=</Modulus><Exponent>AQAB</Exponent><P>31H3sUNyj4vTovUr4KNw5FoDDV1O5utDCEf/HrEisPSWGHAJ0nCZMCp2abd8HuBgVKPiCju4WQR6h1QG02Rg4Q==</P><Q>w3p43JAmyK1PbPad65mbYEOTt640L+7IrNG+POburCdhgnAc5YHpsuP8rxxD/kkz9R0gGPwPx9CYiZWZgDMNzw==</Q><DP>y6RBTGIG66NEQEt10Yj4/yKduegmdSh/neOZXvGEgvzmii5QppeK+YMfK9Pn2XgeH9C55T8EIhiVayZSex4DwQ==</DP><DQ>W2oSy1K+UGp8EkDiaSNUfhgcJHHbBe9s+SS9Ck4Un31rJEy5trqiR35G1L0rLuec3KvaLtTxrEfoja7gMguuEQ==</DQ><InverseQ>XBFR1EIBjdX89EVNvvPV76S4Nkfcgpwif0IKV9a5cXC1E6WSaB5T8LMvs26wvGHQImmgLmL5I9xMp1SGmhgZJA==</InverseQ><D>bhAUogMdYSGM1upiIRF5Udzz5VzpeyZwdZisKoTHhN71kEmywJvNfS11xN34haUnZGZRgU93P2LIdTXY8FCPZoVedP0GFKigysNd0r+QqhMloY5RvMdMD8kxPCrNFkc9ETITNiZOnBcBWq7jXng3mnD8ECjWkImOCFNckn9b/wE=</D></RSAKeyValue>");
+            rsa.FromXmlString("<RSAKeyValue><Modulus>tgPgJTn9M7pKUeIxZOkw9ZaKASSGmMtKzsG0Oe4kl4UHOaAfn/TwWrTgvyiNgAvxFQCw1A7YiMqPiDe/t9KbZoZz1uNBt3SCYDVsSVewpzdPhgmaDnUrylCSkujzTzlBqAKJ8alwW8hYKOOlbPPtY/0aWQ3bbpT49+DaNheyMwM=</Modulus><Exponent>AQAB</Exponent><P>9C4fmxKemcbQd58hm4KP0yR7SPXH/mSui0MA4BHv4NKlj7fP7DA+Uc47MKRrVbuSqe0eKo8K8u5J6ztZoO6nIQ==</P><Q>vtNnctPiGb+Bdy+jlAI4NPlePnLTo8D+4819cwKTD4NGEU0Qwhza1O6szrKemWyTGWpXPyVf/gbk06lLC0mpow==</Q><DP>Lmi1yRt42XFYHeQ41v2xqEe+xtcv88HfCsjpWa0PEoP2w6ID+rgQoCu6RDx7ygekkHdozF3zjsiLdBILrvKtAQ==</DP><DQ>Dksti4ddf0o9+1yBJzwHU8h+C7V0Lubs8MlapTvDIj1WCUO5hqC8r4h1P0JX6OweFKBHir5U82U2zLf4nA7Xew==</DQ><InverseQ>rovdYQjQoQePVxTuO4WijIJkb030RUSuSoiy3nlyH+v2eM1Q7jnTFHN0cWSNqMW486PCkUiDBH7pq2CIJFcnbg==</InverseQ><D>tKx4LLu5SUWcTFe5LDAFt2JtLuEw8i6p3T6ORgrMK9OS7nKxsbgTdhaiGV6JxxcTggOjg3wRGQfpHhAosLHQKm9xwylIV7uM+CbEaNDva6WPK2w45X/vS2/WDdUOyb2AswgibE6+G4ALeoil/shXeoMfn5PsXkLKtzaMaoNDA4E=</D></RSAKeyValue>");
             byte[] signMain = rsa.SignData(Encoding.UTF8.GetBytes(data), new
             SHA1CryptoServiceProvider());
             string sign = Convert.ToBase64String(signMain);
