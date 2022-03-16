@@ -155,80 +155,81 @@ namespace Hamafarin.Controllers
                         string redirectAddress = "https://www.hamafarin.ir/Payment/VerifyPayment/" + tbl_PaymentOnline.PaymentDetilsID;
 
                         #region Pasargad
-                        string timeStamp = tbl_BusinessPlanPayment.CreateDate.Value.ToString("yyyy/MM/dd HH:mm:ss");
-                        string amount = dclAmount.ToString();
-                        string invoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber;
-                        string ActionResult = "1003";
-                        string invoiceDate = tbl_BusinessPlanPayment.CreateDate.Value.ToString("yyyy/MM/dd");
-                        AppSettingsReader appSetting = new AppSettingsReader();
-                        string merchantCode = "4650168";  //کد پذیرنده
-                        string terminalCode = "1837060"; //کد ترمینال  
+                        //string timeStamp = tbl_BusinessPlanPayment.CreateDate.Value.ToString("yyyy/MM/dd HH:mm:ss");
+                        //string amount = dclAmount.ToString();
+                        //string invoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber;
+                        //string ActionResult = "1003";
+                        //string invoiceDate = tbl_BusinessPlanPayment.CreateDate.Value.ToString("yyyy/MM/dd");
+                        //AppSettingsReader appSetting = new AppSettingsReader();
+                        //string merchantCode = "4650168";  //کد پذیرنده
+                        //string terminalCode = "1837060"; //کد ترمینال  
 
-                        DataPost dp = new DataPost();
-                        dp.InvoiceNumber = invoiceNumber;
-                        dp.InvoiceDate = invoiceDate;
-                        dp.MerchantCode = merchantCode;
-                        dp.TerminalCode = terminalCode;
-                        dp.Amount = amount;
-                        dp.RedirectAddress = redirectAddress;
-                        dp.Action = ActionResult;
-                        dp.TimeStamp = timeStamp;
-                        string output = JsonConvert.SerializeObject(dp);
-                        string sign = GetSign(output);
+                        //DataPost dp = new DataPost();
+                        //dp.InvoiceNumber = invoiceNumber;
+                        //dp.InvoiceDate = invoiceDate;
+                        //dp.MerchantCode = merchantCode;
+                        //dp.TerminalCode = terminalCode;
+                        //dp.Amount = amount;
+                        //dp.RedirectAddress = redirectAddress;
+                        //dp.Action = ActionResult;
+                        //dp.TimeStamp = timeStamp;
+                        //string output = JsonConvert.SerializeObject(dp);
+                        //string sign = GetSign(output);
 
-                        byte[] textArray = Encoding.UTF8.GetBytes(output);
-                        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/GetToken");
-                        request.Method = "POST";
-                        request.ContentType = "Application/Json";
-                        request.ContentLength = textArray.Length;
-                        request.Headers.Add("Sign", sign);
+                        //byte[] textArray = Encoding.UTF8.GetBytes(output);
+                        //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/GetToken");
+                        //request.Method = "POST";
+                        //request.ContentType = "Application/Json";
+                        //request.ContentLength = textArray.Length;
+                        //request.Headers.Add("Sign", sign);
 
-                        request.GetRequestStream().Write(textArray, 0, textArray.Length);
-                        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        //request.GetRequestStream().Write(textArray, 0, textArray.Length);
+                        //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
-                        string result = reader.ReadToEnd();
-                        tbl_PaymentOnline.ShaparakMessageGetToken = result;
+                        //StreamReader reader = new StreamReader(response.GetResponseStream());
+                        //string result = reader.ReadToEnd();
+                        //tbl_PaymentOnline.ShaparakMessageGetToken = result;
 
-                        if (result.Contains("Token"))
-                        {
-                            var res = result.Split(':', ',');
-                            string token = res[1];
-                            token = token.Replace("\"", "");
+                        //if (result.Contains("Token"))
+                        //{
+                        //    var res = result.Split(':', ',');
+                        //    string token = res[1];
+                        //    token = token.Replace("\"", "");
 
-                            tbl_PaymentOnline.ShaparakToken = token;
-                            db.SaveChanges();
+                        //    tbl_PaymentOnline.ShaparakToken = token;
+                        //    db.SaveChanges();
 
-                            Response.Redirect("https://pep.shaparak.ir/payment.aspx?n=" + token);
-                            return View();
-                        }
-                        ViewBag.Massage = "فعلا ارتباط با درگاه مقدور نمی باشد";
-                        db.SaveChanges();
+                        //    Response.Redirect("https://pep.shaparak.ir/payment.aspx?n=" + token);
+                        //    return View();
+                        //}
+                        //ViewBag.Massage = "فعلا ارتباط با درگاه مقدور نمی باشد";
+                        //db.SaveChanges();
 
-                        return View(selectPaymentTypeViewModel);
+                        //return View(selectPaymentTypeViewModel);
                         #endregion
 
                         #region Zarinpal
-                        // زرین پال
-                        //int amount = (int)tbl_BusinessPlanPayment.PaymentPrice * 10;
-                        //ServicePointManager.Expect100Continue = false;
-                        //var zp = new PaymentGatewayImplementationServicePortTypeClient();
-                        //string authority;
-                        //int Status = zp.PaymentRequest(zpSecret, amount,
-                        //    $"هم آفرین سرمایه گذاری در طرح {selectPaymentTypeViewModel.BussinessName}",
-                        //    "irfintech.co@gmail.com", "09131880434", redirectAddress, out authority);
+                        //زرین پال
+                        int amount = (int)tbl_BusinessPlanPayment.PaymentPrice * 10;
+                        ServicePointManager.Expect100Continue = false;
+                        var zp = new PaymentGatewayImplementationServicePortTypeClient();
+                        string authority;
+                        int Status = zp.PaymentRequest(zpSecret, amount,
+                            $"هم آفرین سرمایه گذاری در طرح {selectPaymentTypeViewModel.BussinessName}",
+                            "irfintech.co@gmail.com", "09131880434", redirectAddress, out authority);
 
-                        //if (Status == 100)
-                        //{
-                        //    tbl_PaymentOnline.ShaparakMessageGetToken = authority;
-                        //    db.SaveChanges();
-                        //    Response.Redirect("https://www.zarinpal.com/pg/StartPay/" + authority);
-                        //}
-                        //else
-                        //    ViewBag.Massage = "فعلا ارتباط با درگاه مقدور نمی باشد";
+                        if (Status == 100)
+                        {
+                            tbl_PaymentOnline.ShaparakMessageGetToken = authority;
+                            db.SaveChanges(); 
+                            Response.Redirect("https://www.zarinpal.com/pg/StartPay/" + authority);
+                            //return Redirect($"https://www.zarinpal.com/pg/StartPay/{authority}");
+                        }
+                        else
+                            ViewBag.Massage = "فعلا ارتباط با درگاه مقدور نمی باشد";
 
-                        //db.SaveChanges();
-                        //return View(selectPaymentTypeViewModel);
+                        db.SaveChanges();
+                        return View(selectPaymentTypeViewModel);
                         #endregion
                     }
                     else
@@ -318,109 +319,109 @@ namespace Hamafarin.Controllers
                 Tbl_PaymentOnlineDetils qPaymentOnline = db.Tbl_PaymentOnlineDetils.FirstOrDefault(p => p.PaymentDetilsID == id);
                 Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == qPaymentOnline.Payment_id);
 
-                // زرین پال
                 if (qPaymentOnline != null)
                 {
                     #region Zarinpal
-                    //var status = Request.QueryString["Status"];
-                    //var authority = Request.QueryString["Authority"];
-                    //if (string.IsNullOrEmpty(status) == false && status.Equals("OK") && string.IsNullOrEmpty(authority) == false)
-                    //{
-                    //    int amount = (int)qBusinessPlanPayment.PaymentPrice * 10;
-                    //    long RefID;
-                    //    ServicePointManager.Expect100Continue = false;
-                    //    var zp = new PaymentGatewayImplementationServicePortTypeClient();
+                    // زرین پال
+                    var status = Request.QueryString["Status"];
+                    var authority = Request.QueryString["Authority"];
+                    if (string.IsNullOrEmpty(status) == false && status.Equals("OK") && string.IsNullOrEmpty(authority) == false)
+                    {
+                        int amount = (int)qBusinessPlanPayment.PaymentPrice * 10;
+                        long RefID;
+                        ServicePointManager.Expect100Continue = false;
+                        var zp = new PaymentGatewayImplementationServicePortTypeClient();
 
-                    //    int Status = zp.PaymentVerification(zpSecret, authority, amount, out RefID);
+                        int Status = zp.PaymentVerification(zpSecret, authority, amount, out RefID);
 
-                    //    if (Status == 100)
-                    //    {
-                    //        qPaymentOnline.ShaparakVerifyPayment = authority;
-                    //        qPaymentOnline.IsFinally = true;
-                    //        qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
-                    //        qBusinessPlanPayment.IsPaid = true;
-                    //        qPaymentOnline.FinallyDate = DateTime.Now;
-                    //        db.SaveChanges();
-                    //        ViewBag.IsSuccess = true;
-                    //        ViewBag.TransactionReferenceID = RefID;
+                        if (Status == 100)
+                        {
+                            qPaymentOnline.ShaparakVerifyPayment = authority;
+                            qPaymentOnline.IsFinally = true;
+                            qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
+                            qBusinessPlanPayment.IsPaid = true;
+                            qPaymentOnline.FinallyDate = DateTime.Now;
+                            db.SaveChanges();
+                            ViewBag.IsSuccess = true;
+                            ViewBag.TransactionReferenceID = RefID;
 
-                    //        // 4 = سرمایه گذاری
-                    //        Tbl_Sms qSms = db.Tbl_Sms.Find(4);
-                    //        Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                    //        (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+                            // 4 = سرمایه گذاری
+                            Tbl_Sms qSms = db.Tbl_Sms.Find(4);
+                            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                            (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
-                    //        return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
-                    //    }
-                    //    else
-                    //    {
-                    //        ViewBag.IsSuccess = false;
-                    //        ViewBag.Result = "عملیات ناموفق";
-                    //        return View();
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    ViewBag.IsSuccess = false;
-                    //    ViewBag.Result = "عملیات ناموفق";
-                    //    return View();
-                    //}
-                    #endregion
-
-                    #region Pasargad
-                    //درگاه پاسارگاد
-                    string invoiceNumber = Request.QueryString["iN"];
-                    string invoiceDate = Request.QueryString["iD"];
-                    string TransactionReferenceID = Request.QueryString["tref"];
-                    qPaymentOnline.TransactionReferenceID = TransactionReferenceID;
-
-                    // دریافت اطلاعات از درگاه
-                    string strResult = ReadPaymentResult(TransactionReferenceID);
-
-                    qPaymentOnline.ShaparakCheckTransactionResult = strResult;
-
-                    if (!strResult.Contains("ReferenceNumber"))
+                            return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                        }
+                        else
+                        {
+                            ViewBag.IsSuccess = false;
+                            ViewBag.Result = "عملیات ناموفق";
+                            return View();
+                        }
+                    }
+                    else
                     {
                         ViewBag.IsSuccess = false;
                         ViewBag.Result = "عملیات ناموفق";
                         return View();
                     }
+                    #endregion
 
-                    var res = strResult.Split(':', ',');
-                    string[] pay = res[21].Split('.');
+                    #region Pasargad
+                    ////درگاه پاسارگاد
+                    //string invoiceNumber = Request.QueryString["iN"];
+                    //string invoiceDate = Request.QueryString["iD"];
+                    //string TransactionReferenceID = Request.QueryString["tref"];
+                    //qPaymentOnline.TransactionReferenceID = TransactionReferenceID;
 
-                    long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
-                    long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
+                    //// دریافت اطلاعات از درگاه
+                    //string strResult = ReadPaymentResult(TransactionReferenceID);
 
-                    if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
-                    {
-                        // برگشت وجه
-                        string refundResult = RefundPayment(pay[0], invoiceNumber, invoiceDate);
-                        ViewBag.Result = "برگشت وجه";
-                        return View();
-                    }
+                    //qPaymentOnline.ShaparakCheckTransactionResult = strResult;
 
-                    // تایید پرداخت به درگاه
-                    string ShaparakRefNumber = ConfirmPayment(pay[0], invoiceNumber, invoiceDate);
+                    //if (!strResult.Contains("ReferenceNumber"))
+                    //{
+                    //    ViewBag.IsSuccess = false;
+                    //    ViewBag.Result = "عملیات ناموفق";
+                    //    return View();
+                    //}
 
-                    var shaparakbum = ShaparakRefNumber.Split(':', ',');
-                    if (ShaparakRefNumber.Contains("ShaparakRefNumber"))
-                    {
-                        qPaymentOnline.ShaparakVerifyPayment = ShaparakRefNumber;
-                        qPaymentOnline.IsFinally = true;
-                        qBusinessPlanPayment.TransactionPaymentCode = TransactionReferenceID;
-                        qBusinessPlanPayment.IsPaid = true;
-                        qPaymentOnline.FinallyDate = DateTime.Now;
-                        db.SaveChanges();
-                        ViewBag.IsSuccess = true;
-                        ViewBag.TransactionReferenceID = TransactionReferenceID;
+                    //var res = strResult.Split(':', ',');
+                    //string[] pay = res[21].Split('.');
 
-                        // 4 = سرمایه گذاری
-                        Tbl_Sms qSms = db.Tbl_Sms.Find(4);
-                        Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                        (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+                    //long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
+                    //long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
 
-                        return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
-                    }
+                    //if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
+                    //{
+                    //    // برگشت وجه
+                    //    string refundResult = RefundPayment(pay[0], invoiceNumber, invoiceDate);
+                    //    ViewBag.Result = "برگشت وجه";
+                    //    return View();
+                    //}
+
+                    //// تایید پرداخت به درگاه
+                    //string ShaparakRefNumber = ConfirmPayment(pay[0], invoiceNumber, invoiceDate);
+
+                    //var shaparakbum = ShaparakRefNumber.Split(':', ',');
+                    //if (ShaparakRefNumber.Contains("ShaparakRefNumber"))
+                    //{
+                    //    qPaymentOnline.ShaparakVerifyPayment = ShaparakRefNumber;
+                    //    qPaymentOnline.IsFinally = true;
+                    //    qBusinessPlanPayment.TransactionPaymentCode = TransactionReferenceID;
+                    //    qBusinessPlanPayment.IsPaid = true;
+                    //    qPaymentOnline.FinallyDate = DateTime.Now;
+                    //    db.SaveChanges();
+                    //    ViewBag.IsSuccess = true;
+                    //    ViewBag.TransactionReferenceID = TransactionReferenceID;
+
+                    //    // 4 = سرمایه گذاری
+                    //    Tbl_Sms qSms = db.Tbl_Sms.Find(4);
+                    //    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    //    (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+
+                    //    return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                    //}
                     #endregion
                 }
             }

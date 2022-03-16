@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<wsdl:definitions xmlns:tns="http://zarinpal.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" name="PaymentGatewayImplementationService" targetNamespace="http://zarinpal.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://zarinpal.com/" name="PaymentGatewayImplementationService" targetNamespace="http://zarinpal.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://zarinpal.com/">
       <s:element name="PaymentRequest">
@@ -176,7 +176,8 @@
   <wsdl:binding name="PaymentGatewayImplementationServiceBinding" type="tns:PaymentGatewayImplementationServicePortType">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="PaymentRequest">
-      <wsdl:documentation>Payment request session creation should be done by using this method.</wsdl:documentation>
+      <wsdl:documentation>Payment request session creation should be done by using this method.
+            </wsdl:documentation>
       <soap:operation soapAction="#PaymentRequest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
@@ -186,7 +187,9 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="PaymentRequestWithExtra">
-      <wsdl:documentation>Payment request session creation with additional data like wages and more should be done by using this method.</wsdl:documentation>
+      <wsdl:documentation>Payment request session creation with additional data like wages and more should be done
+                by using this method.
+            </wsdl:documentation>
       <soap:operation soapAction="#PaymentRequestWithExtra" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
@@ -206,7 +209,8 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="PaymentVerificationWithExtra">
-      <wsdl:documentation>Payment verification with additional data should be done by using this method.</wsdl:documentation>
+      <wsdl:documentation>Payment verification with additional data should be done by using this method.
+            </wsdl:documentation>
       <soap:operation soapAction="#PaymentVerificationWithExtra" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
@@ -226,7 +230,8 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="RefreshAuthority">
-      <wsdl:documentation>By using this method you can refresh the authority to the needed valid time.</wsdl:documentation>
+      <wsdl:documentation>By using this method you can refresh the authority to the needed valid time.
+            </wsdl:documentation>
       <soap:operation soapAction="#RefreshAuthority" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
@@ -238,7 +243,7 @@
   </wsdl:binding>
   <wsdl:service name="PaymentGatewayImplementationService">
     <wsdl:port name="PaymentGatewayImplementationServicePort" binding="tns:PaymentGatewayImplementationServiceBinding">
-      <soap:address location="https://sandbox.zarinpal.com/pg/services/WebGate/service" />
+      <soap:address location="https://next.zarinpal.com/pg/v4/soap/services/WebGate/service" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

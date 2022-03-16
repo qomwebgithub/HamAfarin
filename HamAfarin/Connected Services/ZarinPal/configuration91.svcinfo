@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="c541G4FxEHWSd0q/F4upT+WPrzY=">
+<SavedWcfConfigurationInformation xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="9.1" CheckSum="Obfs688gUtK3lpTavP99qa5kShm0limcLcPCahZZWXU=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="PaymentGatewayImplementationServiceBinding">
       <properties>
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="PaymentGatewayImplementationServicePort" contract="ZarinPal.PaymentGatewayImplementationServicePortType" bindingType="basicHttpBinding" address="https://sandbox.zarinpal.com/pg/services/WebGate/service" bindingConfiguration="PaymentGatewayImplementationServiceBinding">
+    <endpoint name="PaymentGatewayImplementationServicePort" contract="ZarinPal.PaymentGatewayImplementationServicePortType" bindingType="basicHttpBinding" address="https://next.zarinpal.com/pg/v4/soap/services/WebGate/service" bindingConfiguration="PaymentGatewayImplementationServiceBinding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://sandbox.zarinpal.com/pg/services/WebGate/service</serializedValue>
+          <serializedValue>https://next.zarinpal.com/pg/v4/soap/services/WebGate/service</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

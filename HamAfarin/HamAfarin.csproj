@@ -1096,7 +1096,6 @@
     <Content Include="Areas\Admin\Content\js\bootstrap.js.map" />
     <Content Include="Areas\Admin\Content\js\bootstrap.min.js.map" />
     <Content Include="Areas\Admin\Views\AdminPanel\_Menu.cshtml" />
-    <None Include="Connected Services\ZarinPal\PaymentGatewayImplementationService.wsdl" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
@@ -1112,6 +1111,7 @@
     <Content Include="Content\fonts\bootstarpicon\fonts\bootstrap-icons.woff" />
     <Content Include="Content\fonts\bootstarpicon\fonts\bootstrap-icons.woff2" />
     <Content Include="libman.json" />
+    <None Include="Connected Services\ZarinPal\PaymentGatewayImplementationService.wsdl" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
