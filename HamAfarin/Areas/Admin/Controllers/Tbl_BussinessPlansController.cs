@@ -269,6 +269,32 @@ namespace Hamafarin.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(AdminCreateEditBusinessPlan upsertBusinessPlan)
         {
+            if (ModelState.IsValid == false)
+            {
+                ViewBag.BussinessField_id = new SelectList(
+                db.Tbl_BussinessPlan_BussenessFields, "BussinessFieldID",
+                "BussinessFieldTitle", upsertBusinessPlan.BussinessField_id);
+
+                ViewBag.FinancialDuration_id = new SelectList(
+                    db.Tbl_BussinessPlan_FinancialDuration, "FinancialDurationID",
+                    "FinancialDurationTitle", upsertBusinessPlan.FinancialDuration_id);
+
+                ViewBag.CompanyType_id = new SelectList(
+                    db.Tbl_CompanyType, "CompanyTypeID", "CompanyTypeTitle",
+                    upsertBusinessPlan.CompanyType_id);
+
+                ViewBag.MonetaryUnit_id = new SelectList(
+                    db.Tbl_MonetaryUnits, "MonetaryUnitID", "MonetaryUnitTitle",
+                    upsertBusinessPlan.MonetaryUnit_id);
+
+                ViewBag.User_id = new SelectList(
+                    db.Tbl_Users, "UserID", "UserName", upsertBusinessPlan.User_id);
+
+                ViewBag.Video = upsertBusinessPlan.IntroductionIdeaVideoFileName;
+
+                return View(upsertBusinessPlan);
+            }
+
             upsertBusinessPlan.ImageNameWarranty =
                 SaveNewImage(upsertBusinessPlan.ImageWarrantyFile, upsertBusinessPlan.ImageNameWarranty,
                     "/Resources/BusinessPlans/Warranty/");
@@ -350,34 +376,10 @@ namespace Hamafarin.Areas.Admin.Controllers
                         IsDelete = false
                     });
                 }
-
                 db.SaveChanges();
-                return RedirectToAction("Index");
             }
 
-            ViewBag.BussinessField_id = new SelectList(
-                db.Tbl_BussinessPlan_BussenessFields, "BussinessFieldID",
-                "BussinessFieldTitle", upsertBusinessPlan.BussinessField_id);
-
-            ViewBag.FinancialDuration_id = new SelectList(
-                db.Tbl_BussinessPlan_FinancialDuration, "FinancialDurationID",
-                "FinancialDurationTitle", upsertBusinessPlan.FinancialDuration_id);
-
-            ViewBag.CompanyType_id = new SelectList(
-                db.Tbl_CompanyType, "CompanyTypeID", "CompanyTypeTitle",
-                upsertBusinessPlan.CompanyType_id);
-
-            ViewBag.MonetaryUnit_id = new SelectList(
-                db.Tbl_MonetaryUnits, "MonetaryUnitID", "MonetaryUnitTitle",
-                upsertBusinessPlan.MonetaryUnit_id);
-
-            ViewBag.User_id = new SelectList(
-                db.Tbl_Users, "UserID", "UserName", upsertBusinessPlan.User_id);
-
-            ViewBag.Video = upsertBusinessPlan.IntroductionIdeaVideoFileName;
-
-            ModelState.Clear();
-            return View(upsertBusinessPlan);
+            return RedirectToAction("Index");
         }
 
         public void DoSuccessPlan(int id)
