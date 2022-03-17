@@ -193,7 +193,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             List<Tbl_BussinessPlans> qMyPlans = db.Tbl_BussinessPlans.Where(p => p.User_id == myUserId && p.IsActive && p.IsDeleted == false).ToList();
 
             //لیست پلن های پرداختی
-            List<Tbl_BusinessPlanPayment> qPaymentPlans = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid).ToList();
+            List<Tbl_BusinessPlanPayment> qPaymentPlans = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid && p.IsDelete == false).ToList();
 
             List<UserBusinessPlanViewModel> userBusinessPlanViewModels = new List<UserBusinessPlanViewModel>();
 
@@ -230,7 +230,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         public ActionResult PlanPayments(int id)
         {
             ViewBag.Title = db.Tbl_BussinessPlans.Where(b => id == b.BussinessPlanID && b.IsActive && b.IsDeleted == false).Select(b => b.Title).FirstOrDefault();
-            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).Where(t => t.BusinessPlan_id == id);
+            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans).Where(t => t.BusinessPlan_id == id && t.IsDelete == false);
             return View(tbl_BusinessPlanPayment.ToList());
         }
 

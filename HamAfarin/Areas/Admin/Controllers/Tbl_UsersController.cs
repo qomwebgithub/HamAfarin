@@ -204,7 +204,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
         public ActionResult PaymentList(int id)
         {
-            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.PaymentUser_id == id).Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
+            var tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment.Where(p => p.PaymentUser_id == id && p.IsDelete == false).Include(t => t.Tbl_PaymentType).Include(t => t.Tbl_Users).Include(t => t.Tbl_Users1).Include(t => t.Tbl_BussinessPlans);
             return View(tbl_BusinessPlanPayment.OrderByDescending(c => c.PaidDateTime).ToList());
         }
 

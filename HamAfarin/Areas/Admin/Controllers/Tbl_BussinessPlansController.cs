@@ -421,7 +421,7 @@ namespace Hamafarin.Areas.Admin.Controllers
         {
             List<string> lstMobile = await db.Tbl_BusinessPlanPayment
                 .Include(p => p.Tbl_Users)
-                .Where(p => p.BusinessPlan_id == id && p.IsConfirmedFromFaraboors)
+                .Where(p => p.BusinessPlan_id == id && p.IsConfirmedFromFaraboors && p.IsDelete == false)
                 .Select(p => p.Tbl_Users.MobileNumber)
                 .Distinct()
                 .ToListAsync();

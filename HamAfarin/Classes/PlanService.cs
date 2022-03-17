@@ -66,6 +66,7 @@ namespace HamAfarin
         {
             long? result = db.Tbl_BusinessPlanPayment
                 .Where(p =>
+                    p.IsDelete == false &&
                     p.BusinessPlan_id == id &&
                     p.IsConfirmedFromAdmin == true &&
                     p.IsPaid == true &&
@@ -232,11 +233,11 @@ namespace HamAfarin
         /// <returns>لیست پرداختی های تایید شده طرح</returns>
         public List<Tbl_BusinessPlanPayment> GetPlanSubmittedPaid(HamAfarinDBEntities db, int id)
         {
-            return db.Tbl_BusinessPlanPayment.Where(p => p.BusinessPlan_id == id && p.IsConfirmedFromAdmin && p.IsPaid).ToList();
+            return db.Tbl_BusinessPlanPayment.Where(p => p.BusinessPlan_id == id && p.IsConfirmedFromAdmin && p.IsPaid && p.IsDelete == false).ToList();
         }
         public long GetPlanSubmittedPaidByUserId(HamAfarinDBEntities db, int id, int userId)
         {
-            return db.Tbl_BusinessPlanPayment.Where(p => p.BusinessPlan_id == id && p.CreateUser_id == userId && p.IsConfirmedFromAdmin && p.IsPaid).Sum(s => s.PaymentPrice).Value;
+            return db.Tbl_BusinessPlanPayment.Where(p => p.IsDelete == false && p.BusinessPlan_id == id && p.CreateUser_id == userId && p.IsConfirmedFromAdmin && p.IsPaid).Sum(s => s.PaymentPrice).Value;
         }
         /// <summary>
         /// دریافت تعداد سرمایه گذارهای یک طرح

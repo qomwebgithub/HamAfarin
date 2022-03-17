@@ -110,7 +110,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
 
         public ActionResult SinglePaymentBusinessPlan(int id, bool notify = false)
         {
-            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id);
+            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id && p.IsDelete == false);
             UserPaymentBusinessPlanSingleViewModel selectPayment = new UserPaymentBusinessPlanSingleViewModel();
             Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id && p.IsActive && p.IsDeleted == false);
             bool boolIsRequestedReturn = false;
@@ -218,7 +218,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 .Where(p => p.BusinessPlan_id == qBusinessPlanPayment.BusinessPlan_id &&
                     p.PaymentUser_id == qBusinessPlanPayment.PaymentUser_id &&
                     p.IsConfirmedFromAdmin &&
-                    p.IsPaid)
+                    p.IsPaid && p.IsDelete == false)
                 .Select(p => p.PaymentPrice)
                 .Sum();
 

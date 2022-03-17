@@ -24,7 +24,7 @@ namespace HamAfarin
         {
             (bool Success, byte[] File) tokenResult;
 
-            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id);
+            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id && b.IsDelete == false);
 
             if (user != qBusinessPlanPayment.PaymentUser_id)
             {
@@ -94,7 +94,7 @@ namespace HamAfarin
 
             try
             {
-                Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id);
+                Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(b => b.PaymentID == id && b.IsDelete == false);
                 Tbl_UserProfiles qUserProfile = db.Tbl_UserProfiles.FirstOrDefault(a => a.User_id == qBusinessPlanPayment.PaymentUser_id);
                 Tbl_PersonLegal qPersonLegal = db.Tbl_PersonLegal.FirstOrDefault(p => p.User_id == qBusinessPlanPayment.PaymentUser_id);
                 bool isLegal = db.Tbl_Users

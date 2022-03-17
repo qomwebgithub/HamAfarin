@@ -34,7 +34,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DoReturnedPayment(PaymentReturnedViewModel paymentReturned)
         {
-            var qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p=> p.PaymentID == paymentReturned.PaymentId);
+            var qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p=> p.PaymentID == paymentReturned.PaymentId && p.IsDelete == false);
             if (ModelState.IsValid && qBusinessPlanPayment.PaymentStatus != 0)
             {
                 Tbl_PaymentReturned tbl_PaymentReturned = new Tbl_PaymentReturned()

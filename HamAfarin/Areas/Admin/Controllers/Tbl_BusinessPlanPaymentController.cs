@@ -241,7 +241,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 bool oldIsConfirmedFromAdmin = db.Tbl_BusinessPlanPayment
-                    .Where(b => b.PaymentID == tbl_BusinessPlanPayment.PaymentID)
+                    .Where(b => b.PaymentID == tbl_BusinessPlanPayment.PaymentID && b.IsDelete == false)
                     .Select(b => b.IsConfirmedFromAdmin)
                     .FirstOrDefault();
                 if (oldIsConfirmedFromAdmin == false && tbl_BusinessPlanPayment.IsConfirmedFromAdmin)
@@ -417,7 +417,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult ConfirmedByFaraboors(int? id)
         {
             IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                .Where(p => p.IsConfirmedFromFaraboors == true);
+                .Where(p => p.IsConfirmedFromFaraboors == true && p.IsDelete == false);
 
             if (id != null)
             {
