@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ClosedXML.Excel;
 using DataLayer;
 using Hamafarin;
 using ViewModels;
@@ -21,6 +23,37 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             var tbl_Users = db.Tbl_Users.Include(t => t.Tbl_Roles);
             return View(tbl_Users.OrderByDescending(c => c.RegisterDate).ToList());
+        }
+
+        public FileResult DownloadExcel()
+        {
+            List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false && p.IsActive).ToList();
+
+            List<string> lstColumnsName = new List<string> { "شناسه", " شماره موبایل" };
+
+            DataTable dt = new DataTable("Grid");
+            foreach (var item in lstColumnsName)
+            {
+                dt.Columns.Add(item);
+            }
+
+
+            foreach (var item in qlstProducts)
+            {
+
+                dt.Rows.Add(item.UserID, item.MobileNumber);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "فهرست کاربران هم آفرین" + "(" + DateTime.Now.ToString("yyyy-MM-dd") + ")" + ".xlsx");
+                }
+            }
+
         }
 
         // GET: Admin/Tbl_Users/Details/5
