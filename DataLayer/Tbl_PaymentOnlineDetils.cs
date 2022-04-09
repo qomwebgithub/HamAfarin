@@ -25,6 +25,7 @@ namespace DataLayer
         public string ShaparakVerifyPayment { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<System.DateTime> FinallyDate { get; set; }
+        public Nullable<int> Dargah_id { get; set; }
     
         public virtual Tbl_BusinessPlanPayment Tbl_BusinessPlanPayment { get; set; }
     }

@@ -240,6 +240,17 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CompanyTypeTitle" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Tbl_Dargah">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Checked" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Tbl_DepositToInvestors">
           <Key>
             <PropertyRef Name="DepositID" />
@@ -436,6 +447,7 @@
           <Property Name="ShaparakVerifyPayment" Type="nvarchar(max)" />
           <Property Name="CreateDate" Type="datetime" />
           <Property Name="FinallyDate" Type="datetime" />
+          <Property Name="Dargah_id" Type="int" />
         </EntityType>
         <EntityType Name="Tbl_PaymentReturned">
           <Key>
@@ -1172,6 +1184,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySet Name="Tbl_CapitalApplicantHelp" EntityType="Self.Tbl_CapitalApplicantHelp" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_CommentPlan" EntityType="Self.Tbl_CommentPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_CompanyType" EntityType="Self.Tbl_CompanyType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_Dargah" EntityType="Self.Tbl_Dargah" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_DepositToInvestors" EntityType="Self.Tbl_DepositToInvestors" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_DepositToInvestorsDetails" EntityType="Self.Tbl_DepositToInvestorsDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_DepositTypes" EntityType="Self.Tbl_DepositTypes" Schema="dbo" store:Type="Tables" />
@@ -1388,6 +1401,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySet Name="Tbl_CapitalApplicantHelp" EntityType="webqomir_HamAfarinDBModel.Tbl_CapitalApplicantHelp" />
           <EntitySet Name="Tbl_CommentPlan" EntityType="webqomir_HamAfarinDBModel.Tbl_CommentPlan" />
           <EntitySet Name="Tbl_CompanyType" EntityType="webqomir_HamAfarinDBModel.Tbl_CompanyType" />
+          <EntitySet Name="Tbl_Dargah" EntityType="webqomir_HamAfarinDBModel.Tbl_Dargah" />
           <EntitySet Name="Tbl_DepositToInvestors" EntityType="webqomir_HamAfarinDBModel.Tbl_DepositToInvestors" />
           <EntitySet Name="Tbl_DepositToInvestorsDetails" EntityType="webqomir_HamAfarinDBModel.Tbl_DepositToInvestorsDetails" />
           <EntitySet Name="Tbl_DepositTypes" EntityType="webqomir_HamAfarinDBModel.Tbl_DepositTypes" />
@@ -1837,6 +1851,17 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="CompanyTypeTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_BussinessPlans" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BussinessPlans_Tbl_CompanyType" FromRole="Tbl_CompanyType" ToRole="Tbl_BussinessPlans" />
         </EntityType>
+        <EntityType Name="Tbl_Dargah">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Checked" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Tbl_DepositToInvestors">
           <Key>
             <PropertyRef Name="DepositID" />
@@ -2045,6 +2070,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="ShaparakVerifyPayment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="FinallyDate" Type="DateTime" Precision="3" />
+          <Property Name="Dargah_id" Type="Int32" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentOnlineDetils_Tbl_BusinessPlanPayment" FromRole="Tbl_PaymentOnlineDetils" ToRole="Tbl_BusinessPlanPayment" />
         </EntityType>
         <EntityType Name="Tbl_PaymentReturned">
@@ -3053,6 +3079,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_Dargah">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Dargah">
+              <MappingFragment StoreEntitySet="Tbl_Dargah">
+                <ScalarProperty Name="Checked" ColumnName="Checked" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_DepositToInvestors">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_DepositToInvestors">
               <MappingFragment StoreEntitySet="Tbl_DepositToInvestors">
@@ -3251,6 +3289,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySetMapping Name="Tbl_PaymentOnlineDetils">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_PaymentOnlineDetils">
               <MappingFragment StoreEntitySet="Tbl_PaymentOnlineDetils">
+                <ScalarProperty Name="Dargah_id" ColumnName="Dargah_id" />
                 <ScalarProperty Name="FinallyDate" ColumnName="FinallyDate" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="ShaparakVerifyPayment" ColumnName="ShaparakVerifyPayment" />

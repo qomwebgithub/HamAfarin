@@ -38,6 +38,7 @@ namespace DataLayer
         public virtual DbSet<Tbl_CapitalApplicantHelp> Tbl_CapitalApplicantHelp { get; set; }
         public virtual DbSet<Tbl_CommentPlan> Tbl_CommentPlan { get; set; }
         public virtual DbSet<Tbl_CompanyType> Tbl_CompanyType { get; set; }
+        public virtual DbSet<Tbl_Dargah> Tbl_Dargah { get; set; }
         public virtual DbSet<Tbl_DepositToInvestors> Tbl_DepositToInvestors { get; set; }
         public virtual DbSet<Tbl_DepositToInvestorsDetails> Tbl_DepositToInvestorsDetails { get; set; }
         public virtual DbSet<Tbl_DepositTypes> Tbl_DepositTypes { get; set; }

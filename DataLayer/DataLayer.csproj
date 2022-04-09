@@ -158,6 +158,9 @@
     <Compile Include="Tbl_CompanyType.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tbl_Dargah.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_DepositToInvestors.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>

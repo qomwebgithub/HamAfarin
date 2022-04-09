@@ -42,6 +42,8 @@ namespace ViewModels
         public long MinimumAmountInvest { get; set; }
         [Display(Name = "نوع سرمایه گذاری")]
         public bool IsOnline { get; set; }
+        [Display(Name = "درگاه پرداخت")]
+        public int Dargah { get; set; }
         [Display(Name = "کل سرمایه گذاری شما")]
         public long TotalInvestment { get; set; }
         [Display(Name = "حداکثر امکان سرمایه گذاری شما")]
