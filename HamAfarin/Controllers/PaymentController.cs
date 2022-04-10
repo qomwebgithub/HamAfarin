@@ -451,6 +451,7 @@ namespace Hamafarin.Controllers
                             qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
                             qBusinessPlanPayment.IsPaid = true;
                             qPaymentOnline.FinallyDate = DateTime.Now;
+                            qPaymentOnline.TransactionReferenceID = RefID.ToString();
                             db.SaveChanges();
                             ViewBag.IsSuccess = true;
                             ViewBag.TransactionReferenceID = RefID;
