@@ -25,7 +25,6 @@ namespace Hamafarin.Controllers
             ViewBag.id = page;
 
             //اجازه ی سرمایه گذاری
-            ViewBag.RiskAlertStatement = db.Tbl_Settings.FirstOrDefault().RiskAlertStatement;
             ViewBag.ActivePlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false).Count();
             //ViewBag.PastPlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate > DateTime.Now).Count();
             ViewBag.FuturePlanCount = db.Tbl_FutureBusinessPlan.Where(f => f.IsDeleted == false && f.IsActive == true).Count();
@@ -98,10 +97,20 @@ namespace Hamafarin.Controllers
 
             //اجازه ی سرمایه گذاری
             businessPlansItemViewModel.IsAcceptInvestment = planService.IsAcceptInvestmentPlan(db, qActivePlans.BussinessPlanID);
-            ViewBag.RiskAlertStatement = db.Tbl_Settings.FirstOrDefault().RiskAlertStatement;
             return View(businessPlansItemViewModel);
         }
 
+        public ActionResult RiskAlertStatementInPlan()
+        {
+            Tbl_Settings qSettings = db.Tbl_Settings.FirstOrDefault();
+            FooterViewModel footerViewModel = new FooterViewModel()
+            {
+                RiskAlertStatement = qSettings.RiskAlertStatement,
+                RiskAlertStatementFullText = qSettings.RiskAlertStatementFullText,
+                RiskAlertStatementAvtive = qSettings.RiskAlertStatementAvtive
+            };
+            return PartialView(footerViewModel);
+        }
         public ActionResult ActivePlans(string searchText, long lowestPrice, long highestPrice, int page = 1)
         {
             if (searchText.HasValue() == false)

@@ -27,6 +27,7 @@ namespace DataLayer
         public string LinkedinUrl { get; set; }
         public string WhatsappUrl { get; set; }
         public string AparatUrl { get; set; }
+        public string TelegramUrl { get; set; }
         public string Location { get; set; }
         public string Permits { get; set; }
         public string ContactUs { get; set; }
@@ -43,5 +44,6 @@ namespace DataLayer
         public string InvestmentRole { get; set; }
         public string FinancingPageBanner { get; set; }
         public string InverstmentPageBanner { get; set; }
+        public bool RiskAlertStatementAvtive { get; set; }
     }
 }

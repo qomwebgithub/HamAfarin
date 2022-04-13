@@ -126,7 +126,14 @@ namespace Hamafarin.Controllers
 
                     int currentUserId = UserSetAuthCookie.GetUserID(User.Identity.Name);
                     bool userIslegal = db.Tbl_Users.Where(x => x.UserID == currentUserId).Select(x => x.IsLegal).FirstOrDefault();
+                    Tbl_Users qUser = db.Tbl_Users.First(u => u.UserID == currentUserId);
+                    Tbl_UserProfiles qUserProfile = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == qUser.UserID);
+                    string Email = "";
 
+                    if (qUserProfile != null)
+                    {
+                        Email = qUserProfile.Email;
+                    }
                     PaymentPriceValidation paymentPriceValidation = planService.PaymentPriceValidation(db, selectPaymentTypeViewModel.BusinessPlanID,
                         selectPaymentTypeViewModel.OnlinePaymentPrice, currentUserId, userIslegal);
                     if (paymentPriceValidation.Validation)
@@ -229,8 +236,8 @@ namespace Hamafarin.Controllers
                             var zp = new PaymentGatewayImplementationServicePortTypeClient();
                             string authority;
                             int Status = zp.PaymentRequest(zpSecret, amount,
-                                $"هم آفرین سرمایه گذاری در طرح {selectPaymentTypeViewModel.BussinessName}",
-                                "irfintech.co@gmail.com", "09131880434", redirectAddress, out authority);
+                                $" طرح {selectPaymentTypeViewModel.BussinessName}",
+                                Email, qUser.MobileNumber, redirectAddress, out authority);
 
                             if (Status == 100)
                             {
@@ -445,13 +452,14 @@ namespace Hamafarin.Controllers
 
                         if (data != "[]")
                         {
-                             RefID = jodata["data"]["ref_id"].ToString();
+                            RefID = jodata["data"]["ref_id"].ToString();
                             qPaymentOnline.ShaparakVerifyPayment = authority;
                             qPaymentOnline.IsFinally = true;
                             qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
                             qBusinessPlanPayment.IsPaid = true;
                             qPaymentOnline.FinallyDate = DateTime.Now;
                             qPaymentOnline.TransactionReferenceID = RefID.ToString();
+                            qPaymentOnline.ShaparakCheckTransactionResult = data.ToString();
                             db.SaveChanges();
                             ViewBag.IsSuccess = true;
                             ViewBag.TransactionReferenceID = RefID;

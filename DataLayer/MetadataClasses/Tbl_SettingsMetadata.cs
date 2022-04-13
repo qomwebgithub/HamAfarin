@@ -36,6 +36,8 @@ namespace DataLayer
         public string RiskWarningStatement { get; set; }
         [Display(Name = "آدرس اینستاگرام")]
         public string InstagramUrl { get; set; }
+        [Display(Name = "آدرس تلگرام")]
+        public string TelegramUrl { get; set; }
         [Display(Name = "آدرس لینکدین")]
         public string LinkedinUrl { get; set; }
         [Display(Name = "آدرس واتساپ")]

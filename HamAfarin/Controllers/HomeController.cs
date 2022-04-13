@@ -38,7 +38,8 @@ namespace Hamafarin.Controllers
                 InstagramUrl = qTbl_Settings.InstagramUrl,
                 LinkedinUrl = qTbl_Settings.LinkedinUrl,
                 Location = qTbl_Settings.Location,
-                WhatsappUrl = qTbl_Settings.WhatsappUrl
+                WhatsappUrl = qTbl_Settings.WhatsappUrl,
+                TelegramUrl = qTbl_Settings.TelegramUrl
             };
             return PartialView(headerViewModel);
         }
@@ -259,7 +260,8 @@ namespace Hamafarin.Controllers
             FooterViewModel footerViewModel = new FooterViewModel()
             {
                 RiskAlertStatement = qSettings.RiskAlertStatement,
-                RiskAlertStatementFullText = qSettings.RiskAlertStatementFullText
+                RiskAlertStatementFullText = qSettings.RiskAlertStatementFullText,
+                RiskAlertStatementAvtive = qSettings.RiskAlertStatementAvtive
             };
             return View(footerViewModel);
         }

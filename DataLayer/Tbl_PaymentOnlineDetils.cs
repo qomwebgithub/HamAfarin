@@ -28,5 +28,6 @@ namespace DataLayer
         public Nullable<int> Dargah_id { get; set; }
     
         public virtual Tbl_BusinessPlanPayment Tbl_BusinessPlanPayment { get; set; }
+        public virtual Tbl_Dargah Tbl_Dargah { get; set; }
     }
 }

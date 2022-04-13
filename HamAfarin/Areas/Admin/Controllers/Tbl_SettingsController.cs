@@ -90,6 +90,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 tbl_Settings.Privacy = footerViewModel.Privacy;
                 tbl_Settings.RiskAlertStatement = footerViewModel.RiskAlertStatement;
                 tbl_Settings.RiskAlertStatementFullText = footerViewModel.RiskAlertStatementFullText;
+                tbl_Settings.RiskAlertStatementAvtive = footerViewModel.RiskAlertStatementAvtive;
                 db.SaveChanges();
                 ViewBag.success = true;
 

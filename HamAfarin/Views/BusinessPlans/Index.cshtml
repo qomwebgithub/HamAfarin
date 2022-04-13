@@ -347,35 +347,35 @@
     <div class="w-100 stickyNav_container">
         <ul class="nav nav-tabs d-flex shadow p-3 mb-2 bg-white rounded stickyNav" id="myTab" role="tablist">
             <div class="container d-flex flex-column flex-md-row">
-                <li class="nav-item ml-md-4 text-align-center mod" id="active-idea" style="">
-                    <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="all-tab" data-toggle="tab" href="#all" role="tab"
-                       aria-controls="all" aria-selected="true">طرح های فعال(@ViewBag.ActivePlanCount)</a>
+            <li class="nav-item ml-md-4 text-align-center mod" id="active-idea" style="">
+                <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="all-tab" data-toggle="tab" href="#all" role="tab"
+                   aria-controls="all" aria-selected="true">طرح های فعال(@ViewBag.ActivePlanCount)</a>
+            </li>
+            @*<li class="nav-item ml-4">
+                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="future-tab" data-toggle="tab" href="#future" role="tab"
+                       aria-controls="future" aria-selected="false">طرح های آینده(@ViewBag.FuturePlanCount)</a>
                 </li>
-                @*<li class="nav-item ml-4">
-                        <a class="nav-link stickyNav-item text-dark font-weight-bold" id="future-tab" data-toggle="tab" href="#future" role="tab"
-                           aria-controls="future" aria-selected="false">طرح های آینده(@ViewBag.FuturePlanCount)</a>
-                    </li>
-                    <li class="nav-item ml-4">
-                        <a class="nav-link stickyNav-item text-dark font-weight-bold" id="past-tab" data-toggle="tab" href="#past" role="tab"
-                           aria-controls="past" aria-selected="false">طرح های گذشته(@ViewBag.PastPlanCount)</a>
-                    </li>*@
-                <li class="nav-item mr-md-5  mt-2  mt-md-0 not-li mod" style="height: 40px;">
-                    <!-- Actual search box -->
-                    <div class="form-group has-search d-flex">
+                <li class="nav-item ml-4">
+                    <a class="nav-link stickyNav-item text-dark font-weight-bold" id="past-tab" data-toggle="tab" href="#past" role="tab"
+                       aria-controls="past" aria-selected="false">طرح های گذشته(@ViewBag.PastPlanCount)</a>
+                </li>*@
+            <li class="nav-item mr-md-5  mt-2  mt-md-0 not-li mod" style="height: 40px;">
+                <!-- Actual search box -->
+                <div class="form-group has-search d-flex">
 
-                        <button onclick="search()" class="btn" id="serch-btn"><i class="bi bi-search d-flex"></i></button>
-                        <input id="search_box" type="text" class="form-control" placeholder="جستجو در عنوان و توضیحات طرح">
-                        <button class="btn d-none" id="filter-btn"><i class="bi bi-funnel d-flex"></i></button>
-                    </div>
-                </li>
-                <li class="mr-2 mt-2">
-                    <a class="stickyNav-item text-dark font-weight-bold">
-                        <i class="glyphicon glyphicon-search"></i>
-                    </a>
-                    @*<a class="nav-link stickyNav-item text-dark font-weight-bold">فیلتر</a>*@
-                </li>
-            </div>
-        </ul>
+                    <button onclick="search()" class="btn" id="serch-btn"><i class="bi bi-search d-flex"></i></button>
+                    <input id="search_box" type="text" class="form-control" placeholder="جستجو در عنوان و توضیحات طرح">
+                    <button class="btn d-none" id="filter-btn"><i class="bi bi-funnel d-flex"></i></button>
+                </div>
+            </li>
+            <li class="mr-2 mt-2">
+                <a class="stickyNav-item text-dark font-weight-bold">
+                    <i class="glyphicon glyphicon-search"></i>
+                </a>
+                @*<a class="nav-link stickyNav-item text-dark font-weight-bold">فیلتر</a>*@
+            </li>
+    </div>
+    </ul>
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 px-0">
         <div class="col-12 col-lg-10 col-xl-10 col-md-10 col-sm-10 offset-md-1 offset-lg-1 offset-xl-1 offset-sm-1 bg-white rounded-lg border-dark pl-md-5">
@@ -494,27 +494,7 @@
 </section>
 <!-- active items end -->
 <!-- attention banner start -->
-<section id="risk" class="w-100" style="background-color:#f5f6f8">
-    <div class="col-12">
-        <div class="col-12 col-sm-8 col-lg-offset-2 pt-2 pb-5 container">
-            <h4 class="">
-                <img src="~/Content/img/risk.png" style="width:70px" />
-                بیانیه ریسک
-            </h4>
-            <div class="col-12">
-                <p>
-                    @ViewBag.RiskAlertStatement
-                </p>
-            </div>
-            <div class="row float-left text-left ml-5">
-                <a href="/RiskAlertStatement" class="btn btn-orange btn-lg " style="font-size: 15px;">
-                    ادامه
-                </a>
-            </div>
-            <br />
-        </div>
-    </div>
-</section>
+@Html.Action("RiskAlertStatementInPlan")
 <!-- attention banner end -->
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>
 @section Scripts{

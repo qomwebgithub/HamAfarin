@@ -549,6 +549,7 @@
           <Property Name="LinkedinUrl" Type="nvarchar(max)" />
           <Property Name="WhatsappUrl" Type="nvarchar(max)" />
           <Property Name="AparatUrl" Type="nvarchar(max)" />
+          <Property Name="TelegramUrl" Type="nvarchar(max)" />
           <Property Name="Location" Type="nvarchar(max)" />
           <Property Name="Permits" Type="nvarchar(max)" />
           <Property Name="ContactUs" Type="nvarchar(max)" />
@@ -565,6 +566,7 @@
           <Property Name="InvestmentRole" Type="nvarchar(max)" />
           <Property Name="FinancingPageBanner" Type="nvarchar(max)" />
           <Property Name="InverstmentPageBanner" Type="nvarchar(max)" />
+          <Property Name="RiskAlertStatementAvtive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_ShareHoldersCompany">
           <Key>
@@ -1026,6 +1028,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_PaymentOnlineDetils_Tbl_Dargah">
+          <End Role="Tbl_Dargah" Type="Self.Tbl_Dargah" Multiplicity="0..1" />
+          <End Role="Tbl_PaymentOnlineDetils" Type="Self.Tbl_PaymentOnlineDetils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Dargah">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_PaymentOnlineDetils">
+              <PropertyRef Name="Dargah_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_PaymentReturned_Tbl_BusinessPlanPayment">
           <End Role="Tbl_BusinessPlanPayment" Type="Self.Tbl_BusinessPlanPayment" Multiplicity="0..1" />
           <End Role="Tbl_PaymentReturned" Type="Self.Tbl_PaymentReturned" Multiplicity="*" />
@@ -1334,6 +1348,10 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <End Role="Tbl_BusinessPlanPayment" EntitySet="Tbl_BusinessPlanPayment" />
             <End Role="Tbl_PaymentOnlineDetils" EntitySet="Tbl_PaymentOnlineDetils" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PaymentOnlineDetils_Tbl_Dargah" Association="Self.FK_Tbl_PaymentOnlineDetils_Tbl_Dargah">
+            <End Role="Tbl_Dargah" EntitySet="Tbl_Dargah" />
+            <End Role="Tbl_PaymentOnlineDetils" EntitySet="Tbl_PaymentOnlineDetils" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_PaymentReturned_Tbl_BusinessPlanPayment" Association="Self.FK_Tbl_PaymentReturned_Tbl_BusinessPlanPayment">
             <End Role="Tbl_BusinessPlanPayment" EntitySet="Tbl_BusinessPlanPayment" />
             <End Role="Tbl_PaymentReturned" EntitySet="Tbl_PaymentReturned" />
@@ -1516,6 +1534,10 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <AssociationSet Name="FK_Tbl_CommentPlan_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_CommentPlan_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_CommentPlan" EntitySet="Tbl_CommentPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_PaymentOnlineDetils_Tbl_Dargah" Association="webqomir_HamAfarinDBModel.FK_Tbl_PaymentOnlineDetils_Tbl_Dargah">
+            <End Role="Tbl_Dargah" EntitySet="Tbl_Dargah" />
+            <End Role="Tbl_PaymentOnlineDetils" EntitySet="Tbl_PaymentOnlineDetils" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_DepositToInvestors_Tbl_DepositTypes" Association="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestors_Tbl_DepositTypes">
             <End Role="Tbl_DepositTypes" EntitySet="Tbl_DepositTypes" />
@@ -1861,6 +1883,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <Property Name="Checked" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_PaymentOnlineDetils" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentOnlineDetils_Tbl_Dargah" FromRole="Tbl_Dargah" ToRole="Tbl_PaymentOnlineDetils" />
         </EntityType>
         <EntityType Name="Tbl_DepositToInvestors">
           <Key>
@@ -2072,6 +2095,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="FinallyDate" Type="DateTime" Precision="3" />
           <Property Name="Dargah_id" Type="Int32" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentOnlineDetils_Tbl_BusinessPlanPayment" FromRole="Tbl_PaymentOnlineDetils" ToRole="Tbl_BusinessPlanPayment" />
+          <NavigationProperty Name="Tbl_Dargah" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentOnlineDetils_Tbl_Dargah" FromRole="Tbl_PaymentOnlineDetils" ToRole="Tbl_Dargah" />
         </EntityType>
         <EntityType Name="Tbl_PaymentReturned">
           <Key>
@@ -2179,6 +2203,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="LinkedinUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="WhatsappUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AparatUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TelegramUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Permits" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContactUs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -2195,6 +2220,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="InvestmentRole" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FinancingPageBanner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="InverstmentPageBanner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RiskAlertStatementAvtive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_ShareHoldersCompany">
           <Key>
@@ -2618,6 +2644,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Principal>
             <Dependent Role="Tbl_CommentPlan">
               <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_PaymentOnlineDetils_Tbl_Dargah">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Dargah" Role="Tbl_Dargah" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_PaymentOnlineDetils" Role="Tbl_PaymentOnlineDetils" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Dargah">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_PaymentOnlineDetils">
+              <PropertyRef Name="Dargah_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3397,6 +3435,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySetMapping Name="Tbl_Settings">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Settings">
               <MappingFragment StoreEntitySet="Tbl_Settings">
+                <ScalarProperty Name="RiskAlertStatementAvtive" ColumnName="RiskAlertStatementAvtive" />
                 <ScalarProperty Name="InverstmentPageBanner" ColumnName="InverstmentPageBanner" />
                 <ScalarProperty Name="FinancingPageBanner" ColumnName="FinancingPageBanner" />
                 <ScalarProperty Name="InvestmentRole" ColumnName="InvestmentRole" />
@@ -3413,6 +3452,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="ContactUs" ColumnName="ContactUs" />
                 <ScalarProperty Name="Permits" ColumnName="Permits" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="TelegramUrl" ColumnName="TelegramUrl" />
                 <ScalarProperty Name="AparatUrl" ColumnName="AparatUrl" />
                 <ScalarProperty Name="WhatsappUrl" ColumnName="WhatsappUrl" />
                 <ScalarProperty Name="LinkedinUrl" ColumnName="LinkedinUrl" />

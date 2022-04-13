@@ -50,5 +50,7 @@ namespace ViewModels
         [DataType(DataType.MultilineText)]
         [AllowHtml]
         public string RiskAlertStatementFullText { get; set; }
+        [Display(Name = "نمایش بیانیه ریسک")]
+        public bool RiskAlertStatementAvtive { get; set; }
     }
 }

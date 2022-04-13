@@ -34,6 +34,13 @@
                 @Html.ValidationMessageFor(model => model.IsActive)
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsLegal, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IsLegal)
+                @Html.ValidationMessageFor(model => model.IsLegal)
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Role_id, new { @class = "control-label col-md-2" })

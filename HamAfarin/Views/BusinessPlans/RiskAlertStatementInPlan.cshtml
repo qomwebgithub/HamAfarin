@@ -1,0 +1,27 @@
+﻿@model ViewModels.FooterViewModel
+
+
+@if (Model.RiskAlertStatementAvtive)
+{
+<section class="w-100" style="background-color:#f5f6f8">
+    <div class="col-12">
+        <div class="col-12 col-sm-8 col-lg-offset-2 pt-2 pb-5 container">
+            <h4 class="">
+                <img src="~/Content/img/risk.png" style="width:70px" />
+                بیانیه ریسک
+            </h4>
+            <div class="col-12">
+                <p>
+                    @Model.RiskAlertStatement
+                </p>
+            </div>
+            <div class="row float-left text-left ml-5">
+                <a href="/RiskAlertStatement" class="btn btn-orange btn-lg " style="font-size: 15px;">
+                    ادامه
+                </a>
+            </div>
+            <br />
+        </div>
+    </div>
+</section>
+}

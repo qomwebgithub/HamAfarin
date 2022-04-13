@@ -861,6 +861,7 @@
     <Content Include="Content\img\share %281%29.svg" />
     <Content Include="Content\img\slider1.jpg" />
     <Content Include="Content\img\StartPlan.PNG" />
+    <Content Include="Content\img\telegram.png" />
     <Content Include="Content\img\untitled %283%29.png" />
     <Content Include="Content\img\v1.jpg" />
     <Content Include="Content\img\verify.png" />
@@ -2491,6 +2492,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Payment\OfflinePayment.cshtml" />
     <Content Include="Views\Payment\DargahSelect.cshtml" />
+    <Content Include="Views\BusinessPlans\RiskAlertStatementInPlan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
