@@ -559,6 +559,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.PlanInFarabourseUrl, new { @class = "control-label col-12" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PlanInFarabourseUrl)
+                @Html.ValidationMessageFor(model => model.PlanInFarabourseUrl)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.FaraboorsProjectId, new { @class = "control-label col-12" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FaraboorsProjectId)

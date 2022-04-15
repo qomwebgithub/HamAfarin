@@ -392,11 +392,11 @@
             <li class="col-12 d-sm-none" id="btnSarmayeGozariInMenu">
             </li>
             <li class="nav-item px-2">
-                <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="home-tab" data-toggle="tab" href="#home" role="tab"
                    aria-controls="home" aria-selected="true">معرفی طرح</a>
             </li>
             <li class="nav-item px-2">
-                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab"
+                <a class="nav-link stickyNav-item active text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab"
                    aria-controls="financial" aria-selected="false">اطلاعات مالی</a>
             </li>
             <li class="nav-item px-2">
@@ -419,7 +419,7 @@
     </div>
     <div class="col-12 col-sm-10 offset-sm-1 bg-white px-0" role="tablist" data-aos="fade-down">
         <div class="tab-content" id="myTabContent">
-            <div class="col-12 col-sm-10 offset-sm-1 tab-pane show active fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="col-12 col-sm-10 offset-sm-1 tab-pane show fade" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div id="accordion">
                     <div id="headercollapse1">
                         <div class="text-center">
@@ -477,7 +477,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-10 offset-sm-1 tab-pane fade px-md-5" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+            <div class="col-12 col-sm-10 offset-sm-1 tab-pane fade px-md-5 active" id="financial" role="tabpanel" aria-labelledby="financial-tab">
                 @Html.Raw(@Model.FinancialInformationText)
             </div>
             <div class="col-12 col-sm-10 offset-sm-1 tab-pane fade px-md-5" id="contact" role="tabpanel" aria-labelledby="contact-tab">

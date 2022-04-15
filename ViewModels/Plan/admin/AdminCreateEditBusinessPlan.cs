@@ -193,7 +193,8 @@ namespace ViewModels
         public DateTime? CreateDate { get; set; }
         [Display(Name = "کد فرابورس")]
         public string CodeOTC { get; set; }
-
+        [Display(Name = "آدرس طرح در فرابورس")]
+        public string PlanInFarabourseUrl { get; set; }
         [Display(Name = "آی دی پروژه فرابورس")]
         public string FaraboorsProjectId { get; set; }
         [Display(Name = "اطلاعات مالی")]

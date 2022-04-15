@@ -23,6 +23,7 @@ namespace ViewModels
         public int InvestorCount { get; set; }
         public string MarketTarget { get; set; }
         public string CodeOTC { get; set; }
+        public string PlanInFarabourseUrl { get; set; }
         public int PercentageReturnInvestment { get; set; }
 
     }

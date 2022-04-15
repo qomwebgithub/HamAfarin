@@ -162,7 +162,8 @@ namespace Hamafarin.Controllers
                     AmountRequiredRoRaiseCapital = item.AmountRequiredRoRaiseCapital,
                     MarketTarget = item.MarketTarget,
                     CodeOTC = item.CodeOTC,
-                    PercentageReturnInvestment = item.PercentageReturnInvestment.Value
+                    PercentageReturnInvestment = item.PercentageReturnInvestment.Value,
+                    PlanInFarabourseUrl = item.PlanInFarabourseUrl
                 });
             }
             IPagedList PagedList = lstPlans.ToPagedList(page, 6);
