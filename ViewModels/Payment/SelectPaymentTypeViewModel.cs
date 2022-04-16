@@ -35,7 +35,9 @@ namespace ViewModels
         [Display(Name = "شماره موبایل")]
         public string InvestorMobile { get; set; }
         [Display(Name = "قوانین و مقررات و قرارداد سرمایه گذاری را مطالعه نمودم.")]
-        public bool InvestmentRoles { get; set; }
+        public bool SiteRules { get; set; }
+        public bool RiskStatement { get; set; }
+        public bool InvestmentContract { get; set; }
         public string Privacy { get; set; }
         public string SiteTermsConditions { get; set; }
         [Display(Name = "حداقل میزان سرمایه گذاری")]

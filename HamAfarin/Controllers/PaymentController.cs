@@ -40,12 +40,12 @@ namespace Hamafarin.Controllers
                 if (qBussinessPlans == null)
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-                if (qBussinessPlans.IsActive == false ||
-                    qBussinessPlans.InvestmentStartDate > DateTime.Now ||
-                    qBussinessPlans.InvestmentExpireDate < DateTime.Now)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                //if (qBussinessPlans.IsActive == false ||
+                //    qBussinessPlans.InvestmentStartDate > DateTime.Now ||
+                //    qBussinessPlans.InvestmentExpireDate < DateTime.Now)
+                //{
+                //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //}
 
                 ViewBag.MinimumAmountInvest = qBussinessPlans.MinimumAmountInvest;
                 ViewBag.UserProfileIsActive = true;

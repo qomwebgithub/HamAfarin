@@ -862,6 +862,7 @@
     <Content Include="Content\img\slider1.jpg" />
     <Content Include="Content\img\StartPlan.PNG" />
     <Content Include="Content\img\telegram.png" />
+    <Content Include="Content\img\telegram.svg" />
     <Content Include="Content\img\untitled %283%29.png" />
     <Content Include="Content\img\v1.jpg" />
     <Content Include="Content\img\verify.png" />
@@ -896,7 +897,7 @@
     <Content Include="Content\js\views\investment-help\investment-help.js" />
     <Content Include="Content\js\views\investment-process\investment-process.js" />
     <Content Include="Content\js\views\menu-page\menu-page.js" />
-    <Content Include="Content\js\views\payment\select-payment-type.js" />
+    <Content Include="Content\js\views\payment\select-payment-typeV1.2.js" />
     <Content Include="Content\js\waitMe.min.js" />
     <Content Include="Content\js\wow.min.js" />
     <Content Include="Content\css\Site.css" />

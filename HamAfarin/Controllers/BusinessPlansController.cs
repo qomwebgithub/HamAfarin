@@ -63,6 +63,7 @@ namespace Hamafarin.Controllers
                 Title = qActivePlans.Title,
                 CompanyName = qActivePlans.CompanyName,
                 ImageName = qActivePlans.ImageNameInSinglePlan,
+                MobileImageName = qActivePlans.ImageNameInListPalns,
                 DaysUntilStart = daysUntilStart,
                 RemainingTime = qRemainingDay,
                 RemainingTimeText = qRemainingText,

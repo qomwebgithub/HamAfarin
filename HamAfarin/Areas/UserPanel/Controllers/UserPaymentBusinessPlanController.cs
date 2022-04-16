@@ -158,6 +158,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.IsSuccessBussinessPlan = tbl_BussinessPlans.IsSuccessBussinessPlan;
             selectPayment.ContractFileName = tbl_BussinessPlans.ContractFileName;
             selectPayment.IsProjectParticipationReady = tbl_BussinessPlans.IsProjectParticipationReady;
+            selectPayment.MobileImageName = tbl_BussinessPlans.ImageNameInListPalns;
 
             if (qBusinessPlanPayment.FaraboorsResponse != null &&
                 qBusinessPlanPayment.FaraboorsResponse.Contains("TraceCode"))

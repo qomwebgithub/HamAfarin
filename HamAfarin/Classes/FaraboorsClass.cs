@@ -19,6 +19,8 @@ namespace HamAfarin
 {
     public class FaraboorsClass
     {
+        SMS oSms = new SMS();
+
         HamAfarinDBEntities db = new HamAfarinDBEntities();
         public async Task<(bool Success, byte[] File)> GetProjectParticipationReportAsync(int id, int user)
         {
@@ -132,16 +134,25 @@ namespace HamAfarin
                     //};
                     #endregion
 
-                    FaraboorsReceiveJsonModel body = new FaraboorsReceiveJsonModel
-                    {
-                        NationalID = isLegal ? long.Parse(qPersonLegal.NationalId) : long.Parse(qUserProfile.NationalCode),
-                        IsLegal = isLegal,
-                        FirstName = isLegal ? "" : qUserProfile.FirstName,
-                        LastNameOrCompanyName = isLegal ? qPersonLegal.CompanyName : qUserProfile.LastName,
-                        ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10,
-                        BourseCode = qUserProfile.SejamCode,
-                        PaymentDate = payDate,
-                    };
+                    FaraboorsReceiveJsonModel body = new FaraboorsReceiveJsonModel();
+
+                    body.NationalID = Convert.ToInt64(StringExtensions.Fa2En(Convert.ToString(isLegal ? long.Parse(StringExtensions.Fa2En(qPersonLegal.NationalId)) : long.Parse(qUserProfile.NationalCode))));
+                    body.IsLegal = isLegal;
+                    body.FirstName = isLegal ? "" : qUserProfile.FirstName;
+                    body.LastNameOrCompanyName = isLegal ? qPersonLegal.CompanyName : qUserProfile.LastName;
+                    body.ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10;
+                    body.BourseCode = qUserProfile.SejamCode;
+                    body.PaymentDate = payDate;
+
+                    //{
+                    //    NationalID = Convert.ToInt64(StringExtensions.Fa2En(Convert.ToString(isLegal ? long.Parse(qPersonLegal.NationalId) : long.Parse(qUserProfile.NationalCode)))),
+                    //    IsLegal = isLegal,
+                    //    FirstName = isLegal ? "" : qUserProfile.FirstName,
+                    //    LastNameOrCompanyName = isLegal ? qPersonLegal.CompanyName : qUserProfile.LastName,
+                    //    ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10,
+                    //    BourseCode = qUserProfile.SejamCode,
+                    //    PaymentDate = payDate,
+                    //};
 
 
                     string json = JsonConvert.SerializeObject(body);

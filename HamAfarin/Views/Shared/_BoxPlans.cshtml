@@ -20,9 +20,9 @@
                     </p>
                 </div>
             </a>
-            <div class="text-dark small col-12 p-0">
+            <div class="text-dark small col-12 p-0 mt-4">
                 <div class="pull-right">
-                    <a href="@Model.PlanInFarabourseUrl" class="text-decoration-none text-dark">
+                    <a href="@Model.PlanInFarabourseUrl" class="text-decoration-none text-dark" target="_blank">
                         <i class="bi bi-globe2 text-success font-weight-bold" style="font-size:17px;"></i>
                         مشاهده طرح در فرابورس
                     </a>
@@ -35,10 +35,11 @@
                 </div>
             </div>
             <div class="dropdown-divider col-12"></div>
-            <a class="text-dark" href="/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID" style="text-decoration:none">
+            <div class="">
 
-                <div class="">
-                    <div class="col-12 text-left mt-4">
+                <a class="text-dark" href="/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID" style="text-decoration:none">
+
+                    <div class="col-12 text-left mt-1">
                         @{
                             if (Model.DaysUntilStart > 0)
                             {
@@ -130,8 +131,9 @@
                     <div class="mt-3 text-center">
                         <a href="/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID" class="btn btn-orange">جزئیات طرح</a>
                     </div>
-                </div>
-            </a>
+                </a>
+
+            </div>
 
         </div>
 

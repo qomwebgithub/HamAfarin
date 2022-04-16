@@ -229,26 +229,35 @@
                     <div class="col-md-2">
                     </div>
                     <div class="col-md-10 px-0">
-                        @Html.EditorFor(model => model.InvestmentRoles)
-                        کلیه
-                        @*<a class="link_active" data-toggle="modal" data-target="#siteTermsConditionsModal" href="#">
-                                قوانین و مقررات
-                            </a>*@
-                        <a class="link_active" href="/SiteTermsConditions" target="_blank">قوانین و مقررات</a>،<a class="link_active" href="/RiskAlertStatement" target="_blank">
-                            بیانیه ریسک
-                        </a>
-                        و
-                        <a class="link_active" href="/Resources/BusinessPlans/Contract/@Model.ContractFileName" target="_blank">
-                            قرارداد سرمایه گذاری
-                        </a>
-                        را مطالعه نموده و پذیرفته ام.
-                        @Html.ValidationMessageFor(model => model.InvestmentRoles)
+
+                        <p>
+                            موارد زیر را مطالعه نموده  و پذیرفتم.
+                        </p>
+                        <p>
+                            @Html.EditorFor(model => model.SiteRules)
+                            <a class="link_active" href="/SiteTermsConditions" target="_blank">
+                                 قوانین و مقررات سایت
+                            </a>
+                        </p>
+                        <p>
+                            @Html.EditorFor(model => model.RiskStatement)
+                            <a class="link_active" href="/RiskAlertStatement" target="_blank">
+                                بیانیه ریسک
+                            </a>
+                        </p>
+                        <p>
+                            @Html.EditorFor(model => model.InvestmentContract)
+                            <a class="link_active" href="/Resources/BusinessPlans/Contract/@Model.ContractFileName" target="_blank">
+                                قرارداد سرمایه گذاری
+                            </a>
+                        </p>
+                        @Html.ValidationMessageFor(model => model.SiteRules)
                     </div>
                 </div>
 
             </div>
             <br />
-            <div id="paymentType" class="hidden">
+            <div id="paymentType" class="hidden" style="display: none;">
 
                 <div class="col-sm p-0">
                     @*<p class="text-danger"> سرمایه گذاری</p>*@
@@ -440,5 +449,5 @@
 
 @section Scripts{
     <script src="~/Scripts/modal.js"></script>
-    <script src="~/Content/js/views/payment/select-payment-type.js"></script>
+    <script src="~/Content/js/views/payment/select-payment-typeV1.2.js"></script>
 }

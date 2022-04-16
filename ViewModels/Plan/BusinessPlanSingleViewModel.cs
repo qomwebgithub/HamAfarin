@@ -13,6 +13,7 @@ namespace ViewModels
         public string Title { get; set; }
         public string CompanyName { get; set; }
         public string ImageName { get; set; }
+        public string MobileImageName { get; set; }
         public string ImageNameWarranty { get; set; }
         [Display(Name = "مدت زمان پویش تامین مالی")]
         public string FinancialDuration { get; set; }

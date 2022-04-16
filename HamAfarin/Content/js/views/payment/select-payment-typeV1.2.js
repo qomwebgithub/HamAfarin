@@ -1,7 +1,22 @@
 ﻿$(document).ready(function () {
-    handleInvestmentRoles($("#InvestmentRoles").is(':checked'));
-    $('#InvestmentRoles').change(function () {
-        handleInvestmentRoles($(this).is(":checked"));
+    var check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+    handleInvestmentRules(check);
+
+    $('#SiteRules').change(function () {
+
+        check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+
+        handleInvestmentRules(check);
+    });
+    $('#RiskStatement').change(function () {
+        check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+
+        handleInvestmentRules(check);
+    });
+    $('#InvestmentContract').change(function () {
+        check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+
+        handleInvestmentRules(check);
     });
 
     if ($("#IsOnline").val().toLowerCase() == "true") {
@@ -22,7 +37,16 @@
     });
 });
 
-function handleInvestmentRoles(checked) {
+function Getchecked_SiteRules_RiskStatement_InvestmentContract() {
+    var check = false;
+
+    if ($(SiteRules).is(":checked") && $(RiskStatement).is(":checked") && $(InvestmentContract).is(":checked")) {
+        check = true;
+    }
+    return check;
+}
+
+function handleInvestmentRules(checked) {
     if (checked) {
         $('#paymentType').show();
         $('#btnSubmit').show();
