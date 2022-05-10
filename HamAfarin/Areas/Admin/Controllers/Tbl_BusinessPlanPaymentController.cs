@@ -46,7 +46,48 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             return View(tbl_BusinessPlanPayments.ToList());
         }
+        public FileResult DownloadExcel()
+        {
+            IQueryable<Tbl_BusinessPlanPayment> tbl_BusinessPlanPayment = db.Tbl_BusinessPlanPayment
+    .Where(p => p.IsPaid && p.IsDelete == false && p.IsConfirmedFromAdmin);
 
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Where(p => p.BusinessPlan_id == 28);
+
+            tbl_BusinessPlanPayment = tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentType)
+                .Include(p => p.Tbl_Users)
+                .Include(p => p.Tbl_Users1)
+                .Include(p => p.Tbl_BussinessPlans)
+                .OrderByDescending(t => t.PaidDateTime);
+
+
+            List<string> lstColumnsName = new List<string> { "تاریخ پرداخت", " کد پیگیری", "شماره موبایل", "مبلغ", "تایید ادمین", "تایید فرابورس" };
+
+            DataTable dt = new DataTable("Grid");
+            foreach (var item in lstColumnsName)
+            {
+                dt.Columns.Add(item);
+            }
+
+
+            foreach (var item in tbl_BusinessPlanPayment)
+            {
+
+                dt.Rows.Add(item.PaidDateTime, item.TransactionPaymentCode, item.Tbl_Users.UserName,
+                   string.Format("{0:#,0}", (item.PaymentPrice)), item.IsConfirmedFromAdmin, item.IsConfirmedFromFaraboors);
+            }
+
+            using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
+            {
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream()) //using System.IO;  
+                {
+                    wb.SaveAs(stream);
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "فهرست پرداختی های محصولات نایلونی هم آفرین" + "(" + DateTime.Now.ToString("yyyy-MM-dd") + ")" + ".xlsx");
+                }
+            }
+        }
 
         // GET: Admin/Tbl_BusinessPlanPayment/Details/5
         public ActionResult Details(int? id)

@@ -68,7 +68,7 @@ namespace HamAfarin
                 .Where(p =>
                     p.IsDelete == false &&
                     p.BusinessPlan_id == id &&
-                    p.IsConfirmedFromAdmin == true &&
+                   // p.IsConfirmedFromAdmin == true &&
                     p.IsPaid == true &&
                     p.PaymentUser_id == myUserId)
                 .Sum(s => s.PaymentPrice);

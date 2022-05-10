@@ -200,6 +200,139 @@ namespace HamAfarin.Areas.UserPanel
             ViewBag.Gender = new SelectList(genderList, "key", "value", 1);
             return View(userProfile);
         }
+        
+
+        // GET: UserPanel/Tbl_UserProfiles/Create
+        public ActionResult Createtest()
+        {
+            if (GetUserProfile() != null)
+            {
+                return RedirectToAction("Index");
+            }
+            List<DropDownViewModel> genderList = new List<DropDownViewModel>()
+            {
+                new DropDownViewModel(){key = 1,value= "مرد"},
+                new DropDownViewModel(){key = 2,value= "زن"}
+            };
+            ViewBag.Gender = new SelectList(genderList, "key", "value", 1);
+            UserProfileViewModel userProfile = new UserProfileViewModel()
+            {
+                Profile = new ProfileViewModel()
+                {
+                    MobileNumber = UserSetAuthCookie.GetMobileNumber(User.Identity.Name)
+                }
+            };
+            return View(userProfile);
+        }
+
+        // POST: UserPanel/Tbl_UserProfiles/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Createtest(UserProfileViewModel userProfile, HttpPostedFileBase legalFile)
+        {
+            if (!userProfile.IsLegal)
+            {
+                ModelState.Remove("PersonLegal.CompanyName");
+                ModelState.Remove("PersonLegal.EconomicCode");
+                ModelState.Remove("PersonLegal.NationalId");
+                ModelState.Remove("PersonLegal.RegistratioNumber");
+                ModelState.Remove("PersonLegal.Address");
+            }
+
+            ////////////****************/////////////////////////////
+            // تبدیل تاریخ تولد از 
+            // string
+            // به
+            // datetime
+            if (string.IsNullOrEmpty(userProfile.strBirthDate) == false)
+            {
+                ModelState.Remove("Profile.BirthDate");
+                userProfile.Profile.BirthDate = StringExtensions.StringToDate(userProfile.strBirthDate);
+            }
+            else
+            {
+                ModelState.AddModelError("strBirthDate", "تاریخ تولد را انتخاب کنید");
+                List<DropDownViewModel> genderList1 = new List<DropDownViewModel>()
+            {
+                new DropDownViewModel(){key = 1,value= "مرد"},
+                new DropDownViewModel(){key = 2,value= "زن"}
+            };
+                ViewBag.Gender = new SelectList(genderList1, "key", "value", 1);
+                return View(userProfile);
+            }
+            if (userProfile.Gender == 1)
+            {
+                userProfile.strGender = "Male";
+            }
+            else
+            {
+                userProfile.strGender = "FeMale";
+            }
+            if (ModelState.IsValid)
+            {
+                if (legalFile != null)
+                {
+                    userProfile.PersonLegal.LegalFile = Guid.NewGuid().ToString() + Path.GetExtension(legalFile.FileName);
+                    legalFile.SaveAs(Server.MapPath("/UploadFiles/LegalFiles/" + userProfile.PersonLegal.LegalFile));
+
+                }
+                int userId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+                Tbl_UserProfiles Tbl_UserProfiles = new Tbl_UserProfiles()
+                {
+                    IsActive = false,
+                    IsDeleted = false,
+                    CreateDate = DateTime.Now,
+                    User_id = userId,
+                    MobileNumber = userProfile.Profile.MobileNumber,
+                    FirstName = userProfile.Profile.FirstName,
+                    LastName = userProfile.Profile.LastName,
+                    Bio = userProfile.Profile.Bio,
+                    NationalCode = userProfile.NationalCode,
+                    FatherName = userProfile.Profile.FatherName,
+                    ProfileNationalId = userProfile.Profile.ProfileNationalId,
+                    SejamCode = userProfile.Profile.SejamCode,
+                    AccountNumber = userProfile.Profile.AccountNumber,
+                    AccountSheba = userProfile.Profile.AccountSheba,
+                    Email = userProfile.Profile.Email,
+                    BirthDate = userProfile.Profile.BirthDate,
+                    Gender = userProfile.strGender,
+                };
+
+                db.Tbl_UserProfiles.Add(Tbl_UserProfiles);
+                if (userProfile.IsLegal)
+                {
+                    Tbl_PersonLegal personLegal = new Tbl_PersonLegal()
+                    {
+                        IsActive = false,
+                        IsDelete = false,
+                        CreateDate = DateTime.Now,
+                        User_id = userId,
+                        CompanyName = userProfile.PersonLegal.CompanyName,
+                        NationalId = userProfile.PersonLegal.NationalId,
+                        RegistratioNumber = userProfile.PersonLegal.RegistratioNumber,
+                        Address = userProfile.PersonLegal.Address,
+                        LegalFile = userProfile.PersonLegal.LegalFile
+                    };
+                    db.Tbl_PersonLegal.Add(personLegal);
+
+                    Tbl_Users tbl_Users = db.Tbl_Users.Find(userId);
+                    tbl_Users.IsLegal = true;
+                }
+                db.SaveChanges();
+                //به اکشن ایندکس ارسال میشود برای اعلام موفقیت آمیز بودن پروفایل
+                TempData["EditProfileSuccess"] = true;
+                return RedirectToAction("Index");
+            }
+            List<DropDownViewModel> genderList = new List<DropDownViewModel>()
+            {
+                new DropDownViewModel(){key = 1,value= "مرد"},
+                new DropDownViewModel(){key = 2,value= "زن"}
+            };
+            ViewBag.Gender = new SelectList(genderList, "key", "value", 1);
+            return View(userProfile);
+        }
 
         // GET: UserPanel/Tbl_UserProfiles/Edit/5
         public ActionResult Edit()

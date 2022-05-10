@@ -18,7 +18,7 @@ namespace DataLayer
         [Display(Name = "تایید ادمین")]
         public bool IsConfirmedFromAdmin { get; set; }
         [Display(Name = "تاریخ پرداخت")]
-        [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
+        //[DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
         public Nullable<System.DateTime> PaidDateTime { get; set; }
         [Display(Name = "تاریخ ایجاد")]
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]

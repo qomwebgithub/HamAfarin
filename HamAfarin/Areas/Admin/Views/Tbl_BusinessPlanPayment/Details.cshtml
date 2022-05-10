@@ -93,9 +93,13 @@
         <div class="card-header">
             @Html.DisplayNameFor(model => model.PaymentImageName)
         </div>
-        <div class="card-body">
-            <img class="card-img-top" src="\Images\PaymentImages\@Model.PaymentImageName">
-        </div>
+        @if (Model.PaymentImageName != null)
+        {
+            <div class="card-body">
+                <img class="card-img-top" src="\Images\PaymentImages\@Model.PaymentImageName">
+            </div>
+        }
+
     </div>
     <br />
 
