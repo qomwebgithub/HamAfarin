@@ -36,10 +36,14 @@ namespace HamAfarin
                 {
                     qProfile = new Tbl_UserProfiles();
                     UserName = "بدون نام";
-                    qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == u.User_id && u.IsDeleted == false);
+                    qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == item2.User_id && u.IsDeleted == false);
                     if (qProfile != null)
                     {
                         UserName = qProfile.FirstName;
+                    }
+                    if (item2.User_id == 1)
+                    {
+                        UserName = "مدیر سایت";
                     }
                     listChildComments.Add(new PlanCommentItemViewModel()
                     {
@@ -53,10 +57,14 @@ namespace HamAfarin
                 }
                 qProfile = new Tbl_UserProfiles();
                 UserName = "بدون نام";
-                qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == u.User_id && u.IsDeleted == false);
+                qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == item.User_id && u.IsDeleted == false);
                 if (qProfile != null)
                 {
                     UserName = qProfile.FirstName;
+                }
+                if (item.User_id == 1)
+                {
+                    UserName = "مدیر سایت";
                 }
                 listComments.Add(new PlanCommentItemViewModel()
                 {
@@ -107,22 +115,47 @@ namespace HamAfarin
             List<Tbl_BusinessPlanQuestion> qListQuestions = qAllListQuestions.Where(c => c.Parent_id == null).ToList();
             //ساخت لیست خروجی
             List<PlanQuestionItemViewModel> listQuestions = new List<PlanQuestionItemViewModel>();
+            Tbl_UserProfiles qProfile = new Tbl_UserProfiles();
+            string UserName = "بدون نام";
             foreach (var item in qListQuestions)
             {
+
                 // لیست نظرات بچه
                 List<Tbl_BusinessPlanQuestion> qChildListQuestions = qAllListQuestions.Where(c => c.Parent_id == item.QuestionID).ToList();
                 List<PlanQuestionItemViewModel> listChildQuestions = new List<PlanQuestionItemViewModel>();
                 foreach (var item2 in qChildListQuestions)
                 {
+                    qProfile = new Tbl_UserProfiles();
+                    UserName = "بدون نام";
+                    qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == item2.User_id && u.IsDeleted == false);
+                    if (qProfile != null)
+                    {
+                        UserName = qProfile.FirstName;
+                    }
+                    if (item2.User_id == 1)
+                    {
+                        UserName = "مدیر سایت";
+                    }
                     listChildQuestions.Add(new PlanQuestionItemViewModel()
                     {
                         QuestionID = item2.QuestionID,
                         QuestionText = item2.QuestionText,
                         Parent_id = item2.Parent_id,
                         User_id = item2.User_id,
-                        UserName = new UserService().GetUserNameByUserId(item2.User_id.Value),
+                        UserName = UserName,
                         CreateDate = item2.CreateDate
                     });
+                }
+                qProfile = new Tbl_UserProfiles();
+                UserName = "بدون نام";
+                qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == item.User_id && u.IsDeleted == false);
+                if (qProfile != null)
+                {
+                    UserName = qProfile.FirstName;
+                }
+                if (item.User_id == 1)
+                {
+                    UserName = "مدیر سایت";
                 }
                 listQuestions.Add(new PlanQuestionItemViewModel()
                 {
@@ -130,7 +163,7 @@ namespace HamAfarin
                     QuestionText = item.QuestionText,
                     Parent_id = item.Parent_id,
                     User_id = item.User_id,
-                    UserName = new UserService().GetUserNameByUserId(item.User_id.Value),
+                    UserName = UserName,
                     CreateDate = item.CreateDate,
                     Tbl_BusinessPlanQuestion1 = listChildQuestions
                 });
