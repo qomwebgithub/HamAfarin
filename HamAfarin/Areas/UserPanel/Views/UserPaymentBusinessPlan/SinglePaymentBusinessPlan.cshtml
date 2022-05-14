@@ -90,7 +90,21 @@
                 <p class="small">سرمایه شما <span class="text-success pr-1">@Model.BusinessPlanPayment.ToString("#,##0")</span> تومان</p>
             </div>
             <div class="col-12 col-md-4">
-                <p class="small">سود شما <span class="text-success pr-1">0</span> تومان</p>
+                <p class="small">
+                    سود شما <span class="text-success pr-1">
+                        @if (ViewBag.DepositToInvestors != null)
+                        {
+                            <i>
+                                @ViewBag.DepositToInvestors.ToString("#,##0")
+                            </i>
+
+                        }
+                        else
+                        {
+                            <i>0</i>
+                        }
+                    </span> تومان
+                </p>
             </div>
 
             <div class="col-12 col-md-4">
@@ -258,6 +272,12 @@
                                             {
                                                 <p class="mb-0 small text-danger font-weight-bold text-center">
                                                     به اتمام رسید
+                                                </p>
+                                            }
+                                            else if (Model.PercentageComplate == 100)
+                                            {
+                                                <p class="mb-0 small text-danger font-weight-bold text-center">
+                                                    در انتظار تایید فرابورس
                                                 </p>
                                             }
                                             else
@@ -480,25 +500,29 @@
                                 <td>@Model.TransactionPaymentCode</td>
                             }
                             @*<td>
-                                    @if (Model.PaymentStatus == "انصراف")
-                                    {
-                                        <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
-                                    }
-                                    else
-                                    {
-                                        <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
-                                    }
-                                </td>*@
+            @if (Model.PaymentStatus == "انصراف")
+            {
+                <a class="btn btn-secondary disabled" style="font-size:12px">انصراف</a>
+            }
+            else
+            {
+                <a onclick="ReurnedPayment()" class="btn btn-secondary" style="font-size:12px">انصراف</a>
+            }
+        </td>*@
                             @*<td>
-                                    <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
-                                </td>*@
+            <a href="#" class="btn btn-orange user-payment-btn">رسید واریز</a>
+        </td>*@
                             @if (Model.FaraboorsTraceCode == null)
                             {
                                 <td>در فرابورس ثبت نشده است</td>
                             }
                             else
                             {
-                                <td>@Model.FaraboorsTraceCode</td>
+                                <td>
+                                    <input id="@Model.FaraboorsTraceCode" ctype="text" disabled="disabled" value="@Model.FaraboorsTraceCode" />
+                                    <br />
+                                    <a target="_blank" onclick="CopyText('@Model.FaraboorsTraceCode')" href="https://cf.ifb.ir/home/trackParticipation">استعلام از فرابورس</a>
+                                </td>
                             }
                         </tr>
                     </tbody>
@@ -556,7 +580,12 @@
                         }
                         else
                         {
-                            <td>@Model.FaraboorsTraceCode</td>
+                            <td>
+                                <input id="@Model.FaraboorsTraceCode" ctype="text" disabled="disabled" value="@Model.FaraboorsTraceCode" />
+                                <br />
+                                <a target="_blank" onclick="CopyText('@Model.FaraboorsTraceCode')" href="https://cf.ifb.ir/home/trackParticipation">استعلام از فرابورس</a>
+                            </td>
+
                         }
                     </tr>
                     @*<tr>
@@ -943,6 +972,18 @@
         //        $('#privacyModal').modal('hide');
         //    });
         //}
+
+        function CopyText(id) {
+            console.log(id);
+            var copyText = document.getElementById(id);
+            console.log(copyText);
+            copyText.removeAttribute("disabled");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            alert("کد پیگیری فرابورس در کلیپ بورد شما کپی شد: "+ "\n" + copyText.value);
+            copyText.setAttribute("disabled", "disabled");
+        }
 
     </script>
 

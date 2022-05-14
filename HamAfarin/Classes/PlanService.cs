@@ -25,6 +25,8 @@ namespace HamAfarin
             List<Tbl_CommentPlan> qListComments = qAllListComments.Where(c => c.Parent_id == null).ToList();
             //ساخت لیست خروجی
             List<PlanCommentItemViewModel> listComments = new List<PlanCommentItemViewModel>();
+            Tbl_UserProfiles qProfile = new Tbl_UserProfiles();
+            string UserName = "بدون نام";
             foreach (var item in qListComments)
             {
                 // لیست نظرات بچه
@@ -32,15 +34,29 @@ namespace HamAfarin
                 List<PlanCommentItemViewModel> listChildComments = new List<PlanCommentItemViewModel>();
                 foreach (var item2 in qChildListComments)
                 {
+                    qProfile = new Tbl_UserProfiles();
+                    UserName = "بدون نام";
+                    qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == u.User_id && u.IsDeleted == false);
+                    if (qProfile != null)
+                    {
+                        UserName = qProfile.FirstName;
+                    }
                     listChildComments.Add(new PlanCommentItemViewModel()
                     {
                         CommentID = item2.CommentID,
                         CommentText = item2.CommentText,
                         Parent_id = item2.Parent_id,
                         User_id = item2.User_id,
-                        UserName = new UserService().GetUserNameByUserId(item2.User_id.Value),
+                        UserName = UserName,
                         CreateDate = item2.CreateDate
                     });
+                }
+                qProfile = new Tbl_UserProfiles();
+                UserName = "بدون نام";
+                qProfile = db.Tbl_UserProfiles.FirstOrDefault(u => u.User_id == u.User_id && u.IsDeleted == false);
+                if (qProfile != null)
+                {
+                    UserName = qProfile.FirstName;
                 }
                 listComments.Add(new PlanCommentItemViewModel()
                 {
@@ -48,7 +64,7 @@ namespace HamAfarin
                     CommentText = item.CommentText,
                     Parent_id = item.Parent_id,
                     User_id = item.User_id,
-                    UserName = new UserService().GetUserNameByUserId(item.User_id.Value),
+                    UserName = UserName,
                     CreateDate = item.CreateDate,
                     Tbl_CommentPlan1 = listChildComments
                 });
@@ -144,7 +160,9 @@ namespace HamAfarin
         /// <returns>درصد به عدد صحیح</returns>
         public int GetPercentage(long totalPrice, long raisedPrice)
         {
-            return Convert.ToInt16((raisedPrice / (float)totalPrice) * 100);
+            float fPercentage = (raisedPrice / (float)totalPrice) * 100;
+            int intPercentage = (int)fPercentage;
+            return intPercentage;
         }
 
         /// <summary>

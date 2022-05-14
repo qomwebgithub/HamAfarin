@@ -22,7 +22,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public ActionResult Index()
         {
 
-            string mobile = "09141568600";
+            // string mobile = "09141568600";
 
             var tbl_Users = db.Tbl_Users.Include(t => t.Tbl_Roles);
             return View(tbl_Users.OrderByDescending(c => c.RegisterDate).ToList());

@@ -143,7 +143,10 @@ namespace Hamafarin.Controllers
                 string daysUntilEndText = daysUntilEnd + " روز";
                 if (daysUntilEnd == -1)
                     daysUntilEndText = "پایان";
-
+                if (item.IsSuccessBussinessPlan)
+                {
+                    daysUntilEnd = -1;
+                }
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
@@ -186,6 +189,10 @@ namespace Hamafarin.Controllers
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
+                if (item.IsSuccessBussinessPlan)
+                {
+                    qRemainingDay = -1;
+                }
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);
@@ -225,6 +232,10 @@ namespace Hamafarin.Controllers
                 string qRemainingText = qRemainingDay + " روز";
                 if (qRemainingDay == -1)
                     qRemainingText = "پایان";
+                if (item.IsSuccessBussinessPlan)
+                {
+                    qRemainingDay = -1;
+                }
                 string AmountRequiredRoRaiseCapital = planService.GetEnglishNumber(item.AmountRequiredRoRaiseCapital);
                 int qPercentageComplate = planService.GetPercentage(long.Parse(AmountRequiredRoRaiseCapital), planService.GetRaisedPrice(db, item.BussinessPlanID));
                 int qInvestorCount = planService.GetPlanInvestorCount(db, item.BussinessPlanID);

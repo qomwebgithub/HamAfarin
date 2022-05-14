@@ -39,7 +39,7 @@
 
                 <a class="text-dark" href="/BusinessPlans/SingleBusinessPlan/@Model.BussinessPlanID" style="text-decoration:none">
 
-                    <div class="col-12 text-left mt-1">
+                    <div class="col-12 text-left mt-1 p-0">
                         @{
                             if (Model.DaysUntilStart > 0)
                             {
@@ -53,10 +53,10 @@
                                     با موفقیت تکمیل شد  - @Model.PercentageComplate%
                                 </strong>
                             }
-                            else if (Model.RemainingTime < 0)
+                            else if (Model.PercentageComplate == 100)
                             {
-                                <strong class="small font-weight-bold text-danger">
-                                    با موفقیت تکمیل شد  - @Model.PercentageComplate%
+                                <strong class="small font-weight-bold">
+                                    در انتظار تایید فرابورس - @Model.PercentageComplate%
                                 </strong>
                             }
                             else if (Model.RemainingTime == 0)

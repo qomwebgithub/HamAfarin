@@ -234,9 +234,13 @@
                                     {
                                         @(Model.DaysUntilStart + " روز تا شروع")
                                     }
-                                    else if (Model.RemainingTime < 0)
+                                    else if (Model.RemainingTime < 0 || Model.IsSuccessBussinessPlan)
                                     {
                                         @("به اتمام رسید")
+                                    }
+                                    else if (Model.PercentageComplate == 100)
+                                    {
+                                        @("در انتظار تایید فرابورس")
                                     }
                                     else if (Model.RemainingTime == 0)
                                     {

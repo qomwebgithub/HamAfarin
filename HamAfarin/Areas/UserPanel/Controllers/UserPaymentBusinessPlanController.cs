@@ -62,29 +62,30 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                     strPaymentStatus = "در انتظار تایید";
                 }
                 string strBusinessPlanStatus = "درحال تامین سرمایه";
-                int qRemainingDay = planService.CalculateRemainDay(item.Tbl_BussinessPlans.InvestmentExpireDate);
+                int qRemainingDay = -1;
+
+                if (item.Tbl_BussinessPlans.IsSuccessBussinessPlan == false)
+                {
+                    qRemainingDay = planService.CalculateRemainDay(item.Tbl_BussinessPlans.InvestmentExpireDate);
+                }
+
                 int qPercentageComplate = planService.GetPercentage(long.Parse(item.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital),
                     planService.GetRaisedPrice(db, item.Tbl_BussinessPlans.BussinessPlanID));
-
-                if (qRemainingDay > 0)
-                {
-                    strBusinessPlanStatus = "درحال تامین سرمایه";
-                }
-                else if (qRemainingDay <= 0 && qPercentageComplate >= 100)
+                if (qRemainingDay <= 0 && qPercentageComplate >= 100)
                 {
                     strBusinessPlanStatus = "تکمیل سرمایه";
+                }
+                else if (qPercentageComplate >= 100)
+                {
+                    strBusinessPlanStatus = "در انتظار تایید فرابورس";
                 }
                 else if (qRemainingDay <= 0 && qPercentageComplate < 100)
                 {
                     strBusinessPlanStatus = "عدم تامین سرمایه";
                 }
-                else if (qRemainingDay <= 0 && qPercentageComplate >= 100)
+                else if (qRemainingDay > 0)
                 {
-                    strBusinessPlanStatus = "شروع طرح";
-                }
-                else if (item.Tbl_BussinessPlans.IsSuccessBussinessPlan)
-                {
-                    strBusinessPlanStatus = "پایان طرح";
+                    strBusinessPlanStatus = "درحال تامین سرمایه";
                 }
 
                 lstUserPaymentBusinessPlan.Add(new UserPaymentBusinessPlanList()
@@ -103,21 +104,37 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
 
             IPagedList PagedList = lstUserPaymentBusinessPlan.ToPagedList(page, 6);
-            ViewBag.Count = lstUserPaymentBusinessPlan.Count();
-            ViewBag.TotalInvestment = lstUserPaymentBusinessPlan.Select(p => p.BusinessPlanPayment).Sum();
+            ViewBag.Count = qlstBusinessPlanPayments.Where(p=>p.IsConfirmedFromAdmin).Count();
+            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID).Sum(p => p.DepositAmount);
+            ViewBag.TotalInvestment = qlstBusinessPlanPayments.Where(p => p.IsConfirmedFromAdmin).Select(p => p.PaymentPrice).Sum();
             return View(PagedList);
         }
 
-        public ActionResult SinglePaymentBusinessPlan(int id, bool notify = false)
+        public ActionResult SinglePaymentBusinessPlan(int? id, bool notify = false)
         {
-            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id && p.IsDelete == false);
+            if (id == null)
+            {
+                return RedirectToAction("Index");
+            }
+            int UserID = UserSetAuthCookie.GetUserID(User.Identity.Name);
+
+            Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.PaymentID == id && p.IsDelete == false && p.PaymentUser_id == UserID);
+            if (qBusinessPlanPayment == null)
+            {
+                return RedirectToAction("Index");
+            }
             UserPaymentBusinessPlanSingleViewModel selectPayment = new UserPaymentBusinessPlanSingleViewModel();
             Tbl_BussinessPlans tbl_BussinessPlans = db.Tbl_BussinessPlans.FirstOrDefault(p => p.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id && p.IsActive && p.IsDeleted == false);
             bool boolIsRequestedReturn = false;
             Tbl_PaymentReturned qReturned = db.Tbl_PaymentReturned.FirstOrDefault(r => r.Payment_id == id);
 
             // تعداد روز های باقیمانده
-            int qRemainingDay = planService.CalculateRemainDay(tbl_BussinessPlans.InvestmentExpireDate);
+            int qRemainingDay = -1;
+            if (tbl_BussinessPlans.IsSuccessBussinessPlan == false)
+            {
+                qRemainingDay = planService.CalculateRemainDay(tbl_BussinessPlans.InvestmentExpireDate);
+            }
+
             string qRemainingText = qRemainingDay + " روز";
             if (qRemainingDay == -1)
                 qRemainingText = "پایان";
@@ -222,7 +239,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                     p.IsPaid && p.IsDelete == false)
                 .Select(p => p.PaymentPrice)
                 .Sum();
-
+            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID &&p.Tbl_DepositToInvestors.Plan_id == tbl_BussinessPlans.BussinessPlanID).Sum(p => p.DepositAmount);
             ViewBag.Notify = notify;
 
             return View(selectPayment);
