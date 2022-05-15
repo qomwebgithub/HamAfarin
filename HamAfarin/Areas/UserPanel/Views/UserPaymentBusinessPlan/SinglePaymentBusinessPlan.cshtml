@@ -79,7 +79,7 @@
 
         <div class="row pb-2">
             <div class="col-6">
-                <h4>سرمایه گذاری من</h4>
+                <h4>سرمایه گذاری من در این طرح</h4>
             </div>
             <div class="col-6">
                 <a href="/UserPanel/UserPaymentBusinessPlan" style="font-size: 12px;" class="btn btn-danger float-left">بازگشت</a>
@@ -87,29 +87,12 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-4">
-                <p class="small">سرمایه شما <span class="text-success pr-1">@Model.BusinessPlanPayment.ToString("#,##0")</span> تومان</p>
-            </div>
-            <div class="col-12 col-md-4">
-                <p class="small">
-                    سود شما <span class="text-success pr-1">
-                        @if (ViewBag.DepositToInvestors != null)
-                        {
-                            <i>
-                                @ViewBag.DepositToInvestors.ToString("#,##0")
-                            </i>
-
-                        }
-                        else
-                        {
-                            <i>0</i>
-                        }
-                    </span> تومان
-                </p>
+                <p class="small">سرمایه گذاری موفق : <span class="text-success pr-1">@ViewBag.Count</span> مرتبه</p>
             </div>
 
             <div class="col-12 col-md-4">
                 <p class="small">
-                    جمع کل سرمایه
+                    سرمایه تایید شده : 
                     @if (@ViewBag.TotalPayment != null)
                     {
                         <span class="text-success pr-1">
@@ -123,6 +106,24 @@
                         </span>
                     }
                     تومان
+                </p>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <p class="small">
+                    سود دریافتی من : <span class="text-success pr-1">
+                        @if (ViewBag.DepositToInvestors != null)
+                        {
+                            <i>
+                                @ViewBag.DepositToInvestors.ToString("#,##0")
+                            </i>
+
+                        }
+                        else
+                        {
+                            <i>0</i>
+                        }
+                    </span> تومان
                 </p>
             </div>
 

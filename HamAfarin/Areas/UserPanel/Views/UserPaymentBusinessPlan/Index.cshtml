@@ -7,11 +7,14 @@
     <h4>سرمایه گذاری من</h4>
     <div class="row">
         <div class="col-12 col-md-4">
-            <p class="small">دفعات سرمایه گذاری <span class="text-success pr-1">@ViewBag.Count</span> مرتبه</p>
+            <p class="small">سرمایه گذاری موفق : <span class="text-success pr-1">@ViewBag.Count</span> مرتبه</p>
+        </div>
+        <div class="col-12 col-md-4">
+            <p class="small">سرمایه تایید شده : <span class="text-success pr-1">@ViewBag.TotalInvestment.ToString("#,##0")</span> تومان</p>
         </div>
         <div class="col-12 col-md-4">
             <p class="small">
-                سود شما <span class="text-success pr-1">
+                سود دریافتی من : <span class="text-success pr-1">
                     @if (ViewBag.DepositToInvestors != null)
                     {
                         <i>
@@ -25,9 +28,6 @@
                     }
                 </span> تومان
             </p>
-        </div>
-        <div class="col-12 col-md-4">
-            <p class="small">جمع کل سرمایه <span class="text-success pr-1">@ViewBag.TotalInvestment.ToString("#,##0")</span> تومان</p>
         </div>
     </div>
     <hr />
