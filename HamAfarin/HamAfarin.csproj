@@ -705,6 +705,7 @@
     <Content Include="Areas\Admin\Views\Tbl_Dargah\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Dargah\Index.cshtml" />
     <Content Include="Areas\UserPanel\Views\UserProfile\Createtest.cshtml" />
+    <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
     <None Include="Connected Services\ZarinPal\configuration.svcinfo" />
     <Content Include="Connected Services\ZarinPal\HamAfarin.ZarinPal.GetUnverifiedTransactionsResponse.datasource">

@@ -31,17 +31,12 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string ReturnUrl = "/")
         {
-            //**************************************************///
-            //**************************************************////
-            //recaptcha
+            //captcha
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
                 ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
                 return View(model);
             }
-            //recaptcha
-            //**************************************************///
-            //**************************************************////
 
             if (ModelState.IsValid == false)
                 return View(model);
@@ -65,7 +60,7 @@ namespace Hamafarin.Controllers
 
             //Request.UrlReferrer.Host()
             // FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
-            string strSetAuthCookie = SetCookieString(user);
+            string strSetAuthCookie = new UserService().SetCookieString(user);
             FormsAuthentication.SetAuthCookie(strSetAuthCookie, model.RememberMe);
 
             // 1 = ورود
@@ -81,6 +76,7 @@ namespace Hamafarin.Controllers
             FormsAuthentication.SignOut();
             return Redirect("/");
         }
+
         public ActionResult Register()
         {
             return View();
@@ -89,23 +85,16 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel register)
         {
-            //**************************************************///
-            //**************************************************////
             //recaptcha
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
                 ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
                 return View(register);
             }
-            //recaptcha
-            //**************************************************///
-            //**************************************************////
 
             if (ModelState.IsValid == false)
                 return View(register);
-
-            //if (!IsUserNameExist(regiser.UserName))
-            //{
+            
             register.MobileNumber = StringExtensions.Fa2En(register.MobileNumber);
 
             if (IsMobileNumberExist(register.MobileNumber))
@@ -144,15 +133,8 @@ namespace Hamafarin.Controllers
 
             oSms.SendSms(oUser.MobileNumber, oUser.SmsCode.ToString());
 
-            return RedirectToAction("VerifySms", new { id = oUser.UserToken });
-
-            //}
-            //else
-            //{
-            //    ModelState.AddModelError("UserName", "نام کاربری تکراری می باشد");
-            //}
+            return RedirectToAction(nameof(VerifySms), new { id = oUser.UserToken });
         }
-
 
         public async Task<ActionResult> SendSms(string id)
         {
@@ -205,17 +187,12 @@ namespace Hamafarin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult VerifySms(VerifySmsViewModel verifySms)
         {
-            //**************************************************///
-            //**************************************************////
             //recaptcha
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
                 ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
                 return View(verifySms);
             }
-            //recaptcha
-            //**************************************************///
-            //**************************************************////
 
             if (ModelState.IsValid == false)
                 return View(verifySms);
@@ -232,6 +209,7 @@ namespace Hamafarin.Controllers
             verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
             // پیدا کردن کابر از طریق توکن
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
+
             if (qUser == null)
             {
                 ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
@@ -277,7 +255,7 @@ namespace Hamafarin.Controllers
             qSms = db.Tbl_Sms.Find(2);
             smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
-            string strSetAuthCookie = SetCookieString(qUser);
+            string strSetAuthCookie = new UserService().SetCookieString(qUser);
             FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
             return Redirect("/UserPanel/UserProfile");
 
@@ -332,7 +310,7 @@ namespace Hamafarin.Controllers
             (bool Success, string UserToken) sejamLogin = await oSejamClass.LoginUserAsync(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name));
 
             if (sejamLogin.Success)
-                return RedirectToAction("VerifySms", new { id = sejamLogin.UserToken, ReturnUrl = SejamLogin.ReturnUrl });
+                return RedirectToAction(nameof(VerifySms), new { id = sejamLogin.UserToken, ReturnUrl = SejamLogin.ReturnUrl });
 
             ViewBag.Exemption = true;
             ModelState.AddModelError("NationalCode", sejamLogin.UserToken);
@@ -351,7 +329,6 @@ namespace Hamafarin.Controllers
             mobileNumber = StringExtensions.Fa2En(mobileNumber);
             return db.Tbl_Users.Any(u => u.MobileNumber == mobileNumber.Trim().ToLower());
         }
-
 
         [HttpPost]
         public JsonResult CheckNationalCode(string NationalCode)
@@ -379,8 +356,6 @@ namespace Hamafarin.Controllers
             }
         }
 
-
-
         /// <summary>
         /// چک کردن کد ملی
         /// </summary>
@@ -407,7 +382,6 @@ namespace Hamafarin.Controllers
 
 
         }
-
 
         public async Task<JsonResult> TestApi(string id)
         {
@@ -441,7 +415,7 @@ namespace Hamafarin.Controllers
             qUser.SmsCode = smsCode;
             db.SaveChanges();
             oSms.SendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
-            return RedirectToAction("VerifyForgotPassword", new { id = qUser.UserToken });
+            return RedirectToAction(nameof(VerifyForgotPassword), new { id = qUser.UserToken });
         }
 
         public ActionResult VerifyForgotPassword(string id)
@@ -495,7 +469,7 @@ namespace Hamafarin.Controllers
             // صفر کردن کد اس ام اس برای امنیت است تا کاربر با گویید وارد متد بعدی نشود
             qUser.SmsCode = 0;
             db.SaveChanges();
-            return RedirectToAction("ResetPassword", new { id = qUser.UserToken });
+            return RedirectToAction(nameof(ResetPassword), new { id = qUser.UserToken });
         }
 
         public ActionResult ResetPassword(string id)
@@ -525,26 +499,10 @@ namespace Hamafarin.Controllers
             qUser.Password = FormsAuthentication.HashPasswordForStoringInConfigFile(resetPassword.Password, "MD5");
             qUser.UserToken = Guid.NewGuid().ToString();
             db.SaveChanges();
-            return RedirectToAction("Login");
+            return RedirectToAction(nameof(Login));
         }
 
-        private string SetCookieString(Tbl_Users user)
-        {
-            string strSetAuthCookie;
-            Tbl_UserProfiles userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
-            if (user.HasSejam && userProfiles == null)
-            {
-                user.HasSejam = false;
-                db.SaveChanges();
-            }
-
-            if (user.HasSejam)
-                strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam + "," + userProfiles.FirstName + " " + userProfiles.LastName;
-            else
-                strSetAuthCookie = user.UserID + "," + user.Role_id + "," + user.UserName + "," + user.MobileNumber + "," + user.HasSejam;
-
-            return strSetAuthCookie;
-        }
+        
 
 
     }
