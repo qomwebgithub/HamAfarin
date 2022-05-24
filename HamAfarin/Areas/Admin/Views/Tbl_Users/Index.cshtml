@@ -7,6 +7,8 @@
 
 <h2>@ViewBag.Title</h2>
 
+@Html.Action("PartialSendSms","Tbl_Sms")
+
 @(Html.Kendo().Grid(Model)
               .Name("Grid")
               .Columns(columns =>

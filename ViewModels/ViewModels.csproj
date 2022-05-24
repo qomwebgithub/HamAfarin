@@ -126,6 +126,7 @@
     <Compile Include="Setting\HeaderViewModel.cs" />
     <Compile Include="ShareHolders\AddEditShareHolderViewModel.cs" />
     <Compile Include="Slider\AddEditSliderViewModel.cs" />
+    <Compile Include="SMS\AdminSendSms.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

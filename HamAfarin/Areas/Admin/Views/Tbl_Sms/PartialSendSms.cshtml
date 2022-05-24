@@ -1,0 +1,73 @@
+﻿@model ViewModels.AdminSendSmsviewModel
+
+@*<div class="card card-body">
+        <table class="table table-success table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        شماره موبایل
+                    </th>
+                    <th>
+                        متن اس ام اس
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+
+                        @Html.TextBoxFor(model => model.MobileNumber, null, new { placeholder = "شماره موبایل(اختیاری)" })
+
+                    </td>
+                    <td>
+
+                        @Html.TextAreaFor(model => model.Message)
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a onclick="SendSms()" class="btn btn-success left col-7">ارسال اس ام اس</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>*@
+
+
+<form method="post" action="/Admin/AdminSemdSms/SendSms">
+    <div class="card card-body">
+        <table class="table table-success table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        شماره موبایل
+                    </th>
+                    <th>
+                        متن اس ام اس
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+
+                        @Html.TextBoxFor(model => model.MobileNumber, null, new { placeholder = "شماره موبایل(اختیاری)" })
+
+                    </td>
+                    <td>
+
+                        @Html.TextAreaFor(model => model.Message)
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="ارسال اس ام اس" class="btn btn-success left col-7" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+

@@ -21,6 +21,7 @@ namespace HamAfarin.Areas.Admin.Controllers
     public class Tbl_SmsController : Controller
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
+        SMS oSms = new SMS();
 
         // GET: Admin/Tbl_Sms
         public async Task<ActionResult> Index()
@@ -59,5 +60,77 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
             return View(tbl_Sms);
         }
+
+        public ActionResult PartialSendSms()
+        {
+            return PartialView();
+        }
+
+        /// <summary>
+        /// ارسال اس ام اس به کاربران
+        /// </summary>
+        /// <param name="MobileNumber">شماره موبایل کاربر (اختیاری است) اگر وارد نکرده بود به همه ی کاربران مورد نظر اس ام اس ارسال میشود</param>
+        /// <param name="Message">متن پیام</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult SendSms(AdminSendSmsviewModel sendSms)
+        {
+            try
+            {
+
+
+                // اگر متن پیام خالی بود پیام ارسال نمیکنیم
+                if (string.IsNullOrEmpty(sendSms.Message) == false)
+                {
+                    // اگر شماره موبایل پر شده بود فقط به همان شماره پیام میفرستیم در غیر اینصورت به همه ی کاربران موردنظر اس ام اس ارسال میکنیم
+                    if (string.IsNullOrEmpty(sendSms.MobileNumber) == false)
+                    {
+                        sendSms.MobileNumber = StringExtensions.Fa2En(sendSms.MobileNumber);
+                        (bool Success, string Message) result = oSms.SendSms(sendSms.MobileNumber, sendSms.Message);
+                    }
+                    else
+                    {
+                        //// شماره موبایل ها را در لیستی از استرینگ ذخیره میکنیم
+                        //foreach (var item in lstGetOrdersForSendSms)
+                        //{
+                        //    lsttMobileNumber.Add(StringExtensions.Fa2En(item.Mobile));
+                        //}
+                        //if (lsttMobileNumber != null)
+                        //{
+                        //    if (lsttMobileNumber.Count > 0)
+                        //    {
+                        //        oSms.SendSMS(lsttMobileNumber, sendSms.Message);
+                        //        // ذخیره اس ام اس ارسالی
+                        //        foreach (var item in lsttMobileNumber)
+                        //        {
+                        //            Tbl_SendSmsForCustomers tbl_SendSms = new Tbl_SendSmsForCustomers()
+                        //            {
+                        //                ID = Guid.NewGuid().ToString(),
+                        //                CreateDate = DateTime.Now,
+                        //                IsSend = true,
+                        //                Message = sendSms.Message,
+                        //                MobileNumber = item
+                        //            };
+                        //            db.Tbl_SendSmsForCustomers.Add(tbl_SendSms);
+                        //        }
+                        //        db.SaveChanges();
+                        //    }
+
+                        //}
+                    }
+                    //return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception e)
+            {
+                //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            }
+            return RedirectToAction("ListSendSms");
+        }
+
+
     }
 }

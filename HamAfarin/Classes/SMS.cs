@@ -1,4 +1,5 @@
 ﻿using DataLayer;
+using HamAfarin.SmsSender;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,27 @@ namespace HamAfarin
     public class SMS
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
+        //JaxRpcMessagingServiceClient sms = new JaxRpcMessagingServiceClient();
 
         public (bool Success, string Message) SendSms(string mobileNumber, string message)
         {
             mobileNumber = FixMobileNumber(mobileNumber);
-
+            //string[] lsttMobileNumber = { mobileNumber };
             (bool Success, string Message) tokenResult;
 
+            //string a = sms.send(
+            //    "irfintech",
+            //    "irfintech123",
+            //    "98200071072",
+            //    lsttMobileNumber,
+            //    "",
+            //    "",
+            //    "",
+            //    "",
+            //    "",
+            //    "",
+            //    "",
+            //    "");
             // این کد پیش فرض داخل داکیومنت می باشد
             string url = "https://ws2.adpdigital.com/url/send?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&srcaddress=98200071072&body=" + message + "&unicode=1";
             WebClient client = new WebClient();

@@ -104,8 +104,8 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
 
             IPagedList PagedList = lstUserPaymentBusinessPlan.ToPagedList(page, 6);
-            ViewBag.Count = qlstBusinessPlanPayments.Where(p=>p.IsConfirmedFromAdmin).Count();
-            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID).Sum(p => p.DepositAmount);
+            ViewBag.Count = qlstBusinessPlanPayments.Where(p => p.IsConfirmedFromAdmin).Count();
+            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID && p.IsDelete == false && p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false).Sum(p => p.DepositAmount);
             ViewBag.TotalInvestment = qlstBusinessPlanPayments.Where(p => p.IsConfirmedFromAdmin).Select(p => p.PaymentPrice).Sum();
             return View(PagedList);
         }
@@ -232,16 +232,16 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             selectPayment.IsAcceptInvestment = planService.IsAcceptInvestmentPlan(db, tbl_BussinessPlans.BussinessPlanID);
 
             ViewBag.Privacy = db.Tbl_Settings.Select(s => s.Privacy).FirstOrDefault();
-           List<Tbl_BusinessPlanPayment> qlstBusinessPlanPayment = db.Tbl_BusinessPlanPayment
-                .Where(p => p.BusinessPlan_id == qBusinessPlanPayment.BusinessPlan_id &&
-                    p.PaymentUser_id == qBusinessPlanPayment.PaymentUser_id &&
-                    p.IsConfirmedFromAdmin &&
-                    p.IsPaid && p.IsDelete == false).ToList();
+            List<Tbl_BusinessPlanPayment> qlstBusinessPlanPayment = db.Tbl_BusinessPlanPayment
+                 .Where(p => p.BusinessPlan_id == qBusinessPlanPayment.BusinessPlan_id &&
+                     p.PaymentUser_id == qBusinessPlanPayment.PaymentUser_id &&
+                     p.IsConfirmedFromAdmin &&
+                     p.IsPaid && p.IsDelete == false).ToList();
 
             ViewBag.TotalPayment = qlstBusinessPlanPayment.Select(p => p.PaymentPrice).Sum();
             ViewBag.Count = qlstBusinessPlanPayment.Count;
 
-            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID &&p.Tbl_DepositToInvestors.Plan_id == tbl_BussinessPlans.BussinessPlanID).Sum(p => p.DepositAmount);
+            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID && p.Tbl_DepositToInvestors.Plan_id == tbl_BussinessPlans.BussinessPlanID && p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false).Sum(p => p.DepositAmount);
             ViewBag.Notify = notify;
 
             return View(selectPayment);

@@ -49,14 +49,19 @@ namespace Hamafarin.Controllers
             string hashPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(model.Password, "MD5");
             model.MobileNumber = StringExtensions.Fa2En(model.MobileNumber);
 
-            Tbl_Users user = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == model.MobileNumber && u.Password == hashPassword);
+            Tbl_Users user = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == model.MobileNumber && u.IsDeleted == false);
 
             if (user == null)
             {
                 ModelState.AddModelError("MobileNumber", "نام کاربری یا کلمه عبور اشتباه است یا کاربری یافت نشد");
                 return View(model);
             }
-
+            // چک کردن پسورد
+            if (user.Password != hashPassword)
+            {
+                ModelState.AddModelError("MobileNumber", "نام کاربری یا کلمه عبور اشتباه است یا کاربری یافت نشد");
+                return View(model);
+            }
             if (user.IsActive == false || user.IsDeleted)
             {
                 ModelState.AddModelError("MobileNumber", "حساب کاربری شما فعال نیست");
