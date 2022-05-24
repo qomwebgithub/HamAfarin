@@ -12,6 +12,19 @@ namespace Hamafarin
 
         HamAfarinDBEntities db = new HamAfarinDBEntities();
 
+        public string SetCookieString(Tbl_Users user)
+        {
+            Tbl_UserProfiles userProfiles = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == user.UserID);
+            if (user.HasSejam && userProfiles == null)
+            {
+                user.HasSejam = false;
+                db.SaveChanges();
+            }
+
+            string fullName = user.HasSejam ? $"{userProfiles.FirstName} {userProfiles.LastName}" : null;
+
+            return $"{user.UserID},{user.Role_id },{user.UserName},{user.MobileNumber},{user.HasSejam},{fullName},{user.IsLegal}";
+        }
 
         /// <summary>
         /// بدست آوردن شناسه ی کاربر با استفاده از نام کاربری

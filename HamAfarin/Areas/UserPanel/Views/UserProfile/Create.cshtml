@@ -5,18 +5,18 @@
     ViewBag.Title = "ایجاد پروفایل";
 }
 <body>
-
+    <h4 class="pb-3">تکمیل اطلاعات حقوقی</h4>
     <hr />
     @using (Html.BeginForm("Create", "UserProfile", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
-        <div class="form-horizontal" style="font-size:13px">
+        <div class="form-horizontal pt-3" style="font-size:13px">
             @Html.ValidationSummary(true)
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl-6">
                     <div class="form-group">
-                        <span class="control-label col-md-6 " style="color:#00b4d8;font-size:16px"> حساب حقیقی </span>
+                        <span class="control-label col-md-6 " style="color:#00b4d8;font-size:16px"> اطلاعات نماینده حقوقی </span>
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Profile.MobileNumber, new { @class = "control-label col-md-6" })
@@ -50,6 +50,31 @@
                             @Html.ValidationMessageFor(model => model.Gender)
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NationalCode, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control", @uifocus = "focus", maxlength = "10" } })
+                            @Html.ValidationMessageFor(model => model.NationalCode)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Profile.ProfileNationalId, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Profile.ProfileNationalId)
+                            @Html.ValidationMessageFor(model => model.Profile.ProfileNationalId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Profile.FatherName, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.Profile.FatherName)
+                            @Html.ValidationMessageFor(model => model.Profile.FatherName)
+                        </div>
+                    </div>
+
                     <div class="container">
                         @Html.LabelFor(model => model.Profile.BirthDate, new { @class = "control-label col-md-6" })
                         <div class="row">
@@ -71,29 +96,6 @@
                         </div>
                     </div>
                     <br />
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.NationalCode, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.NationalCode, new { htmlAttributes = new { @class = "form-control", @uifocus = "focus", maxlength = "10" } })
-                            @Html.ValidationMessageFor(model => model.NationalCode)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Profile.FatherName, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.Profile.FatherName)
-                            @Html.ValidationMessageFor(model => model.Profile.FatherName)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Profile.ProfileNationalId, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.Profile.ProfileNationalId)
-                            @Html.ValidationMessageFor(model => model.Profile.ProfileNationalId)
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Profile.Email, new { @class = "control-label col-md-6" })
@@ -102,6 +104,46 @@
                             @Html.ValidationMessageFor(model => model.Profile.Email)
                         </div>
                     </div>
+
+                </div>
+
+                <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="form-group">
+                        <span class="control-label col-md-6 " style="color:#00b4d8;font-size:16px"> اطلاعات شخص حقوقی </span>
+                    </div>
+                    <hr class="d-lg-none d-xl-none d-md-none" />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.CompanyName, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.PersonLegal.CompanyName)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.CompanyName)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.NationalId, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.PersonLegal.NationalId)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.NationalId)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.RegistratioNumber, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.PersonLegal.RegistratioNumber)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.RegistratioNumber)
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.PersonLegal.EconomicCode, new { @class = "control-label col-md-6" })
+                        <div class="col-md-12">
+                            @Html.EditorFor(model => model.PersonLegal.EconomicCode)
+                            @Html.ValidationMessageFor(model => model.PersonLegal.EconomicCode)
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.Profile.SejamCode, new { @class = "control-label col-md-6" })
                         <div class="col-md-12">
@@ -126,63 +168,8 @@
                         </div>
                     </div>
 
-                    @*<div class="form-group">
-                            @Html.LabelFor(model => model.Profile.Bio, new { @class = "control-label col-md-6" })
-                            <div class="col-md-12">
-                                @Html.TextAreaFor(model => model.Profile.Bio)
-                                @Html.ValidationMessageFor(model => model.Profile.Bio)
-                            </div>
-                        </div>*@
 
 
-                </div>
-
-                <div class="col-12 col-lg-6 col-xl-6">
-                    <hr class="d-lg-none d-xl-none d-md-none" />
-
-                    <div class="form-group">
-                        <span class="control-label col-md-6 " style="color:#00b4d8;font-size:16px"> حساب حقوقی </span>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-6">
-                        </div>
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.IsLegal, null, new { @class = "col-1" })
-                            @Html.LabelFor(model => model.IsLegal, null, new { @class = "col-11" })
-                            @Html.ValidationMessageFor(model => model.IsLegal)
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PersonLegal.CompanyName, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.PersonLegal.CompanyName)
-                            @Html.ValidationMessageFor(model => model.PersonLegal.CompanyName)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PersonLegal.EconomicCode, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.PersonLegal.EconomicCode)
-                            @Html.ValidationMessageFor(model => model.PersonLegal.EconomicCode)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PersonLegal.NationalId, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.PersonLegal.NationalId)
-                            @Html.ValidationMessageFor(model => model.PersonLegal.NationalId)
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PersonLegal.RegistratioNumber, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.EditorFor(model => model.PersonLegal.RegistratioNumber)
-                            @Html.ValidationMessageFor(model => model.PersonLegal.RegistratioNumber)
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.PersonLegal.Address, new { @class = "control-label col-md-6" })
@@ -196,10 +183,7 @@
                         <div class="col-md-12">
                             موارد زیر در یک فایل فشرده (zip) بارگزاری شود:
                             <ol>
-                                <li>روز نامه رسمی آخرین تغیررات</li>
-                                <li>نامه معرفی فرد حقوقی شامل کد سجام</li>
-                                <li>نامه معرفی ثبت کننده پنل سرمایه گذاری</li>
-                                <li>نامه معرفی شخص مجاز به ثبت سفارش در طرح ها</li>
+                                <li>روز نامه رسمی آخرین تغییرات</li>
                                 <li>روزنامه رسمی صاحبان امضای مجاز</li>
                             </ol>
                         </div>
@@ -212,11 +196,12 @@
                 </div>
 
             </div>
-
             <br />
-            <div class="form-group" id="buttons">
-                <div class="col-md-offset-2 col-md-12">
-                    <input type="submit" value="ثبت اطلاعات کاربر" class="btn btn-danger control-label col-md-5" style="background-color:#ff1654" />
+            <div class="form-group row" id="buttons">
+                <div class="d-md-block d-sm-none col-md-6">
+                </div>
+                <div class="col-12 col-md-6 text-center">
+                    <input type="submit" value="ثبت اطلاعات" class="btn btn-danger control-label" style="background-color:#ff1654" />
                 </div>
             </div>
         </div>
@@ -232,26 +217,6 @@
 
 
     <script>
-        $(document).ready(function () {
-            handleLegal($("#IsLegal").is(':checked'))
-            $('#IsLegal').change(function () {
-                handleLegal(this.checked)
-            });
-        });
-
-        function handleLegal(checked) {
-            if (checked) {
-                $('#legal').show();
-                document.getElementById("Profile_AccountNumber").innerHTML = "شماره حساب شرکت";
-                document.getElementById("Profile_AccountSheba").innerHTML = "شبای شماره حساب شرکت";
-            }
-            else {
-                $('#legal').hide();
-                document.getElementById("Profile_AccountNumber").innerHTML = "شماره حساب";
-                document.getElementById("Profile_AccountSheba").innerHTML = "شبای شماره حساب";
-            }
-        };
-
         $("#BirthDateYMD").MdPersianDateTimePicker({
             targetTextSelector: "#strBirthDate",
             textFormat: "yyyy-MM-dd",
@@ -259,7 +224,6 @@
             modalMode: false,
             englishNumber: false,
         });
-
     </script>
 
 }

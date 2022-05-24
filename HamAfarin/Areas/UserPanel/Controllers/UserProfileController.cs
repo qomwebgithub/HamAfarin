@@ -19,55 +19,27 @@ namespace HamAfarin.Areas.UserPanel
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
         UserService userService = new UserService();
-                CheckNationalCode checkNationalCode = new CheckNationalCode();
+        CheckNationalCode checkNationalCode = new CheckNationalCode();
 
         // GET: UserPanel/Tbl_UserProfiles
         // GET: UserPanel/Tbl_UserProfiles
         public ActionResult Index()
         {
             UserProfileViewModel userProfileViewModel = GetUserProfile();
+
             if (userProfileViewModel == null)
-            {
-                return RedirectToAction("Create");
-            }
+                return RedirectToAction(nameof(LegalOrIndividuals));
+
             if (TempData.ContainsKey("EditProfileSuccess"))
                 ViewBag.EditProfileSuccess = TempData["EditProfileSuccess"];
+
             return View(userProfileViewModel);
         }
 
-        private UserProfileViewModel GetUserProfile()
+        public ActionResult LegalOrIndividuals()
         {
-            // Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
-            int UserID = UserSetAuthCookie.GetUserID(User.Identity.Name);
-            Tbl_UserProfiles qProfile = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == UserID);
-            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(p => p.UserID == UserID);
-            if (qProfile == null || qUser == null)
-            {
-                return null;
-            }
-
-            ProfileViewModel profileViewModel = null;
-            if (qProfile != null)
-                profileViewModel = userService.ConvertTblProfileToProfileModel(qProfile);
-            Tbl_PersonLegal qLegal = db.Tbl_PersonLegal.FirstOrDefault(p => p.User_id == UserID);
-            PersonLegalViewModel personLegalViewModel = null;
-            if (qLegal != null)
-                personLegalViewModel = userService.ConvertTblLegalToLegalModel(qLegal);
-            UserProfileViewModel userProfileViewModel = new UserProfileViewModel()
-            {
-                IsActive = qProfile.IsActive,
-                UserName = UserSetAuthCookie.GetUserName(User.Identity.Name),
-                Profile = profileViewModel,
-                IsLegal = qUser.IsLegal,
-                strGender = qProfile.Gender,
-                PersonLegal = personLegalViewModel,
-                NationalCode = qProfile.NationalCode,
-                Profile_id = qProfile.ProfileID
-            };
-            return userProfileViewModel;
+            return View();
         }
-
-
 
         // GET: UserPanel/Tbl_UserProfiles/Create
         public ActionResult Create()
@@ -99,108 +71,90 @@ namespace HamAfarin.Areas.UserPanel
         [ValidateAntiForgeryToken]
         public ActionResult Create(UserProfileViewModel userProfile, HttpPostedFileBase legalFile)
         {
-            if (!userProfile.IsLegal)
+            List<DropDownViewModel> genderList1 = new List<DropDownViewModel>()
             {
-                ModelState.Remove("PersonLegal.CompanyName");
-                ModelState.Remove("PersonLegal.EconomicCode");
-                ModelState.Remove("PersonLegal.NationalId");
-                ModelState.Remove("PersonLegal.RegistratioNumber");
-                ModelState.Remove("PersonLegal.Address");
-            }
+                new DropDownViewModel(){key = 1,value= "مرد"},
+                new DropDownViewModel(){key = 2,value= "زن"}
+            };
+            ViewBag.Gender = new SelectList(genderList1, "key", "value", 1);
 
-            ////////////****************/////////////////////////////
-            // تبدیل تاریخ تولد از 
-            // string
-            // به
-            // datetime
-            if (string.IsNullOrEmpty(userProfile.strBirthDate) == false)
-            {
-                ModelState.Remove("Profile.BirthDate");
-                userProfile.Profile.BirthDate = StringExtensions.StringToDate(userProfile.strBirthDate);
-            }
-            else
+            ModelState.Remove("Profile.BirthDate");
+            userProfile.Profile.BirthDate = StringExtensions.StringToDate(userProfile.strBirthDate);
+
+            if (!ModelState.IsValid)
+                return View(userProfile);
+
+            if (string.IsNullOrEmpty(userProfile.strBirthDate))
             {
                 ModelState.AddModelError("strBirthDate", "تاریخ تولد را انتخاب کنید");
-                List<DropDownViewModel> genderList1 = new List<DropDownViewModel>()
-            {
-                new DropDownViewModel(){key = 1,value= "مرد"},
-                new DropDownViewModel(){key = 2,value= "زن"}
-            };
-                ViewBag.Gender = new SelectList(genderList1, "key", "value", 1);
                 return View(userProfile);
             }
+
             if (userProfile.Gender == 1)
-            {
                 userProfile.strGender = "Male";
-            }
             else
-            {
                 userProfile.strGender = "FeMale";
-            }
-            if (ModelState.IsValid)
+
+            if (legalFile != null)
             {
-                if (legalFile != null)
-                {
-                    userProfile.PersonLegal.LegalFile = Guid.NewGuid().ToString() + Path.GetExtension(legalFile.FileName);
-                    legalFile.SaveAs(Server.MapPath("/UploadFiles/LegalFiles/" + userProfile.PersonLegal.LegalFile));
-
-                }
-                int userId = UserSetAuthCookie.GetUserID(User.Identity.Name);
-                Tbl_UserProfiles Tbl_UserProfiles = new Tbl_UserProfiles()
-                {
-                    IsActive = false,
-                    IsDeleted = false,
-                    CreateDate = DateTime.Now,
-                    User_id = userId,
-                    MobileNumber = userProfile.Profile.MobileNumber,
-                    FirstName = userProfile.Profile.FirstName,
-                    LastName = userProfile.Profile.LastName,
-                    Bio = userProfile.Profile.Bio,
-                    NationalCode = userProfile.NationalCode,
-                    FatherName = userProfile.Profile.FatherName,
-                    ProfileNationalId = userProfile.Profile.ProfileNationalId,
-                    SejamCode = userProfile.Profile.SejamCode,
-                    AccountNumber = userProfile.Profile.AccountNumber,
-                    AccountSheba = userProfile.Profile.AccountSheba,
-                    Email = userProfile.Profile.Email,
-                    BirthDate = userProfile.Profile.BirthDate,
-                    Gender = userProfile.strGender,
-                };
-
-                db.Tbl_UserProfiles.Add(Tbl_UserProfiles);
-                if (userProfile.IsLegal)
-                {
-                    Tbl_PersonLegal personLegal = new Tbl_PersonLegal()
-                    {
-                        IsActive = false,
-                        IsDelete = false,
-                        CreateDate = DateTime.Now,
-                        User_id = userId,
-                        CompanyName = userProfile.PersonLegal.CompanyName,
-                        NationalId = userProfile.PersonLegal.NationalId,
-                        RegistratioNumber = userProfile.PersonLegal.RegistratioNumber,
-                        Address = userProfile.PersonLegal.Address,
-                        LegalFile = userProfile.PersonLegal.LegalFile
-                    };
-                    db.Tbl_PersonLegal.Add(personLegal);
-
-                    Tbl_Users tbl_Users = db.Tbl_Users.Find(userId);
-                    tbl_Users.IsLegal = true;
-                }
-                db.SaveChanges();
-                //به اکشن ایندکس ارسال میشود برای اعلام موفقیت آمیز بودن پروفایل
-                TempData["EditProfileSuccess"] = true;
-                return RedirectToAction("Index");
+                userProfile.PersonLegal.LegalFile = Guid.NewGuid().ToString() + Path.GetExtension(legalFile.FileName);
+                legalFile.SaveAs(Server.MapPath("/UploadFiles/LegalFiles/" + userProfile.PersonLegal.LegalFile));
             }
-            List<DropDownViewModel> genderList = new List<DropDownViewModel>()
+
+            int userId = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            Tbl_UserProfiles Tbl_UserProfiles = new Tbl_UserProfiles()
             {
-                new DropDownViewModel(){key = 1,value= "مرد"},
-                new DropDownViewModel(){key = 2,value= "زن"}
+                IsActive = false,
+                IsDeleted = false,
+                CreateDate = DateTime.Now,
+                User_id = userId,
+                MobileNumber = userProfile.Profile.MobileNumber,
+                FirstName = userProfile.Profile.FirstName,
+                LastName = userProfile.Profile.LastName,
+                Bio = userProfile.Profile.Bio,
+                NationalCode = userProfile.NationalCode,
+                FatherName = userProfile.Profile.FatherName,
+                ProfileNationalId = userProfile.Profile.ProfileNationalId,
+                SejamCode = userProfile.Profile.SejamCode,
+                AccountNumber = userProfile.Profile.AccountNumber,
+                AccountSheba = userProfile.Profile.AccountSheba,
+                Email = userProfile.Profile.Email,
+                BirthDate = userProfile.Profile.BirthDate,
+                Gender = userProfile.strGender,
             };
-            ViewBag.Gender = new SelectList(genderList, "key", "value", 1);
-            return View(userProfile);
+
+            db.Tbl_UserProfiles.Add(Tbl_UserProfiles);
+
+            Tbl_PersonLegal personLegal = new Tbl_PersonLegal()
+            {
+                IsActive = false,
+                IsDelete = false,
+                CreateDate = DateTime.Now,
+                User_id = userId,
+                CompanyName = userProfile.PersonLegal.CompanyName,
+                NationalId = userProfile.PersonLegal.NationalId,
+                EconomicCode = userProfile.PersonLegal.EconomicCode,
+                RegistratioNumber = userProfile.PersonLegal.RegistratioNumber,
+                Address = userProfile.PersonLegal.Address,
+                LegalFile = userProfile.PersonLegal.LegalFile
+            };
+            db.Tbl_PersonLegal.Add(personLegal);
+
+            Tbl_Users tbl_Users = db.Tbl_Users.Find(userId);
+            tbl_Users.IsLegal = true;
+
+            db.SaveChanges();
+
+            string strSetAuthCookie = new UserService().SetCookieString(tbl_Users);
+            FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
+
+            //به اکشن ایندکس ارسال میشود برای اعلام موفقیت آمیز بودن پروفایل
+            TempData["EditProfileSuccess"] = true;
+
+            return RedirectToAction(nameof(Index));
+
         }
-        
+
 
         // GET: UserPanel/Tbl_UserProfiles/Create
         public ActionResult Createtest()
@@ -509,6 +463,45 @@ namespace HamAfarin.Areas.UserPanel
             }
 
         }
+
+        private UserProfileViewModel GetUserProfile()
+        {
+            // Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
+            int UserID = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            Tbl_UserProfiles qProfile = db.Tbl_UserProfiles.FirstOrDefault(p => p.User_id == UserID);
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(p => p.UserID == UserID);
+
+            string strSetAuthCookie = new UserService().SetCookieString(qUser);
+            FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
+
+            if (qProfile == null || qUser == null)
+                return null;
+
+            ProfileViewModel profileViewModel = null;
+
+            if (qProfile != null)
+                profileViewModel = userService.ConvertTblProfileToProfileModel(qProfile);
+
+            Tbl_PersonLegal qLegal = db.Tbl_PersonLegal.FirstOrDefault(p => p.User_id == UserID);
+            PersonLegalViewModel personLegalViewModel = null;
+
+            if (qLegal != null)
+                personLegalViewModel = userService.ConvertTblLegalToLegalModel(qLegal);
+
+            UserProfileViewModel userProfileViewModel = new UserProfileViewModel()
+            {
+                IsActive = qProfile.IsActive,
+                UserName = UserSetAuthCookie.GetUserName(User.Identity.Name),
+                Profile = profileViewModel,
+                IsLegal = qUser.IsLegal,
+                strGender = qProfile.Gender,
+                PersonLegal = personLegalViewModel,
+                NationalCode = qProfile.NationalCode,
+                Profile_id = qProfile.ProfileID
+            };
+            return userProfileViewModel;
+        }
+
 
         protected override void Dispose(bool disposing)
         {

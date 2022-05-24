@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,8 +15,7 @@ namespace HamAfarin
         /// <returns></returns>
         public static int GetUserID(string userIdentityName)
         {
-            int UserID = Convert.ToInt32(userIdentityName.Split(',')[0]);
-            return UserID;
+            return Convert.ToInt32(userIdentityName.Split(',')[0]);
         }
 
         /// <summary>
@@ -25,8 +25,7 @@ namespace HamAfarin
         /// <returns></returns>
         public static int GetRoleID(string userIdentityName)
         {
-            int RoleID = Convert.ToInt32(userIdentityName.Split(',')[1]);
-            return RoleID;
+            return Convert.ToInt32(userIdentityName.Split(',')[1]);
         }
 
         /// <summary>
@@ -36,8 +35,7 @@ namespace HamAfarin
         /// <returns></returns>
         public static string GetUserName(string userIdentityName)
         {
-            string Username = userIdentityName.Split(',')[2];
-            return Username;
+            return userIdentityName.Split(',')[2];
         }
 
         /// <summary>
@@ -47,8 +45,7 @@ namespace HamAfarin
         /// <returns></returns>
         public static string GetMobileNumber(string userIdentityName)
         {
-            string Username = userIdentityName.Split(',')[3];
-            return Username;
+            return userIdentityName.Split(',')[3];
         }
 
         /// <summary>
@@ -64,9 +61,8 @@ namespace HamAfarin
             int index = 4;
 
             if (index < array.Length)
-            {
                 hasSejam = Convert.ToBoolean(array[index]);
-            }
+
             return hasSejam;
         }
 
@@ -83,10 +79,27 @@ namespace HamAfarin
             int index = 5;
 
             if (index < array.Length)
-            {
                 fullName = array[index];
-            }
+
             return fullName;
+        }
+
+        /// <summary>
+        /// دریافت حقیقی یا حقوقی بودن کاربر لاگین شده
+        /// </summary>
+        /// <param name="userIdentityName"></param>
+        /// <returns></returns>
+        public static bool GetIsLegal(string userIdentityName)
+        {
+            bool isLegal = false;
+
+            string[] array = userIdentityName.Split(',');
+            int index = 6;
+
+            if (index < array.Length)
+                isLegal = Convert.ToBoolean(array[index]);
+
+            return isLegal;
         }
     }
 }

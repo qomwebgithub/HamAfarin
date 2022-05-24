@@ -22,7 +22,7 @@
                 {
                     <a href="/UserPanel/UserProfile" class="btn btn-login-register">
                         <i class="bi bi-person-check-fill"></i>
-                        @if (UserSetAuthCookie.GetFullName(User.Identity.Name) != null)
+                        @if (string.IsNullOrWhiteSpace(UserSetAuthCookie.GetFullName(User.Identity.Name)) == false)
                         {
                             @UserSetAuthCookie.GetFullName(User.Identity.Name)
                         }
