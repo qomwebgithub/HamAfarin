@@ -1,0 +1,132 @@
+﻿@model DataLayer.Tbl_RequestFinancing
+
+@{
+    ViewBag.Title = " تقاضای سرمایه";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<a href="/Admin/Tbl_RequestFinancing" class="p-2">
+    <span class="icon icon-arrow-right"></span><span class="mb-3">  بازگشت به لیست</span>
+</a>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="col-md-12 border border-dark p-2">
+        <div class="col-12 text-center p-2">
+            <h3>اطلاعات طرح</h3>
+        </div>
+        <hr />
+        <table class="table table-light table-bordered table-hover table-striped">
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-12 font-weight-bold p-0" })
+                    @Html.DisplayFor(model => model.Title, new { @class = "col-md-12" })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model.Tbl_Users.UserName, new { @class = "control-label col-md-12 font-weight-bold p-0" })
+                    @Html.DisplayFor(model => model.Tbl_Users.UserName, new { @class = "col-md-12" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Tbl_Users.Tbl_PersonLegal.First().CompanyName, new { @class = "control-label col-md-12 font-weight-bold p-0" })
+                    @Html.DisplayFor(model => model.Tbl_Users.Tbl_PersonLegal.First().CompanyName, new { @class = "col-md-12" })
+                </td>
+                <td>
+                    <span class="control-label col-md-12 font-weight-bold p-0"> فایل مدارک </span>
+                    <div class="col-md-12">
+                        <a class="btn btn-success" href="/UploadFiles/DocumentFilePlan/@Model.DocumentFile">دانلود فایل مدارک</a>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.LabelFor(model => model.DescriptionAdmin, new { @class = "control-label col-md-12 font-weight-bold p-0" })
+                    @Html.TextAreaFor(model => model.DescriptionAdmin, new { @class = "col-md-12" })
+                    @Html.ValidationMessageFor(model => model.DescriptionAdmin)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    @Html.LabelFor(model => model.DescriptionAdminHidden, new { @class = "control-label col-md-12 font-weight-bold p-0" })
+                    @Html.TextAreaFor(model => model.DescriptionAdminHidden, new { @class = "col-md-12" })
+                    @Html.ValidationMessageFor(model => model.DescriptionAdminHidden)
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="2">
+                    <span class="font-weight-bold">وضعیت طرح : </span>
+                    @if (Model.Status_id == 1)
+                    {
+                        <a class="btn btn-success border-success">
+                            تایید شده
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default border-success" onclick="ChangeStatus(1)">
+                            تایید شده
+                        </a>
+                    }
+                    @if (Model.Status_id == 2)
+                    {
+                        <a class="btn btn-info border-info">
+                            در حال بررسی
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default border-info" onclick="ChangeStatus(2)">
+                            در حال بررسی
+                        </a>
+                    }
+                    @if (Model.Status_id == 3)
+                    {
+                        <a class="btn btn-danger border-danger">
+                            رد شده
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-default border-danger" onclick="ChangeStatus(3)">
+                            رد شده
+                        </a>
+                    }
+
+                </td>
+
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function ChangeStatus(status) {
+            if ($('#DescriptionAdminHidden').val() == null) {
+                alert("توضیحات نباید خالی باشد");
+            }
+            else {
+                $.ajax({
+                    url: "@Url.Action("ChangeStatusRequestFinancing", "Tbl_RequestFinancing")",
+                    type: "Get",
+                    data: {
+                        status: status,
+                        Id: "@Model.ID",
+                        DescriptionAdmin: $('#DescriptionAdmin').val(),
+                        DescriptionAdminHidden: $('#DescriptionAdminHidden').val(),
+                    }
+                }).done(function (result) {
+                    if (result == "False") {
+                        alert("خطا در انجام عملیات");
+
+                    } else if (result) {
+                        location.href = location.href;
+                    }
+                });
+            }
+        }
+    </script>
+}
+

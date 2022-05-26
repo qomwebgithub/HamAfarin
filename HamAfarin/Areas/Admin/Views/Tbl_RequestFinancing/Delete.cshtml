@@ -1,0 +1,106 @@
+﻿@model DataLayer.Tbl_RequestFinancing
+
+@{
+    ViewBag.Title = "حذف " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<h3>آیا از حذف این مورد اطمینان دارید؟</h3>
+<div>    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocumentFile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionAdmin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionAdminHidden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionAdminHidden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_RequestFinancingStatus.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_RequestFinancingStatus.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+       <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="تایید حذف" class="btn btn-primary" />
+				@Html.ActionLink("بازگشت به فهرست", "Index")
+            </div>
+        </div>
+    }
+</div>

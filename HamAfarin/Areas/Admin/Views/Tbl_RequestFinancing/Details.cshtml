@@ -1,0 +1,99 @@
+﻿@model DataLayer.Tbl_RequestFinancing
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tbl_RequestFinancing</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDelete)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsDelete)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DocumentFile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DocumentFile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CheckDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CheckDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionAdmin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionAdmin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionAdminHidden)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionAdminHidden)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_RequestFinancingStatus.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_RequestFinancingStatus.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tbl_Users.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tbl_Users.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

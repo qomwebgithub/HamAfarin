@@ -105,8 +105,10 @@
     <Compile Include="Plan\BusinessPlansItemViewModel.cs" />
     <Compile Include="Plan\PlanQuestionItemViewModel.cs" />
     <Compile Include="Plan\PlanCommentItemViewModel.cs" />
+    <Compile Include="Plan\user\ListRequestFinancingUserViewModel.cs" />
     <Compile Include="Plan\user\UserBusinessPlanViewModel.cs" />
     <Compile Include="Plan\user\UserCreateBusinessPlan.cs" />
+    <Compile Include="Plan\user\UserRequestFinancingViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question\UserQuestionBusinessPlanList.cs" />
     <Compile Include="Sejam\AddressViewModel.cs" />

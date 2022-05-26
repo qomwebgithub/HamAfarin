@@ -188,10 +188,10 @@
                             </ol>
                         </div>
                         @Html.LabelFor(model => model.PersonLegal.LegalFile, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
-                            @Html.Kendo().Upload().Name("legalFile")
-                            @Html.ValidationMessageFor(model => model.PersonLegal.LegalFile)
-                        </div>
+                    <div class="col-md-12">
+                        <input type="file" name="legalFile">
+                        @Html.ValidationMessageFor(model => model.PersonLegal.LegalFile)
+                    </div>
                     </div>
                 </div>
 

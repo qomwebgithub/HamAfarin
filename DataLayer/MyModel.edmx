@@ -489,6 +489,29 @@
           <Property Name="Address" Type="nvarchar(max)" />
           <Property Name="LegalFile" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Tbl_RequestFinancing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="User_id" Type="int" />
+          <Property Name="Status_id" Type="int" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="DocumentFile" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CheckDate" Type="datetime" />
+          <Property Name="DescriptionAdmin" Type="nvarchar(max)" />
+          <Property Name="DescriptionAdminHidden" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Tbl_RequestFinancingStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Tbl_Roles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -1101,6 +1124,30 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus">
+          <End Role="Tbl_RequestFinancingStatus" Type="Self.Tbl_RequestFinancingStatus" Multiplicity="0..1" />
+          <End Role="Tbl_RequestFinancing" Type="Self.Tbl_RequestFinancing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_RequestFinancingStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_RequestFinancing">
+              <PropertyRef Name="Status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_RequestFinancing_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_RequestFinancing" Type="Self.Tbl_RequestFinancing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_RequestFinancing">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Tickets_Tbl_Tickets">
           <End Role="Tbl_Tickets" Type="Self.Tbl_Tickets" Multiplicity="0..1" />
           <End Role="Tbl_Tickets1" Type="Self.Tbl_Tickets" Multiplicity="*" />
@@ -1218,6 +1265,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySet Name="Tbl_PaymentReturned" EntityType="Self.Tbl_PaymentReturned" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_PaymentType" EntityType="Self.Tbl_PaymentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_PersonLegal" EntityType="Self.Tbl_PersonLegal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_RequestFinancing" EntityType="Self.Tbl_RequestFinancing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_RequestFinancingStatus" EntityType="Self.Tbl_RequestFinancingStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Roles" EntityType="Self.Tbl_Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SajamToken" EntityType="Self.Tbl_SajamToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_SejamException" EntityType="Self.Tbl_SejamException" Schema="dbo" store:Type="Tables" />
@@ -1373,6 +1422,14 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_UserProfiles" EntitySet="Tbl_UserProfiles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus" Association="Self.FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus">
+            <End Role="Tbl_RequestFinancingStatus" EntitySet="Tbl_RequestFinancingStatus" />
+            <End Role="Tbl_RequestFinancing" EntitySet="Tbl_RequestFinancing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_RequestFinancing_Tbl_Users" Association="Self.FK_Tbl_RequestFinancing_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_RequestFinancing" EntitySet="Tbl_RequestFinancing" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Tickets_Tbl_Tickets" Association="Self.FK_Tbl_Tickets_Tbl_Tickets">
             <End Role="Tbl_Tickets" EntitySet="Tbl_Tickets" />
             <End Role="Tbl_Tickets1" EntitySet="Tbl_Tickets" />
@@ -1439,6 +1496,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySet Name="Tbl_PaymentReturned" EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentReturned" />
           <EntitySet Name="Tbl_PaymentType" EntityType="webqomir_HamAfarinDBModel.Tbl_PaymentType" />
           <EntitySet Name="Tbl_PersonLegal" EntityType="webqomir_HamAfarinDBModel.Tbl_PersonLegal" />
+          <EntitySet Name="Tbl_RequestFinancing" EntityType="webqomir_HamAfarinDBModel.Tbl_RequestFinancing" />
+          <EntitySet Name="Tbl_RequestFinancingStatus" EntityType="webqomir_HamAfarinDBModel.Tbl_RequestFinancingStatus" />
           <EntitySet Name="Tbl_Roles" EntityType="webqomir_HamAfarinDBModel.Tbl_Roles" />
           <EntitySet Name="Tbl_SajamToken" EntityType="webqomir_HamAfarinDBModel.Tbl_SajamToken" />
           <EntitySet Name="Tbl_SejamException" EntityType="webqomir_HamAfarinDBModel.Tbl_SejamException" />
@@ -1575,6 +1634,14 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <AssociationSet Name="FK_Tbl_PersonLegal_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_PersonLegal_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_PersonLegal" EntitySet="Tbl_PersonLegal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus" Association="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus">
+            <End Role="Tbl_RequestFinancingStatus" EntitySet="Tbl_RequestFinancingStatus" />
+            <End Role="Tbl_RequestFinancing" EntitySet="Tbl_RequestFinancing" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_RequestFinancing_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_RequestFinancing" EntitySet="Tbl_RequestFinancing" />
           </AssociationSet>
           <AssociationSet Name="FK_Tbl_Users_Tbl_Roles" Association="webqomir_HamAfarinDBModel.FK_Tbl_Users_Tbl_Roles">
             <End Role="Tbl_Roles" EntitySet="Tbl_Roles" />
@@ -2143,6 +2210,32 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="LegalFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PersonLegal_Tbl_Users" FromRole="Tbl_PersonLegal" ToRole="Tbl_Users" />
         </EntityType>
+        <EntityType Name="Tbl_RequestFinancing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="User_id" Type="Int32" />
+          <Property Name="Status_id" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DocumentFile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CheckDate" Type="DateTime" Precision="3" />
+          <Property Name="DescriptionAdmin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionAdminHidden" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_RequestFinancingStatus" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus" FromRole="Tbl_RequestFinancing" ToRole="Tbl_RequestFinancingStatus" />
+          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_Users" FromRole="Tbl_RequestFinancing" ToRole="Tbl_Users" />
+        </EntityType>
+        <EntityType Name="Tbl_RequestFinancingStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_RequestFinancing" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus" FromRole="Tbl_RequestFinancingStatus" ToRole="Tbl_RequestFinancing" />
+        </EntityType>
         <EntityType Name="Tbl_Roles">
           <Key>
             <PropertyRef Name="RoleID" />
@@ -2373,6 +2466,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <NavigationProperty Name="Tbl_DepositToInvestorsDetails1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_DepositToInvestorsDetails_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_DepositToInvestorsDetails" />
           <NavigationProperty Name="Tbl_PaymentReturned" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PaymentReturned_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_PaymentReturned" />
           <NavigationProperty Name="Tbl_PersonLegal" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_PersonLegal_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_PersonLegal" />
+          <NavigationProperty Name="Tbl_RequestFinancing" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_RequestFinancing" />
           <NavigationProperty Name="Tbl_Roles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Users_Tbl_Roles" FromRole="Tbl_Users" ToRole="Tbl_Roles" />
           <NavigationProperty Name="Tbl_Tickets" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_Tickets1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
@@ -2765,6 +2859,30 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
               <PropertyRef Name="UserID" />
             </Principal>
             <Dependent Role="Tbl_PersonLegal">
+              <PropertyRef Name="User_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_RequestFinancingStatus" Role="Tbl_RequestFinancingStatus" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_RequestFinancing" Role="Tbl_RequestFinancing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_RequestFinancingStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_RequestFinancing">
+              <PropertyRef Name="Status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_RequestFinancing_Tbl_Users">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_RequestFinancing" Role="Tbl_RequestFinancing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_RequestFinancing">
               <PropertyRef Name="User_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -3384,6 +3502,31 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="PersonLegalID" ColumnName="PersonLegalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_RequestFinancing">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_RequestFinancing">
+              <MappingFragment StoreEntitySet="Tbl_RequestFinancing">
+                <ScalarProperty Name="DescriptionAdminHidden" ColumnName="DescriptionAdminHidden" />
+                <ScalarProperty Name="DescriptionAdmin" ColumnName="DescriptionAdmin" />
+                <ScalarProperty Name="CheckDate" ColumnName="CheckDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DocumentFile" ColumnName="DocumentFile" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Status_id" ColumnName="Status_id" />
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_RequestFinancingStatus">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_RequestFinancingStatus">
+              <MappingFragment StoreEntitySet="Tbl_RequestFinancingStatus">
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

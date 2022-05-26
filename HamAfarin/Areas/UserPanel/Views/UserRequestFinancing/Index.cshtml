@@ -1,0 +1,78 @@
+﻿@model IEnumerable<ViewModels.ListRequestFinancingUserViewModel>
+<div class="container">
+    <h4>درخواست های من</h4>
+    @if (ViewBag.CanNotRequest != null)
+    {
+        <p> کاربر گرامی, درخواست شما در حال بررسی میباشد </p>
+    }
+    else
+    {
+        <a class="btn btn-orange mx-2" href="/UserPanel/UserRequestFinancing/RequestFinancing">تقاضای سرمایه</a>
+    }
+    <hr />
+    @if (Model != null)
+    {
+        if (Model.Count() > 0)
+        {
+            <table class="table table-striped border table-responsive text-center">
+                <thead>
+                    <tr>
+                        <td>
+                            ردیف
+                        </td>
+                        <td>
+                            عنوان
+                        </td>
+                        <td>
+                            وضعیت
+                        </td>
+                        <td>
+                            تاریخ درخواست
+                        </td>
+                        <td>
+                            عملیات
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Row
+                            </td>
+                            <td>
+                                @item.Title
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                @item.RequestDate.ToString("yyyy/MM/dd")
+                            </td>
+                            <td>
+                                <a class="btn btn-info text-white" href="/UserPanel/UserRequestFinancing/RequestFinancingDetails/@item.RequestFinancingID"> جزئیات</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="container">
+                <p>
+                    موردی ثبت نشده است
+                </p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="container">
+            <p>
+                موردی ثبت نشده است
+            </p>
+        </div>
+    }
+</div>

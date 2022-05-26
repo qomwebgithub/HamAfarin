@@ -57,6 +57,8 @@ namespace DataLayer
         public virtual DbSet<Tbl_PaymentReturned> Tbl_PaymentReturned { get; set; }
         public virtual DbSet<Tbl_PaymentType> Tbl_PaymentType { get; set; }
         public virtual DbSet<Tbl_PersonLegal> Tbl_PersonLegal { get; set; }
+        public virtual DbSet<Tbl_RequestFinancing> Tbl_RequestFinancing { get; set; }
+        public virtual DbSet<Tbl_RequestFinancingStatus> Tbl_RequestFinancingStatus { get; set; }
         public virtual DbSet<Tbl_Roles> Tbl_Roles { get; set; }
         public virtual DbSet<Tbl_SajamToken> Tbl_SajamToken { get; set; }
         public virtual DbSet<Tbl_SejamException> Tbl_SejamException { get; set; }

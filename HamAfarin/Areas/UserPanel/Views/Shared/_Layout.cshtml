@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-lg-3 mb-4 col-12">
                 <div class="card border-0 shadow">
-                        @Html.Action("_Menu", "UserPanel", new { area = "UserPanel" })
+                    @Html.Action("_Menu", "UserPanel", new { area = "UserPanel" })
                 </div>
             </div>
             <div class="col-lg-9 col-12 card p-0 border-0 shadow">
@@ -37,6 +37,7 @@
         </div>
     </div>
 </div>
+<script src="~/Areas/Admin/Content/js/popper.min.js"></script>
 
 @section Scripts{
     @RenderSection("Scripts", false)
