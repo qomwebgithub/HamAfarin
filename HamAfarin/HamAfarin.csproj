@@ -860,6 +860,7 @@
     <Content Include="Content\img\handshake.png" />
     <Content Include="Content\img\handshake1.png" />
     <Content Include="Content\img\headerTestBanerImage.jpg" />
+    <Content Include="Content\img\Hourglass.gif" />
     <Content Include="Content\img\icon-badge.png" />
     <Content Include="Content\img\icon-clock.svg" />
     <Content Include="Content\img\icon-notebook.svg" />

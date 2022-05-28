@@ -35,7 +35,7 @@
     </div>*@
 
 
-<form method="post" action="/Admin/AdminSemdSms/SendSms">
+<form method="post" action="/Admin/Tbl_Sms/SendSms">
     <div class="card card-body">
         <table class="table table-success table-bordered table-striped">
             <thead>
@@ -50,20 +50,38 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>
+                    <td class="col-6">
+                        <p>
 
-                        @Html.TextBoxFor(model => model.MobileNumber, null, new { placeholder = "شماره موبایل(اختیاری)" })
+                            @Html.TextBoxFor(model => model.MobileNumber, null, new { placeholder = "شماره موبایل(اختیاری)" })
+                        </p>
 
+                        <p>
+                            <h5> توضیحات: </h5>
+                            اگر میخواهید برای تعداد محدودی از کاربران sms ارسال کنید
+                            باید شماره موبایل های وارد شده را با comma , از هم جدا کنید
+                            <br />
+                            مثال برای یک شماره موبایل : 09191234567
+                            <br />
+                            مثال برای چنیدن شماره موبایل : 09191234567,09331234567,...
+                        </p>
+                        <p>
+                            اگر شماره موبایل را خالی بگذارید برای همه ی کاربران sms ارسال میشود.
+                        </p>
                     </td>
-                    <td>
-
-                        @Html.TextAreaFor(model => model.Message)
-
+                    <td class="col-6">
+                        <textarea class="form-control" id="Message" name="Message" cols="20" rows="10">
+@Model.Message
+                         </textarea>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="submit" value="ارسال اس ام اس" class="btn btn-success left col-7" />
+                        <a id="btn_SureSendSms" class="btn btn-warning left col-7" onclick="SureSendSms()">
+                            آیا برای ارسال مطمئن هستید؟؟
+                        </a>
+
+                        <input type="submit" id="btn_SendSms" value="ارسال اس ام اس" class="btn btn-success left col-7" style="display:none" />
                     </td>
                 </tr>
             </tbody>

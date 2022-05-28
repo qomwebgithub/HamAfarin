@@ -24,21 +24,24 @@ namespace HamAfarin
             //string[] lsttMobileNumber = { mobileNumber };
             (bool Success, string Message) tokenResult;
 
-            //string a = sms.send(
+            DateTime date = DateTime.Now;
+
+            //SendResult a = sms.send(
             //    "irfintech",
             //    "irfintech123",
             //    "98200071072",
             //    lsttMobileNumber,
             //    "",
             //    "",
-            //    "",
-            //    "",
-            //    "",
-            //    "",
-            //    "",
-            //    "");
+            //    lsttMobileNumber,
+            //    1,
+            //    1,
+            //    true, date,"");
+
             // این کد پیش فرض داخل داکیومنت می باشد
-            string url = "https://ws2.adpdigital.com/url/send?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&srcaddress=98200071072&body=" + message + "&unicode=1";
+            string url = "https://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress0=" + mobileNumber + "&body0=" + message + "&unicode0=1";
+
+            //string url = "http://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&body=" + message + "&unicode=1";
             WebClient client = new WebClient();
             try
             {

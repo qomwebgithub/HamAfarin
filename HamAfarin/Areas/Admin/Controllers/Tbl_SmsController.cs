@@ -63,7 +63,16 @@ namespace HamAfarin.Areas.Admin.Controllers
 
         public ActionResult PartialSendSms()
         {
-            return PartialView();
+            string Message = "";
+            Tbl_Sms qSmsNewPlan = db.Tbl_Sms.FirstOrDefault(p => p.ID == 8);
+            if (qSmsNewPlan != null)
+            {
+                Message = qSmsNewPlan.Message;
+            }
+            return PartialView(new AdminSendSmsviewModel()
+            {
+                Message = Message
+            });
         }
 
         /// <summary>
@@ -77,7 +86,25 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             try
             {
+                // اگر متن پیام خالی بود پیام ارسال نمیکنیم
+                if (string.IsNullOrEmpty(sendSms.Message) == false)
+                {
+                    SendSmsAsync(sendSms);
+                }
 
+            }
+            catch (Exception e)
+            {
+                //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+
+            }
+            return Redirect("/Admin/Tbl_Users");
+        }
+
+        public async Task SendSmsAsync(AdminSendSmsviewModel sendSms)
+        {
+            await Task.Run(() =>
+            {
 
                 // اگر متن پیام خالی بود پیام ارسال نمیکنیم
                 if (string.IsNullOrEmpty(sendSms.Message) == false)
@@ -90,6 +117,15 @@ namespace HamAfarin.Areas.Admin.Controllers
                     }
                     else
                     {
+                        string common = "";
+                        List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false && p.IsActive).ToList();
+                        foreach (var item in qlstProducts)
+                        {
+                            sendSms.MobileNumber += common + item.MobileNumber;
+                            common = ",";
+                        }
+
+                        (bool Success, string Message) result = oSms.SendSms(sendSms.MobileNumber, sendSms.Message);
                         //// شماره موبایل ها را در لیستی از استرینگ ذخیره میکنیم
                         //foreach (var item in lstGetOrdersForSendSms)
                         //{
@@ -120,17 +156,9 @@ namespace HamAfarin.Areas.Admin.Controllers
                     }
                     //return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
-                //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
-            }
-            catch (Exception e)
-            {
-                //return Json(new { success = false }, JsonRequestBehavior.AllowGet);
 
-            }
-            return RedirectToAction("ListSendSms");
+            });
         }
-
-
     }
 }

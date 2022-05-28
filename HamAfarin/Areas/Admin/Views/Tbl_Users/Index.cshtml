@@ -7,7 +7,7 @@
 
 <h2>@ViewBag.Title</h2>
 
-@Html.Action("PartialSendSms","Tbl_Sms")
+@Html.Action("PartialSendSms", "Tbl_Sms")
 
 @(Html.Kendo().Grid(Model)
               .Name("Grid")
@@ -47,3 +47,20 @@
                                     .Model(model => model.Id(item => item.UserID))
                     )
     )
+
+@section Scripts{
+
+    <script>
+        function SureSendSms() {
+            $('#btn_SendSms').css("display", "");
+            $('#btn_SureSendSms').css("display", "none");
+        }
+
+        $("#btn_SendSms").click(function () {
+            $("#loading").show();
+        });
+
+    </script>
+
+
+}
