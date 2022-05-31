@@ -335,6 +335,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (smsResult.Success)
             {
                 qTbl_DepositToInvestors.IsPaid = true;
+                qTbl_DepositToInvestors.DepositDate = DateTime.Now;
                 await db.SaveChangesAsync();
             }
 

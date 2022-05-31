@@ -617,7 +617,7 @@ namespace HamAfarin
             }
             else if (exception.Contains("\"errorCode\":4004"))
             {
-                return "ثبت نام تکمیل نشده است";
+                return "سرمایه گذار محترم ثبت نام شما در سامانه تکمیل نشده است";
             }
             else if (exception.Contains("\"errorCode\":4005"))
             {

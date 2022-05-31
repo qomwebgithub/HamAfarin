@@ -547,19 +547,24 @@ namespace Hamafarin.Controllers
             return View();
         }
 
+        [OutputCache(Duration = 86400)]
         public ActionResult InvestmentSummary()
         {
             List<Tbl_BusinessPlanPayment> qPayments = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid && p.IsDelete == false).ToList();
             int qActiveUsers = db.Tbl_Users.Where(p => p.IsActive && p.IsDeleted == false).Count();
             long qAmountCapitalRaised = qPayments.Sum(p => p.PaymentPrice).Value;
-            int qInvestmentCountPerson = qPayments.Select(p => p.PaymentUser_id).Distinct().Count();
+          //  int qInvestmentCountPerson = qPayments.Select(p => p.PaymentUser_id).Distinct().Count();
             int qInvestmentSuccessPlanCount = db.Tbl_BussinessPlans.Where(p => p.IsSuccessBussinessPlan).Count();
+            long qTotalDepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.IsDelete == false && p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false).Sum(p => p.DepositAmount.Value);
+            int qCountDepositToInvestors = db.Tbl_DepositToInvestors.Count(p => p.IsDelete == false && p.IsPaid);
             InvestmentSummaryViewModel investmentSummaryViewModel = new InvestmentSummaryViewModel()
             {
                 AmountCapitalRaised = qAmountCapitalRaised,
                 ActiveUsers = qActiveUsers,
-                InvestmentCountPerson = qInvestmentCountPerson,
-                InvestmentSuccessPlanCount = qInvestmentSuccessPlanCount
+               // InvestmentCountPerson = qInvestmentCountPerson,
+                InvestmentSuccessPlanCount = qInvestmentSuccessPlanCount,
+                TotalDepositToInvestors = qTotalDepositToInvestors,
+                CountDepositToInvestors = qCountDepositToInvestors
             };
             return PartialView(investmentSummaryViewModel);
         }

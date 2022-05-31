@@ -13,7 +13,7 @@
             }
         </a>
     </li>
-    @if (!UserSetAuthCookie.GetHasSejam(User.Identity.Name) && !UserSetAuthCookie.GetIsLegal(User.Identity.Name))
+    @if (UserSetAuthCookie.GetHasSejam(User.Identity.Name) == false && UserSetAuthCookie.GetIsLegal(User.Identity.Name) == false)
     {
         <li style="font-size:16px">
             <a href="/Account/SejamLogin" class="btn btn-danger" style="background-color:#ff1654"> دریافت اطلاعات از سجام </a>

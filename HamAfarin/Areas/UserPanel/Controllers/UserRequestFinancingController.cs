@@ -50,8 +50,9 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             {
                 return Redirect("/UserPanel/UserProfile");
             }
+            int User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
-            if (db.Tbl_RequestFinancing.Any(p=>p.IsDelete == false && p.Status_id == 2))
+            if (db.Tbl_RequestFinancing.Any(p=>p.IsDelete == false && p.Status_id == 2 && p.User_id == User_id))
             {
                 return RedirectToAction("Index");
             }
@@ -106,7 +107,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
 
             int User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
-            Tbl_RequestFinancing qRequestFinancing = db.Tbl_RequestFinancing.FirstOrDefault(p => p.ID == id && p.User_id == User_id);
+            Tbl_RequestFinancing qRequestFinancing = db.Tbl_RequestFinancing.FirstOrDefault(p => p.ID == id && p.User_id == User_id && p.IsDelete == false);
             if (qRequestFinancing == null)
             {
                 return RedirectToAction("Index");

@@ -27,6 +27,7 @@ namespace DataLayer
         [Display(Name = "تصویر در نمایش طرح")]
         public string ImageNameInSinglePlan { get; set; }
         [Display(Name = "توضیح کوتاه(نمایش در سایت)")]
+        [AllowHtml]
         public string ShortDescription { get; set; }
         [Display(Name = "تصویر لوگوی طرح")]
         public string BussinessLogoImageName { get; set; }

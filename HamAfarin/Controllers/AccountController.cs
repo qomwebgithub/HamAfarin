@@ -276,6 +276,15 @@ namespace Hamafarin.Controllers
 
         public ActionResult SejamLogin(string ReturnUrl = "/")
         {
+            if (User.Identity.IsAuthenticated == false)
+                return Redirect("/LogOut");
+
+            // اگر کاربر حقوقی بود اجازه ورود از سجام را نمیدهیم
+            if (UserSetAuthCookie.GetIsLegal(User.Identity.Name))
+            {
+                return Redirect("/");
+            }
+
             return View(new SejamLoginViewModel { ReturnUrl = ReturnUrl });
         }
 
