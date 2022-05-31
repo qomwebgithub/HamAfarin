@@ -25,10 +25,6 @@ namespace Hamafarin.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            Tbl_Users tbl_Users = db.Tbl_Users.First(p=>p.UserID == 1807);
-            string strSetAuthCookie = new UserService().SetCookieString(tbl_Users);
-            FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);
-
             return View();
         }
 
