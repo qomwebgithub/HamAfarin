@@ -87,6 +87,8 @@
                                 @Html.ValidationMessageFor(model => model.Profile.LastName)
                             </div>
                         </div>
+
+
                         <div class="form-group">
                             @Html.LabelFor(model => model.NationalCode, new { @class = "control-label col-md-6" })
                             <div class="col-md-12">
@@ -94,75 +96,7 @@
                                 @Html.ValidationMessageFor(model => model.NationalCode)
                             </div>
                         </div>
-                        @*<div class="form-group">
 
-                                @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-6" })
-                                <div class="col-md-12">
-
-                                    @{ if (Model.strGender == "Male")
-                                        {
-                                            <input type="text" value="مرد" />
-                                        }
-                                        else
-                                        {
-                                            <input type="text" value="زن" />
-
-                                        }
-                                    }
-                                </div>
-
-                                @Html.ValidationMessageFor(model => model.Gender)
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Profile.BirthDate, new { @class = "control-label col-md-6" })
-                                <div class="col-12">
-                                    <input type="text" value="@string.Format("{0: yyyy/MM/dd}", Model.Profile.BirthDate)" />
-
-                                    @Html.ValidationMessageFor(model => model.Profile.BirthDate, null, new { @class = "text-danger" })
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Profile.FatherName, new { @class = "control-label col-md-6" })
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.Profile.FatherName)
-                                    @Html.ValidationMessageFor(model => model.Profile.FatherName)
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Profile.ProfileNationalId, new { @class = "control-label col-md-6" })
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.Profile.ProfileNationalId)
-                                    @Html.ValidationMessageFor(model => model.Profile.ProfileNationalId)
-                                </div>
-                            </div>*@
-
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Profile.SejamCode, new { @class = "control-label col-md-6" })
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.Profile.SejamCode)
-                                @Html.ValidationMessageFor(model => model.Profile.SejamCode)
-                            </div>
-                        </div>
-
-                        @*<div class="form-group">
-                                @Html.LabelFor(model => model.Profile.AccountNumber, new { @class = "control-label col-md-6", id = "Profile_AccountNumber" })
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.Profile.AccountNumber)
-                                    @Html.ValidationMessageFor(model => model.Profile.AccountNumber)
-                                </div>
-                            </div>*@
-
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.Profile.AccountSheba, new { @class = "control-label col-md-6", id = "Profile_AccountSheba" })
-                            <div class="col-md-12">
-                                @Html.EditorFor(model => model.Profile.AccountSheba)
-                                @Html.ValidationMessageFor(model => model.Profile.AccountSheba)
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             @Html.LabelFor(model => model.Profile.Email, new { @class = "control-label col-md-6" })
@@ -171,15 +105,6 @@
                                 @Html.ValidationMessageFor(model => model.Profile.Email)
                             </div>
                         </div>
-
-
-                        @*<div class="form-group">
-                                @Html.LabelFor(model => model.Profile.Bio, new { @class = "control-label col-md-6" })
-                                <div class="col-md-12">
-                                    @Html.TextAreaFor(model => model.Profile.Bio)
-                                    @Html.ValidationMessageFor(model => model.Profile.Bio)
-                                </div>
-                            </div>*@
 
                     </div>
 
@@ -200,14 +125,6 @@
                             </div>
 
                             <div class="form-group">
-                                @Html.LabelFor(model => model.PersonLegal.EconomicCode, new { @class = "control-label col-md-6" })
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.PersonLegal.EconomicCode)
-                                    @Html.ValidationMessageFor(model => model.PersonLegal.EconomicCode)
-                                </div>
-                            </div>
-
-                            <div class="form-group">
                                 @Html.LabelFor(model => model.PersonLegal.NationalId, new { @class = "control-label col-md-6" })
                                 <div class="col-md-12">
                                     @Html.EditorFor(model => model.PersonLegal.NationalId)
@@ -224,6 +141,30 @@
                             </div>
 
                             <div class="form-group">
+                                @Html.LabelFor(model => model.PersonLegal.EconomicCode, new { @class = "control-label col-md-6" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.PersonLegal.EconomicCode)
+                                    @Html.ValidationMessageFor(model => model.PersonLegal.EconomicCode)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Profile.SejamCode, new { @class = "control-label col-md-6" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Profile.SejamCode)
+                                    @Html.ValidationMessageFor(model => model.Profile.SejamCode)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Profile.AccountSheba, new { @class = "control-label col-md-6", id = "Profile_AccountSheba" })
+                                <div class="col-md-12">
+                                    @Html.EditorFor(model => model.Profile.AccountSheba)
+                                    @Html.ValidationMessageFor(model => model.Profile.AccountSheba)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 @Html.LabelFor(model => model.PersonLegal.Address, new { @class = "control-label col-md-6" })
                                 <div class="col-md-12">
                                     @Html.TextAreaFor(model => model.PersonLegal.Address)
@@ -235,138 +176,6 @@
                     }
 
                 </div>
-
-
-                @*<div class="col-12 m-2">
-                        <div class="row">
-                            <div class="col-12 col-lg-6 col-xs-6 col-md-6 p-0">
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">نام و نام خانوادگی</p>
-                                    <span class="font-weight-normal">@Model.Profile.FirstName @Model.Profile.LastName</span>
-                                </div>
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class=" mb-0" style="color: #81858b;">شماره تلفن همراه</p>
-                                    <span class="font-weight-normal">@Model.Profile.MobileNumber</span>
-                                </div>
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">تاریخ تولد</p>
-                                    <span class="font-weight-normal"> @string.Format("{0: yyyy/MM/dd}", Model.Profile.BirthDate)</span>
-                                </div>
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">نام پدر</p>
-                                    <span class="font-weight-normal"> @Model.Profile.FatherName</span>
-                                </div>
-                                <div class="col-12 border-left border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">جنسیت</p>
-                                    <span class="font-weight-normal">
-                                        @{ if (Model.strGender == "Male")
-                                            {
-                                                <span class="font-weight-normal">
-                                                    مرد
-                                                </span>
-
-                                            }
-                                            else
-                                            {
-                                                <span class="font-weight-normal">
-                                                    زن
-                                                </span>
-
-                                            }
-                                        }
-                                    </span>
-                                </div>
-                                <div class="col-12 border-left p-3">
-                                    <p class="mb-0" style="color: #81858b;">توضیحات بیشتر</p>
-                                    <span class="font-weight-normal"> @Model.Profile.Bio</span>
-                                </div>
-                            </div>
-
-                            <div class="col-12 col-lg-6 col-xs-6 col-md-6 p-0">
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">کد ملی</p>
-                                    <span class="font-weight-normal">@Model.NationalCode</span>
-                                </div>
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">شماره شناسنامه</p>
-                                    <span class="font-weight-normal">@Model.Profile.ProfileNationalId</span>
-                                </div>
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">پست الکترونیک</p>
-                                    <span class="font-weight-normal">@Model.Profile.Email</span>
-                                </div>
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">کد سجام</p>
-                                    <span class="font-weight-normal">@Model.Profile.SejamCode</span>
-                                </div>
-                                <div class="col-12 border-bottom p-3">
-                                    <p class="mb-0" style="color: #81858b;">شبای شماره حساب</p>
-                                    <span class="font-weight-normal">@Model.Profile.AccountSheba</span>
-                                </div>
-                                <div class="col-12 p-3">
-                                    <p class="mb-0" style="color: #81858b;"> شماره حساب</p>
-                                    <span class="font-weight-normal">@Model.Profile.AccountNumber</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    if (Model.IsLegal)
-                    {
-                        <div class="col-12 p-2">
-                            <div class="border">
-                                <div class="row p-2">
-                                    <div class="col-6">
-                                        <dl>
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.PersonLegal.CompanyName)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.PersonLegal.CompanyName)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.PersonLegal.EconomicCode)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.PersonLegal.EconomicCode)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.PersonLegal.NationalId)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.PersonLegal.NationalId)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.PersonLegal.RegistratioNumber)
-                                            </dt>
-                                        </dl>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <dl>
-                                            <dd>
-                                                @Html.DisplayFor(model => model.PersonLegal.RegistratioNumber)
-                                            </dd>
-
-                                            <dt>
-                                                @Html.DisplayNameFor(model => model.PersonLegal.Address)
-                                            </dt>
-
-                                            <dd>
-                                                @Html.DisplayFor(model => model.PersonLegal.Address)
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }*@
             }
         }
     </div>

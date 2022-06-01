@@ -4,6 +4,9 @@
     ViewBag.Title = "تقاضای سرمایه";
 }
 <body>
+    <a href="/UserPanel/UserRequestFinancing" class="p-2">
+        <span class="bi bi-arrow-right-circle"></span><span class="mb-3">  بازگشت به لیست</span>
+    </a>
     <h4 class="pb-3">درخواست تامین مالی </h4>
     <hr />
     @using (Html.BeginForm("RequestFinancing", "UserRequestFinancing", FormMethod.Post, new { enctype = "multipart/form-data" }))

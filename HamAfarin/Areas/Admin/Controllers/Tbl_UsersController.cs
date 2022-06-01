@@ -176,7 +176,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         /// <returns>لیست پروفایلهای تایید نشده</returns>
         public ActionResult UnSubmittedProfile()
         {
-            List<Tbl_UserProfiles> qListProfile = db.Tbl_UserProfiles.Where(p => p.IsActive == false && p.IsDeleted == false).ToList();
+            List<Tbl_UserProfiles> qListProfile = db.Tbl_UserProfiles.Where(p => p.IsActive == false && p.IsDeleted == false).OrderByDescending(p=>p.CreateDate).ToList();
             List<ProfileItemViewModel> listProfileItems = new List<ProfileItemViewModel>();
             foreach (var item in qListProfile)
             {
