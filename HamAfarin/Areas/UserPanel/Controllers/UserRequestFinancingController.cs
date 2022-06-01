@@ -21,7 +21,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
             int User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
 
-            List<Tbl_RequestFinancing> qlstRequestFinancings = db.Tbl_RequestFinancing.Where(p => p.User_id == User_id && p.IsDelete == false).ToList();
+            List<Tbl_RequestFinancing> qlstRequestFinancings = db.Tbl_RequestFinancing.Where(p => p.User_id == User_id && p.IsDelete == false).OrderByDescending(p=>p.CreateDate).ToList();
             // اگر طرحی در حال بررسی بود نمیتواند طرح جدید درخواست بدهد
             if (qlstRequestFinancings.Any(p=>p.Status_id == 2))
             {
