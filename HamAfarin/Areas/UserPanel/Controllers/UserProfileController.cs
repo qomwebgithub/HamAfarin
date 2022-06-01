@@ -38,6 +38,11 @@ namespace HamAfarin.Areas.UserPanel
 
         public ActionResult LegalOrIndividuals()
         {
+            UserProfileViewModel userProfileViewModel = GetUserProfile();
+
+            if (userProfileViewModel != null)
+                return RedirectToAction(nameof(Index));
+
             return View();
         }
 
