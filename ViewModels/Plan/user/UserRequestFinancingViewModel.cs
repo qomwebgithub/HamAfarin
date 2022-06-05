@@ -9,16 +9,16 @@ namespace ViewModels
 {
     public class UserRequestFinancingViewModel
     {
-        [Display(Name = "عنوان")]
+        [Display(Name = "عنوان طرح")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [StringLength(300, ErrorMessage = "حداکثر 300 کاراکتر میتوانید وارد کنید")]
         public string Title { get; set; }
-        [Display(Name = "توضیحات")]
+        [Display(Name = "توضیحات طرح")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [StringLength(5000,ErrorMessage ="حداکثر 5000 کاراکتر میتوانید وارد کنید")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
-        [Display(Name = "بارگذاری فایل")]
+        [Display(Name = "بارگذاری مدارک")]
         public string DocumentFile { get; set; }
 
         public string Status { get; set; }
