@@ -2418,6 +2418,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\AccountApiController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\BusinessPlansController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
