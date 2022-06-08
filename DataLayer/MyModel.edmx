@@ -5,6 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="webqomir_HamAfarinDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Tbl_Affiliate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Token_Id" Type="int" />
+          <Property Name="User_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Tbl_ApiToken">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Token" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
             <PropertyRef Name="BlogID" />
@@ -509,7 +525,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Title" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_Roles">
@@ -740,6 +756,42 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="NationalId" Type="nvarchar" MaxLength="50" />
           <Property Name="NationalCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <Association Name="FK_Tbl_Affiliate_Tbl_ApiToken">
+          <End Role="Tbl_ApiToken" Type="Self.Tbl_ApiToken" Multiplicity="0..1" />
+          <End Role="Tbl_Affiliate" Type="Self.Tbl_Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ApiToken">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Affiliate">
+              <PropertyRef Name="Token_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Affiliate_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_Affiliate" Type="Self.Tbl_Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Affiliate">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_ApiToken_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_ApiToken" Type="Self.Tbl_ApiToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_ApiToken">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Blog_Tbl_Users">
           <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
           <End Role="Tbl_Blog" Type="Self.Tbl_Blog" Multiplicity="*" />
@@ -1233,6 +1285,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="webqomir_HamAfarinDBModelStoreContainer">
+          <EntitySet Name="Tbl_Affiliate" EntityType="Self.Tbl_Affiliate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_ApiToken" EntityType="Self.Tbl_ApiToken" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Blog" EntityType="Self.Tbl_Blog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_BusinessLevels" EntityType="Self.Tbl_BusinessLevels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_BusinessPlanGallery" EntityType="Self.Tbl_BusinessPlanGallery" Schema="dbo" store:Type="Tables" />
@@ -1294,6 +1348,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
     [View_DepositToInvestorsDetails].[NationalCode] AS [NationalCode]
     FROM [dbo].[View_DepositToInvestorsDetails] AS [View_DepositToInvestorsDetails]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Tbl_Affiliate_Tbl_ApiToken" Association="Self.FK_Tbl_Affiliate_Tbl_ApiToken">
+            <End Role="Tbl_ApiToken" EntitySet="Tbl_ApiToken" />
+            <End Role="Tbl_Affiliate" EntitySet="Tbl_Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Affiliate_Tbl_Users" Association="Self.FK_Tbl_Affiliate_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_Affiliate" EntitySet="Tbl_Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_ApiToken_Tbl_Users" Association="Self.FK_Tbl_ApiToken_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_ApiToken" EntitySet="Tbl_ApiToken" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="Self.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1464,6 +1530,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
     <edmx:ConceptualModels>
       <Schema Namespace="webqomir_HamAfarinDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="HamAfarinDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Tbl_Affiliate" EntityType="webqomir_HamAfarinDBModel.Tbl_Affiliate" />
+          <EntitySet Name="Tbl_ApiToken" EntityType="webqomir_HamAfarinDBModel.Tbl_ApiToken" />
           <EntitySet Name="Tbl_Blog" EntityType="webqomir_HamAfarinDBModel.Tbl_Blog" />
           <EntitySet Name="Tbl_BusinessLevels" EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessLevels" />
           <EntitySet Name="Tbl_BusinessPlanGallery" EntityType="webqomir_HamAfarinDBModel.Tbl_BusinessPlanGallery" />
@@ -1511,6 +1579,18 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySet Name="Tbl_UserProfiles" EntityType="webqomir_HamAfarinDBModel.Tbl_UserProfiles" />
           <EntitySet Name="Tbl_Users" EntityType="webqomir_HamAfarinDBModel.Tbl_Users" />
           <EntitySet Name="View_DepositToInvestorsDetails" EntityType="webqomir_HamAfarinDBModel.View_DepositToInvestorsDetails" />
+          <AssociationSet Name="FK_Tbl_Affiliate_Tbl_ApiToken" Association="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken">
+            <End Role="Tbl_ApiToken" EntitySet="Tbl_ApiToken" />
+            <End Role="Tbl_Affiliate" EntitySet="Tbl_Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_Affiliate_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_Affiliate" EntitySet="Tbl_Affiliate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_ApiToken_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_ApiToken" EntitySet="Tbl_ApiToken" />
+          </AssociationSet>
           <AssociationSet Name="FK_Tbl_Blog_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_Blog_Tbl_Users">
             <End Role="Tbl_Users" EntitySet="Tbl_Users" />
             <End Role="Tbl_Blog" EntitySet="Tbl_Blog" />
@@ -1676,6 +1756,26 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <End Role="Tbl_UserProfiles" EntitySet="Tbl_UserProfiles" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Tbl_Affiliate">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Token_Id" Type="Int32" />
+          <Property Name="User_Id" Type="Int32" />
+          <NavigationProperty Name="Tbl_ApiToken" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken" FromRole="Tbl_Affiliate" ToRole="Tbl_ApiToken" />
+          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_Users" FromRole="Tbl_Affiliate" ToRole="Tbl_Users" />
+        </EntityType>
+        <EntityType Name="Tbl_ApiToken">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_Affiliate" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken" FromRole="Tbl_ApiToken" ToRole="Tbl_Affiliate" />
+          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users" FromRole="Tbl_ApiToken" ToRole="Tbl_Users" />
+        </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
             <PropertyRef Name="BlogID" />
@@ -2232,7 +2332,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_RequestFinancing" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_RequestFinancing_Tbl_RequestFinancingStatus" FromRole="Tbl_RequestFinancingStatus" ToRole="Tbl_RequestFinancing" />
         </EntityType>
@@ -2454,6 +2554,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="ActivateDate" Type="DateTime" Precision="3" />
           <Property Name="RegisterDate" Type="DateTime" Precision="3" />
           <Property Name="IsLegal" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Tbl_Affiliate" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_Affiliate" />
+          <NavigationProperty Name="Tbl_ApiToken" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_ApiToken" />
           <NavigationProperty Name="Tbl_Blog" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Blog_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_Blog" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_BusinessPlanPayment" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment1" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_Users1" FromRole="Tbl_Users" ToRole="Tbl_BusinessPlanPayment" />
@@ -2491,6 +2593,42 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="NationalId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NationalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <Association Name="FK_Tbl_Affiliate_Tbl_ApiToken">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_ApiToken" Role="Tbl_ApiToken" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Affiliate" Role="Tbl_Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_ApiToken">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Tbl_Affiliate">
+              <PropertyRef Name="Token_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_Affiliate_Tbl_Users">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Affiliate" Role="Tbl_Affiliate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_Affiliate">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_ApiToken_Tbl_Users">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_ApiToken" Role="Tbl_ApiToken" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_ApiToken">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tbl_Blog_Tbl_Users">
           <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
           <End Type="webqomir_HamAfarinDBModel.Tbl_Blog" Role="Tbl_Blog" Multiplicity="*" />
@@ -2989,6 +3127,24 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="webqomir_HamAfarinDBModelStoreContainer" CdmEntityContainer="HamAfarinDBEntities">
+          <EntitySetMapping Name="Tbl_Affiliate">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Affiliate">
+              <MappingFragment StoreEntitySet="Tbl_Affiliate">
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="Token_Id" ColumnName="Token_Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_ApiToken">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_ApiToken">
+              <MappingFragment StoreEntitySet="Tbl_ApiToken">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Tbl_Blog">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Blog">
               <MappingFragment StoreEntitySet="Tbl_Blog">

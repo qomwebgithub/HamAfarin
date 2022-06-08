@@ -120,6 +120,12 @@
       <DependentUpon>MyModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tbl_Affiliate.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_ApiToken.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Tbl_Blog.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
