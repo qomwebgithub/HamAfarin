@@ -347,27 +347,19 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public JsonResult CheckNationalCode(string NationalCode)
         {
-            if (checkNationalCode.check(NationalCode, out string Message))
-            {
-                return Json(true, JsonRequestBehavior.DenyGet);
-            }
-            else
-            {
+            if (!checkNationalCode.check(NationalCode, out string Message))
                 return Json(false, JsonRequestBehavior.DenyGet);
-            }
+            
+            return Json(true, JsonRequestBehavior.DenyGet);
         }
 
         [HttpPost]
         public JsonResult CheckPassword(string Password)
         {
-            if (checkPassword.check(Password, out string Message))
-            {
-                return Json(true, JsonRequestBehavior.DenyGet);
-            }
-            else
-            {
+            if (!checkPassword.check(Password, out string Message))
                 return Json(false, JsonRequestBehavior.DenyGet);
-            }
+            
+            return Json(true, JsonRequestBehavior.DenyGet);
         }
 
         /// <summary>
@@ -378,23 +370,13 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public JsonResult DuplicateNationalCode(string NationalCode, string LastNationalCode = "")
         {
-            if (checkNationalCode.check(NationalCode, out string Message))
-            {
-                if (db.Tbl_Users.Where(p => p.UserName == NationalCode).Any() && NationalCode != LastNationalCode)
-                {
-                    return Json("کد ملی تکراری است", JsonRequestBehavior.DenyGet);
-                }
-                else
-                {
-                    return Json(true, JsonRequestBehavior.DenyGet);
-                }
-            }
-            else
-            {
+            if (!checkNationalCode.check(NationalCode, out string Message))
                 return Json("کد ملی نامعتبر است", JsonRequestBehavior.DenyGet);
-            }
-
-
+           
+            if (db.Tbl_Users.Where(p => p.UserName == NationalCode).Any() && NationalCode != LastNationalCode)
+                return Json("کد ملی تکراری است", JsonRequestBehavior.DenyGet);
+            
+            return Json(true, JsonRequestBehavior.DenyGet);
         }
 
         public async Task<JsonResult> TestApi(string id)
