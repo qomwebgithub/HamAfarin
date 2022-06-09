@@ -13,7 +13,9 @@ namespace ViewModels
         public long AmountCapitalRaised { get; set; }
         public int ActiveUsers { get; set; }
         public int InvestmentSuccessPlanCount { get; set; }
-        public int InvestmentCountPerson { get; set; }
+        public int? InvestmentCountPerson { get; set; }
+        public double TotalDepositToInvestors { get; set; }
+        public int CountDepositToInvestors { get; set; }
 
 
     }

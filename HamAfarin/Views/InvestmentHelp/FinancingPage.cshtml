@@ -57,7 +57,7 @@
                 </li>*@
             <div class="d-flex wraper">
             <li class="nav-item mx-2">
-                <a class="nav-link stickyNav-item text-dark active font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab" aria-controls="financial" aria-selected="false">
+                <a class="nav-link stickyNav-item text-dark font-weight-bold" id="financial-tab" data-toggle="tab" href="#financial" role="tab" aria-controls="financial" aria-selected="false">
                     مزایای هم آفرین
                     برای کارآفرینان
                 </a>
@@ -81,7 +81,7 @@
         </li>
     </div>
     <li class="nav-item " id="send-li">
-        <a class="nav-link stickyNav-item  font-weight-bold btn-orange" id="faq-tab" data-toggle="tab" href="#faq" role="tab"
+        <a class="nav-link active stickyNav-item  font-weight-bold btn-orange" id="faq-tab" data-toggle="tab" href="#faq" role="tab"
            aria-controls="faq" aria-selected="false">ارسال طرح</a>
     </li>
     </ul>
@@ -92,7 +92,7 @@
             </div>
             <div class="col-12 col-md-9 mr-md-5 pl-md-5">
                 <div class=" tab-content mr-md-5" id="myTabContent">
-                    <div class="tab-pane show active fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
+                    <div class="tab-pane fade" id="financial" role="tabpanel" aria-labelledby="financial-tab">
                         <br />
                         <br />
                         <br />
@@ -142,7 +142,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade container p-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
+                    <div class="tab-pane show active fade container p-md-5" id="faq" role="tabpanel" aria-labelledby="faq-tab">
                         <br />
                         <br />
                         <br />
@@ -150,6 +150,9 @@
                         <div class="d-sm-none" style="height:120px;"></div>
                         <div>
                             @Html.Raw(Model.SendPlan)
+
+                            <a class="btn btn-orange mb-3" href="/UserPanel/UserRequestFinancing/RequestFinancing">تقاضای سرمایه</a>
+
                         </div>
                     </div>
 

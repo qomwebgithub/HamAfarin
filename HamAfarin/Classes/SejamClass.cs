@@ -74,15 +74,7 @@ namespace HamAfarin
         /// <returns></returns>
         public bool CheckNationalCode(string uniqueIdentifier, int UserID)
         {
-            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == uniqueIdentifier);
-            if (qUser != null)
-            {
-                if (qUser.UserID != UserID)
-                {
-                    return false;
-                }
-            }
-            return true;
+            return db.Tbl_Users.Any(u => u.UserName == uniqueIdentifier && u.UserID == UserID);
         }
 
         public bool LoginUser(string uniqueIdentifier, int UserID, out string UserToken)
@@ -617,7 +609,7 @@ namespace HamAfarin
             }
             else if (exception.Contains("\"errorCode\":4004"))
             {
-                return "ثبت نام تکمیل نشده است";
+                return "سرمایه گذار محترم، ثبت نام شما در سجام تکمیل نشده است";
             }
             else if (exception.Contains("\"errorCode\":4005"))
             {

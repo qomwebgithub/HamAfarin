@@ -17,7 +17,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         // GET: Admin/Tbl_RequestFinancing
         public ActionResult Index()
         {
-            var tbl_RequestFinancing = db.Tbl_RequestFinancing.Include(t => t.Tbl_RequestFinancingStatus).Include(t => t.Tbl_Users);
+            var tbl_RequestFinancing = db.Tbl_RequestFinancing.OrderByDescending(p=>p.CreateDate);
             return View(tbl_RequestFinancing.ToList());
         }
 

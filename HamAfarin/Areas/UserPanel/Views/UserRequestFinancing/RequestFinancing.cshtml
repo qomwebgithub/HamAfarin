@@ -4,6 +4,7 @@
     ViewBag.Title = "تقاضای سرمایه";
 }
 <body>
+
     <h4 class="pb-3">درخواست تامین مالی </h4>
     <hr />
     @using (Html.BeginForm("RequestFinancing", "UserRequestFinancing", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -41,7 +42,7 @@
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.DocumentFile, new { @class = "control-label col-md-6" })
-                        <div class="col-md-12">
+                        <div class="col-12 col-sm-3">
                             <input type="file" name="DocumentFile">
                             @Html.ValidationMessageFor(model => model.DocumentFile)
                         </div>
@@ -51,8 +52,11 @@
                         <div class="d-md-block d-sm-none col-md-6">
                         </div>
                         <div class="col-12 col-md-6 text-center">
-                            <input type="submit" value="ثبت اطلاعات" class="btn btn-danger control-label" style="background-color:#ff1654" />
+                            <input type="submit" value="ارسال مدارک" class="btn btn-danger control-label" style="background-color:#ff1654" />
                         </div>
+                        <a href="/UserPanel/UserRequestFinancing" class="col-12">
+                            <span class="bi bi-arrow-right-circle"></span><span class="mb-3">  بازگشت به لیست</span>
+                        </a>
                     </div>
 
                 </div>

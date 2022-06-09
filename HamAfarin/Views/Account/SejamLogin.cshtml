@@ -2,14 +2,14 @@
 @using CaptchaMvc.HtmlHelpers;
 
 @{
-    ViewBag.Title = "ورود از سجام";
+    ViewBag.Title = "دریافت اطلاعات از سامانه سجام";
     var captcha = Html.Captcha("کد امنیتی جدید", "", 4, "لطفا کد امنیتی را وارد کنید", false);
 
 }
 <div class="container">
     <div class="row">
         <div class="col-12 col-md-8 col-lg-4 offset-md-2 offset-lg-4 bg-white rounded-lg border-dark my-4 p-0 shadow" style="font-size:14px;">
-            <h3 class="text-center m-2 p-2">ورود از سجام</h3>
+            <h3 class="text-center m-2 p-2">دریافت اطلاعات از سامانه سجام</h3>
             <hr />
             @using (Html.BeginForm())
             {
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-3 col-12">
-                            <input type="submit" value="ورود" class="btn btn-danger col-12" style="background-color:#ff1654" />
+                            <input type="submit" value="دریافت اطلاعات از سجام" class="btn btn-danger col-12" style="background-color:#ff1654" />
                         </div>
                         <div class="col-md-offset-3 col-12 pt-5">
                             <a href="https://www.sejam.ir/" target="_blank">

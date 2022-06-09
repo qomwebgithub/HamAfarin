@@ -17,6 +17,8 @@ namespace DataLayer
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Tbl_Users()
         {
+            this.Tbl_Affiliate = new HashSet<Tbl_Affiliate>();
+            this.Tbl_ApiToken = new HashSet<Tbl_ApiToken>();
             this.Tbl_Blog = new HashSet<Tbl_Blog>();
             this.Tbl_BusinessPlanPayment = new HashSet<Tbl_BusinessPlanPayment>();
             this.Tbl_BusinessPlanPayment1 = new HashSet<Tbl_BusinessPlanPayment>();
@@ -54,6 +56,10 @@ namespace DataLayer
         public Nullable<System.DateTime> RegisterDate { get; set; }
         public bool IsLegal { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Affiliate> Tbl_Affiliate { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_ApiToken> Tbl_ApiToken { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Blog> Tbl_Blog { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

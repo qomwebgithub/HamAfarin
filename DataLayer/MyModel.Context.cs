@@ -25,6 +25,8 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Tbl_Affiliate> Tbl_Affiliate { get; set; }
+        public virtual DbSet<Tbl_ApiToken> Tbl_ApiToken { get; set; }
         public virtual DbSet<Tbl_Blog> Tbl_Blog { get; set; }
         public virtual DbSet<Tbl_BusinessLevels> Tbl_BusinessLevels { get; set; }
         public virtual DbSet<Tbl_BusinessPlanGallery> Tbl_BusinessPlanGallery { get; set; }

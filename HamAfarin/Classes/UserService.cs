@@ -22,6 +22,17 @@ namespace Hamafarin
             }
 
             string fullName = user.HasSejam ? $"{userProfiles.FirstName} {userProfiles.LastName}" : null;
+            if (string.IsNullOrEmpty(fullName))
+            {
+                if (user.IsLegal)
+                {
+                    Tbl_PersonLegal personLegal = db.Tbl_PersonLegal.FirstOrDefault(p => p.User_id == user.UserID);
+                    if (personLegal != null)
+                    {
+                        fullName = personLegal.CompanyName;
+                    }
+                }
+            }
 
             return $"{user.UserID},{user.Role_id },{user.UserName},{user.MobileNumber},{user.HasSejam},{fullName},{user.IsLegal}";
         }
