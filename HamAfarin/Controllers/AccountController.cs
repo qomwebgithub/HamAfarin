@@ -208,7 +208,6 @@ namespace Hamafarin.Controllers
                 return View(verifySms);
             }
 
-            Tbl_Sms qSms;
             (bool Success, string Message) smsResult;
             // انگلیسی سازی عدد اس ام اس
             verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
@@ -220,6 +219,8 @@ namespace Hamafarin.Controllers
                 ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
                 return View(verifySms);
             }
+
+            Tbl_Sms qSms;
             //اگر کاربر ادمین نبود
             if (qUser.Role_id != 1)
             {
@@ -227,7 +228,7 @@ namespace Hamafarin.Controllers
                 if (qUser.HasSejam)
                 {
                     oSejamClass = new SejamClass();
-                    bool VerifySejam = oSejamClass.VerifyUser(verifySms, out string Message);
+                    bool VerifySejam = oSejamClass.VerifyUser(verifySms.SmsCode, out string Message);
 
                     if (VerifySejam == false)
                     {
@@ -291,27 +292,22 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public async Task<ActionResult> SejamLogin(SejamLoginViewModel SejamLogin)
         {
-            //**************************************************///
-            //**************************************************////
-            //recaptcha
+            //captcha
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
                 ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
                 return View(SejamLogin);
             }
-            //recaptcha
-            //**************************************************///
-            //**************************************************////
 
             if (ModelState.IsValid == false)
                 return View(SejamLogin);
 
-            oSejamClass = new SejamClass();
             SejamLogin.NationalCode = StringExtensions.Fa2En(SejamLogin.NationalCode);
 
             if (User.Identity.IsAuthenticated == false)
                 return Redirect("/LogOut");
 
+            oSejamClass = new SejamClass();
             if (oSejamClass.CheckNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)) == false)
             {
                 ModelState.AddModelError("NationalCode", "کد ملی وارد شده قبلا ثبت شده است ");

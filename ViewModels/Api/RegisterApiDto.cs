@@ -1,15 +1,9 @@
-﻿using HamAfarin.Classes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace ViewModels
 {
-    public class ApiRegisterDto
+    public class RegisterApiDto
     {
         public string UserName { get; set; }
         [Display(Name = "شماره موبایل")]

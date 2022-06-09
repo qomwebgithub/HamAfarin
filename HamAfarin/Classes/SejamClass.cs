@@ -140,33 +140,22 @@ namespace HamAfarin
             return false;
         }
 
-        public async Task<(bool Success, string UserToken)> LoginUserAsync(string uniqueIdentifier, int UserID)
+        public async Task<(bool Success, string UserToken)> LoginUserAsync(string uniqueIdentifier, int userId)
         {
-            (bool Success, string UserToken) loginResult;
             try
             {
                 if (string.IsNullOrEmpty(uniqueIdentifier))
-                {
-                    loginResult = (false, "Empty");
-                    return loginResult;
-                }
+                    return (false, "Empty");
 
-                Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == UserID);
+                Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == userId);
 
                 if (oUser == null)
-                {
-                    loginResult = (false, "کاربر یافت نشد");
-                    return loginResult;
-                }
-
-                loginResult = (true, oUser.UserToken);
+                    return (false, "کاربر یافت نشد");
 
                 (bool Success, string Message) kycOtpResult = await kycOtpHttpClientAsync(uniqueIdentifier);
+
                 if (kycOtpResult.Success == false)
-                {
-                    loginResult = (false, kycOtpResult.Message);
-                    return loginResult;
-                }
+                    return (false, kycOtpResult.Message);
 
                 // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
                 // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
@@ -190,7 +179,8 @@ namespace HamAfarin
                 db.Tbl_SejamTempNationalCode.Add(tempNationalCode);
                 oUser.HasSejam = true;
                 db.SaveChanges();
-                return loginResult;
+
+                return (true, oUser.UserToken);
             }
             catch (Exception e)
             {
@@ -204,8 +194,8 @@ namespace HamAfarin
                 };
                 db.Tbl_SejamException.Add(oSejamException);
                 db.SaveChanges();
-                loginResult = (false, e.ToString());
-                return loginResult;
+
+                return (false, e.ToString());
             }
 
         }
@@ -270,67 +260,69 @@ namespace HamAfarin
             return false;
         }
 
-        public bool VerifyUser(VerifySmsViewModel verifySms, out string Message)
+        public bool VerifyUser(string verificationCode, out string Message)
         {
             Message = "";
             bool boolToken = GetToken(out string token);
-            if (boolToken)
+
+            if (!boolToken)
+                return false;
+
+            verificationCode = StringExtensions.Fa2En(verificationCode);
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verificationCode);
+
+            if (qUser == null)
+                return false;
+
+            // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
+            // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
+            // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
+            Tbl_SejamTempNationalCode qSejamTemp = db.Tbl_SejamTempNationalCode.FirstOrDefault(s => s.User_id == qUser.UserID && s.IsActive);
+            if (qSejamTemp == null)
             {
-                verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
-                Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verifySms.UserToken);
-                if (qUser != null)
+                Message = "کد ملی یافت نشد";
+                return false;
+            }
+
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.sejam.ir:8080/v1.1/servicesWithOtp/profiles/" + qSejamTemp.NationalCode + "?otp=" + verificationCode);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "Get";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+
+            try
+            {
+                // Get the response.
+                using (var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
                 {
-                    // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
-                    // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
-                    // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
-                    Tbl_SejamTempNationalCode qSejamTemp = db.Tbl_SejamTempNationalCode.FirstOrDefault(s => s.User_id == qUser.UserID && s.IsActive);
-                    if (qSejamTemp == null)
+                    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
-                        Message = "کد ملی یافت نشد";
-                        return false;
-                    }
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.sejam.ir:8080/v1.1/servicesWithOtp/profiles/" + qSejamTemp.NationalCode + "?otp=" + verifySms.SmsCode);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "Get";
-                    httpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+                        var result = streamReader.ReadToEnd();
+                        bool getProfile = GetProfile(qUser, result, out string NationalCode);
 
-                    try
-                    {
-                        // Get the response.
-                        using (var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
-                        {
-                            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                            {
-                                var result = streamReader.ReadToEnd();
-                                bool getProfile = GetProfile(qUser, result, out string NationalCode);
-                                if (getProfile)
-                                {
-                                    qUser.UserName = NationalCode;
-                                    db.SaveChanges();
-                                    return true;
-                                }
-                            }
-
-                        }
-                    }
-                    catch (Exception e)
-                    {
-                        Tbl_SejamException oSejamException = new Tbl_SejamException()
-                        {
-                            CreateDate = DateTime.Now,
-                            Description = "uniqueIdentifier: " + qUser.UserName + " ",
-                            Exception = e.ToString(),
-                            ID = Guid.NewGuid().ToString(),
-                            Method = "VerifyUser"
-                        };
-                        db.Tbl_SejamException.Add(oSejamException);
+                        if (!getProfile)
+                            return false;
+                        
+                        qUser.UserName = NationalCode;
                         db.SaveChanges();
-                        Message = SejamExceptionMessage(e.ToString());
-                        return false;
+                        return true;
                     }
                 }
             }
-            return false;
+            catch (Exception e)
+            {
+                Tbl_SejamException oSejamException = new Tbl_SejamException()
+                {
+                    CreateDate = DateTime.Now,
+                    Description = "uniqueIdentifier: " + qUser.UserName + " ",
+                    Exception = e.ToString(),
+                    ID = Guid.NewGuid().ToString(),
+                    Method = "VerifyUser"
+                };
+                db.Tbl_SejamException.Add(oSejamException);
+                db.SaveChanges();
+                Message = SejamExceptionMessage(e.ToString());
+                return false;
+            }
         }
 
 
@@ -445,8 +437,7 @@ namespace HamAfarin
 
             try
             {
-
-
+                #region OldCode
                 //از این روش به علت ارسال دو درخواست تا زمان رفع باگ استفاده نمی شود
                 //Tbl_SajamToken qSajamToken = db.Tbl_SajamToken.FirstOrDefault(t => t.IsActive && t.IsDelete == false);
 
@@ -462,6 +453,7 @@ namespace HamAfarin
                 //    db.Entry(qSajamToken).State = EntityState.Modified;
                 //    db.SaveChanges();
                 //}
+                #endregion
 
                 //روش دوم: پاک کردن تمام اکتیو ها
                 List<Tbl_SajamToken> qSajamTokens = db.Tbl_SajamToken.Where(t => t.IsActive && t.IsDelete == false).ToList();

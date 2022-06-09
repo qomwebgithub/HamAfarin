@@ -72,7 +72,8 @@
     <Compile Include="Account\InvestmentsReport\InvestmentsReportViewModel.cs" />
     <Compile Include="Account\ResetPasswordViewModel.cs" />
     <Compile Include="Api\ApiResult.cs" />
-    <Compile Include="Api\RegisterViewModel.cs" />
+    <Compile Include="Api\MobileVerificationApiDto.cs" />
+    <Compile Include="Api\RegisterApiDto.cs" />
     <Compile Include="Blog\singleViewModel.cs" />
     <Compile Include="Classes\StringExtensions.cs" />
     <Compile Include="Common\DropDownViewModel.cs" />
