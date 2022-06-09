@@ -295,7 +295,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             string date = qBusinessPlanPayment.PaidDateTime.Value.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
 
             FaraboorsClass faraboorsClass = new FaraboorsClass();
-            var apiResult = await faraboorsClass.ProjectFinancingProviderAsync(id, date);
+            var apiResult = await faraboorsClass.PostProjectFinancingProviderAsync(id, date);
             qBusinessPlanPayment.FaraboorsResponse = apiResult.Message;
             if (apiResult.Success)
             {

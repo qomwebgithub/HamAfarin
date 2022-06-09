@@ -545,7 +545,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public async Task<ActionResult> ConfirmFaraboors(int id, string payDate)
         {
             FaraboorsClass faraboors = new FaraboorsClass();
-            (bool Success, string Message) apiResult = await faraboors.ProjectFinancingProviderAsync(id, payDate);
+            (bool Success, string Message) apiResult = await faraboors.PostProjectFinancingProviderAsync(id, payDate);
             Tbl_BusinessPlanPayment tbl_BusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FindAsync(id);
             tbl_BusinessPlanPayment.FaraboorsResponse = apiResult.Message;
             if (apiResult.Success)

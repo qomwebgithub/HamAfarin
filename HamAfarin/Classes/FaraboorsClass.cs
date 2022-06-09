@@ -1,25 +1,19 @@
 ﻿using Common;
 using DataLayer;
-using HamAfarin.Classes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using ViewModels;
 
 namespace HamAfarin
 {
     public class FaraboorsClass
     {
         SMS oSms = new SMS();
+        private readonly string _apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
 
         HamAfarinDBEntities db = new HamAfarinDBEntities();
         public async Task<(bool Success, byte[] File)> GetProjectParticipationReportAsync(int id, int user)
@@ -90,7 +84,7 @@ namespace HamAfarin
             }
         }
 
-        public async Task<(bool Success, string Message)> ProjectFinancingProviderAsync(int id, string payDate)
+        public async Task<(bool Success, string Message)> PostProjectFinancingProviderAsync(int id, string payDate)
         {
             (bool Success, string Message) tokenResult;
 
@@ -112,8 +106,7 @@ namespace HamAfarin
                         .Where(b => b.BussinessPlanID == qBusinessPlanPayment.BusinessPlan_id)
                         .Select(b => b.FaraboorsProjectId)
                         .FirstOrDefault();
-                    string apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
-                    var subUrl = $"{projectId}/projectfinancingprovider?apiKey={apiKey}";
+                    var subUrl = $"{projectId}/projectfinancingprovider?apiKey={_apiKey}";
 
                     #region FormatExample
                     // Test API
@@ -173,6 +166,71 @@ namespace HamAfarin
 
                     return tokenResult;
 
+                }
+            }
+            catch (Exception e)
+            {
+                tokenResult = (false, e.Message);
+                return tokenResult;
+            }
+        }
+
+
+        public async Task<(bool Success, string Message)> GetProjectInfoAsync(string projectID)
+        {
+            (bool Success, string Message) tokenResult;
+
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    //Real API
+                    client.BaseAddress = new Uri("https://cfapi.ifb.ir/projects/");
+                    var subUrl = "GetProjectInfo";
+
+                    var body = new JObject();
+                    body.Add("ApiKey", _apiKey);
+                    body.Add("projectID", projectID);
+
+                    #region TestCode
+                    //object body = new
+                    //{
+                    //    ApiKey = _apiKey,
+                    //    projectID = projectID
+                    //};
+
+                    //dynamic body = new JObject();
+                    //body.ApiKey = _apiKey;
+                    //body.projectID = projectID;
+
+
+                    //var request = new HttpRequestMessage
+                    //{
+                    //    Method = HttpMethod.Get,
+                    //    RequestUri = new Uri("https://cfapi.ifb.ir/projects/GetProjectInfo"),
+                    //    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                    //};
+
+
+                    //StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    //HttpResponseMessage response = await client.GetAsync(subUrl, content);
+                    #endregion
+
+                    string json = JsonConvert.SerializeObject(body);
+
+                    StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(subUrl, content);
+                    string responseBody = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                        tokenResult = (true, responseBody);
+                    else
+                        tokenResult = (false, responseBody);
+
+                    return tokenResult;
+                    //return (false, "");
                 }
             }
             catch (Exception e)
