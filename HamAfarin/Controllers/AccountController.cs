@@ -308,7 +308,7 @@ namespace Hamafarin.Controllers
                 return Redirect("/LogOut");
 
             oSejamClass = new SejamClass();
-            if (oSejamClass.CheckNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)) == false)
+            if (oSejamClass.IsDuplicateNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)))
             {
                 ModelState.AddModelError("NationalCode", "کد ملی وارد شده قبلا ثبت شده است ");
                 return View(new SejamLoginViewModel { ReturnUrl = SejamLogin.ReturnUrl });

@@ -72,7 +72,7 @@ namespace HamAfarin
         /// <param name="uniqueIdentifier">کد ملی</param>
         /// <param name="UserID">ایدی کاربر</param>
         /// <returns></returns>
-        public bool CheckNationalCode(string uniqueIdentifier, int UserID)
+        public bool IsDuplicateNationalCode(string uniqueIdentifier, int UserID)
         {
             return db.Tbl_Users.Any(u => u.UserName == uniqueIdentifier && u.UserID == UserID);
         }
