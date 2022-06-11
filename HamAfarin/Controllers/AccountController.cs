@@ -99,7 +99,7 @@ namespace Hamafarin.Controllers
 
             if (ModelState.IsValid == false)
                 return View(register);
-            
+
             register.MobileNumber = StringExtensions.Fa2En(register.MobileNumber);
 
             if (IsMobileNumberExist(register.MobileNumber))
@@ -208,6 +208,7 @@ namespace Hamafarin.Controllers
                 return View(verifySms);
             }
 
+            Tbl_Sms qSms;
             (bool Success, string Message) smsResult;
             // انگلیسی سازی عدد اس ام اس
             verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
@@ -219,8 +220,6 @@ namespace Hamafarin.Controllers
                 ModelState.AddModelError("SmsCode", "کابر یافت نشد" + verifySms.UserToken);
                 return View(verifySms);
             }
-
-            Tbl_Sms qSms;
             //اگر کاربر ادمین نبود
             if (qUser.Role_id != 1)
             {
@@ -292,23 +291,28 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public async Task<ActionResult> SejamLogin(SejamLoginViewModel SejamLogin)
         {
-            //captcha
+            //**************************************************///
+            //**************************************************////
+            //recaptcha
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
                 ModelState.AddModelError("CaptchaInputText", "عبارت امنیتی را درست وارد کنید");
                 return View(SejamLogin);
             }
+            //recaptcha
+            //**************************************************///
+            //**************************************************////
 
             if (ModelState.IsValid == false)
                 return View(SejamLogin);
 
+            oSejamClass = new SejamClass();
             SejamLogin.NationalCode = StringExtensions.Fa2En(SejamLogin.NationalCode);
 
             if (User.Identity.IsAuthenticated == false)
                 return Redirect("/LogOut");
 
-            oSejamClass = new SejamClass();
-            if (oSejamClass.IsDuplicateNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)) == false)
+            if (oSejamClass.CheckNationalCode(SejamLogin.NationalCode, UserSetAuthCookie.GetUserID(User.Identity.Name)) == false)
             {
                 ModelState.AddModelError("NationalCode", "کد ملی وارد شده قبلا ثبت شده است ");
                 return View(new SejamLoginViewModel { ReturnUrl = SejamLogin.ReturnUrl });
@@ -343,19 +347,27 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public JsonResult CheckNationalCode(string NationalCode)
         {
-            if (!checkNationalCode.check(NationalCode, out string Message))
+            if (checkNationalCode.check(NationalCode, out string Message))
+            {
+                return Json(true, JsonRequestBehavior.DenyGet);
+            }
+            else
+            {
                 return Json(false, JsonRequestBehavior.DenyGet);
-            
-            return Json(true, JsonRequestBehavior.DenyGet);
+            }
         }
 
         [HttpPost]
         public JsonResult CheckPassword(string Password)
         {
-            if (!checkPassword.check(Password, out string Message))
+            if (checkPassword.check(Password, out string Message))
+            {
+                return Json(true, JsonRequestBehavior.DenyGet);
+            }
+            else
+            {
                 return Json(false, JsonRequestBehavior.DenyGet);
-            
-            return Json(true, JsonRequestBehavior.DenyGet);
+            }
         }
 
         /// <summary>
@@ -366,13 +378,23 @@ namespace Hamafarin.Controllers
         [HttpPost]
         public JsonResult DuplicateNationalCode(string NationalCode, string LastNationalCode = "")
         {
-            if (!checkNationalCode.check(NationalCode, out string Message))
+            if (checkNationalCode.check(NationalCode, out string Message))
+            {
+                if (db.Tbl_Users.Where(p => p.UserName == NationalCode).Any() && NationalCode != LastNationalCode)
+                {
+                    return Json("کد ملی تکراری است", JsonRequestBehavior.DenyGet);
+                }
+                else
+                {
+                    return Json(true, JsonRequestBehavior.DenyGet);
+                }
+            }
+            else
+            {
                 return Json("کد ملی نامعتبر است", JsonRequestBehavior.DenyGet);
-           
-            if (db.Tbl_Users.Where(p => p.UserName == NationalCode).Any() && NationalCode != LastNationalCode)
-                return Json("کد ملی تکراری است", JsonRequestBehavior.DenyGet);
-            
-            return Json(true, JsonRequestBehavior.DenyGet);
+            }
+
+
         }
 
         public async Task<JsonResult> TestApi(string id)
@@ -494,7 +516,7 @@ namespace Hamafarin.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        
+
 
 
     }
