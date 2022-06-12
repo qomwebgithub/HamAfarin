@@ -74,7 +74,15 @@ namespace HamAfarin
         /// <returns></returns>
         public bool CheckNationalCode(string uniqueIdentifier, int UserID)
         {
-            return db.Tbl_Users.Any(u => u.UserName == uniqueIdentifier && u.UserID == UserID);
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == uniqueIdentifier);
+            if (qUser != null)
+            {
+                if (qUser.UserID != UserID)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool LoginUser(string uniqueIdentifier, int UserID, out string UserToken)
