@@ -227,7 +227,7 @@ namespace Hamafarin.Controllers
                 if (qUser.HasSejam)
                 {
                     oSejamClass = new SejamClass();
-                    bool VerifySejam = oSejamClass.VerifyUser(verifySms.SmsCode, out string Message);
+                    bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken,verifySms.SmsCode, out string Message);
 
                     if (VerifySejam == false)
                     {

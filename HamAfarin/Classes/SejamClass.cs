@@ -270,32 +270,34 @@ namespace HamAfarin
             return false;
         }
 
-        public bool VerifyUser(string verificationCode, out string Message)
+        public bool VerifyUser(string UserToken, string verificationCode, out string Message)
         {
             Message = "";
             bool boolToken = GetToken(out string token);
             if (boolToken)
             {
-                verificationCode = StringExtensions.Fa2En(verificationCode);
-                Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verificationCode);
-                if (qUser != null)
+                Tbl_Users qUser = new Tbl_Users();
+                try
                 {
-                    // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
-                    // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
-                    // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
-                    Tbl_SejamTempNationalCode qSejamTemp = db.Tbl_SejamTempNationalCode.FirstOrDefault(s => s.User_id == qUser.UserID && s.IsActive);
-                    if (qSejamTemp == null)
+                    verificationCode = StringExtensions.Fa2En(verificationCode);
+                     qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == UserToken);
+                    if (qUser != null)
                     {
-                        Message = "کد ملی یافت نشد";
-                        return false;
-                    }
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.sejam.ir:8080/v1.1/servicesWithOtp/profiles/" + qSejamTemp.NationalCode + "?otp=" + verificationCode);
-                    httpWebRequest.ContentType = "application/json";
-                    httpWebRequest.Method = "Get";
-                    httpWebRequest.Headers.Add("Authorization", "Bearer " + token);
+                        // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
+                        // اگر ابتدا در خوده تیبل کاربر ذخیره کنیم ممکن است اشتباه وارد کرده باشد و کد ملی شخص دیگری برای این کاربر ثبت شود
+                        // اگر اس ام اس را درست وارد کرد ان موقع کد ملی را در تیبل کاربر ذخیره میکنیم
+                        Tbl_SejamTempNationalCode qSejamTemp = db.Tbl_SejamTempNationalCode.FirstOrDefault(s => s.User_id == qUser.UserID && s.IsActive);
+                        if (qSejamTemp == null)
+                        {
+                            Message = "کد ملی یافت نشد";
+                            return false;
+                        }
+                        var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.sejam.ir:8080/v1.1/servicesWithOtp/profiles/" + qSejamTemp.NationalCode + "?otp=" + verificationCode);
+                        httpWebRequest.ContentType = "application/json";
+                        httpWebRequest.Method = "Get";
+                        httpWebRequest.Headers.Add("Authorization", "Bearer " + token);
 
-                    try
-                    {
+
                         // Get the response.
                         using (var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
                         {
@@ -313,21 +315,26 @@ namespace HamAfarin
 
                         }
                     }
-                    catch (Exception e)
+                }
+                catch (Exception e)
+                {
+                    string UserName = " کاربر یافت نشد " + UserToken;
+                    if (qUser != null)
                     {
-                        Tbl_SejamException oSejamException = new Tbl_SejamException()
-                        {
-                            CreateDate = DateTime.Now,
-                            Description = "uniqueIdentifier: " + qUser.UserName + " ",
-                            Exception = e.ToString(),
-                            ID = Guid.NewGuid().ToString(),
-                            Method = "VerifyUser"
-                        };
-                        db.Tbl_SejamException.Add(oSejamException);
-                        db.SaveChanges();
-                        Message = SejamExceptionMessage(e.ToString());
-                        return false;
+                        UserName = qUser.UserName;
                     }
+                    Tbl_SejamException oSejamException = new Tbl_SejamException()
+                    {
+                        CreateDate = DateTime.Now,
+                        Description = "uniqueIdentifier: " + UserName + " ",
+                        Exception = e.ToString(),
+                        ID = Guid.NewGuid().ToString(),
+                        Method = "VerifyUser"
+                    };
+                    db.Tbl_SejamException.Add(oSejamException);
+                    db.SaveChanges();
+                    Message = SejamExceptionMessage(e.ToString());
+                    return false;
                 }
             }
             return false;

@@ -118,8 +118,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                     else
                     {
                         string common = "";
-                        List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false && p.IsActive).ToList();
-                        foreach (var item in qlstProducts)
+                        List<Tbl_Users> qlstUsers = db.Tbl_Users.Where(p => p.IsDeleted == false && p.IsActive).ToList();
+                        foreach (var item in qlstUsers)
                         {
                             sendSms.MobileNumber += common + item.MobileNumber;
                             common = ",";

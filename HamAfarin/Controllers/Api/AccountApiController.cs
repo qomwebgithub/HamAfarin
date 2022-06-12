@@ -96,7 +96,7 @@ namespace HamAfarin.Controllers.Api
             if (qUser == null)
                 return Json(new ApiResult { IsSuccess = true, StatusCode = 400, Message = "کابر یافت نشد" });
 
-            bool VerifySejam = oSejamClass.VerifyUser(verificationDto.VerificationCode, out string Message);
+            bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken,verificationDto.VerificationCode, out string Message);
 
             if (VerifySejam == false)
                 return Json(new ApiResult { IsSuccess = true, StatusCode = 400, Message = Message });
