@@ -74,7 +74,9 @@ namespace HamAfarin.Controllers.Api
             if (sejamLogin.Success == false)
                 return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = sejamLogin.UserToken });
 
-            return Json(new ApiResult<string> { Data = oUser.UserToken, IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
+            object data = new { UserToken = oUser.UserToken };
+
+            return Json(new ApiResult<object> { Data = data, IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
         }
 
         [HttpPost]
