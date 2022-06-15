@@ -34,6 +34,7 @@ namespace ViewModels
         public List<Tbl_BusinessPlanGallery> GalleryPlan { get; set; }
         [Display(Name = "توضیح کوتاه(نمایش در سایت)")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        [AllowHtml]
         public string ShortDescription { get; set; }
         [Display(Name = "تصویر لوگوی طرح")]
         public string BussinessLogoImageName { get; set; }

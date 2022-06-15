@@ -75,13 +75,10 @@ namespace HamAfarin
         public bool CheckNationalCode(string uniqueIdentifier, int UserID)
         {
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == uniqueIdentifier);
-            if (qUser != null)
-            {
-                if (qUser.UserID != UserID)
-                {
-                    return false;
-                }
-            }
+
+            if (qUser != null && qUser.UserID != UserID)
+                return false;
+
             return true;
         }
 
@@ -345,6 +342,7 @@ namespace HamAfarin
                     return false;
                 }
             }
+            Message = "خطای توکن";
             return false;
         }
 
@@ -460,8 +458,7 @@ namespace HamAfarin
 
             try
             {
-
-
+                #region OldCode
                 //از این روش به علت ارسال دو درخواست تا زمان رفع باگ استفاده نمی شود
                 //Tbl_SajamToken qSajamToken = db.Tbl_SajamToken.FirstOrDefault(t => t.IsActive && t.IsDelete == false);
 
@@ -477,6 +474,7 @@ namespace HamAfarin
                 //    db.Entry(qSajamToken).State = EntityState.Modified;
                 //    db.SaveChanges();
                 //}
+                #endregion
 
                 //روش دوم: پاک کردن تمام اکتیو ها
                 List<Tbl_SajamToken> qSajamTokens = db.Tbl_SajamToken.Where(t => t.IsActive && t.IsDelete == false).ToList();
