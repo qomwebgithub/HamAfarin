@@ -35,38 +35,69 @@ namespace HamAfarin.Controllers.Api
             var ApiToken = header.GetValues(ApiKey).First();
 
             if (db.Tbl_ApiToken.Any(a => a.Token == ApiToken) == false)
-                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = "توکن معتبر نمی باشد" });
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 404, Message = "توکن معتبر نمی باشد" });
+
+            if (ModelState.IsValid == false)
+            {
+                var errors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .Select(x => new { x.Key, x.Value.Errors })
+                .ToArray();
+
+                return Json(new { IsSuccess = false, StatusCode = 401, Message = "اطلاعات وارد شده صحیح نیست", errors = errors });
+            }
+
+            register.NationalCode = register.NationalCode.Fa2En();
+
+            if (checkNationalCode.check(register.NationalCode, out string Message))
+            {
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 410, Message = "کد ملی وارد شده صحیح نمی باشد" });
+            }
 
             register.MobileNumber = register.MobileNumber.Fa2En();
 
-            if (ModelState.IsValid == false)
-                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = "خطا" });
-
-
-            if (db.Tbl_Users.Any(u => u.MobileNumber == register.MobileNumber))
-                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = "این شماره قبلا ثبت شده است" });
-
-            if (db.Tbl_UserProfiles.Any(u => u.NationalCode == register.NationalCode))
-                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = "این کدملی قبلا ثبت شده است" });
-
-            Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == register.MobileNumber);
-            oUser = new Tbl_Users()
+            if (StringExtensions.PhoneValid(register.MobileNumber))
             {
-                UserName = register.MobileNumber.Fa2En(),
-                MobileNumber = register.MobileNumber.Fa2En(),
-                IsActive = false,
-                IsDeleted = false,
-                RegisterDate = DateTime.Now,
-                Role_id = 2,
-                Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
-                SmsCode = 0,
-                IsLegal = false,
-                UserToken = Guid.NewGuid().ToString(),
-                HasSejam = false,
-                ActivateDate = null,
-            };
-            db.Tbl_Users.Add(oUser);
-            db.SaveChanges();
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 420, Message = "شماره موبایل وارد شده صحیح نمی باشد" });
+            }
+
+            if (db.Tbl_Users.Any(u => u.MobileNumber == register.MobileNumber && u.IsActive))
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 421, Message = "این شماره قبلا ثبت شده است" });
+
+            if (db.Tbl_Users.Any(u => u.UserName == register.NationalCode && u.IsActive))
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 411, Message = "این کدملی قبلا ثبت شده است" });
+
+            Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == register.NationalCode && u.IsActive == false);
+        
+            if (oUser == null)
+            {
+                oUser = new Tbl_Users()
+                {
+                    UserName = register.NationalCode.Fa2En(),
+                    MobileNumber = register.MobileNumber.Fa2En(),
+                    IsActive = false,
+                    IsDeleted = false,
+                    RegisterDate = DateTime.Now,
+                    Role_id = 2,
+                    Password = FormsAuthentication.HashPasswordForStoringInConfigFile(register.Password, "MD5"),
+                    SmsCode = 0,
+                    IsLegal = false,
+                    UserToken = Guid.NewGuid().ToString(),
+                    HasSejam = false,
+                    ActivateDate = null,
+                };
+                db.Tbl_Users.Add(oUser);
+                db.SaveChanges();
+            }
+            else
+            {
+                oUser.MobileNumber = register.MobileNumber.Fa2En();
+                oUser.UserName = register.NationalCode.Fa2En();
+                oUser.UserToken = Guid.NewGuid().ToString();
+                db.SaveChanges();
+            }
+
+
 
             (bool Success, string UserToken) sejamLogin =
                 await oSejamClass.LoginUserAsync(register.NationalCode, oUser.UserID);
@@ -98,11 +129,11 @@ namespace HamAfarin.Controllers.Api
             if (qUser == null)
                 return Json(new ApiResult { IsSuccess = true, StatusCode = 400, Message = "کابر یافت نشد" });
 
-            bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken,verificationDto.VerificationCode, out string Message);
+            bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken, verificationDto.VerificationCode, out string Message);
 
             if (VerifySejam == false)
                 return Json(new ApiResult { IsSuccess = true, StatusCode = 400, Message = Message });
-                
+
             // 3 = ثبت اطلاعات از سجام
             var qSms = db.Tbl_Sms.Find(3);
             var smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
@@ -111,7 +142,7 @@ namespace HamAfarin.Controllers.Api
             qUser.SmsCode = 0;
             qUser.IsActive = true;
 
-            var qApiToken = db.Tbl_ApiToken.FirstOrDefault( a=>a.Token == apiToken);
+            var qApiToken = db.Tbl_ApiToken.FirstOrDefault(a => a.Token == apiToken);
 
             var affiliate = new Tbl_Affiliate()
             {

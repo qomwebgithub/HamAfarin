@@ -5,7 +5,6 @@ namespace ViewModels
 {
     public class RegisterApiDto
     {
-        public string UserName { get; set; }
         [Display(Name = "شماره موبایل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         [MaxLength(11, ErrorMessage = "موبایل ۱۱ رقم می باشد")]
