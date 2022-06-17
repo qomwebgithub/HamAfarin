@@ -68,7 +68,7 @@ namespace HamAfarin.Controllers.Api
                 return Json(new ApiResult { IsSuccess = false, StatusCode = 411, Message = "این کدملی قبلا ثبت شده است" });
 
             Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.UserName == register.NationalCode && u.IsActive == false);
-        
+
             if (oUser == null)
             {
                 oUser = new Tbl_Users()
@@ -85,6 +85,7 @@ namespace HamAfarin.Controllers.Api
                     UserToken = Guid.NewGuid().ToString(),
                     HasSejam = false,
                     ActivateDate = null,
+                    AffiliateToken = Guid.NewGuid().ToString(),
                 };
                 db.Tbl_Users.Add(oUser);
                 db.SaveChanges();
@@ -94,6 +95,10 @@ namespace HamAfarin.Controllers.Api
                 oUser.MobileNumber = register.MobileNumber.Fa2En();
                 oUser.UserName = register.NationalCode.Fa2En();
                 oUser.UserToken = Guid.NewGuid().ToString();
+                if (string.IsNullOrEmpty(oUser.AffiliateToken))
+                {
+                    oUser.AffiliateToken = Guid.NewGuid().ToString();
+                }
                 db.SaveChanges();
             }
 
@@ -103,7 +108,7 @@ namespace HamAfarin.Controllers.Api
                 await oSejamClass.LoginUserAsync(register.NationalCode, oUser.UserID);
 
             if (sejamLogin.Success == false)
-                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = sejamLogin.UserToken });
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 430, Message = sejamLogin.UserToken });
 
             object data = new { UserToken = oUser.UserToken };
 
@@ -121,28 +126,29 @@ namespace HamAfarin.Controllers.Api
 
             var apiToken = header.GetValues(ApiKey).First();
 
-            if (db.Tbl_ApiToken.Any(a => a.Token == apiToken) == false)
-                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = "توکن معتبر نمی باشد" });
+            var qApiToken = db.Tbl_ApiToken.FirstOrDefault(a => a.Token == apiToken);
+
+            if (qApiToken == null)
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 404, Message = "توکن معتبر نمی باشد" });
 
 
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verificationDto.UserToken);
             if (qUser == null)
-                return Json(new ApiResult { IsSuccess = true, StatusCode = 400, Message = "کابر یافت نشد" });
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 405, Message = "کابر یافت نشد" });
 
             bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken, verificationDto.VerificationCode, out string Message);
 
             if (VerifySejam == false)
-                return Json(new ApiResult { IsSuccess = true, StatusCode = 400, Message = Message });
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 430, Message = Message });
 
             // 3 = ثبت اطلاعات از سجام
-            var qSms = db.Tbl_Sms.Find(3);
-            var smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+            //var qSms = db.Tbl_Sms.Find(3);
+            //var smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
             qUser.UserToken = Guid.NewGuid().ToString();
             qUser.SmsCode = 0;
             qUser.IsActive = true;
-
-            var qApiToken = db.Tbl_ApiToken.FirstOrDefault(a => a.Token == apiToken);
+            qUser.ActivateDate = DateTime.Now;
 
             var affiliate = new Tbl_Affiliate()
             {
@@ -154,10 +160,12 @@ namespace HamAfarin.Controllers.Api
             db.SaveChanges();
 
             // 2 = ثبت نام
-            var qSms2 = db.Tbl_Sms.Find(2);
-            var smsResult2 = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+            //var qSms2 = db.Tbl_Sms.Find(2);
+            //var smsResult2 = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
-            return Json(new ApiResult { IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
+            object data = new { UserAffiliateToken = qUser.AffiliateToken };
+
+            return Json(new ApiResult<object> { Data = data, IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
         }
     }
 }

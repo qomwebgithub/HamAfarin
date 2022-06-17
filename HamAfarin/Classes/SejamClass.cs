@@ -285,7 +285,7 @@ namespace HamAfarin
                 try
                 {
                     verificationCode = StringExtensions.Fa2En(verificationCode);
-                     qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == UserToken);
+                    qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == UserToken);
                     if (qUser != null)
                     {
                         // کدملی کاربر را در تیبل دیگری ذخیره میکنیم
@@ -313,9 +313,12 @@ namespace HamAfarin
                                 if (getProfile)
                                 {
                                     qUser.UserName = NationalCode;
+                                    qUser.HasSejam = true;
                                     db.SaveChanges();
                                     return true;
                                 }
+                                Message = NationalCode;
+                                return false;
                             }
 
                         }
@@ -353,9 +356,15 @@ namespace HamAfarin
             try
             {
                 BasePerson oBasePerson = new BasePerson(Profile.ToString());
+                string mobile = oBasePerson.mobile.MobbileFix();
+                if (oUser.MobileNumber != oBasePerson.mobile.MobbileFix())
+                {
+                    NationalCode = "شماره موبایل وارد شده باید با شماره موبایل فرد در سامانه سجام مطابقت داشته باشد";
+                    return false;
+                }
                 if (string.IsNullOrEmpty(oUser.MobileNumber))
                 {
-                    oUser.MobileNumber = oBasePerson.mobile;
+                    oUser.MobileNumber = oBasePerson.mobile.MobbileFix();
                 }
                 oUser.UserStatus = oBasePerson.status;
                 oUser.UserType = oBasePerson.type;

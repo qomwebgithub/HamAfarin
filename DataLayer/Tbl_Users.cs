@@ -44,17 +44,18 @@ namespace DataLayer
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
         public bool HasSejam { get; set; }
+        public bool IsLegal { get; set; }
         public Nullable<int> Role_id { get; set; }
         public string UserName { get; set; }
         public string MobileNumber { get; set; }
         public string Password { get; set; }
         public Nullable<int> SmsCode { get; set; }
         public string UserToken { get; set; }
+        public string AffiliateToken { get; set; }
         public string UserType { get; set; }
         public string UserStatus { get; set; }
         public Nullable<System.DateTime> ActivateDate { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
-        public bool IsLegal { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Affiliate> Tbl_Affiliate { get; set; }

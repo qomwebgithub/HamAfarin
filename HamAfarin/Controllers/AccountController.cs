@@ -252,6 +252,7 @@ namespace Hamafarin.Controllers
                 qUser.UserToken = Guid.NewGuid().ToString();
                 qUser.SmsCode = 0;
                 qUser.IsActive = true;
+                qUser.ActivateDate = DateTime.Now;
                 db.SaveChanges();
 
             }

@@ -7,6 +7,24 @@ namespace Common
     public static class StringExtensions
     {
 
+        public static string MobbileFix(this string mobile)
+        {
+            if (mobile.Count() == 12)
+            {
+                int ew = mobile[0];
+                int ew2 = mobile[1];
+                if (ew != 48)
+                {
+                    if (ew == 57 && ew2 == 56)
+                    {
+                        mobile = mobile.Substring(2, 10);
+                        mobile = '0' + mobile;
+                    }
+                }
+            }
+            return mobile;
+        }
+
         public static bool PhoneValid(this string value)
         {
             if (string.IsNullOrEmpty(value))
