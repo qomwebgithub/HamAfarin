@@ -169,7 +169,7 @@ namespace HamAfarin.Controllers.Api
         }
 
         [HttpPost]
-        [Route("api/v1/mobileverification")]
+        [Route("api/v1/resendSms")]
         public async Task<IHttpActionResult> ResendSms([FromBody] MobileVerificationApiDto verificationDto)
         {
             var header = Request.Headers;
