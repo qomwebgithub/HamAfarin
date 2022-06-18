@@ -167,5 +167,37 @@ namespace HamAfarin.Controllers.Api
 
             return Json(new ApiResult<object> { Data = data, IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
         }
+
+        [HttpPost]
+        [Route("api/v1/mobileverification")]
+        public async Task<IHttpActionResult> ResendSms([FromBody] MobileVerificationApiDto verificationDto)
+        {
+            var header = Request.Headers;
+
+            if (header.Contains(ApiKey) == false)
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 400, Message = "لطفا توکن خود را ارسال کنید." });
+
+            var apiToken = header.GetValues(ApiKey).First();
+
+            var qApiToken = db.Tbl_ApiToken.FirstOrDefault(a => a.Token == apiToken);
+
+            if (qApiToken == null)
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 404, Message = "توکن معتبر نمی باشد" });
+
+
+            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserToken == verificationDto.UserToken);
+            if (qUser == null)
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 405, Message = "کابر یافت نشد" });
+
+            (bool Success, string UserToken) sejamLogin = await oSejamClass.LoginUserAsync(qUser.UserName, qUser.UserID);
+           
+            if (sejamLogin.Success == false)
+                return Json(new ApiResult { IsSuccess = false, StatusCode = 430, Message = sejamLogin.UserToken });
+
+            object data = new { UserToken = qUser.UserToken };
+
+            return Json(new ApiResult<object> { Data = data, IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
+        }
+
     }
 }

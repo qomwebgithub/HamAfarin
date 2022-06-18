@@ -74,6 +74,7 @@
     <Compile Include="Api\ApiResult.cs" />
     <Compile Include="Api\MobileVerificationApiDto.cs" />
     <Compile Include="Api\RegisterApiDto.cs" />
+    <Compile Include="Api\ResendSmsApiDto.cs" />
     <Compile Include="Blog\singleViewModel.cs" />
     <Compile Include="Classes\StringExtensions.cs" />
     <Compile Include="Common\DropDownViewModel.cs" />
