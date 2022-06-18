@@ -49,14 +49,14 @@ namespace HamAfarin.Controllers.Api
 
             register.NationalCode = register.NationalCode.Fa2En();
 
-            if (checkNationalCode.check(register.NationalCode, out string Message))
+            if (checkNationalCode.check(register.NationalCode, out string Message) == false)
             {
                 return Json(new ApiResult { IsSuccess = false, StatusCode = 410, Message = "کد ملی وارد شده صحیح نمی باشد" });
             }
 
             register.MobileNumber = register.MobileNumber.Fa2En();
 
-            if (StringExtensions.PhoneValid(register.MobileNumber))
+            if (StringExtensions.PhoneValid(register.MobileNumber) == false)
             {
                 return Json(new ApiResult { IsSuccess = false, StatusCode = 420, Message = "شماره موبایل وارد شده صحیح نمی باشد" });
             }
@@ -190,7 +190,7 @@ namespace HamAfarin.Controllers.Api
                 return Json(new ApiResult { IsSuccess = false, StatusCode = 405, Message = "کابر یافت نشد" });
 
             (bool Success, string UserToken) sejamLogin = await oSejamClass.LoginUserAsync(qUser.UserName, qUser.UserID);
-           
+
             if (sejamLogin.Success == false)
                 return Json(new ApiResult { IsSuccess = false, StatusCode = 430, Message = sejamLogin.UserToken });
 
