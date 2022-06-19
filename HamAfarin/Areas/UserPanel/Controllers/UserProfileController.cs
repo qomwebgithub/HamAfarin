@@ -117,7 +117,7 @@ namespace HamAfarin.Areas.UserPanel
                 FirstName = userProfile.Profile.FirstName,
                 LastName = userProfile.Profile.LastName,
                 Bio = userProfile.Profile.Bio,
-                NationalCode = userProfile.NationalCode,
+                NationalCode = StringExtensions.Fa2En(userProfile.NationalCode),
                 FatherName = userProfile.Profile.FatherName,
                 ProfileNationalId = userProfile.Profile.ProfileNationalId,
                 SejamCode = userProfile.Profile.SejamCode,
@@ -137,9 +137,9 @@ namespace HamAfarin.Areas.UserPanel
                 CreateDate = DateTime.Now,
                 User_id = userId,
                 CompanyName = userProfile.PersonLegal.CompanyName,
-                NationalId = userProfile.PersonLegal.NationalId,
-                EconomicCode = userProfile.PersonLegal.EconomicCode,
-                RegistratioNumber = userProfile.PersonLegal.RegistratioNumber,
+                NationalId = StringExtensions.Fa2En(userProfile.PersonLegal.NationalId),
+                EconomicCode = StringExtensions.Fa2En(userProfile.PersonLegal.EconomicCode),
+                RegistratioNumber = StringExtensions.Fa2En(userProfile.PersonLegal.RegistratioNumber),
                 Address = userProfile.PersonLegal.Address,
                 LegalFile = userProfile.PersonLegal.LegalFile
             };
