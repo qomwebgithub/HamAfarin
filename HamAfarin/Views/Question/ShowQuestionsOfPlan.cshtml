@@ -2,34 +2,31 @@
 
 
 
-    <div class="col-12 colxl-12 divide-by-line">
-        <div class="float-right">
-            <h6>
-                شما هم می توانید در مورد این طرح سوال بپرسید.
+<div class="col-12 colxl-12 divide-by-line">
+    <div class="float-right">
+        <h6>
+            در صورت داشتن شكايت در مورد اين طرح لازم است وارد حساب كاربري خود شويد.
+        </h6>
+        @if (!User.Identity.IsAuthenticated)
+        {
+            <h6 class="text-muted">
+                برای درج سوال, لازم است ابتدا وارد حساب کاربری خود شوید.
             </h6>
-            @{ if (!User.Identity.IsAuthenticated)
-                {
-                    <h6 class="text-muted">
-                        برای درج سوال, لازم است ابتدا وارد حساب کاربری خود شوید.
-                    </h6>
-                }
-            }
-        </div>
-        @{ if (User.Identity.IsAuthenticated)
-            {
-
-                <div class="float-left">
-                    <button type="button" onclick="CreateQuestion()" class="btn btn-orange my-2" data-toggle="modal" data-target="#myModal2">درج پرسش من</button>
-                </div>
-            }
-            else
-            {
-                <div class="float-left">
-                    <a href="/Account/Login" class="btn btn-orange my-2">ورود</a>
-                </div>
-            }
         }
     </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="float-left">
+            <button type="button" onclick="CreateQuestion()" class="btn btn-orange my-2" data-toggle="modal" data-target="#myModal2">درج پرسش من</button>
+        </div>
+    }
+    else
+    {
+        <div class="float-left">
+            <a href="/Account/Login" class="btn btn-orange my-2">ورود</a>
+        </div>
+    }
+</div>
 
 
 @foreach (var item in Model.Where(c => c.Parent_id == null))
