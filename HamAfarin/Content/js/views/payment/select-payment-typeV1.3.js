@@ -1,23 +1,32 @@
 ﻿$(document).ready(function () {
-    var check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+    //let check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+    let check = isRluesAccepted();
     handleInvestmentRules(check);
+    
+    $('#AcceptRules').change(function () {
 
-    $('#SiteRules').change(function () {
-
-        check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
-
-        handleInvestmentRules(check);
-    });
-    $('#RiskStatement').change(function () {
-        check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+        //check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+        check = isRluesAccepted();
 
         handleInvestmentRules(check);
     });
-    $('#InvestmentContract').change(function () {
-        check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
 
-        handleInvestmentRules(check);
-    });
+    //$('#SiteRules').change(function () {
+
+    //    check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+
+    //    handleInvestmentRules(check);
+    //});
+    //$('#RiskStatement').change(function () {
+    //    check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+
+    //    handleInvestmentRules(check);
+    //});
+    //$('#InvestmentContract').change(function () {
+    //    check = Getchecked_SiteRules_RiskStatement_InvestmentContract();
+
+    //    handleInvestmentRules(check);
+    //});
 
     if ($("#IsOnline").val().toLowerCase() == "true") {
         document.getElementById("onlineRadio").checked = true;
@@ -37,13 +46,18 @@
     });
 });
 
-function Getchecked_SiteRules_RiskStatement_InvestmentContract() {
-    var check = false;
+//function Getchecked_SiteRules_RiskStatement_InvestmentContract() {
+//    if ($(SiteRules).is(":checked") && $(RiskStatement).is(":checked") && $(InvestmentContract).is(":checked")) {
+//        return true;
+//    }
+//    return false;
+//}
 
-    if ($(SiteRules).is(":checked") && $(RiskStatement).is(":checked") && $(InvestmentContract).is(":checked")) {
-        check = true;
+function isRluesAccepted() {
+    if ($(AcceptRules).is(":checked")) {
+        return true;
     }
-    return check;
+    return false;
 }
 
 function handleInvestmentRules(checked) {

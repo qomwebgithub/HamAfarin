@@ -70,6 +70,7 @@ namespace Hamafarin.Controllers
                 selectPayment.InvestorMobile = tbl_UserProfiles.MobileNumber;
                 selectPayment.InvestorNationalCode = tbl_UserProfiles.NationalCode;
                 selectPayment.ContractFileName = qBussinessPlans.ContractFileName;
+                selectPayment.BusinessPlanRisks = qBussinessPlans.BusinessPlanRisks;
                 // کل سرمایه گذاری شما
                 selectPayment.TotalInvestment = planService.TotalUserInvestmentForPlan(db, id, myUserId);
                 // حداکثر امکان سرمایه گذاری شما

@@ -19,8 +19,10 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <img src="~/Resources/BusinessPlans/Warranty/@Model.ImageNameWarranty" />
-
+                    @if (Model.ImageNameWarranty != null)
+                    {
+                        <img src="~/Resources/BusinessPlans/Warranty/@Model.ImageNameWarranty" />
+                    }
                 </div>
             </div>
         </div>
@@ -102,6 +104,7 @@
                 </tbody>
             </table>
 
+            #region OldCode
             @*<div class="container border">
                     <div class="row">
                         <div class="col-sm">
@@ -171,9 +174,8 @@
                         </div>
 
                     </div>
-                </div>*@
-
-            @*<div class="container border">
+                </div>
+                <div class="container border">
                     <div class="row">
                         <div class="col-sm">
 
@@ -220,38 +222,61 @@
 
                     </div>
                 </div>*@
+            #endregion
 
             <br />
             <br />
             <div class="container p-0">
 
-                <div class="form-group">
-                    <div class="col-md-2">
+                <div class="mb-5 pl-5">
+                    <a class="card-link mr-5" data-toggle="collapse" href="#collapseRisk" role="button" aria-expanded="false" aria-controls="collapseRisk">
+                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
+                    </a>
+                    <div id="collapseRisk" class="collapse">
+                        <p class="figure-caption text-muted pt-1">
+                            @Html.Raw(@Model.BusinessPlanRisks)
+                        </p>
                     </div>
-                    <div class="col-md-10 px-0">
+                </div>
 
+                <div class="form-group">
+                    <div class="col-md-10 px-0">
                         <p>
-                            موارد زیر را مطالعه نموده  و پذیرفتم.
-                        </p>
-                        <p>
-                            @Html.EditorFor(model => model.SiteRules)
-                            <a class="link_active" href="/SiteTermsConditions" target="_blank">
-                                 قوانین و مقررات سایت
-                            </a>
-                        </p>
-                        <p>
-                            @Html.EditorFor(model => model.RiskStatement)
-                            <a class="link_active" href="/RiskAlertStatement" target="_blank">
-                                بیانیه ریسک
-                            </a>
-                        </p>
-                        <p>
-                            @Html.EditorFor(model => model.InvestmentContract)
+                            @Html.EditorFor(model => model.AcceptRules)
                             <a class="link_active" href="/Resources/BusinessPlans/Contract/@Model.ContractFileName" target="_blank">
                                 قرارداد سرمایه گذاری
                             </a>
+                            ،
+                            <a class="link_active" href="/SiteTermsConditions" target="_blank">
+                                قوانین و مقررات سایت
+                            </a>
+                            و
+                            <a class="link_active" href="/RiskAlertStatement" target="_blank">
+                                بیانیه ریسک
+                            </a>
+                            را مطالعه و پذیرفتم.
                         </p>
-                        @Html.ValidationMessageFor(model => model.SiteRules)
+                        @Html.ValidationMessageFor(model => model.AcceptRules)
+
+                        @*<p>
+                                @Html.EditorFor(model => model.SiteRules)
+                                <a class="link_active" href="/SiteTermsConditions" target="_blank">
+                                    قوانین و مقررات سایت
+                                </a>
+                            </p>
+                            <p>
+                                @Html.EditorFor(model => model.RiskStatement)
+                                <a class="link_active" href="/RiskAlertStatement" target="_blank">
+                                    بیانیه ریسک
+                                </a>
+                            </p>
+                            <p>
+                                @Html.EditorFor(model => model.InvestmentContract)
+                                <a class="link_active" href="/Resources/BusinessPlans/Contract/@Model.ContractFileName" target="_blank">
+                                    قرارداد سرمایه گذاری
+                                </a>
+                            </p>
+                            @Html.ValidationMessageFor(model => model.SiteRules)*@
                     </div>
                 </div>
 
@@ -260,32 +285,32 @@
             <div id="paymentType" class="hidden" style="display: none;">
 
                 <div class="col-sm p-0">
-                    @*<p class="text-danger"> سرمایه گذاری</p>*@
+                    @*<p class="text-danger"> سرمایه گذاری</p>
 
-                    @*<div class="row">
-                                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.MinimumAmountInvest)</p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-12"> @Model.MinimumAmountInvest.ToString("#,##0")</p>
-                                            </div>
-                                            <div class="row">
-                            <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.MaximumInvestment)</p>
-                        </div>
                         <div class="row">
-                            <p class="col-12"> @Model.MaximumInvestment.ToString("#,##0")</p>
-                        </div>
-                                            <div class="row">
-                                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.TotalInvestment)</p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-12"> @Model.TotalInvestment.ToString("#,##0")</p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CanInvestment)</p>
-                                            </div>
-                                            <div class="row">
-                                                <p class="col-12"> @Model.CanInvestment.ToString("#,##0")</p>
-                                            </div>*@
+                                                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.MinimumAmountInvest)</p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="col-12"> @Model.MinimumAmountInvest.ToString("#,##0")</p>
+                                                </div>
+                                                <div class="row">
+                                <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.MaximumInvestment)</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-12"> @Model.MaximumInvestment.ToString("#,##0")</p>
+                            </div>
+                                                <div class="row">
+                                                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.TotalInvestment)</p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="col-12"> @Model.TotalInvestment.ToString("#,##0")</p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="col-12 font-weight-bold"> @Html.DisplayNameFor(model => model.CanInvestment)</p>
+                                                </div>
+                                                <div class="row">
+                                                    <p class="col-12"> @Model.CanInvestment.ToString("#,##0")</p>
+                                                </div>*@
 
                     <table class="table text-center">
                         <thead class="thead-light">
@@ -381,7 +406,7 @@
                                     <div class="form-group row col-md-6 pl-0">
                                         @Html.LabelFor(model => model.PaymentImageName, new { @class = "control-label col-md-4 px-0" })
                                         <div class="col-md-8 px-0">
-                                            @Html.Kendo().Upload().Name("imgPaymentImageNameUploaded")
+                                            <input type="file" name="imgPaymentImageNameUploaded" value="" />
                                             @Html.ValidationMessageFor(model => model.PaymentImageName, null, new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -449,5 +474,5 @@
 
 @section Scripts{
     <script src="~/Scripts/modal.js"></script>
-    <script src="~/Content/js/views/payment/select-payment-typeV1.2.js"></script>
+    <script src="~/Content/js/views/payment/select-payment-typeV1.3.js"></script>
 }
