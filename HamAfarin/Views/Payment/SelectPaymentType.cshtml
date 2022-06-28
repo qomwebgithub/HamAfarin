@@ -227,18 +227,12 @@
             <br />
             <br />
             <div class="container p-0">
-
-                <div class="mb-5 pl-5">
-                    <a class="card-link mr-5" data-toggle="collapse" href="#collapseRisk" role="button" aria-expanded="false" aria-controls="collapseRisk">
-                        <h5 class="font-weight-bold text-dark mt-2 font-size-normal"> <i class="bi bi-plus text-dark mx-2"></i> ریسک های طرح</h5>
-                    </a>
-                    <div id="collapseRisk" class="collapse">
-                        <p class="figure-caption text-muted pt-1">
-                            @Html.Raw(@Model.BusinessPlanRisks)
-                        </p>
-                    </div>
+                <div class="mb-5 p-3 bg-light">
+                    <h5 class="font-weight-bold text-dark mt-2 font-size-normal">بیانیه ریسک و ریسک های طرح</h5>
+                    <p class="figure-caption text-muted pt-1">
+                        @Html.Raw(@Model.BusinessPlanRisks)
+                    </p>
                 </div>
-
                 <div class="form-group">
                     <div class="col-md-10 px-0">
                         <p>
