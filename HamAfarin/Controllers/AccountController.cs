@@ -342,7 +342,13 @@ namespace Hamafarin.Controllers
         bool IsMobileNumberExist(string mobileNumber)
         {
             mobileNumber = StringExtensions.Fa2En(mobileNumber);
-            return db.Tbl_Users.Any(u => u.MobileNumber == mobileNumber.Trim().ToLower() && u.Tbl_UserProfiles != null);
+
+            int? userId = db.Tbl_Users.Where(u => u.MobileNumber == mobileNumber).Select(u => u.UserID).FirstOrDefault();
+
+            if (userId != null)
+                return db.Tbl_UserProfiles.Any(p => p.User_id == userId);
+
+            return false;
         }
 
         [HttpPost]
