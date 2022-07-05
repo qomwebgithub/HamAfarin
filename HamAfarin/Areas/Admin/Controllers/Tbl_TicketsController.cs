@@ -64,10 +64,23 @@ namespace Hamafarin.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
-            //جزئیات تیکت
             List<Tbl_Tickets> qlstTickets = new List<Tbl_Tickets>();
             qlstTickets.Add(qTicket);
-            qlstTickets.AddRange(db.Tbl_Tickets.Where(t => t.Parent_id == id));
+
+            var parentId = qTicket.Parent_id;
+            while (parentId != null)
+            {
+                var ticket = db.Tbl_Tickets.FirstOrDefault(t=>t.TicketID == parentId);
+
+                if (ticket == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+                parentId = ticket.Parent_id;
+                qlstTickets.Add(ticket);
+            }
+
+            //جزئیات تیکت
+            qlstTickets.AddRange(db.Tbl_Tickets.Where(t => t.Parent_id == id).ToList());
 
             return View(qlstTickets);
         }
