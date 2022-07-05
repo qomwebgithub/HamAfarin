@@ -130,7 +130,7 @@ namespace HamAfarin
 
         private string FixMobileNumber(string mobileNumber)
         {
-            string countryCode = "98";
+            string iranCallCountryCode = "98";
             if (mobileNumber.Contains(","))
             {
                 string[] mobileNumbersArray = mobileNumber.Split(',');
@@ -139,17 +139,17 @@ namespace HamAfarin
 
                 foreach (string number in mobileNumbersArray)
                 {
-                    if (number.Substring(0, 2) == countryCode)
+                    if (number.Substring(0, 2) == iranCallCountryCode)
                         lstFixedMobileNumbers.Add(number);
                     else
                         lstFixedMobileNumbers.Add("98" + number.Substring(1));
                 }
 
-                mobileNumber = String.Join(",", lstFixedMobileNumbers);
+                return String.Join(",", lstFixedMobileNumbers);
             }
-            else if (mobileNumber.Substring(0, 2) != countryCode)
+            else if (mobileNumber.Substring(0, 2) != iranCallCountryCode)
             {
-                mobileNumber = "98" + mobileNumber.Substring(1);
+                return "98" + mobileNumber.Substring(1);
             }
 
             return mobileNumber;
