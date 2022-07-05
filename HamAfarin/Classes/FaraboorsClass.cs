@@ -298,6 +298,13 @@ namespace HamAfarin
                     body.ProvidedFinancePrice = qBusinessPlanPayment.PaymentPrice * 10;
                     body.BourseCode = qUserProfile.SejamCode;
                     body.PaymentDate = payDate;
+                    body.BankTrackingNumber = qBusinessPlanPayment.TransactionPaymentCode;
+
+                    //شماره دارای کد کشور است یا خیر چک شود
+                    if (qUserProfile.MobileNumber.Substring(0, 2) == "98")
+                        body.MobileNumber = "0" + qUserProfile.MobileNumber.Substring(2);
+                    else
+                        body.MobileNumber = qUserProfile.MobileNumber;
 
                     string json = JsonConvert.SerializeObject(body);
 

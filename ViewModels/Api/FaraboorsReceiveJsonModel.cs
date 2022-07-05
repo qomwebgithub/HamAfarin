@@ -13,6 +13,8 @@ namespace HamAfarin
         public long? ProvidedFinancePrice { get; set; }
         public string BourseCode { get; set; }
         public string PaymentDate { get; set; }
+        public string BankTrackingNumber { get; set; }
+        public string MobileNumber { get; set; }
     }
 
     //public class FaraboorsReceiveJsonModel
