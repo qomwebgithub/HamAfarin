@@ -299,6 +299,7 @@ namespace HamAfarin
                     body.BourseCode = qUserProfile.SejamCode;
                     body.PaymentDate = payDate;
                     body.BankTrackingNumber = qBusinessPlanPayment.TransactionPaymentCode;
+                    body.ShebaBankAccountNumber = qUserProfile.AccountSheba;
 
                     //شماره دارای کد کشور است یا خیر چک شود
                     if (qUserProfile.MobileNumber.Substring(0, 2) == "98")

@@ -14,6 +14,7 @@ namespace HamAfarin
         public string BourseCode { get; set; }
         public string PaymentDate { get; set; }
         public string BankTrackingNumber { get; set; }
+        public string ShebaBankAccountNumber { get; set; }
         public string MobileNumber { get; set; }
     }
 
