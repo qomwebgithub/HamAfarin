@@ -38,6 +38,7 @@ namespace DataLayer
             this.Tbl_Tickets3 = new HashSet<Tbl_Tickets>();
             this.Tbl_Tickets4 = new HashSet<Tbl_Tickets>();
             this.Tbl_UserProfiles = new HashSet<Tbl_UserProfiles>();
+            this.Tbl_Wallet = new HashSet<Tbl_Wallet>();
         }
     
         public int UserID { get; set; }
@@ -56,6 +57,7 @@ namespace DataLayer
         public string UserStatus { get; set; }
         public Nullable<System.DateTime> ActivateDate { get; set; }
         public Nullable<System.DateTime> RegisterDate { get; set; }
+        public long WalletBalance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Affiliate> Tbl_Affiliate { get; set; }
@@ -100,5 +102,7 @@ namespace DataLayer
         public virtual ICollection<Tbl_Tickets> Tbl_Tickets4 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_UserProfiles> Tbl_UserProfiles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_Wallet> Tbl_Wallet { get; set; }
     }
 }

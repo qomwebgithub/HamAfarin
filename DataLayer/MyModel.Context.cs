@@ -73,6 +73,8 @@ namespace DataLayer
         public virtual DbSet<Tbl_Tickets> Tbl_Tickets { get; set; }
         public virtual DbSet<Tbl_UserProfiles> Tbl_UserProfiles { get; set; }
         public virtual DbSet<Tbl_Users> Tbl_Users { get; set; }
+        public virtual DbSet<Tbl_Wallet> Tbl_Wallet { get; set; }
+        public virtual DbSet<Tbl_WalletType> Tbl_WalletType { get; set; }
         public virtual DbSet<View_DepositToInvestorsDetails> View_DepositToInvestorsDetails { get; set; }
     }
 }

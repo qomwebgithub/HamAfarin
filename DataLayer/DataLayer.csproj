@@ -264,6 +264,12 @@
     <Compile Include="Tbl_Users.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tbl_Wallet.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_WalletType.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="View_DepositToInvestorsDetails.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>

@@ -2371,6 +2371,7 @@
     <Compile Include="Areas\Admin\Controllers\Tbl_SlidersController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_TicketsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_UserProfilesController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Tbl_WalletController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_DepositToInvestorsController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\InvestmentsReportController.cs" />
@@ -2405,6 +2406,7 @@
     <Compile Include="Classes\SMS.cs" />
     <Compile Include="Classes\UserService.cs" />
     <Compile Include="Classes\UserSetAuthCookie.cs" />
+    <Compile Include="Classes\WalletService.cs" />
     <Compile Include="Connected Services\SmsSender\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
