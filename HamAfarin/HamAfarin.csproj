@@ -741,6 +741,7 @@
     <Content Include="Areas\Admin\Views\Tbl_RequestFinancing\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_RequestFinancing\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_RequestFinancing\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_BussinessPlans\FbCreate.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
@@ -2401,6 +2402,7 @@
     <Compile Include="Classes\MyRoleProvider.cs" />
     <Compile Include="Classes\PersianCulture.cs" />
     <Compile Include="Classes\PlanService.cs" />
+    <Compile Include="Classes\Api\ProjectInfoDto.cs" />
     <Compile Include="Classes\SejamClass.cs" />
     <Compile Include="Classes\ShaparakMessageEncoding.cs" />
     <Compile Include="Classes\SMS.cs" />

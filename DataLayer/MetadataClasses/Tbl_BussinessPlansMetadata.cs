@@ -134,7 +134,7 @@ namespace DataLayer
         [Display(Name = "نوع سرمایه گذاری")]
         public string PreviousInvestorType { get; set; }
         [Display(Name = "نرخ بازگشت سرمایه به درصد")]
-        [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
+        //[Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public Nullable<int> PercentageReturnInvestment { get; set; }
         [Display(Name = "تاریخ سرمایه گذاری قبلی")]
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]

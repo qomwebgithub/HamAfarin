@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,12 +10,13 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using ClosedXML.Excel;
-using Common;
 using DataLayer;
 using HamAfarin;
 using InsertShowImage;
 using KooyWebApp_MVC.Classes;
+using Newtonsoft.Json;
 using ViewModels;
+using ViewModels.Api;
 
 namespace Hamafarin.Areas.Admin.Controllers
 {
@@ -101,6 +101,86 @@ namespace Hamafarin.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             return View(tbl_BussinessPlans);
+        }
+
+        public ActionResult FbCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> FbCreate(string faraboorsProjectId)
+        {
+            if (string.IsNullOrWhiteSpace(faraboorsProjectId))
+            {
+                ViewBag.Error = "لطفا آیدی را وارد کنید";
+                return View();
+            }
+
+            FaraboorsClass fb = new FaraboorsClass();
+
+            (bool Success, string Message) result = await fb.GetProjectInfoAsync(faraboorsProjectId);
+
+            if (!result.Success)
+            {
+                ViewBag.Error = result.Message;
+                return View();
+            }
+
+            ProjectInfoDto dto = JsonConvert.DeserializeObject<ProjectInfoDto>(result.Message);
+
+            Tbl_BussinessPlans bussinessPlan = new Tbl_BussinessPlans();
+
+            bussinessPlan.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            bussinessPlan.IsActive = false;
+            bussinessPlan.IsDeleted = false;
+
+            bussinessPlan.FaraboorsProjectId = dto.TraceCode;
+            bussinessPlan.CreateDate = dto.CreationDate;
+            bussinessPlan.Title = dto.PersianName;
+            bussinessPlan.CodeOTC = dto.PersoanApprovedSymbol; //نام این فیلد گفته بودند ویرایش شود
+
+            //فیلد های زیر اضافه شود
+            //bp. = dto.EnglishApprovedSymbol;
+            //bp. = dto.IndustryGroupDescription;
+            //bp. = dto.SubIndustryGroupDescription;
+
+            bussinessPlan.AmountRequiredRoRaiseCapital = dto.TotalPrice.ToString();
+            bussinessPlan.MinimumAmountInvest = dto.RealPersonMinimumAvailabePrice.ToString();
+            bussinessPlan.InvestmentStartDate = dto.ApprovedUnderwritingStartDate;
+            bussinessPlan.InvestmentExpireDate = dto.ApprovedUnderwritingEndDate;
+
+            //فیلد زیر اضافه شود
+            //bp. = dto.ProjectStatusDescription;
+
+            ProjectOwnerCompany ownerDto = dto.ProjectOwnerCompany.FirstOrDefault();
+            if (ownerDto != null)
+            {
+                bussinessPlan.CompanyNationalCertificateCode = ownerDto.NationalID.ToString();
+                bussinessPlan.CompanyName = ownerDto.Name;
+                bussinessPlan.CompanyType_id = ownerDto.CompanyTypeID;
+                bussinessPlan.CompanyRegisterCode = ownerDto.RegistrationNumber;
+                bussinessPlan.CompanyRegisterDate = ownerDto.RegistrationDate;
+                bussinessPlan.CompanyEconomicCode = ownerDto.EconomicID;
+                bussinessPlan.CompanyRegisterAddress = ownerDto.Address;
+                bussinessPlan.CompanyPostalCode = ownerDto.PostalCode;
+            }
+
+            //1 = مدیرعامل
+            ListOfProjectBoardMember ceoDto = dto.ListOfProjectBoardMembers.FirstOrDefault(m => m.OrganizationPostID == 1);
+            if (ceoDto != null)
+            {
+                bussinessPlan.CompanyAgentFullName = ceoDto.FirstName + " " + ceoDto.LastName;
+                bussinessPlan.CompanyAgentPhoneNumber = ceoDto.MobileNumber;
+                bussinessPlan.CompanyAgentEmail = ceoDto.EmailAddress;
+                bussinessPlan.CompanyAgentRole = ceoDto.OrganizationPostDescription;
+            }
+
+            db.Tbl_BussinessPlans.Add(bussinessPlan);
+            db.SaveChanges();
+            return RedirectToAction(actionName: "Index");
+
         }
 
         // GET: Admin/Tbl_BussinessPlans/Create

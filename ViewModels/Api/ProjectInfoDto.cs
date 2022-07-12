@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels.Api
 {
-    public class ProjectInfoJsonModel
+    public class ProjectInfoDto
     {
         [JsonProperty("Trace Code")]
         public string TraceCode { get; set; }
@@ -76,10 +77,10 @@ namespace ViewModels.Api
         public int RealPersonMinimumAvailabePrice { get; set; }
 
         [JsonProperty("Real Person Maximum Available Price")]
-        public int RealPersonMaximumAvailablePrice { get; set; }
+        public long RealPersonMaximumAvailablePrice { get; set; }
 
         [JsonProperty("Legal Person Minimum Availabe Price")]
-        public int LegalPersonMinimumAvailabePrice { get; set; }
+        public long LegalPersonMinimumAvailabePrice { get; set; }
 
         [JsonProperty("Legal Person Maximum Availabe Price")]
         public long LegalPersonMaximumAvailabePrice { get; set; }

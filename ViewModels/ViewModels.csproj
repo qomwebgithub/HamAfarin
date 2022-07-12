@@ -72,10 +72,10 @@
     <Compile Include="Account\InvestmentsReport\InvestmentsReportViewModel.cs" />
     <Compile Include="Account\ResetPasswordViewModel.cs" />
     <Compile Include="Api\ApiResult.cs" />
-    <Compile Include="Api\FaraboorsReceiveJsonModel.cs" />
+    <Compile Include="Api\ProjectFinancingProviderDto.cs" />
     <Compile Include="Api\FaraboorsResponseJsonModel.cs" />
     <Compile Include="Api\MobileVerificationApiDto.cs" />
-    <Compile Include="Api\ProjectInfoJsonModel.cs" />
+    <Compile Include="Api\ProjectInfoDto.cs" />
     <Compile Include="Api\RegisterApiDto.cs" />
     <Compile Include="Api\ResendSmsApiDto.cs" />
     <Compile Include="Blog\singleViewModel.cs" />
