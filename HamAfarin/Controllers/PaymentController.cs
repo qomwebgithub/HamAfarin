@@ -343,201 +343,185 @@ namespace Hamafarin.Controllers
             {
                 Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.IsDelete == false && p.PaymentID == qPaymentOnline.Payment_id);
 
-                if (qPaymentOnline != null)
+                if (qPaymentOnline == null)
+                    return View();
+
+                if (qPaymentOnline.Dargah_id == 1)
                 {
-                    if (qPaymentOnline.Dargah_id == 1)
+                    #region Pasargad
+                    //درگاه پاسارگاد
+                    string invoiceNumber = Request.QueryString["iN"];
+                    string invoiceDate = Request.QueryString["iD"];
+                    string TransactionReferenceID = Request.QueryString["tref"];
+                    qPaymentOnline.TransactionReferenceID = TransactionReferenceID;
+
+                    // دریافت اطلاعات از درگاه
+                    string strResult = ReadPaymentResult(TransactionReferenceID);
+
+                    qPaymentOnline.ShaparakCheckTransactionResult = strResult;
+
+                    if (!strResult.Contains("ReferenceNumber"))
                     {
-                        #region Pasargad
-                        //درگاه پاسارگاد
-                        string invoiceNumber = Request.QueryString["iN"];
-                        string invoiceDate = Request.QueryString["iD"];
-                        string TransactionReferenceID = Request.QueryString["tref"];
-                        qPaymentOnline.TransactionReferenceID = TransactionReferenceID;
-
-                        // دریافت اطلاعات از درگاه
-                        string strResult = ReadPaymentResult(TransactionReferenceID);
-
-                        qPaymentOnline.ShaparakCheckTransactionResult = strResult;
-
-                        if (!strResult.Contains("ReferenceNumber"))
-                        {
-                            ViewBag.IsSuccess = false;
-                            ViewBag.Result = "عملیات ناموفق";
-                            return View();
-                        }
-
-                        var res = strResult.Split(':', ',');
-                        string[] pay = res[21].Split('.');
-
-                        long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
-                        long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
-
-                        if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
-                        {
-                            // برگشت وجه
-                            string refundResult = RefundPayment(pay[0], invoiceNumber, invoiceDate);
-                            ViewBag.Result = "برگشت وجه";
-                            return View();
-                        }
-
-                        // تایید پرداخت به درگاه
-                        string ShaparakRefNumber = ConfirmPayment(pay[0], invoiceNumber, invoiceDate);
-
-                        var shaparakbum = ShaparakRefNumber.Split(':', ',');
-                        if (ShaparakRefNumber.Contains("ShaparakRefNumber"))
-                        {
-                            qPaymentOnline.ShaparakVerifyPayment = ShaparakRefNumber;
-                            qPaymentOnline.IsFinally = true;
-                            qBusinessPlanPayment.TransactionPaymentCode = TransactionReferenceID;
-                            qBusinessPlanPayment.IsPaid = true;
-                            qPaymentOnline.FinallyDate = DateTime.Now;
-                            db.SaveChanges();
-                            ViewBag.IsSuccess = true;
-                            ViewBag.TransactionReferenceID = TransactionReferenceID;
-
-                            // 4 = سرمایه گذاری
-                            Tbl_Sms qSms = db.Tbl_Sms.Find(4);
-                            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                            (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
-
-                            return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
-                        }
-                        #endregion
-
+                        ViewBag.IsSuccess = false;
+                        ViewBag.Result = "عملیات ناموفق";
+                        return View();
                     }
-                    else if (qPaymentOnline.Dargah_id == 2)
+
+                    var res = strResult.Split(':', ',');
+                    string[] pay = res[21].Split('.');
+
+                    long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
+                    long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
+
+                    if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
                     {
-                        #region Zarinpal
-                        // زرین پال
-                        var status = Request.QueryString["Status"];
-                        var authority = Request.QueryString["Authority"];
+                        // برگشت وجه
+                        string refundResult = RefundPayment(pay[0], invoiceNumber, invoiceDate);
+                        ViewBag.Result = "برگشت وجه";
+                        return View();
+                    }
+
+                    // تایید پرداخت به درگاه
+                    string ShaparakRefNumber = ConfirmPayment(pay[0], invoiceNumber, invoiceDate);
+
+                    var shaparakbum = ShaparakRefNumber.Split(':', ',');
+                    if (ShaparakRefNumber.Contains("ShaparakRefNumber"))
+                    {
+                        qPaymentOnline.ShaparakVerifyPayment = ShaparakRefNumber;
+                        qPaymentOnline.IsFinally = true;
+                        qBusinessPlanPayment.TransactionPaymentCode = TransactionReferenceID;
+                        qBusinessPlanPayment.IsPaid = true;
                         qPaymentOnline.FinallyDate = DateTime.Now;
-                        qPaymentOnline.ShaparakToken = status;
-                        qPaymentOnline.ShaparakVerifyPayment = authority;
                         db.SaveChanges();
+                        ViewBag.IsSuccess = true;
+                        ViewBag.TransactionReferenceID = TransactionReferenceID;
 
-                        //if (Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
-                        //{
-                        //    if (Request.QueryString["Status"].ToString().Equals("OK"))
-                        //    {
+                        // 4 = سرمایه گذاری
+                        Tbl_Sms qSms = db.Tbl_Sms.Find(4);
+                        Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                        (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
+                        return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                    }
+                    #endregion
 
+                }
+                else if (qPaymentOnline.Dargah_id == 2)
+                {
+                    // زرین پال
+                    var status = Request.QueryString["Status"];
+                    var authority = Request.QueryString["Authority"];
+                    qPaymentOnline.FinallyDate = DateTime.Now;
+                    qPaymentOnline.ShaparakToken = status;
+                    qPaymentOnline.ShaparakVerifyPayment = authority;
+                    db.SaveChanges();
 
+                    //if (Request.QueryString["Status"] != "" && Request.QueryString["Status"] != null && Request.QueryString["Authority"] != "" && Request.QueryString["Authority"] != null)
+                    //{
+                    //    if (Request.QueryString["Status"].ToString().Equals("OK"))
+                    //    {
 
-                        int amount = (int)qBusinessPlanPayment.PaymentPrice * 10;
-                        string RefID;
+                    int amount = (int)qBusinessPlanPayment.PaymentPrice * 10;
+                    string RefID;
 
+                    string url = "https://api.zarinpal.com/pg/v4/payment/verify.json?merchant_id=" +
+                        zpSecret + "&amount=" + amount + "&authority=" + authority;
 
+                    var client = new RestClient(url);
+                    Method method = Method.Post;
+                    var request = new RestRequest("", method);
 
-                        string url = "https://api.zarinpal.com/pg/v4/payment/verify.json?merchant_id=" +
-    zpSecret + "&amount="
-    + amount + "&authority="
-    + authority;
+                    request.AddHeader("accept", "application/json");
 
-                        var client = new RestClient(url);
-                        Method method = Method.Post;
-                        var request = new RestRequest("", method);
+                    request.AddHeader("content-type", "application/json");
 
-                        request.AddHeader("accept", "application/json");
-
-                        request.AddHeader("content-type", "application/json");
-
-                        var response = client.ExecuteAsync(request);
-
-
-                        Newtonsoft.Json.Linq.JObject jodata = Newtonsoft.Json.Linq.JObject.Parse(response.Result.Content);
-                        string data = jodata["data"].ToString();
-
-                        Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(response.Result.Content);
-                        string errors = jo["errors"].ToString();
-
-                        if (data != "[]")
-                        {
-                            RefID = jodata["data"]["ref_id"].ToString();
-                            qPaymentOnline.ShaparakVerifyPayment = authority;
-                            qPaymentOnline.IsFinally = true;
-                            qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
-                            qBusinessPlanPayment.IsPaid = true;
-                            qPaymentOnline.FinallyDate = DateTime.Now;
-                            qPaymentOnline.TransactionReferenceID = RefID.ToString();
-                            qPaymentOnline.ShaparakCheckTransactionResult = data.ToString();
-                            db.SaveChanges();
-                            ViewBag.IsSuccess = true;
-                            ViewBag.TransactionReferenceID = RefID;
-
-                            // 4 = سرمایه گذاری
-                            Tbl_Sms qSms = db.Tbl_Sms.Find(4);
-                            Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                            (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
-
-                            return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
-
-                        }
-                        else if (errors != "[]")
-                        {
-
-                            string errorscode = jo["errors"]["code"].ToString();
-                            qPaymentOnline.ShaparakVerifyPayment = errorscode;
-                            db.SaveChanges();
-                            ViewBag.IsSuccess = false;
-                            ViewBag.Result = "عملیات ناموفق";
-                            return View();
-
-                        }
+                    var response = client.ExecuteAsync(request);
 
 
+                    Newtonsoft.Json.Linq.JObject jodata = Newtonsoft.Json.Linq.JObject.Parse(response.Result.Content);
+                    string data = jodata["data"].ToString();
 
+                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(response.Result.Content);
+                    string errors = jo["errors"].ToString();
 
+                    if (data != "[]")
+                    {
+                        RefID = jodata["data"]["ref_id"].ToString();
+                        qPaymentOnline.ShaparakVerifyPayment = authority;
+                        qPaymentOnline.IsFinally = true;
+                        qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
+                        qBusinessPlanPayment.IsPaid = true;
+                        qPaymentOnline.FinallyDate = DateTime.Now;
+                        qPaymentOnline.TransactionReferenceID = RefID.ToString();
+                        qPaymentOnline.ShaparakCheckTransactionResult = data.ToString();
+                        db.SaveChanges();
+                        ViewBag.IsSuccess = true;
+                        ViewBag.TransactionReferenceID = RefID;
 
-                        //ServicePointManager.Expect100Continue = false;
-                        //var zp = new PaymentGatewayImplementationServicePortTypeClient();
+                        // 4 = سرمایه گذاری
+                        Tbl_Sms qSms = db.Tbl_Sms.Find(4);
+                        Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                        (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
-                        //int Status = zp.PaymentVerification(zpSecret, authority, amount, out RefID);
-                        //qPaymentOnline.FinallyDate = DateTime.Now;
-                        //qPaymentOnline.ShaparakCheckTransactionResult = Status.ToString();
-                        //db.SaveChanges();
-                        //if (Status == 100)
-                        //{
-                        //    qPaymentOnline.ShaparakVerifyPayment = authority;
-                        //    qPaymentOnline.IsFinally = true;
-                        //    qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
-                        //    qBusinessPlanPayment.IsPaid = true;
-                        //    qPaymentOnline.FinallyDate = DateTime.Now;
-                        //    db.SaveChanges();
-                        //    ViewBag.IsSuccess = true;
-                        //    ViewBag.TransactionReferenceID = RefID;
-
-                        //    // 4 = سرمایه گذاری
-                        //    Tbl_Sms qSms = db.Tbl_Sms.Find(4);
-                        //    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                        //    (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
-
-                        //    return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
-                        //}
-                        //else
-                        //{
-                        //    ViewBag.IsSuccess = false;
-                        //    ViewBag.Result = "عملیات ناموفق";
-                        //    return View();
-                        //}
-                        //    }
-                        //    else
-                        //    {
-                        //        ViewBag.IsSuccess = false;
-                        //        ViewBag.Result = "عملیات ناموفق";
-                        //        return View();
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    ViewBag.IsSuccess = false;
-                        //    ViewBag.Result = "عملیات ناموفق";
-                        //    return View();
-                        //}
-                        #endregion
-
+                        return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                    }
+                    else if (errors != "[]")
+                    {
+                        string errorscode = jo["errors"]["code"].ToString();
+                        qPaymentOnline.ShaparakVerifyPayment = errorscode;
+                        db.SaveChanges();
+                        ViewBag.IsSuccess = false;
+                        ViewBag.Result = "عملیات ناموفق";
+                        return View();
                     }
 
+                    #region OldCode
+                    //ServicePointManager.Expect100Continue = false;
+                    //var zp = new PaymentGatewayImplementationServicePortTypeClient();
+
+                    //int Status = zp.PaymentVerification(zpSecret, authority, amount, out RefID);
+                    //qPaymentOnline.FinallyDate = DateTime.Now;
+                    //qPaymentOnline.ShaparakCheckTransactionResult = Status.ToString();
+                    //db.SaveChanges();
+                    //if (Status == 100)
+                    //{
+                    //    qPaymentOnline.ShaparakVerifyPayment = authority;
+                    //    qPaymentOnline.IsFinally = true;
+                    //    qBusinessPlanPayment.TransactionPaymentCode = RefID.ToString();
+                    //    qBusinessPlanPayment.IsPaid = true;
+                    //    qPaymentOnline.FinallyDate = DateTime.Now;
+                    //    db.SaveChanges();
+                    //    ViewBag.IsSuccess = true;
+                    //    ViewBag.TransactionReferenceID = RefID;
+
+                    //    // 4 = سرمایه گذاری
+                    //    Tbl_Sms qSms = db.Tbl_Sms.Find(4);
+                    //    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    //    (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+
+                    //    return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                    //}
+                    //else
+                    //{
+                    //    ViewBag.IsSuccess = false;
+                    //    ViewBag.Result = "عملیات ناموفق";
+                    //    return View();
+                    //}
+                    //    }
+                    //    else
+                    //    {
+                    //        ViewBag.IsSuccess = false;
+                    //        ViewBag.Result = "عملیات ناموفق";
+                    //        return View();
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    ViewBag.IsSuccess = false;
+                    //    ViewBag.Result = "عملیات ناموفق";
+                    //    return View();
+                    //}
+                    #endregion
                 }
             }
             catch (Exception e)
