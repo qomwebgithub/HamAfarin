@@ -141,17 +141,16 @@ namespace Hamafarin.Areas.Admin.Controllers
             bussinessPlan.Title = dto.PersianName;
             bussinessPlan.CodeOTC = dto.PersoanApprovedSymbol; //نام این فیلد گفته بودند ویرایش شود
 
-            //فیلد های زیر اضافه شود
-            //bp. = dto.EnglishApprovedSymbol;
-            //bp. = dto.IndustryGroupDescription;
-            //bp. = dto.SubIndustryGroupDescription;
+            bussinessPlan.EnglishCodeOTC = dto.EnglishApprovedSymbol;
+            bussinessPlan.IndustryGroupDescription = dto.IndustryGroupDescription;
+            bussinessPlan.SubIndustryGroupDescription = dto.SubIndustryGroupDescription;
 
             bussinessPlan.AmountRequiredRoRaiseCapital = dto.TotalPrice.ToString();
             bussinessPlan.MinimumAmountInvest = dto.RealPersonMinimumAvailabePrice.ToString();
             bussinessPlan.InvestmentStartDate = dto.ApprovedUnderwritingStartDate;
             bussinessPlan.InvestmentExpireDate = dto.ApprovedUnderwritingEndDate;
 
-            //فیلد زیر اضافه شود
+            //فیلد زیر اضافه شود؟
             //bp. = dto.ProjectStatusDescription;
 
             ProjectOwnerCompany ownerDto = dto.ProjectOwnerCompany.FirstOrDefault();
@@ -460,6 +459,38 @@ namespace Hamafarin.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> FbUpdate(int id)
+        {
+            Tbl_BussinessPlans bussinessPlan = await db.Tbl_BussinessPlans.FirstOrDefaultAsync(b => b.BussinessPlanID == id && !b.IsDeleted);
+
+            if (bussinessPlan == null)
+                return Json(false);
+
+            string faraboorsProjectId = bussinessPlan.FaraboorsProjectId;
+
+            if (faraboorsProjectId == null)
+                return Json(false);
+
+            FaraboorsClass fb = new FaraboorsClass();
+
+            (bool Success, string Message) result = await fb.GetProjectInfoAsync(faraboorsProjectId);
+
+            if (!result.Success)
+                return Json(false);
+
+            ProjectInfoDto dto = JsonConvert.DeserializeObject<ProjectInfoDto>(result.Message);
+
+            bussinessPlan.CodeOTC = dto.PersoanApprovedSymbol;
+            bussinessPlan.EnglishCodeOTC = dto.EnglishApprovedSymbol;
+            bussinessPlan.InvestmentStartDate = dto.ApprovedUnderwritingStartDate;
+            bussinessPlan.InvestmentExpireDate = dto.ApprovedUnderwritingEndDate;
+
+            await db.SaveChangesAsync();
+
+            return Json(true);
         }
 
         public void DoSuccessPlan(int id)

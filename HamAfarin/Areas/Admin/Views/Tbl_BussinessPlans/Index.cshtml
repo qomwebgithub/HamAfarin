@@ -27,6 +27,7 @@
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_BusinessPlanPayment/UnSubmittedPayments/@item.BussinessPlanID">پرداخت های تایید نشده</a>
             <a href="@Url.Action("ExcelReport")/@item.BussinessPlanID" class="btn btn-sm btn-info">گزارش</a>
             <a id="SendSMS" class="btn btn-outline-danger btn-sm" onclick="confirmSendSMS(@item.BussinessPlanID)">پیامک گواهی</a>
+            <a id="FbUpdate" class="btn btn-outline-danger btn-sm" onclick="confirmUpdate(@item.BussinessPlanID)">بروزرسانی</a>
         </text>).Width(320);
 
     })
@@ -70,6 +71,35 @@
                                 toastr.error(data.message);
                             }
                             $('#SendSMS').removeClass("disabled");
+                        }
+                    });
+                }
+            });
+        }
+
+        function confirmUpdate(id) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'توجه',
+                text: 'آیا از بروزرسانی طرح از فرابورس اطمینان دارید؟',
+                showCancelButton: true,
+                confirmButtonText: `بله`,
+                cancelButtonText: 'خیر',
+                confirmButtonColor: '#d0aa45',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $("#FbUpdate").addClass("disabled");
+                    $.ajax({
+                        type: "POST",
+                        url: "/Admin/Tbl_BussinessPlans/FbUpdate/" + id,
+                        success: function (data) {
+                            if (data) {
+                                toastr.success("بروزرسانی طرح با موفقیت انجام شد");
+                            }
+                            else {
+                                toastr.error("بروزرسانی طرح با خطا مواجه شد");
+                            }
+                            $('#FbUpdate').removeClass("disabled");
                         }
                     });
                 }

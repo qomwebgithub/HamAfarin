@@ -192,8 +192,14 @@ namespace ViewModels
         public string BusinessPlanFeatures { get; set; }
         [DisplayFormat(DataFormatString = "{0: yyyy/MM/dd}")]
         public DateTime? CreateDate { get; set; }
-        [Display(Name = "کد فرابورس")]
+        [Display(Name = "نماد فارسی فرابورس")]
         public string CodeOTC { get; set; }
+        [Display(Name = "نماد انگلیسی فرابورس")]
+        public string EnglishCodeOTC { get; set; }
+        [Display(Name = "عنوان گروه صنعت")]
+        public string IndustryGroupDescription { get; set; }
+        [Display(Name = "عنوان زیر گروه صنعت")]
+        public string SubIndustryGroupDescription { get; set; }
         [Display(Name = "آدرس طرح در فرابورس")]
         public string PlanInFarabourseUrl { get; set; }
         [Display(Name = "آی دی پروژه فرابورس")]

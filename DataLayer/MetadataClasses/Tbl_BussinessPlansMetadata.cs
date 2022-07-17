@@ -79,7 +79,7 @@ namespace DataLayer
         public bool IsDifferentActiveAddressWithRegisterAddress { get; set; }
         [Display(Name = "آدرس محل فعالیت")]
         public string CompanyActiveAddress { get; set; }
-        [Display(Name = "کد پستی")]
+        [Display(Name = "کد پستی محل فعالیت")]
         public string CompanyActivePostalCode { get; set; }
         [Display(Name = "آیا دانش بنیان ثبت شده است؟")]
         public bool IsDaneshBonyan { get; set; }

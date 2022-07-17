@@ -78,29 +78,29 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BussinessName, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BussinessName)
-                @Html.ValidationMessageFor(model => model.BussinessName)
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.BussinessName, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.BussinessName)
+                    @Html.ValidationMessageFor(model => model.BussinessName)
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BussinessSummaryDescription, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.BussinessSummaryDescription, new { @cols = 80, @rows = 7 })
-                @Html.ValidationMessageFor(model => model.BussinessSummaryDescription)
+            <div class="form-group">
+                @Html.LabelFor(model => model.BussinessSummaryDescription, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.BussinessSummaryDescription, new { @cols = 80, @rows = 7 })
+                    @Html.ValidationMessageFor(model => model.BussinessSummaryDescription)
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BussinessField_id, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.DropDownList("BussinessField_id", String.Empty)
-                @Html.ValidationMessageFor(model => model.BussinessField_id)
-            </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.BussinessField_id, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.DropDownList("BussinessField_id", String.Empty)
+                    @Html.ValidationMessageFor(model => model.BussinessField_id)
+                </div>
+            </div>*@
 
         <div class="container">
             @Html.LabelFor(model => model.InvestmentStartDate, new { @class = "control-label col-md-4" })
@@ -240,13 +240,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CompanyIntroductionLetterFileName, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.Kendo().Upload().Name("LetterFile")
-                @Html.ValidationMessageFor(model => model.CompanyIntroductionLetterFileName)
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.CompanyIntroductionLetterFileName, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.Kendo().Upload().Name("LetterFile")
+                    @Html.ValidationMessageFor(model => model.CompanyIntroductionLetterFileName)
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.CompanyRegisterAddress, new { @class = "control-label col-12" })
@@ -280,15 +280,15 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-12">
-            </div>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
-                @Html.LabelFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
-                @Html.ValidationMessageFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
-            </div>
-        </div>
+        @*<div class="form-group">
+                <div class="col-12">
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
+                    @Html.LabelFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
+                    @Html.ValidationMessageFor(model => model.IsDifferentActiveAddressWithRegisterAddress)
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.CompanyActiveAddress, new { @class = "control-label col-12" })
@@ -348,13 +348,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BusinessPlanRisksUser, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.BusinessPlanRisksUser)
-                @Html.ValidationMessageFor(model => model.BusinessPlanRisksUser)
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.BusinessPlanRisksUser, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.BusinessPlanRisksUser)
+                    @Html.ValidationMessageFor(model => model.BusinessPlanRisksUser)
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.BusinessPlanRisks, new { @class = "control-label col-12" })
@@ -364,13 +364,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BussinessModelFileName, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.Kendo().Upload().Name("ModelFile")
-                @Html.ValidationMessageFor(model => model.BussinessModelFileName)
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.BussinessModelFileName, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.Kendo().Upload().Name("ModelFile")
+                    @Html.ValidationMessageFor(model => model.BussinessModelFileName)
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.IntroductionIdeaVideoFileName, new { @class = "control-label col-12" })
@@ -388,13 +388,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Coasts, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Coasts)
-                @Html.ValidationMessageFor(model => model.Coasts)
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.Coasts, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Coasts)
+                    @Html.ValidationMessageFor(model => model.Coasts)
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.CompetitiveAdvantagesAndDisadvantages, new { @class = "control-label col-12" })
@@ -404,13 +404,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SlideShowPresentationFileName, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.Kendo().Upload().Name("SlideFile")
-                @Html.ValidationMessageFor(model => model.SlideShowPresentationFileName)
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.SlideShowPresentationFileName, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.Kendo().Upload().Name("SlideFile")
+                    @Html.ValidationMessageFor(model => model.SlideShowPresentationFileName)
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.DocumentsAndReportsFileName, new { @class = "control-label col-12" })
@@ -462,77 +462,77 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-12">
-            </div>
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.HaveYouRaisedCapitalPrevious)
-                @Html.LabelFor(model => model.HaveYouRaisedCapitalPrevious)
-                @Html.ValidationMessageFor(model => model.HaveYouRaisedCapitalPrevious)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.InvestmentAmountPrevious, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.InvestmentAmountPrevious)
-                @Html.ValidationMessageFor(model => model.InvestmentAmountPrevious)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PercentageOfSharesCapitalPrevious, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PercentageOfSharesCapitalPrevious)
-                @Html.ValidationMessageFor(model => model.PercentageOfSharesCapitalPrevious)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PreviousInvestorFullName, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PreviousInvestorFullName)
-                @Html.ValidationMessageFor(model => model.PreviousInvestorFullName)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PreviousInvestorType, new { @class = "control-label col-12" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PreviousInvestorType)
-                @Html.ValidationMessageFor(model => model.PreviousInvestorType)
-            </div>
-        </div>
-
-        <div class="container">
-            @Html.LabelFor(model => model.PreviousInvestorDate, new { @class = "control-label col-12" })
-            <div class="row">
+        @*<div class="form-group">
                 <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text cursor-pointer btn btn-success" id="PreviousInvestorDateYMD">انتخاب تاریخ</span>
-                        </div>
-                    </div>
-                    @Html.EditorFor(model => model.strPreviousInvestorDate)
-                    @Html.ValidationMessageFor(model => model.strPreviousInvestorDate, null, new { @class = "text-danger" })
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.HaveYouRaisedCapitalPrevious)
+                    @Html.LabelFor(model => model.HaveYouRaisedCapitalPrevious)
+                    @Html.ValidationMessageFor(model => model.HaveYouRaisedCapitalPrevious)
                 </div>
             </div>
-        </div>
 
-        <div class="container">
-            @Html.LabelFor(model => model.PreviousInvestorExpireDate, new { @class = "control-label col-12" })
-            <div class="row">
-                <div class="col-12">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text cursor-pointer btn btn-success" id="PreviousInvestorExpireDateYMD">انتخاب تاریخ</span>
-                        </div>
-                    </div>
-                    @Html.EditorFor(model => model.strPreviousInvestorExpireDate)
-                    @Html.ValidationMessageFor(model => model.strPreviousInvestorExpireDate, null, new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.InvestmentAmountPrevious, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.InvestmentAmountPrevious)
+                    @Html.ValidationMessageFor(model => model.InvestmentAmountPrevious)
                 </div>
             </div>
-        </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PercentageOfSharesCapitalPrevious, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PercentageOfSharesCapitalPrevious)
+                    @Html.ValidationMessageFor(model => model.PercentageOfSharesCapitalPrevious)
+                </div>
+            </div>*
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PreviousInvestorFullName, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PreviousInvestorFullName)
+                    @Html.ValidationMessageFor(model => model.PreviousInvestorFullName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PreviousInvestorType, new { @class = "control-label col-12" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PreviousInvestorType)
+                    @Html.ValidationMessageFor(model => model.PreviousInvestorType)
+                </div>
+            </div>
+
+            <div class="container">
+                @Html.LabelFor(model => model.PreviousInvestorDate, new { @class = "control-label col-12" })
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer btn btn-success" id="PreviousInvestorDateYMD">انتخاب تاریخ</span>
+                            </div>
+                        </div>
+                        @Html.EditorFor(model => model.strPreviousInvestorDate)
+                        @Html.ValidationMessageFor(model => model.strPreviousInvestorDate, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                @Html.LabelFor(model => model.PreviousInvestorExpireDate, new { @class = "control-label col-12" })
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text cursor-pointer btn btn-success" id="PreviousInvestorExpireDateYMD">انتخاب تاریخ</span>
+                            </div>
+                        </div>
+                        @Html.EditorFor(model => model.strPreviousInvestorExpireDate)
+                        @Html.ValidationMessageFor(model => model.strPreviousInvestorExpireDate, null, new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.PercentageReturnInvestment, new { @class = "control-label col-12" })
@@ -555,6 +555,30 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CodeOTC)
                 @Html.ValidationMessageFor(model => model.CodeOTC)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EnglishCodeOTC, new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EnglishCodeOTC)
+                @Html.ValidationMessageFor(model => model.EnglishCodeOTC)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IndustryGroupDescription, new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IndustryGroupDescription)
+                @Html.ValidationMessageFor(model => model.IndustryGroupDescription)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubIndustryGroupDescription, new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SubIndustryGroupDescription)
+                @Html.ValidationMessageFor(model => model.SubIndustryGroupDescription)
             </div>
         </div>
 
