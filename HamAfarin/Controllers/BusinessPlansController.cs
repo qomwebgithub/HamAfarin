@@ -129,7 +129,7 @@ namespace Hamafarin.Controllers
                     (Convert.ToInt64(b.MinimumAmountInvest)) >= lowestPrice &&
                     (Convert.ToInt64(b.MinimumAmountInvest)) <= highestPrice &&
                     (b.Title.Contains(searchText) || b.BusinessPlanFeatures.Contains(searchText)))
-                .OrderByDescending(b => b.BussinessPlanID).ToList();
+                .OrderByDescending(b => b.InvestmentStartDate).ToList();
 
 
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
