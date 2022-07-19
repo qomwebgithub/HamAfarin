@@ -73,7 +73,7 @@ namespace Hamafarin.Controllers
         {
             int takeNewActivePlans = 3;
             List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false)
-                .OrderByDescending(b => b.BussinessPlanID).Take(takeNewActivePlans).ToList();
+                .OrderByDescending(b => b.InvestmentStartDate).Take(takeNewActivePlans).ToList();
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
             foreach (var item in qlstActivePlans)
             {
