@@ -578,7 +578,8 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
             TimeSpan time = new TimeSpan(lstNumbers[0], lstNumbers[1], lstNumbers[2]);
 
-            if (lstPaidDateTime[2].Contains("ب.ظ"))
+
+            if (lstPaidDateTime.Length - 1 >= 2 && lstPaidDateTime[2].Contains("ب.ظ"))
             {
                 if (lstNumbers[0] != 12)
                 {
