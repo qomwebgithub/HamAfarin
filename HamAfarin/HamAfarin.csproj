@@ -553,9 +553,6 @@
     <Content Include="Areas\UserPanel\Content\js\bootstrap.bundle.min.js.map" />
     <Content Include="Areas\UserPanel\Content\js\bootstrap.js.map" />
     <Content Include="Areas\UserPanel\Content\js\bootstrap.min.js.map" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BussinessPlans\Create.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BussinessPlans\Details.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BussinessPlans\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Users\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Users\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Users\Details.cshtml" />
@@ -565,7 +562,6 @@
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\SubmittedPayments.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\DraftsPayments.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Settings\EditFooter.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BussinessPlans\InvestedPlans.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\PlanPayments.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Menu\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Menu\Delete.cshtml" />
@@ -594,11 +590,6 @@
     <Content Include="Areas\UserPanel\Views\UserProfile\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Users\UnSubmittedProfile.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Users\EditProfile.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BusinessPlanPayment\Create.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BusinessPlanPayment\Delete.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BusinessPlanPayment\Details.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BusinessPlanPayment\Edit.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Tbl_BusinessPlanPayment\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_ShareHoldersCompany\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_ShareHoldersCompany\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_ShareHoldersCompany\Details.cshtml" />
@@ -2378,8 +2369,6 @@
     <Compile Include="Areas\UserPanel\Controllers\InvestmentsReportController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\PaymentReturnedController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserRequestFinancingController.cs" />
-    <Compile Include="Areas\UserPanel\Controllers\Tbl_BusinessPlanPaymentController.cs" />
-    <Compile Include="Areas\UserPanel\Controllers\Tbl_BussinessPlansController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\TicketsController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserCommentBusinessPlanController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserPanelController.cs" />
