@@ -23,6 +23,8 @@ namespace DataLayer
         public int ID { get; set; }
         public Nullable<int> User_Id { get; set; }
         public string Token { get; set; }
+        public string Url { get; set; }
+        public string TokenHash { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Affiliate> Tbl_Affiliate { get; set; }

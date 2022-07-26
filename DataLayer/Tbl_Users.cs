@@ -52,7 +52,7 @@ namespace DataLayer
         public string Password { get; set; }
         public Nullable<int> SmsCode { get; set; }
         public string UserToken { get; set; }
-        public string AffiliateToken { get; set; }
+        public string PermanentUserToken { get; set; }
         public string UserType { get; set; }
         public string UserStatus { get; set; }
         public Nullable<System.DateTime> ActivateDate { get; set; }

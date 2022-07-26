@@ -82,14 +82,34 @@ namespace Hamafarin.Controllers
             return Redirect("/");
         }
 
-        public ActionResult Register()
+        public ActionResult Register(string id)
         {
+            string affiliateToken = null;
+
+            if (id != null)
+                affiliateToken = db.Tbl_ApiToken.Where(u => u.Url == id).Select(u => u.TokenHash).FirstOrDefault();
+
+            if (!string.IsNullOrWhiteSpace(affiliateToken))
+            {
+                HttpCookie StudentCookies = new HttpCookie("affiliateToken");
+                StudentCookies.Value = affiliateToken;
+                StudentCookies.Expires = DateTime.Now.AddDays(30);
+                Response.Cookies.Add(StudentCookies);
+            }
+
             return View();
         }
+
+        //[HttpPost]
+        //public ActionResult RegisterSignal()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public ActionResult Register(RegisterViewModel register)
         {
+            var transaction = db.Database.BeginTransaction();
             //recaptcha
             if (!this.IsCaptchaValid("عبارت امنیتی را درست وارد کنید"))
             {
@@ -133,6 +153,22 @@ namespace Hamafarin.Controllers
                 oUser.UserToken = Guid.NewGuid().ToString();
 
             db.SaveChanges();
+
+            string affiliateToken = Request.Cookies["affiliateToken"]?.Value;
+            if (!string.IsNullOrWhiteSpace(affiliateToken))
+            {
+                int? TokenId = db.Tbl_ApiToken.Where(u => u.TokenHash == affiliateToken)
+                    .Select(u => u.ID).FirstOrDefault();
+
+                if (TokenId != null)
+                {
+                    Tbl_Affiliate Tbl_Affiliate = new Tbl_Affiliate() { Token_Id = TokenId, User_Id = oUser.UserID };
+                    db.Tbl_Affiliate.Add(Tbl_Affiliate);
+                    db.SaveChanges();
+                }
+            }
+
+            transaction.Commit();
 
             ViewBag.IsSuccess = true;
 
@@ -227,7 +263,7 @@ namespace Hamafarin.Controllers
                 if (qUser.HasSejam)
                 {
                     oSejamClass = new SejamClass();
-                    bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken,verifySms.SmsCode, out string Message);
+                    bool VerifySejam = oSejamClass.VerifyUser(qUser.UserToken, verifySms.SmsCode, out string Message);
 
                     if (VerifySejam == false)
                     {

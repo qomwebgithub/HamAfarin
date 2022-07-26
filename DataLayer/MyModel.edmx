@@ -20,6 +20,8 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_Id" Type="int" />
           <Property Name="Token" Type="nvarchar" MaxLength="50" />
+          <Property Name="Url" Type="nvarchar" MaxLength="50" />
+          <Property Name="TokenHash" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
@@ -255,7 +257,7 @@
           <Key>
             <PropertyRef Name="CompanyTypeID" />
           </Key>
-          <Property Name="CompanyTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyTypeID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="CompanyTypeTitle" Type="nvarchar" MaxLength="50" />
@@ -736,7 +738,7 @@
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
           <Property Name="SmsCode" Type="int" />
           <Property Name="UserToken" Type="nvarchar" MaxLength="50" />
-          <Property Name="AffiliateToken" Type="nvarchar" MaxLength="50" />
+          <Property Name="PermanentUserToken" Type="nvarchar" MaxLength="50" />
           <Property Name="UserType" Type="nvarchar(max)" />
           <Property Name="UserStatus" Type="nvarchar(max)" />
           <Property Name="ActivateDate" Type="datetime" />
@@ -1840,6 +1842,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_Id" Type="Int32" />
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TokenHash" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Affiliate" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken" FromRole="Tbl_ApiToken" ToRole="Tbl_Affiliate" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users" FromRole="Tbl_ApiToken" ToRole="Tbl_Users" />
         </EntityType>
@@ -2106,7 +2110,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Key>
             <PropertyRef Name="CompanyTypeID" />
           </Key>
-          <Property Name="CompanyTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyTypeID" Type="Int32" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CompanyTypeTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -2620,7 +2624,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SmsCode" Type="Int32" />
           <Property Name="UserToken" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="AffiliateToken" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PermanentUserToken" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="UserType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="UserStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ActivateDate" Type="DateTime" Precision="3" />
@@ -3257,6 +3261,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySetMapping Name="Tbl_ApiToken">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_ApiToken">
               <MappingFragment StoreEntitySet="Tbl_ApiToken">
+                <ScalarProperty Name="TokenHash" ColumnName="TokenHash" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -4016,7 +4022,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="ActivateDate" ColumnName="ActivateDate" />
                 <ScalarProperty Name="UserStatus" ColumnName="UserStatus" />
                 <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="AffiliateToken" ColumnName="AffiliateToken" />
+                <ScalarProperty Name="PermanentUserToken" ColumnName="PermanentUserToken" />
                 <ScalarProperty Name="UserToken" ColumnName="UserToken" />
                 <ScalarProperty Name="SmsCode" ColumnName="SmsCode" />
                 <ScalarProperty Name="Password" ColumnName="Password" />

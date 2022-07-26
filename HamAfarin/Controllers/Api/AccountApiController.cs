@@ -85,7 +85,7 @@ namespace HamAfarin.Controllers.Api
                     UserToken = Guid.NewGuid().ToString(),
                     HasSejam = false,
                     ActivateDate = null,
-                    AffiliateToken = Guid.NewGuid().ToString(),
+                    PermanentUserToken = Guid.NewGuid().ToString(),
                 };
                 db.Tbl_Users.Add(oUser);
                 db.SaveChanges();
@@ -95,9 +95,9 @@ namespace HamAfarin.Controllers.Api
                 oUser.MobileNumber = register.MobileNumber.Fa2En();
                 oUser.UserName = register.NationalCode.Fa2En();
                 oUser.UserToken = Guid.NewGuid().ToString();
-                if (string.IsNullOrEmpty(oUser.AffiliateToken))
+                if (string.IsNullOrEmpty(oUser.PermanentUserToken))
                 {
-                    oUser.AffiliateToken = Guid.NewGuid().ToString();
+                    oUser.PermanentUserToken = Guid.NewGuid().ToString();
                 }
                 db.SaveChanges();
             }
@@ -163,7 +163,7 @@ namespace HamAfarin.Controllers.Api
             //var qSms2 = db.Tbl_Sms.Find(2);
             //var smsResult2 = oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
-            object data = new { UserAffiliateToken = qUser.AffiliateToken };
+            object data = new { UserAffiliateToken = qUser.PermanentUserToken };
 
             return Json(new ApiResult<object> { Data = data, IsSuccess = true, StatusCode = 201, Message = "عملیات با موفقیت انجام شد" });
         }
