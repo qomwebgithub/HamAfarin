@@ -22,6 +22,7 @@
           <Property Name="Token" Type="nvarchar" MaxLength="50" />
           <Property Name="Url" Type="nvarchar" MaxLength="50" />
           <Property Name="TokenHash" Type="nvarchar" MaxLength="200" />
+          <Property Name="Name" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
@@ -1844,6 +1845,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TokenHash" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Affiliate" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken" FromRole="Tbl_ApiToken" ToRole="Tbl_Affiliate" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users" FromRole="Tbl_ApiToken" ToRole="Tbl_Users" />
         </EntityType>
@@ -3261,6 +3263,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySetMapping Name="Tbl_ApiToken">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_ApiToken">
               <MappingFragment StoreEntitySet="Tbl_ApiToken">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TokenHash" ColumnName="TokenHash" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Token" ColumnName="Token" />

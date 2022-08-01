@@ -84,17 +84,19 @@ namespace Hamafarin.Controllers
 
         public ActionResult Register(string id)
         {
-            string affiliateToken = null;
 
             if (id != null)
-                affiliateToken = db.Tbl_ApiToken.Where(u => u.Url == id).Select(u => u.TokenHash).FirstOrDefault();
-
-            if (!string.IsNullOrWhiteSpace(affiliateToken))
             {
-                HttpCookie StudentCookies = new HttpCookie("affiliateToken");
-                StudentCookies.Value = affiliateToken;
-                StudentCookies.Expires = DateTime.Now.AddDays(30);
-                Response.Cookies.Add(StudentCookies);
+                var token = db.Tbl_ApiToken.Where(u => u.Url == id).FirstOrDefault();
+                
+                if (!string.IsNullOrWhiteSpace(token.TokenHash))
+                {
+                    HttpCookie affiliateCookie = new HttpCookie("affiliateToken");
+                    affiliateCookie.Value = token.TokenHash;
+                    affiliateCookie.Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies.Add(affiliateCookie);
+                    ViewBag.Name = token.Name;
+                }
             }
 
             return View();
