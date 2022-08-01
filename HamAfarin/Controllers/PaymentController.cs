@@ -539,7 +539,7 @@ namespace Hamafarin.Controllers
             int qActiveUsers = db.Tbl_Users.Where(p => p.IsActive && p.IsDeleted == false).Count();
             long qAmountCapitalRaised = qPayments.Sum(p => p.PaymentPrice).Value;
             //  int qInvestmentCountPerson = qPayments.Select(p => p.PaymentUser_id).Distinct().Count();
-            int qInvestmentSuccessPlanCount = db.Tbl_BussinessPlans.Where(p => p.IsSuccessBussinessPlan).Count();
+            int qInvestmentSuccessPlanCount = db.Tbl_BussinessPlans.Where(p => p.IsSuccessBussinessPlan && p.IsDeleted == false && p.IsActive).Count();
             long qTotalDepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.IsDelete == false && p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false).Sum(p => p.DepositAmount.Value);
             // بدست اوردن کل سود واریزی با یک رقم اعشار, میلیارد تومن
             double intTotalDepositToInvestors = Convert.ToInt32(qTotalDepositToInvestors / 100000000);

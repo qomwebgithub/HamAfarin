@@ -21,7 +21,7 @@
           <Property Name="User_Id" Type="int" />
           <Property Name="Token" Type="nvarchar" MaxLength="50" />
           <Property Name="Url" Type="nvarchar" MaxLength="50" />
-          <Property Name="TokenHash" Type="nvarchar" MaxLength="150" />
+          <Property Name="TokenHash" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="Tbl_Blog">
           <Key>
@@ -1843,7 +1843,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="User_Id" Type="Int32" />
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TokenHash" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="TokenHash" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Tbl_Affiliate" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken" FromRole="Tbl_ApiToken" ToRole="Tbl_Affiliate" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users" FromRole="Tbl_ApiToken" ToRole="Tbl_Users" />
         </EntityType>
