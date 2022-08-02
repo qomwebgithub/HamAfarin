@@ -733,6 +733,7 @@
     <Content Include="Areas\Admin\Views\Tbl_RequestFinancing\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_RequestFinancing\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BussinessPlans\FbCreate.cshtml" />
+    <Content Include="Areas\UserPanel\Views\Affiliate\Index.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
@@ -2368,6 +2369,7 @@
     <Compile Include="Areas\Admin\Controllers\Tbl_DepositToInvestorsController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\InvestmentsReportController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\PaymentReturnedController.cs" />
+    <Compile Include="Areas\UserPanel\Controllers\AffiliateController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserRequestFinancingController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\TicketsController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserCommentBusinessPlanController.cs" />

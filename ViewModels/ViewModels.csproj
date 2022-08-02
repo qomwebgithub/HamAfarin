@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\AffiliateViewModel.cs" />
     <Compile Include="Account\ForgotPasswordViewModel.cs" />
     <Compile Include="Account\InvestmentsReport\InvestmentDetailViewModel.cs" />
     <Compile Include="Account\InvestmentsReport\InvestmentsReportViewModel.cs" />

@@ -101,5 +101,18 @@ namespace HamAfarin
 
             return isLegal;
         }
+
+        public static bool GetIsAffilate(string userIdentityName)
+        {
+            bool isAffilate = false;
+
+            string[] array = userIdentityName.Split(',');
+            int index = 7;
+
+            if (index < array.Length)
+                isAffilate = Convert.ToBoolean(array[index]);
+
+            return isAffilate;
+        }
     }
 }

@@ -34,7 +34,9 @@ namespace Hamafarin
                 }
             }
 
-            return $"{user.UserID},{user.Role_id },{user.UserName},{user.MobileNumber},{user.HasSejam},{fullName},{user.IsLegal}";
+            var isAffiliate = db.Tbl_ApiToken.Where(a => a.User_Id == user.UserID).Any();
+
+            return $"{user.UserID},{user.Role_id },{user.UserName},{user.MobileNumber},{user.HasSejam},{fullName},{user.IsLegal},{isAffiliate}";
         }
 
         /// <summary>

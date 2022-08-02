@@ -33,10 +33,13 @@
                     <div class="panel-body">
                         <ul class="nav">
                             <li><a href="/UserPanel/UserPaymentBusinessPlan" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>سرمایه گذاری من </a></li>
-                            @if (@UserSetAuthCookie.GetIsLegal(User.Identity.Name))
+                            @if (UserSetAuthCookie.GetIsLegal(User.Identity.Name))
                             {
                                 <li><a href="/UserPanel/UserRequestFinancing" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>تقاضای سرمایه </a></li>
-
+                            }
+                            @if (UserSetAuthCookie.GetIsAffilate(User.Identity.Name))
+                            {
+                                <li><a href="/UserPanel/Affiliate" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i>گزارش بازاریابی </a></li>
                             }
                             <li><a href="/UserPanel/InvestmentsReport" style="text-decoration:none;color: #81858b;"><i class="glyphicon glyphicon-usd"></i> گزارش تراکنش ها</a></li>
                             <li>
