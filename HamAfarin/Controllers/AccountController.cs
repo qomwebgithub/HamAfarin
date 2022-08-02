@@ -156,10 +156,10 @@ namespace Hamafarin.Controllers
 
             db.SaveChanges();
 
-            string affiliateToken = Request.Cookies["affiliateToken"]?.Value;
-            if (!string.IsNullOrWhiteSpace(affiliateToken))
+            HttpCookie cookie = Request.Cookies["affiliateToken"];
+            if (!string.IsNullOrWhiteSpace(cookie?.Value))
             {
-                int? TokenId = db.Tbl_ApiToken.Where(u => u.TokenHash == affiliateToken)
+                int? TokenId = db.Tbl_ApiToken.Where(u => u.TokenHash == cookie.Value)
                     .Select(u => u.ID).FirstOrDefault();
 
                 if (TokenId != null)
@@ -167,6 +167,8 @@ namespace Hamafarin.Controllers
                     Tbl_Affiliate Tbl_Affiliate = new Tbl_Affiliate() { Token_Id = TokenId, User_Id = oUser.UserID };
                     db.Tbl_Affiliate.Add(Tbl_Affiliate);
                     db.SaveChanges();
+                    cookie.Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies.Add(cookie);
                 }
             }
 
