@@ -23,8 +23,16 @@ namespace HamAfarin.Areas.UserPanel.Controllers
                 return View();
 
             List<AffiliateViewModel> affiliateVM = db.Tbl_Affiliate
-                .Where(a => tokenIds.Contains(a.Token_Id.Value))
-                .Select(a => new AffiliateViewModel { Id = a.User_Id.Value }).ToList();
+                .Where(a => tokenIds.Contains(a.Token_Id.Value) && a.Tbl_Users.IsActive)
+                .Select(a => new AffiliateViewModel
+                {
+                    Id = a.User_Id.Value,
+                    Mobile = a.Tbl_Users.MobileNumber,
+                    CreateDate = a.Tbl_Users.RegisterDate
+                }).ToList();
+
+            foreach (var item in affiliateVM)
+                item.Mobile = item.Mobile.Remove(4, 4).Insert(4, "****");
 
             return View(affiliateVM);
         }
