@@ -12,5 +12,9 @@ namespace ViewModels
 
         [Display(Name = "شناسه")]
         public int Id { get; set; }
+        [Display(Name = "موبایل")]
+        public string Mobile { get; set; }
+        [Display(Name = "تاریخ ثبت نام")]
+        public DateTime? CreateDate { get; set; }
     }
 }

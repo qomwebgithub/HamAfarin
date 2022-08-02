@@ -6,7 +6,26 @@
 }
 @if (Model.Any())
 {
-    var i = 1; 
+    var i = 1;
+    <h4>سرمایه گذاری من</h4>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <p class="small">سرمایه گذان : <span class="text-success pr-1">9</span> نفر</p>
+        </div>
+        <div class="col-12 col-md-4">
+            <p class="small">کل مبلغ سرمایه : <span class="text-success pr-1">900,000</span> تومان</p>
+        </div>
+        <div class="col-12 col-md-4">
+            <p class="small">
+                تعداد طرح : <span class="text-success pr-1">
+                    <i>
+                        58,810
+                    </i>
+                </span>
+            </p>
+        </div>
+    </div>
+    <hr>
     <section class="container-fluid px-0">
         <div class="table-responsive d-none d-md-block">
             <table class="table mt-2 table-bordered text-center">
@@ -14,6 +33,9 @@
                     <tr>
                         <th scope="col">ردیف</th>
                         <th scope="col">شناسه</th>
+                        <th scope="col">تلفن</th>
+                        <th scope="col">تاریخ</th>
+                        <th scope="col">جزییات</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,6 +44,15 @@
                         <tr>
                             <td>@i</td>
                             <td>@item.Id</td>
+                            <td style="direction: ltr;">@item.Mobile</td>
+                            <td>@item.CreateDate.Value.ToString("yyyy/MM/dd")</td>
+                            <td>
+                                <div class="text-center">
+                                    <a href="#">
+                                        <i class="bi bi-three-dots color-golden h4"></i>
+                                    </a>
+                                </div>
+                            </td>
                         </tr>
                         { i++; }
                     }
