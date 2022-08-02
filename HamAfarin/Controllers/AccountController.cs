@@ -93,13 +93,13 @@ namespace Hamafarin.Controllers
                 {
                     HttpCookie affiliateCookie = new HttpCookie("affiliateToken");
                     affiliateCookie.Value = token.TokenHash;
-                    affiliateCookie.Expires = DateTime.Now.AddDays(30);
+                    affiliateCookie.Expires = DateTime.Now.AddDays(14);
                     Response.Cookies.Add(affiliateCookie);
                     ViewBag.Name = token.Name;
                 }
             }
 
-            return View();
+            return View(id);
         }
 
         //[HttpPost]
