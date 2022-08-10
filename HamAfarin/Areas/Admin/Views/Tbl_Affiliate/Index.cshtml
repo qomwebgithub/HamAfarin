@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ViewModels.ApiTokenViewModel>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "فهرست بازاریابان";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+    .Name("Grid")
+    .Columns(columns =>
+    {
+        columns.Bound(model => model.ID);
+        columns.Bound(model => model.Name);
+        columns.Bound(model => model.Username);
+        columns.Bound(model => model.Mobile);
+        columns.Bound(model => model.Url);
+        columns.Bound(model => model.UserCount);
+        columns.Bound(model => model.TotalInvestment);
+        @*columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
+        .Template(@<text>
+            @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
+            @Html.ActionLink("حذف", "Delete", new { id = @item.ID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
+        </text>);*@
+
+    })
+    //.ToolBar(toolbar =>
+    //    {
+    //        toolbar.Custom().Action("Create", "Tbl_Affiliate").Text("افزودن");
+    //    }
+    //)
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Filterable()
+    .DataSource(dataSource => dataSource
+    .Server()
+    .Model(model => model.Id(item => item.ID))
+)
+)

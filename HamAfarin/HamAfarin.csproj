@@ -734,6 +734,7 @@
     <Content Include="Areas\Admin\Views\Tbl_RequestFinancing\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_BussinessPlans\FbCreate.cshtml" />
     <Content Include="Areas\UserPanel\Views\Affiliate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Affiliate\Index.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
@@ -2341,6 +2342,7 @@
     <Compile Include="Areas\Admin\Controllers\ExportImportExcelController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_BlogController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_DargahController.cs" />
+    <Compile Include="Areas\Admin\Controllers\Tbl_AffiliateController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_RequestFinancingController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_SmsController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_BusinessPlanPaymentController.cs" />
