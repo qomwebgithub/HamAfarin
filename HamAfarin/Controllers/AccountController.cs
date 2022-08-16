@@ -87,6 +87,7 @@ namespace Hamafarin.Controllers
 
             if (id != null)
             {
+                id = id.ToLower();
                 var token = db.Tbl_ApiToken.Where(u => u.Url == id).FirstOrDefault();
 
                 if (!string.IsNullOrWhiteSpace(token.TokenHash))
@@ -95,7 +96,9 @@ namespace Hamafarin.Controllers
                     affiliateCookie.Value = token.TokenHash;
                     affiliateCookie.Expires = DateTime.Now.AddDays(14);
                     Response.Cookies.Add(affiliateCookie);
-                    ViewBag.Name = token.Name;
+
+                    if (id == "signal")
+                        ViewBag.Name = token.Name;
                 }
             }
 
