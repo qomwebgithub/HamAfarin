@@ -88,7 +88,7 @@ namespace Hamafarin.Controllers
             if (id != null)
             {
                 var token = db.Tbl_ApiToken.Where(u => u.Url == id).FirstOrDefault();
-                
+
                 if (!string.IsNullOrWhiteSpace(token.TokenHash))
                 {
                     HttpCookie affiliateCookie = new HttpCookie("affiliateToken");
@@ -564,6 +564,23 @@ namespace Hamafarin.Controllers
         }
 
 
+        public ActionResult Affiliate(int id, string affiliate)
+        {
+            if (affiliate != null)
+            {
+                Tbl_ApiToken token = db.Tbl_ApiToken.Where(u => u.Url == affiliate).FirstOrDefault();
+
+                if (!string.IsNullOrWhiteSpace(token.TokenHash))
+                {
+                    HttpCookie affiliateCookie = new HttpCookie("affiliateToken");
+                    affiliateCookie.Value = token.TokenHash;
+                    affiliateCookie.Expires = DateTime.Now.AddDays(14);
+                    Response.Cookies.Add(affiliateCookie);
+                }
+            }
+
+            return RedirectToAction("SingleBusinessPlan", "BusinessPlans", new { id = id });
+        }
 
 
     }
