@@ -564,11 +564,11 @@ namespace Hamafarin.Controllers
         }
 
 
-        public ActionResult Affiliate(int id, string affiliate)
+        public ActionResult Affiliate(string id, int? planId)
         {
-            if (affiliate != null)
+            if (id != null)
             {
-                Tbl_ApiToken token = db.Tbl_ApiToken.Where(u => u.Url == affiliate).FirstOrDefault();
+                Tbl_ApiToken token = db.Tbl_ApiToken.Where(u => u.Url == id).FirstOrDefault();
 
                 if (!string.IsNullOrWhiteSpace(token.TokenHash))
                 {
@@ -579,7 +579,10 @@ namespace Hamafarin.Controllers
                 }
             }
 
-            return RedirectToAction("SingleBusinessPlan", "BusinessPlans", new { id = id });
+            if (planId == null)
+                return RedirectToAction("Index", "BusinessPlans");
+
+            return RedirectToAction("SingleBusinessPlan", "BusinessPlans", new { id = planId });
         }
 
 
