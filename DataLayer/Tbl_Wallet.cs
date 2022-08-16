@@ -14,7 +14,7 @@ namespace DataLayer
     
     public partial class Tbl_Wallet
     {
-        public int ID { get; set; }
+        public long ID { get; set; }
         public int User_id { get; set; }
         public int Type_id { get; set; }
         public long Amount { get; set; }

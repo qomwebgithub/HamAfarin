@@ -750,7 +750,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_id" Type="int" Nullable="false" />
           <Property Name="Type_id" Type="int" Nullable="false" />
           <Property Name="Amount" Type="bigint" Nullable="false" />
@@ -2660,7 +2660,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_id" Type="Int32" Nullable="false" />
           <Property Name="Type_id" Type="Int32" Nullable="false" />
           <Property Name="Amount" Type="Int64" Nullable="false" />
