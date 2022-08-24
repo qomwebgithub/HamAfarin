@@ -26,7 +26,6 @@
                         <div class="text-success col-6 col-xl-4 xol-lg-4 col-md-4 p-0">
                             آماده سرمایه گذاری
                         </div>
-
                     }
                     else
                     {
@@ -66,7 +65,7 @@
                             {
                                 <span class="control-label col-md-12 " style="color:#00b4d8;font-size:16px"> اطلاعات نماینده حقوقی </span>
                             }
-                           
+
                         </div>
                         <div class="form-group">
                             @Html.LabelFor(model => model.Profile.MobileNumber, new { @class = "control-label col-md-6" })
@@ -109,11 +108,7 @@
                                 @Html.ValidationMessageFor(model => model.Profile.Email)
                             </div>
                         </div>
-                        @if (Model.IsLegal)
-                        {
-
-                        }
-                        else
+                        @if (!Model.IsLegal)
                         {
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Profile.AccountSheba, new { @class = "control-label col-md-6" })

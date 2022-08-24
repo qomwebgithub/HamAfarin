@@ -495,7 +495,7 @@ namespace Hamafarin.Controllers
             return View();
         }
 
-        //[OutputCache(Duration = 86400)]
+        [OutputCache(Duration = 86400)]
         public ActionResult InvestmentSummary()
         {
             List<Tbl_BusinessPlanPayment> qPayments = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid && p.IsDelete == false).ToList();
