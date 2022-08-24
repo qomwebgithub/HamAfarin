@@ -495,28 +495,26 @@ namespace Hamafarin.Controllers
             return View();
         }
 
-        [OutputCache(Duration = 86400)]
+        //[OutputCache(Duration = 86400)]
         public ActionResult InvestmentSummary()
         {
             List<Tbl_BusinessPlanPayment> qPayments = db.Tbl_BusinessPlanPayment.Where(p => p.IsConfirmedFromAdmin && p.IsPaid && p.IsDelete == false).ToList();
             int qActiveUsers = db.Tbl_Users.Where(p => p.IsActive && p.IsDeleted == false).Count();
-            long qAmountCapitalRaised = qPayments.Sum(p => p.PaymentPrice).Value;
+            long qAmountCapitalRaised = qPayments.Sum(p => p.PaymentPrice ).Value;
             //  int qInvestmentCountPerson = qPayments.Select(p => p.PaymentUser_id).Distinct().Count();
             int qInvestmentSuccessPlanCount = db.Tbl_BussinessPlans.Where(p => p.IsSuccessBussinessPlan && p.IsDeleted == false && p.IsActive).Count();
             long qTotalDepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.IsDelete == false && p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false).Sum(p => p.DepositAmount.Value);
             // بدست اوردن کل سود واریزی با یک رقم اعشار, میلیارد تومن
-            double intTotalDepositToInvestors = Convert.ToInt32(qTotalDepositToInvestors / 100000000);
-
-            double FTotalDepositToInvestors = Convert.ToDouble(intTotalDepositToInvestors / 10);
+            double doubleTotalDepositToInvestors = Math.Round(qTotalDepositToInvestors / (double)1000000000, 1);
 
             int qCountDepositToInvestors = db.Tbl_DepositToInvestors.Count(p => p.IsDelete == false && p.IsPaid);
             InvestmentSummaryViewModel investmentSummaryViewModel = new InvestmentSummaryViewModel()
             {
-                AmountCapitalRaised = qAmountCapitalRaised,
+                AmountCapitalRaised = Math.Round(qAmountCapitalRaised / (double)1000000000, 1),
                 ActiveUsers = qActiveUsers,
                 // InvestmentCountPerson = qInvestmentCountPerson,
                 InvestmentSuccessPlanCount = qInvestmentSuccessPlanCount,
-                TotalDepositToInvestors = FTotalDepositToInvestors,
+                TotalDepositToInvestors = doubleTotalDepositToInvestors,
                 CountDepositToInvestors = qCountDepositToInvestors
             };
             return PartialView(investmentSummaryViewModel);
