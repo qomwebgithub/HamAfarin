@@ -44,7 +44,7 @@ namespace HamAfarin.Classes
         public string GetToken(string requestToken)
         {
             string[] res = requestToken.Split(':', ',');
-            return res[3].Replace("\"", "");
+            return res[3].Replace("\"", "").Replace("}", "");
         }
 
         public string GetRedirectUrl(string token)
