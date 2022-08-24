@@ -21,7 +21,7 @@ namespace HamAfarin.Areas.Admin.Controllers
     public class Tbl_SmsController : Controller
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
 
         // GET: Admin/Tbl_Sms
         public async Task<ActionResult> Index()

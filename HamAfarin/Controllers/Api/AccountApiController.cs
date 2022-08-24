@@ -17,7 +17,7 @@ namespace HamAfarin.Controllers.Api
     public class AccountApiController : ApiController
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
         private readonly SejamClass oSejamClass = new SejamClass();
         CheckNationalCode checkNationalCode = new CheckNationalCode();
         CheckPassword checkPassword = new CheckPassword();

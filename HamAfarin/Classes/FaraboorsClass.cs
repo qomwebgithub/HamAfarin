@@ -14,7 +14,7 @@ namespace HamAfarin
 {
     public class FaraboorsClass
     {
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
         private const string _apiKey = "e84ef828-f196-4dce-ae77-cc7e23a2742b";
 
         HamAfarinDBEntities db = new HamAfarinDBEntities();

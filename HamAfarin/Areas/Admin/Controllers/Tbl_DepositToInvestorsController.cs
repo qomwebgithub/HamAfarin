@@ -19,7 +19,7 @@ namespace HamAfarin.Areas.Admin.Controllers
     public class Tbl_DepositToInvestorsController : Controller
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
 
         // GET: UserPanel/DepositToInvestors
         public ActionResult Index()

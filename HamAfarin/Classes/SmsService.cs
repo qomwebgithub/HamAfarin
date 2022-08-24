@@ -13,7 +13,7 @@ using System.Web;
 
 namespace HamAfarin
 {
-    public class SMS
+    public class SmsService
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
         //JaxRpcMessagingServiceClient sms = new JaxRpcMessagingServiceClient();

@@ -24,7 +24,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
         UserService userService = new UserService();
         PlanService planService = new PlanService();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
 
         // GET: UserPanel/UserPaymentBusinessPlan
         /// <summary>

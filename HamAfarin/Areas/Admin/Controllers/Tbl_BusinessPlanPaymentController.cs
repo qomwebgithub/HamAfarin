@@ -23,7 +23,7 @@ namespace HamAfarin.Areas.Admin.Controllers
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
         UserService userService = new UserService();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
 
         // GET: Admin/Tbl_BusinessPlanPayment
         public ActionResult Index(int? id)

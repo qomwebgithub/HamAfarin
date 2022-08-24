@@ -17,7 +17,7 @@ namespace Hamafarin.Controllers
     public class AccountController : Controller
     {
         HamAfarinDBEntities db = new HamAfarinDBEntities();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
         SejamClass oSejamClass = new SejamClass();
         CheckNationalCode checkNationalCode = new CheckNationalCode();
         CheckPassword checkPassword = new CheckPassword();

@@ -1,25 +1,17 @@
 ﻿using DataLayer;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using ViewModels;
-using Common;
-using AutoMapper;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data;
-using ClosedXML.Excel;
-using System.IO;
-using System.Globalization;
 
 namespace HamAfarin.Areas.Admin.Controllers
 {
     public class Tbl_AffiliateController : Controller
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
-        SMS oSms = new SMS();
+        SmsService oSms = new SmsService();
 
         // GET: UserPanel/DepositToInvestors
         public async Task<ActionResult> Index()
