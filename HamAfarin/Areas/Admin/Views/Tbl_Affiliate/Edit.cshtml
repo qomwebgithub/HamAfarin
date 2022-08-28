@@ -1,0 +1,79 @@
+﻿@model ViewModels.ApiTokenViewModel
+
+@{
+    ViewBag.Title = "ویرایش " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Content/js/Select2/select2.min.js"></script>
+<link href="~/Content/css/select2.min.css" rel="stylesheet" />
+
+
+
+<style>
+    input, select, textarea {
+        max-width: 987PX;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('.my_select').select2();
+    });
+</script>
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal w-25" >
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+
+        <div class="form-group form-row form-control ">
+            <div class="col-md-12">
+                <select id="SelectProduct" name="SelectProduct">
+                    <option value="@Html.DropDownList("User_ID", String.Empty)">                      
+                        @Html.ValidationMessageFor(model => model.UserID)
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Url, new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Url)
+                @Html.ValidationMessageFor(model => model.Url)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </div>
+        </div>
+
+
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-12">
+                <input type="submit" value="ثبت" class="btn btn-primary col-4" />
+                <a href="/Admin/Tbl_Affiliate" class="btn btn-warning col-7">بازگشت به فهرست</a>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $('#SelectProduct').select2({
+            language: "fa",
+            width: 'resolve' 
+        });
+    });
+</script>

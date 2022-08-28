@@ -18,6 +18,7 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="User_Id" Type="int" />
           <Property Name="Token" Type="nvarchar" MaxLength="50" />
           <Property Name="Url" Type="nvarchar" MaxLength="50" />
@@ -1841,6 +1842,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="User_Id" Type="Int32" />
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -3268,6 +3270,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
