@@ -3,6 +3,7 @@ using HamAfarin.Classes.Interface;
 using HamAfarin.ZarinPal;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -14,9 +15,46 @@ namespace HamAfarin.Classes
         private const string _terminalId = "12949549";
         private const string _terminalPassword = "1837060";
 
-        public (bool IsSuccess, string Result) RequestToken(BankDto dto)
+        public (bool IsSuccess, string Result) CheckTransaction(string transactionReferenceID)
         {
-            string json = MakeJson(dto);
+            throw new NotImplementedException();
+        }
+
+        public (bool IsSuccess, string Result) ConfirmPayment(BankPaymentDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BankPaymentDto DeserializeBankRequest(NameValueCollection requestQueryString)
+        {
+            string mid = requestQueryString["MID"],
+                state = requestQueryString["State"],
+                status = requestQueryString["Status"],
+                rrn = requestQueryString["RRN"],
+                refNum = requestQueryString["RefNum"],
+                resNum = requestQueryString["ResNum"],
+                traceNo = requestQueryString["TraceNo"],
+                amount = requestQueryString["Amount"],
+                wage = requestQueryString["Wage"],
+                securePan = requestQueryString["SecurePan"],
+                hashedCardNumber = requestQueryString["HashedCardNumber"];
+
+            return new BankPaymentDto();
+        }
+
+        public long GetTransactionAmount(string transactionResult)
+        {
+            throw new NotImplementedException();
+        }
+
+        public (bool IsSuccess, string Result) RefundPayment(BankPaymentDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public BankRequestDto Request(BankInvoice bankInvoice)
+        {
+            string json = MakeJson(bankInvoice);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest
                 .Create("https://sep.shaparak.ir/onlinepg/onlinepg");
@@ -34,25 +72,19 @@ namespace HamAfarin.Classes
 
             string result = reader.ReadToEnd();
 
-            bool success = false;
-            if (result.Contains("\"status\":1"))
-                success = true;
+            var dto = new BankRequestDto() { IsSuccess = false, Result = result };
 
-            return (success, result);
+            if (!result.Contains("\"status\":1"))
+                return dto;
+
+            dto.IsSuccess = true;
+            dto.Token = result.Split(':', ',')[3].Replace("\"", "").Replace("}", "");
+            dto.RedirectUrl = "https://sep.shaparak.ir/OnlinePG/SendToken?token=" + dto.Token;
+
+            return dto;
         }
 
-        public string GetToken(string requestToken)
-        {
-            string[] res = requestToken.Split(':', ',');
-            return res[3].Replace("\"", "").Replace("}", "");
-        }
-
-        public string GetRedirectUrl(string token)
-        {
-            return "https://sep.shaparak.ir/OnlinePG/SendToken?token=" + token;
-        }
-
-        private string MakeJson(BankDto dto)
+        private string MakeJson(BankInvoice dto)
         {
             var requestDto = new SamanBankRequestTokenDto()
             {
@@ -65,6 +97,7 @@ namespace HamAfarin.Classes
             };
             return JsonConvert.SerializeObject(requestDto);
         }
+
     }
 
     public class SamanBankRequestTokenDto

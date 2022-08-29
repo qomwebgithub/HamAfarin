@@ -12,33 +12,26 @@ namespace HamAfarin.Classes
 {
     public class ZarinPalBankService : IBankService
     {
-        private const string _bankRedirectUrl = "https://www.zarinpal.com/pg/StartPay/";
         private const string _secretKey = "bfb039ca-b62b-434a-a7fc-ad2b53c981b0";
 
-        public (bool IsSuccess, string Result) RequestToken(BankDto dto)
+        public BankRequestDto Request(BankInvoice bankInvoice)
         {
             ServicePointManager.Expect100Continue = false;
             string token;
             var zp = new PaymentGatewayImplementationServicePortTypeClient();
-            int Status = zp.PaymentRequest(_secretKey, (int)dto.Amount, dto.Description,
-                dto.UserEmail, dto.UserMobile, dto.AfterPaymentRedirectAddress, out token);
+            int Status = zp.PaymentRequest(_secretKey, (int)bankInvoice.Amount, bankInvoice.Description,
+                bankInvoice.UserEmail, bankInvoice.UserMobile, bankInvoice.AfterPaymentRedirectAddress, out token);
 
-            var success = false;
+            var dto = new BankRequestDto() { IsSuccess = false, Result = token };
 
-            if (Status == 100)
-                success = true;
+            if (Status != 100)
+                return dto;
 
-            return (success, token);
-        }
+            dto.IsSuccess = true;
+            dto.Token = token;
+            dto.RedirectUrl = "https://www.zarinpal.com/pg/StartPay/" + token;
 
-        public string GetToken(string requestToken)
-        {
-            return requestToken;
-        }
-
-        public string GetRedirectUrl(string token)
-        {
-            return _bankRedirectUrl + token;
+            return dto;
         }
     }
 }
