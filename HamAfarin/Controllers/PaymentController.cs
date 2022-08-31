@@ -297,6 +297,7 @@ namespace Hamafarin.Controllers
             return View("SelectPaymentType/" + selectPaymentTypeViewModel.BusinessPlanID);
         }
 
+        [HttpGet, HttpPost]
         public ActionResult VerifyPayment(string id)
         {
             Tbl_PaymentOnlineDetils qPaymentOnline = db.Tbl_PaymentOnlineDetils.FirstOrDefault(p => p.PaymentDetilsID == id);
@@ -308,6 +309,10 @@ namespace Hamafarin.Controllers
                 if (qPaymentOnline == null)
                     return View();
 
+                long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
+                long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
+                bool isRefund = qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice;
+                
                 if (qPaymentOnline.Dargah_id == 1)
                 {
                     IBankService bankService = new PasargadBankService();
@@ -383,10 +388,7 @@ namespace Hamafarin.Controllers
                     var res = strResult.Split(':', ',');
                     string[] pay = res[21].Split('.');
 
-                    long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
-                    long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
-
-                    if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
+                    if (isRefund)
                     {
                         // برگشت وجه
                         string refundResult = RefundPayment(pay[0], invoiceNumber, invoiceDate);
