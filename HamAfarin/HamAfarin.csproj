@@ -819,6 +819,9 @@
     <Content Include="Areas\Admin\Views\Tbl_BussinessPlans\FbCreate.cshtml" />
     <Content Include="Areas\UserPanel\Views\Affiliate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Affiliate\create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Affiliate\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Affiliate\Edit.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
@@ -884,6 +887,7 @@
     <Content Include="Content\css\persian-datepicker-0.4.5.min.css" />
     <Content Include="Content\css\responsive.css" />
     <Content Include="Content\css\rtl.css" />
+    <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\simple-line-icons.css" />
     <Content Include="Content\css\slides\css\splide-core.min.css" />
     <Content Include="Content\css\slides\css\splide.min.css" />
@@ -1012,6 +1016,9 @@
     <Content Include="Content\js\jquery-3.5.1.min.js" />
     <Content Include="Content\js\jquery-ui.min.js" />
     <Content Include="Content\js\owl.carousel.min.js" />
+    <Content Include="Content\js\Select2\fa.js" />
+    <Content Include="Content\js\Select2\jquery.min.js" />
+    <Content Include="Content\js\Select2\select2.min.js" />
     <Content Include="Content\js\sweetalert2.all.min.js" />
     <Content Include="Content\js\toastr.min.js" />
     <Content Include="Content\js\views\account\account.js" />

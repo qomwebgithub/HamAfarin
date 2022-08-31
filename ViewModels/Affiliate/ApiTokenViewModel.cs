@@ -12,7 +12,7 @@ namespace ViewModels
         [Display(Name = "شناسه")]
         public int ID { get; set; }
         [Display(Name = "شناسه کاربری")]
-        public int? User_Id { get; set; }
+        public int? UserID { get; set; }
         [Display(Name = "تعداد کاربران")]
         public int UserCount { get; set; }
         [Display(Name = "نام کاربری")]
