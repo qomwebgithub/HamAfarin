@@ -53,16 +53,24 @@ namespace HamAfarin.Areas.Admin.Controllers
             //    default: gatewayName = "Saman"; break;
             //};
 
-            Invoice invoice = new Invoice()
-            {
-                GatewayName = "ParbadVirtual",
-                TrackingNumber = new Random().Next(1,1000),
-                Amount = 10000,
-                CallbackUrl = new CallbackUrl("http://localhost:4677/Admin/AdminPanel/TestVerify"),
-                //CallbackUrl = Url.Action("TestVerify", "AdminPanel", null, Request.Url.Scheme)
-            };
+            //Invoice invoice = new Invoice()
+            //{
+            //    GatewayName = "ParbadVirtual",
+            //    TrackingNumber = new Random().Next(1,1000),
+            //    Amount = 10000,
+            //    CallbackUrl = new CallbackUrl("http://localhost:4677/Admin/AdminPanel/TestVerify"),
+            //    //CallbackUrl = Url.Action("TestVerify", "AdminPanel", null, Request.Url.Scheme)
+            //};
 
-            IPaymentRequestResult result = await onlinePayment.RequestAsync(invoice);
+            IPaymentRequestResult result = await onlinePayment.RequestAsync(invoice =>
+                invoice
+                    .SetTrackingNumber(new Random().Next(1, 1000))
+                    .SetAmount(10000)
+                    .SetCallbackUrl("https://hamafarin.ir/Admin/AdminPanel/TestVerify")
+                    .SetGateway("Saman")
+                    //.SetZarinPalData(new ZarinPalInvoice(
+                    //    "test", "test@gmail.com", "09191155021"))
+            );
 
             if (!result.IsSucceed)
                 throw new Exception();
@@ -81,7 +89,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             {
                 // You can also see if the invoice is already verified before.
                 var isAlreadyVerified = invoice.IsAlreadyVerified;
-                return Content("The payment was not successful.");
+                return Content("پرداخت نا موفق");
             }
 
             // This is an example of cancelling an invoice when you think that the payment process must be stopped.
@@ -95,7 +103,8 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             var verifyResult = await onlinePayment.VerifyAsync(invoice);
 
-            return View(verifyResult);
+            //return View(verifyResult);
+            return Content("پرداخت موفق.");
         }
         private IOnlinePayment OnlinePayment()
         {
@@ -137,8 +146,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                             });
                         });
 
-                    gateways.AddParbadVirtual()
-                        .WithOptions(options => options.GatewayPath = "/MyVirtualGateway");
+                    //gateways.AddParbadVirtual()
+                    //    .WithOptions(options => options.GatewayPath = "/MyVirtualGateway");
                 })
                 .ConfigureHttpContext(builder => builder.UseOwinFromCurrentHttpContext())
                 .ConfigureStorage(builder => builder.AddStorage(new PaymentStorage()))
