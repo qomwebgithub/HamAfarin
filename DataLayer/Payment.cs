@@ -29,6 +29,8 @@ namespace DataLayer
         public string GatewayAccountName { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsPaid { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transaction { get; set; }

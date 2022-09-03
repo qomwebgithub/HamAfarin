@@ -18,6 +18,8 @@
           <Property Name="GatewayAccountName" Type="nvarchar(max)" />
           <Property Name="IsCompleted" Type="bit" Nullable="false" />
           <Property Name="IsPaid" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -30,8 +32,10 @@
           <Property Name="Message" Type="nvarchar(max)" />
           <Property Name="AdditionalData" Type="nvarchar(max)" />
           <Property Name="PaymentId" Type="bigint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
-        <Association Name="FK_Transaction_Payment">
+        <Association Name="FK_Transactions_Payments">
           <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
           <End Role="Transaction" Type="Self.Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -46,7 +50,7 @@
         <EntityContainer Name="HamafarinPaymentDBModelStoreContainer">
           <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Transaction" EntityType="Self.Transaction" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Transaction_Payment" Association="Self.FK_Transaction_Payment">
+          <AssociationSet Name="FK_Transactions_Payments" Association="Self.FK_Transactions_Payments">
             <End Role="Payment" EntitySet="Payment" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
@@ -58,7 +62,7 @@
         <EntityContainer Name="HamafarinPaymentDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Payment" EntityType="HamafarinPaymentDBModel.Payment" />
           <EntitySet Name="Transaction" EntityType="HamafarinPaymentDBModel.Transaction" />
-          <AssociationSet Name="FK_Transaction_Payment" Association="HamafarinPaymentDBModel.FK_Transaction_Payment">
+          <AssociationSet Name="FK_Transactions_Payments" Association="HamafarinPaymentDBModel.FK_Transactions_Payments">
             <End Role="Payment" EntitySet="Payment" />
             <End Role="Transaction" EntitySet="Transaction" />
           </AssociationSet>
@@ -76,7 +80,9 @@
           <Property Name="GatewayAccountName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsCompleted" Type="Boolean" Nullable="false" />
           <Property Name="IsPaid" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Transaction" Relationship="HamafarinPaymentDBModel.FK_Transaction_Payment" FromRole="Payment" ToRole="Transaction" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Transaction" Relationship="HamafarinPaymentDBModel.FK_Transactions_Payments" FromRole="Payment" ToRole="Transaction" />
         </EntityType>
         <EntityType Name="Transaction">
           <Key>
@@ -89,9 +95,11 @@
           <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AdditionalData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PaymentId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Payment" Relationship="HamafarinPaymentDBModel.FK_Transaction_Payment" FromRole="Transaction" ToRole="Payment" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Payment" Relationship="HamafarinPaymentDBModel.FK_Transactions_Payments" FromRole="Transaction" ToRole="Payment" />
         </EntityType>
-        <Association Name="FK_Transaction_Payment">
+        <Association Name="FK_Transactions_Payments">
           <End Type="HamafarinPaymentDBModel.Payment" Role="Payment" Multiplicity="1" />
           <End Type="HamafarinPaymentDBModel.Transaction" Role="Transaction" Multiplicity="*" />
           <ReferentialConstraint>
@@ -112,6 +120,8 @@
           <EntitySetMapping Name="Payment">
             <EntityTypeMapping TypeName="HamafarinPaymentDBModel.Payment">
               <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
                 <ScalarProperty Name="IsCompleted" ColumnName="IsCompleted" />
                 <ScalarProperty Name="GatewayAccountName" ColumnName="GatewayAccountName" />
@@ -127,6 +137,8 @@
           <EntitySetMapping Name="Transaction">
             <EntityTypeMapping TypeName="HamafarinPaymentDBModel.Transaction">
               <MappingFragment StoreEntitySet="Transaction">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="PaymentId" ColumnName="PaymentId" />
                 <ScalarProperty Name="AdditionalData" ColumnName="AdditionalData" />
                 <ScalarProperty Name="Message" ColumnName="Message" />

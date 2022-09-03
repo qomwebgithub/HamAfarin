@@ -7,7 +7,7 @@
       <Diagram DiagramId="8efe02cd275345e8a20e5821884ec2ec" Name="Diagram1">
         <EntityTypeShape EntityType="HamafarinPaymentDBModel.Payment" Width="1.5" PointX="0.75" PointY="1" />
         <EntityTypeShape EntityType="HamafarinPaymentDBModel.Transaction" Width="1.5" PointX="3" PointY="1.125" />
-        <AssociationConnector Association="HamafarinPaymentDBModel.FK_Transaction_Payment" />
+        <AssociationConnector Association="HamafarinPaymentDBModel.FK_Transactions_Payments" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

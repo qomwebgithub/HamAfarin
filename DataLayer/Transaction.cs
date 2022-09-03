@@ -21,6 +21,8 @@ namespace DataLayer
         public string Message { get; set; }
         public string AdditionalData { get; set; }
         public long PaymentId { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public Nullable<System.DateTime> UpdatedOn { get; set; }
     
         public virtual Payment Payment { get; set; }
     }
