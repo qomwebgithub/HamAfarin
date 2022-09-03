@@ -73,6 +73,7 @@
     <Compile Include="Account\InvestmentsReport\InvestmentsReportViewModel.cs" />
     <Compile Include="Account\ResetPasswordViewModel.cs" />
     <Compile Include="Affiliate\ApiTokenViewModel.cs" />
+    <Compile Include="Affiliate\LstUsersAffiliateViewModel.cs" />
     <Compile Include="Api\ApiResult.cs" />
     <Compile Include="Api\ProjectFinancingProviderDto.cs" />
     <Compile Include="Api\FaraboorsResponseJsonModel.cs" />

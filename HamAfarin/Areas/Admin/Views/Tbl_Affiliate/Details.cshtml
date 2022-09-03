@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ViewModels.LstUsersAffiliateViewModel>
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "فهرست ";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@(Html.Kendo().Grid(Model)
+                    .Name("Grid")
+                    .Columns(columns =>
+                    {
+                    columns.Bound(model => model.UserID);
+                    columns.Bound(model => model.MobileNumber);
+                    columns.Bound(model => model.FirstName);
+                    columns.Bound(model => model.LastName);
+                    columns.Bound(model => model.NationalCode);
+                    columns.Bound(model => model.IsActive);
+                    columns.Bound(model => model.RegisterDate)
+              .Template(@<text>
+            <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_UserProfiles/Details/@item.UserID">اطلاعات سرمایه گذار</a>
+        </text>).Width(200);
+        })
+		.Groupable()
+		.Pageable()
+		.Sortable()
+		.Scrollable()
+		.Filterable()
+		.DataSource(dataSource => dataSource
+									.Server()
+					)
+	)

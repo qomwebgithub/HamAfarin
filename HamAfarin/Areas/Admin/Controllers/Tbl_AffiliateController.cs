@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net;
 using System;
+using System.Collections.Generic;
 
 namespace HamAfarin.Areas.Admin.Controllers
 {
@@ -132,7 +133,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
             return View(apiTokenViewModel);
         }
-        
+
         [HttpPost]
         public async Task<ActionResult> Edit(ApiTokenViewModel apiTokenViewModel)
         {
@@ -153,29 +154,55 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
 
 
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
-            if (tbl_ApiToken == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_ApiToken);
-        }
+            var qlstUser = await db.Tbl_Affiliate.AsNoTracking().Where(i => i.Token_Id == id).Select(u => u.Tbl_Users).ToListAsync();
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id)
+            if (qlstUser != null)
+            {
+                List<LstUsersAffiliateViewModel> lstUsersAffiliate = new List<LstUsersAffiliateViewModel>();
+                foreach (var item in qlstUser)
+                {
+                    lstUsersAffiliate.Add(new LstUsersAffiliateViewModel()
+                    {
+                        UserID = item.UserID,
+                        FirstName = item.Tbl_UserProfiles.Select(n => n.FirstName).FirstOrDefault(),
+                        LastName = item.Tbl_UserProfiles.Select(n => n.LastName).FirstOrDefault(),
+                        MobileNumber = item.MobileNumber,
+                        RegisterDate = item.RegisterDate,
+                        NationalCode = item.Tbl_UserProfiles.Select(i => i.NationalCode).FirstOrDefault(),
+                        IsActive = item.IsActive,
+                    });
+                }
+            return View(lstUsersAffiliate);
+            }
+            return View();
+        }
+    
+
+    public ActionResult Delete(int? id)
+    {
+        if (id == null)
         {
-            Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
-            tbl_ApiToken.IsDelete = true;
-            db.SaveChanges();
-            return RedirectToAction("Index");
-
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
+        Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
+        if (tbl_ApiToken == null)
+        {
+            return HttpNotFound();
+        }
+        return View(tbl_ApiToken);
     }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public ActionResult Delete(int id)
+    {
+        Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
+        tbl_ApiToken.IsDelete = true;
+        db.SaveChanges();
+        return RedirectToAction("Index");
+
+    }
+}
 }
