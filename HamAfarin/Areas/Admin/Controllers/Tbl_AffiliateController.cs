@@ -19,7 +19,6 @@ namespace HamAfarin.Areas.Admin.Controllers
     public class Tbl_AffiliateController : Controller
     {
         private HamAfarinDBEntities db = new HamAfarinDBEntities();
-        SmsService oSms = new SmsService();
 
         // GET: UserPanel/DepositToInvestors
         public async Task<ActionResult> Index()

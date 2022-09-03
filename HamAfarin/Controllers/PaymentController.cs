@@ -6,6 +6,7 @@ using HamAfarin.Classes.Interface;
 using HamAfarin.ZarinPal;
 using KooyWebApp_MVC.Classes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -179,7 +180,6 @@ namespace Hamafarin.Controllers
                         string redirectAddress = "https://www.hamafarin.ir/Payment/VerifyPayment/" + tbl_PaymentOnline.PaymentDetilsID;
 
                         #region BankPayment
-
                         IBankService bankService;
                         switch (selectPaymentTypeViewModel.Dargah)
                         {
@@ -188,7 +188,7 @@ namespace Hamafarin.Controllers
                             default: bankService = new SamanBankService(); break;
                         };
 
-                        var bankDto = new BankDto()
+                        var bankDto = new BankInvoice()
                         {
                             UserEmail = email,
                             UserMobile = qUser.MobileNumber,
@@ -200,16 +200,15 @@ namespace Hamafarin.Controllers
                             TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
                         };
 
-                        (bool IsSuccess, string Result) request = bankService.RequestToken(bankDto);
+                        var request = bankService.Request(bankDto);
                         tbl_PaymentOnline.ShaparakMessageGetToken = request.Result;
 
                         if (request.IsSuccess)
                         {
-                            var token = bankService.GetToken(request.Result);
-                            tbl_PaymentOnline.ShaparakToken = token;
+                            tbl_PaymentOnline.ShaparakToken = request.Token;
                             db.SaveChanges();
 
-                            return Redirect(bankService.GetRedirectUrl(token));
+                            return Redirect(request.RedirectUrl);
                         }
                         #endregion
 
@@ -298,6 +297,7 @@ namespace Hamafarin.Controllers
             return View("SelectPaymentType/" + selectPaymentTypeViewModel.BusinessPlanID);
         }
 
+        [HttpGet, HttpPost]
         public ActionResult VerifyPayment(string id)
         {
             Tbl_PaymentOnlineDetils qPaymentOnline = db.Tbl_PaymentOnlineDetils.FirstOrDefault(p => p.PaymentDetilsID == id);
@@ -309,17 +309,72 @@ namespace Hamafarin.Controllers
                 if (qPaymentOnline == null)
                     return View();
 
+                long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
+                long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
+                bool isRefund = qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice;
+                
                 if (qPaymentOnline.Dargah_id == 1)
                 {
+                    IBankService bankService = new PasargadBankService();
                     #region Pasargad
+                    #region NewCode
                     //درگاه پاسارگاد
+                    //var requestDto = bankService.DeserializeBankRequest(Request.QueryString);
+                    //qPaymentOnline.TransactionReferenceID = requestDto.TransactionReferenceID;
+
+                    //// دریافت اطلاعات از درگاه
+                    //var checkTransaction = bankService.CheckTransaction(requestDto.TransactionReferenceID);
+                    //qPaymentOnline.ShaparakCheckTransactionResult = checkTransaction.Result;
+
+                    //if (!checkTransaction.IsSuccess)
+                    //{
+                    //    ViewBag.IsSuccess = false;
+                    //    ViewBag.Result = "عملیات ناموفق";
+                    //    return View();
+                    //}
+
+                    //requestDto.Amount = bankService.GetTransactionAmount(checkTransaction.Result);
+
+                    //long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
+                    //long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
+
+                    //if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
+                    //{
+                    //    // برگشت وجه
+                    //    bankService.RefundPayment(requestDto);
+                    //    ViewBag.Result = "برگشت وجه";
+                    //    return View();
+                    //}
+
+                    //// تایید پرداخت به درگاه
+                    //var ShaparakRefNumber = bankService.ConfirmPayment(requestDto);
+
+                    //if (ShaparakRefNumber.IsSuccess)
+                    //{
+                    //    qPaymentOnline.ShaparakVerifyPayment = ShaparakRefNumber.Result;
+                    //    qPaymentOnline.IsFinally = true;
+                    //    qBusinessPlanPayment.TransactionPaymentCode = requestDto.TransactionReferenceID;
+                    //    qBusinessPlanPayment.IsPaid = true;
+                    //    qPaymentOnline.FinallyDate = DateTime.Now;
+                    //    db.SaveChanges();
+                    //    ViewBag.IsSuccess = true;
+                    //    ViewBag.TransactionReferenceID = requestDto.TransactionReferenceID;
+                    //    // 4 = سرمایه گذاری
+                    //    Tbl_Sms qSms = db.Tbl_Sms.Find(4);
+                    //    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    //    (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+
+                    //    return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                    //}
+                #endregion
+
                     string invoiceNumber = Request.QueryString["iN"];
                     string invoiceDate = Request.QueryString["iD"];
                     string TransactionReferenceID = Request.QueryString["tref"];
                     qPaymentOnline.TransactionReferenceID = TransactionReferenceID;
 
                     // دریافت اطلاعات از درگاه
-                    string strResult = ReadPaymentResult(TransactionReferenceID);
+                    string strResult = CheckTransactionResult(TransactionReferenceID);
 
                     qPaymentOnline.ShaparakCheckTransactionResult = strResult;
 
@@ -333,10 +388,7 @@ namespace Hamafarin.Controllers
                     var res = strResult.Split(':', ',');
                     string[] pay = res[21].Split('.');
 
-                    long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
-                    long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
-
-                    if (qBusinessPlanPayment.Tbl_BussinessPlans.IsOverflowInvestment == false && totalPrice < raisedPrice)
+                    if (isRefund)
                     {
                         // برگشت وجه
                         string refundResult = RefundPayment(pay[0], invoiceNumber, invoiceDate);
@@ -395,16 +447,14 @@ namespace Hamafarin.Controllers
                     var request = new RestRequest("", method);
 
                     request.AddHeader("accept", "application/json");
-
                     request.AddHeader("content-type", "application/json");
 
                     var response = client.ExecuteAsync(request);
 
-
-                    Newtonsoft.Json.Linq.JObject jodata = Newtonsoft.Json.Linq.JObject.Parse(response.Result.Content);
+                    JObject jodata = JObject.Parse(response.Result.Content);
                     string data = jodata["data"].ToString();
 
-                    Newtonsoft.Json.Linq.JObject jo = Newtonsoft.Json.Linq.JObject.Parse(response.Result.Content);
+                    JObject jo = JObject.Parse(response.Result.Content);
                     string errors = jo["errors"].ToString();
 
                     if (data != "[]")
@@ -486,6 +536,10 @@ namespace Hamafarin.Controllers
                     //}
                     #endregion
                 }
+                else
+                {
+
+                }
             }
             catch (Exception e)
             {
@@ -531,7 +585,7 @@ namespace Hamafarin.Controllers
             return sign;
         }
 
-        private string ReadPaymentResult(string TransactionReferenceID)
+        private string CheckTransactionResult(string TransactionReferenceID)
         {
             PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
             dp.TransactionReferenceID = TransactionReferenceID;

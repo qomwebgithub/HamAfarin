@@ -74,6 +74,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HamafarinPaymentModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HamafarinPaymentModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HamafarinPaymentModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HamafarinPaymentModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HamafarinPaymentModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HamafarinPaymentModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="MetadataClasses\Tbl_BlogMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_DepositTypesMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_DepositToInvestorsMetadata.cs" />
@@ -118,6 +133,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>MyModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Payment.cs">
+      <DependentUpon>HamafarinPaymentModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tbl_Affiliate.cs">
@@ -270,6 +288,9 @@
     <Compile Include="Tbl_WalletType.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Transaction.cs">
+      <DependentUpon>HamafarinPaymentModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="View_DepositToInvestorsDetails.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
@@ -280,12 +301,29 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>MyModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <EntityDeploy Include="HamafarinPaymentModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HamafarinPaymentModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="HamafarinPaymentModel.edmx.diagram">
+      <DependentUpon>HamafarinPaymentModel.edmx</DependentUpon>
+    </None>
     <None Include="MyModel.edmx.diagram">
       <DependentUpon>MyModel.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="HamafarinPaymentModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HamafarinPaymentModel.edmx</DependentUpon>
+      <LastGenOutput>HamafarinPaymentModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="HamafarinPaymentModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HamafarinPaymentModel.edmx</DependentUpon>
+      <LastGenOutput>HamafarinPaymentModel.cs</LastGenOutput>
+    </Content>
     <Content Include="MyModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>MyModel.edmx</DependentUpon>
