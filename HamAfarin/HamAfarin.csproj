@@ -834,6 +834,7 @@
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Affiliate\Details.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
