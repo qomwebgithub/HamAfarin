@@ -4075,3 +4075,7 @@ body {
     margin-right: -1.25rem;
     margin-left: unset;
 }
+
+input, select, textarea {
+    max-width: 987PX;
+}

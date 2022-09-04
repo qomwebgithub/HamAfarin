@@ -831,7 +831,7 @@
     <Content Include="Areas\Admin\Views\Tbl_BussinessPlans\FbCreate.cshtml" />
     <Content Include="Areas\UserPanel\Views\Affiliate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Tbl_Affiliate\create.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_Affiliate\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Edit.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />

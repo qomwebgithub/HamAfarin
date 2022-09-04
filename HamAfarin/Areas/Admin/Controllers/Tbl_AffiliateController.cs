@@ -81,25 +81,25 @@ namespace HamAfarin.Areas.Admin.Controllers
             return View(apiTokenVM.ToList());
         }
 
-        public async Task<ActionResult> create()
+        public async Task<ActionResult> Create()
         {
             ApiTokenViewModel apiTokenViewModel = new ApiTokenViewModel();
-            ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName");
+            ViewBag.User_ID = new SelectList(db.Tbl_Users.AsNoTracking(), "UserID", "UserName");
 
             return View(apiTokenViewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> create(ApiTokenViewModel apiTokenViewModel)
+        public async Task<ActionResult> Create(ApiTokenViewModel apiTokenViewModel)
         {
-            ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName",apiTokenViewModel.UserID);
+            ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName",apiTokenViewModel.User_ID);
             if (ModelState.IsValid)
             {
                 Tbl_ApiToken tbl_ApiToken = new Tbl_ApiToken();
 
                 tbl_ApiToken.Url = apiTokenViewModel.Url;
                 tbl_ApiToken.Name = apiTokenViewModel.Name;
-                tbl_ApiToken.User_Id = apiTokenViewModel.UserID;
+                tbl_ApiToken.User_Id = apiTokenViewModel.User_ID;
                 tbl_ApiToken.Token = Guid.NewGuid().ToString();
                 var bytes = UTF8Encoding.UTF8.GetBytes(tbl_ApiToken.Token);
                 var shaM = new HMACSHA512();
@@ -107,7 +107,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
 
                 db.Tbl_ApiToken.Add(tbl_ApiToken);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -126,7 +126,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 apiTokenViewModel.ID = qTbl_ApiToken.ID;
                 apiTokenViewModel.Name = qTbl_ApiToken.Name;
                 apiTokenViewModel.Url = qTbl_ApiToken.Url;
-                apiTokenViewModel.UserID = qTbl_ApiToken.User_Id;
+                apiTokenViewModel.User_ID = qTbl_ApiToken.User_Id;
                 ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName", qTbl_ApiToken.User_Id);
             }
             return View(apiTokenViewModel);
@@ -142,7 +142,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 {
                     qTbl_ApiToken.Name = apiTokenViewModel.Name;
                     qTbl_ApiToken.Url = apiTokenViewModel.Url;
-                    qTbl_ApiToken.User_Id = apiTokenViewModel.UserID;
+                    qTbl_ApiToken.User_Id = apiTokenViewModel.User_ID;
                     db.SaveChanges();
 
                 }
