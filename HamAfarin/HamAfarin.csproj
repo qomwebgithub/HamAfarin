@@ -1095,11 +1095,9 @@
     <Content Include="Global.asax" />
     <Content Include="Images\BlogImages\Image\no-photo.jpg" />
     <Content Include="Images\BlogImages\Thumb\no-photo.jpg" />
-    <Content Include="Images\BusinessPlans\Image\85ced2be-997b-4686-ae92-cd69144d9b7b.jpg" />
     <Content Include="Images\BusinessPlans\Image\6f1f21af-3262-4204-bca0-9026b824cdb1.jpg" />
     <Content Include="Images\BusinessPlans\Image\no-photo.jpg" />
     <Content Include="Images\BusinessPlans\Thumb\6f1f21af-3262-4204-bca0-9026b824cdb1.jpg" />
-    <Content Include="Images\BusinessPlans\Thumb\e1cc2617-4d93-4cae-987e-37839fa3115e.jpg" />
     <Content Include="Images\BusinessPlans\Thumb\no-photo.jpg" />
     <Content Include="Images\FuturePlans\Image\no-photo.jpg" />
     <Content Include="Images\FuturePlans\Thumb\no-photo.jpg" />
@@ -1111,9 +1109,7 @@
     <Content Include="Images\SettingImages\Thumb\no-photo.jpg" />
     <Content Include="Images\ShareHolders\Image\no-photo.jpg" />
     <Content Include="Images\ShareHolders\Logo\no-photo.jpg" />
-    <Content Include="Resources\BusinessPlans\Idea\b66b4609-1527-4ca1-90b1-cfacd452dc9b.mp4" />
     <Content Include="Resources\BusinessPlans\Idea\demo.mp4" />
-    <Content Include="Resources\BusinessPlans\Warranty\5e9af31f-dfa2-46dc-9e4c-a8b27338691c.jpg" />
     <Content Include="Resources\BusinessPlans\Warranty\98ceff98-2965-44ac-b855-e1eab1525fe9.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2533,6 +2529,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\BusinessPlansController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Classes\Dto\DataPost.cs" />
     <Compile Include="Controllers\FutureBusinessPlanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestmentHelpController.cs" />
