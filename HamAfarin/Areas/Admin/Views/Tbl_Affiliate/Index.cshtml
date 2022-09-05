@@ -4,14 +4,7 @@
 @{
     ViewBag.Title = "فهرست بازاریابان";
 }
-<div class="container">
-    <div class="row d-flex flex-row justify-content-between">
-        <h2 class="col-3">@ViewBag.Title</h2>
-        <a class="col-3 btn btn-success shadow w-25" href="/Admin/Tbl_Affiliate/create"><span class="h4">اضافه کردن بازاریاب</span></a>
-    </div>
-    <hr />
-</div>
-
+<h2>فهرست بازاریابان</h2>
 @(Html.Kendo().Grid(Model)
     .Name("Grid")
     .Columns(columns =>
@@ -20,21 +13,23 @@
         columns.Bound(model => model.Name);
         columns.Bound(model => model.Username);
         columns.Bound(model => model.Mobile);
+        columns.Bound(model => model.CreateDate);
         columns.Bound(model => model.Url);
         columns.Bound(model => model.UserCount);
         columns.Bound(model => model.TotalInvestment);
         columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
         .Template(@<text>
-            @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "col-3 btn btn-warning" })
-            @Html.ActionLink("حذف", "Delete", new { id = @item.ID }, new { @class = "col-3 btn btn-danger " })
+            @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "text-danger" })
+            @Html.ActionLink("حذف", "Delete", new { id = @item.ID }, new { @class = "text-danger" })
+            @Html.ActionLink("جزئیات", "Details", new { id = @item.ID }, new { @class = "text-danger" })
         </text>);
 
     })
-    //.ToolBar(toolbar =>
-    //    {
-    //        toolbar.Custom().Action("Create", "Tbl_Affiliate").Text("افزودن");
-    //    }
-    //)
+    .ToolBar(toolbar =>
+    {
+        toolbar.Custom().Action("Create", "Tbl_Affiliate").Text("افزودن");
+    }
+    )
     .Groupable()
     .Pageable()
     .Sortable()

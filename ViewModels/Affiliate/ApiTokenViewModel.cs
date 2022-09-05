@@ -21,6 +21,10 @@ namespace ViewModels
         public string Mobile { get; set; }
         [Display(Name = "آدرس بازاریابی")]
         public string Url { get; set; }
+
+        [Display(Name = "تاریخ ایجاد")]
+        public DateTime? CreateDate { get; set; }
+
         [Display(Name = "نام")]
         public string Name { get; set; }
         [Display(Name = "کل سرمایه گذاری")]
