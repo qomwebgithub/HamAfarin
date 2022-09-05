@@ -13,8 +13,8 @@
         columns.Bound(model => model.Name);
         columns.Bound(model => model.Username);
         columns.Bound(model => model.Mobile);
-        columns.Bound(model => model.CreateDate);
-        columns.Bound(model => model.Url);
+        columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
+        columns.Bound(model => model.Url).Width(50);
         columns.Bound(model => model.UserCount);
         columns.Bound(model => model.TotalInvestment);
         columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)

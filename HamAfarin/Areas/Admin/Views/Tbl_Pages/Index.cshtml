@@ -16,8 +16,8 @@
                             .Template(@<text>
                         <img class="thumbnail" src="/Images/Pages/Thumb/@item.ImageName" style="max-width: 150px" />
                             </text>);
-columns.Bound(model => model.CreateDate);
-columns.Bound(item => @item.PageID).Title("لینک صفحه").Filterable(false).Groupable(false)
+      columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
+      columns.Bound(item => @item.PageID).Title("لینک صفحه").Filterable(false).Groupable(false)
 .Template(@<text>
             <p style="direction: ltr;">@ConfigurationManager.AppSettings["ThisDomain"]Page/@item.PageID/@item.UrlTitle</p>
 </text>);

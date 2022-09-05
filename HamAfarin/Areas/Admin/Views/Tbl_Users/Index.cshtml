@@ -13,19 +13,19 @@
 @Html.Action("PartialSendSms", "Tbl_Sms")
 
 @(Html.Kendo().Grid(Model)
-              .Name("Grid")
-              .Columns(columns =>
-                  {
-        columns.Bound(model => model.UserName);
-        columns.Bound(model => model.MobileNumber);
-        columns.Bound(model => model.Tbl_Roles.RoleDisplayTitle);
-        columns.Bound(model => model.IsActive);
-        columns.Bound(model => model.IsLegal);
-        columns.Bound(model => model.HasSejam);
-        columns.Bound(model => model.RegisterDate);
-        columns.Bound(model => model.ActivateDate);
-					columns.Bound(item => @item.UserID).Title("دستورات").Filterable(false).Groupable(false)
-							.Template(@<text>
+    .Name("Grid")
+    .Columns(columns =>
+    {
+    columns.Bound(model => model.UserName);
+    columns.Bound(model => model.MobileNumber);
+    columns.Bound(model => model.Tbl_Roles.RoleDisplayTitle);
+    columns.Bound(model => model.IsActive);
+    columns.Bound(model => model.IsLegal);
+    columns.Bound(model => model.HasSejam);
+    columns.Bound(model => model.RegisterDate).Format("{0:yyy/MM/dd HH:mm}");
+    columns.Bound(model => model.ActivateDate).Format("{0:yyy/MM/dd HH:mm}");
+    columns.Bound(item => @item.UserID).Title("دستورات").Filterable(false).Groupable(false)
+                  .Template(@<text>
 									@Html.ActionLink("لیست سرمایه گذاری ها", "PaymentList", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("ویرایش", "Edit", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("حذف", "Delete", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Delete"})

@@ -16,12 +16,12 @@
                             .Template(@<text>
                     <img src="~/Images/InvestableImages/Thumb/@item.ImageName" class="thumbnail" style="max-width:200px" />
                             </text>);
-columns.Bound(model => model.Title);
-columns.Bound(model => model.CreateDate);
-columns.Bound(model => model.IsActive);
-columns.Bound(model => model.Sort);
-     columns.Bound(item => @item.InvestableID).Title("دستورات").Filterable(false).Groupable(false)
-             .Template(@<text>
+               columns.Bound(model => model.Title);
+               columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
+               columns.Bound(model => model.IsActive);
+               columns.Bound(model => model.Sort);
+               columns.Bound(item => @item.InvestableID).Title("دستورات").Filterable(false).Groupable(false)
+                  .Template(@<text>
                     @Html.ActionLink("ویرایش", "Edit", new { id = @item.InvestableID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
                     @Html.ActionLink("حذف", "Delete", new { id = @item.InvestableID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
             </text>).Width(200);

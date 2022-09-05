@@ -19,14 +19,14 @@
                             .Template(@<text>
                     <img src="~/Images/BlogImages/Thumb/@item.ImageName" class="thumbnail" style="max-width:200px" />
                             </text>);
-columns.Bound(model => model.Title);
-columns.Bound(model => model.IsActive);
-columns.Bound(model => model.CreateDate);
-columns.Bound(model => model.ShowMainPage);
-columns.Bound(model => model.CountVisit);
-columns.Bound(model => model.Tbl_Users.UserName);
-columns.Bound(item => @item.BlogID).Title("دستورات").Filterable(false).Groupable(false)
-.Template(@<text>
+                    columns.Bound(model => model.Title);
+                    columns.Bound(model => model.IsActive);
+                    columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
+                    columns.Bound(model => model.ShowMainPage);
+                    columns.Bound(model => model.CountVisit);
+                    columns.Bound(model => model.Tbl_Users.UserName);
+                    columns.Bound(item => @item.BlogID).Title("دستورات").Filterable(false).Groupable(false)
+          .Template(@<text>
             @Html.ActionLink("جزئیات", "Details", new { id = @item.BlogID }, new { @class = "btn btn-info" })
             @Html.ActionLink("حذف", "Delete", new { id = @item.BlogID }, new { @class = "btn btn-danger" })
 </text>).Width(200);

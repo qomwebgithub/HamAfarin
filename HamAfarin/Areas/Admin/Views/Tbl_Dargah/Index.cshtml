@@ -8,27 +8,27 @@
 
 <h2>@ViewBag.Title</h2>
 
-        @(Html.Kendo().Grid(Model)
-              .Name("Grid")
-              .Columns(columns =>
-                  {
-                  columns.Bound(model => model.IsActive);
+@(Html.Kendo().Grid(Model)
+        .Name("Grid")
+        .Columns(columns =>
+        {
+        columns.Bound(model => model.IsActive);
         columns.Bound(model => model.Title);
         columns.Bound(model => model.Name);
-        columns.Bound(model => model.CreateDate);
+        columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
         columns.Bound(model => model.Checked);
-					columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
-							.Template(@<text>
+        columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
+                      .Template(@<text>
 									@Html.ActionLink("ویرایش", "Edit", new {id = @item.ID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
-									</text>).Width(200);  
+									</text>).Width(200);
 		})
 		.Groupable()
 		.Pageable()
 		.Sortable()
-		.Filterable()              
+		.Filterable()
 		.DataSource(dataSource => dataSource
 									.Server()
-							
+
 									.Model(model => model.Id(item => item.ID))
-					)              
+					)
 	)

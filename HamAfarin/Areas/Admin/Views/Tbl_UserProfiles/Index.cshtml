@@ -32,21 +32,21 @@
 <iframe id="downloadIframe" style="display:none;"></iframe>
 
 @(Html.Kendo().Grid(Model)
-              .Name("Grid")
-              .Columns(columns =>
-                  {
-        columns.Bound(model => model.CreateDate);
+        .Name("Grid")
+        .Columns(columns =>
+        {
+        columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
         columns.Bound(model => model.MobileNumber);
         columns.Bound(model => model.FirstName);
         columns.Bound(model => model.LastName);
         columns.Bound(model => model.NationalCode);
         columns.Bound(model => model.SejamCode);
-        columns.Bound(model => model.BirthDate);
+        columns.Bound(model => model.BirthDate).Format("{0:yyy/MM/dd HH:mm}");
         columns.Bound(model => model.Gender);
         columns.Bound(model => model.IsActive);
         columns.Bound(model => model.Tbl_Users.IsLegal);
-					columns.Bound(item => @item.ProfileID).Title("دستورات").Filterable(false).Groupable(false)
-							.Template(@<text>
+        columns.Bound(item => @item.ProfileID).Title("دستورات").Filterable(false).Groupable(false)
+                      .Template(@<text>
 									@Html.ActionLink("ویرایش", "Edit", new {id = @item.ProfileID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
 									@Html.ActionLink("حذف", "Delete", new {id = @item.ProfileID}, new {@class = "k-button k-button-icontext k-grid-Delete"})
 									</text>).Width(200);

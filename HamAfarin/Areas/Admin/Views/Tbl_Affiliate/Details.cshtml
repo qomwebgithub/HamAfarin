@@ -18,7 +18,7 @@
                     columns.Bound(model => model.LastName);
                     columns.Bound(model => model.NationalCode);
                     columns.Bound(model => model.IsActive);
-                    columns.Bound(model => model.RegisterDate)
+                    columns.Bound(model => model.RegisterDate).Format("{0:yyy/MM/dd HH:mm}")
               .Template(@<text>
             <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_UserProfiles/Details/@item.UserID">اطلاعات سرمایه گذار</a>
         </text>).Width(200);

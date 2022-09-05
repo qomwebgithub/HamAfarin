@@ -37,7 +37,12 @@
       .Columns(columns =>
           {
                         columns.Bound(model => model.IsPaid);
-columns.Bound(model => model.PaidDateTime);
+columns.Bound(model => model.PaidDateTime).Template(
+        @<text>
+            @string.Format("{0:yy/MM/dd HH:mm}", item.PaidDateTime)
+        </text>
+
+).Width(70);
 columns.Bound(model => model.TransactionPaymentCode);
 columns.Bound(item => item.PaymentType_id).Filterable(false).Groupable(false)
     .Template(@<text>

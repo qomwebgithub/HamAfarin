@@ -8,17 +8,17 @@
 <h2>@ViewBag.Title</h2>
 
         @(Html.Kendo().Grid(Model)
-              .Name("Grid")
-              .Columns(columns =>
-                  {
+        .Name("Grid")
+        .Columns(columns =>
+        {
         columns.Bound(model => model.Title);
-        columns.Bound(model => model.CreateDate);
-        columns.Bound(model => model.CheckDate);
+        columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
+        columns.Bound(model => model.CheckDate).Format("{0:yyy/MM/dd HH:mm}");
         columns.Bound(model => model.Tbl_RequestFinancingStatus.Title).Title("وضعیت");
         columns.Bound(model => model.Tbl_Users.UserName);
         columns.Bound(model => model.Tbl_Users.Tbl_PersonLegal.First().CompanyName);
-					columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
-							.Template(@<text>
+        columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
+                      .Template(@<text>
 									@Html.ActionLink("ویرایش", "Edit", new {id = @item.ID}, new {@class = "btn btn-warning"})
 									@*@Html.ActionLink("حذف", "Delete", new {id = @item.ID}, new {@class = "k-button k-button-icontext k-grid-Delete"})*@
 									</text>).Width(200);  

@@ -8,14 +8,14 @@
 <h2>@ViewBag.Title</h2>
 
 @(Html.Kendo().Grid(Model)
-      .Name("Grid")
-      .Columns(columns =>
-          {
-                        columns.Bound(model => model.Title);
+.Name("Grid")
+.Columns(columns =>
+{
+columns.Bound(model => model.Title);
 columns.Bound(model => model.Message);
-columns.Bound(model => model.EditDate);
-            columns.Bound(item => @item.ID).Title("عملیات").Filterable(false).Groupable(false)
-                    .Template(@<text>
+columns.Bound(model => model.EditDate).Format("{0:yyy/MM/dd HH:mm}");
+columns.Bound(item => @item.ID).Title("عملیات").Filterable(false).Groupable(false)
+            .Template(@<text>
                 @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
                     </text>).Width(200);
           })

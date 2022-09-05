@@ -12,17 +12,17 @@
 <br />
 
 @(Html.Kendo().Grid(Model)
-      .Name("Grid")
-      .Columns(columns =>
-          {
-                        columns.Bound(model => model.IsPaid);
-columns.Bound(model => model.PaidDateTime);
+.Name("Grid")
+.Columns(columns =>
+{
+columns.Bound(model => model.IsPaid);
+columns.Bound(model => model.PaidDateTime).Format("{0:yyy/MM/dd HH:mm}");
 columns.Bound(model => model.TransactionPaymentCode);
 columns.Bound(model => model.PaymentPrice);
 columns.Bound(model => model.Tbl_Users.UserName);
 columns.Bound(model => model.Tbl_BussinessPlans.Title);
-            columns.Bound(item => @item.PaymentID).Title("دستورات").Filterable(false).Groupable(false)
-                    .Template(@<text>
+columns.Bound(item => @item.PaymentID).Title("دستورات").Filterable(false).Groupable(false)
+              .Template(@<text>
                 @Html.ActionLink("جزییات", "Details", "Tbl_BusinessPlanPayment", new { id = @item.PaymentID }, new { @class = "btn btn-info" })
 
                 @Html.ActionLink("حذف", "Delete", new { id = @item.PaymentID }, new { @class = "btn btn-danger" })

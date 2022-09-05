@@ -8,18 +8,18 @@
 <h2>@ViewBag.Title</h2>
 
 @(Html.Kendo().Grid(Model)
-      .Name("Grid")
-      .Columns(columns =>
-          {
-              columns.Bound(model => model.IsActive);
+.Name("Grid")
+.Columns(columns =>
+{
+columns.Bound(model => model.IsActive);
 columns.Bound(model => model.IsDeleted);
-columns.Bound(model => model.CreateDate);
+columns.Bound(model => model.CreateDate).Format("{0:yyy/MM/dd HH:mm}");
 columns.Bound(model => model.QuestionText);
 columns.Bound(model => model.Tbl_BusinessPlanQuestion2.QuestionText);
 columns.Bound(model => model.Tbl_BussinessPlans.Title);
 columns.Bound(model => model.Tbl_Users.UserName);
-            columns.Bound(item => @item.QuestionID).Title("دستورات").Filterable(false).Groupable(false)
-                    .Template(@<text>
+columns.Bound(item => @item.QuestionID).Title("دستورات").Filterable(false).Groupable(false)
+              .Template(@<text>
                         @Html.ActionLink("ویرایش", "Edit", new { id = @item.QuestionID }, new { @class = "k-button k-button-icontext k-grid-Edit" })
                         @Html.ActionLink("حذف", "Delete", new { id = @item.QuestionID }, new { @class = "k-button k-button-icontext k-grid-Delete" })
                     </text>).Width(200);

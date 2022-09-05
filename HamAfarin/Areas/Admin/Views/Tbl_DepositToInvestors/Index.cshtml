@@ -14,7 +14,7 @@
     .Columns(columns =>
     {
         columns.Bound(model => model.Tbl_BussinessPlans.Title);
-        columns.Bound(model => model.DepositDate);
+        columns.Bound(model => model.DepositDate).Format("{0:yyy/MM/dd HH:mm}");
         columns.Bound(model => model.Tbl_DepositTypes.DepositTypeName);
         columns.Bound(model => model.YieldPercent);
         columns.Bound(model => model.TotalDeposit);
