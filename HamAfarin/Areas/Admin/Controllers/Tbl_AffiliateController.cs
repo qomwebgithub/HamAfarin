@@ -102,7 +102,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 tbl_ApiToken.Name = apiTokenViewModel.Name;
                 tbl_ApiToken.User_Id = apiTokenViewModel.User_ID;
                 tbl_ApiToken.Token = Guid.NewGuid().ToString();
-                var bytes = UTF8Encoding.UTF8.GetBytes(tbl_ApiToken.Token);
+                var bytes = Encoding.UTF8.GetBytes(tbl_ApiToken.Token);
                 var shaM = new HMACSHA512();
                 tbl_ApiToken.TokenHash = Convert.ToBase64String(shaM.ComputeHash(bytes));
 

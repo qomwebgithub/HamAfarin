@@ -2528,6 +2528,7 @@
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\BusinessPlansController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Classes\Dto\DataPost.cs" />
     <Compile Include="Controllers\FutureBusinessPlanController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvestmentHelpController.cs" />
