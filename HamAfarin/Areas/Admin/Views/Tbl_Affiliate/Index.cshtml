@@ -4,14 +4,7 @@
 @{
     ViewBag.Title = "فهرست بازاریابان";
 }
-<div class="container">
-    <div class="row d-flex flex-row justify-content-between">
-        <h2 class="col-3">@ViewBag.Title</h2>
-        <a class="col-3 btn btn-success shadow w-25" href="/Admin/Tbl_Affiliate/create"><span class="h4">اضافه کردن بازاریاب</span></a>
-    </div>
-    <hr />
-</div>
-
+<h2>فهرست بازاریابان</h2>
 @(Html.Kendo().Grid(Model)
     .Name("Grid")
     .Columns(columns =>
@@ -30,11 +23,11 @@
         </text>);
 
     })
-    //.ToolBar(toolbar =>
-    //    {
-    //        toolbar.Custom().Action("Create", "Tbl_Affiliate").Text("افزودن");
-    //    }
-    //)
+    .ToolBar(toolbar =>
+    {
+        toolbar.Custom().Action("Create", "Tbl_Affiliate").Text("افزودن");
+    }
+    )
     .Groupable()
     .Pageable()
     .Sortable()
