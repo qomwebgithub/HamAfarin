@@ -1082,3 +1082,7 @@ input, [type="password"] {
 .transaction-report-icon {
     font-size: 22px;
 }
+
+.modal-backdrop {
+    background-color: #00000088;
+}

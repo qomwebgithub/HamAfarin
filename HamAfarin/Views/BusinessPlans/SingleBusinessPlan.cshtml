@@ -14,6 +14,9 @@
 }
 
 <style>
+    .fade:not(.show){
+        opacity:1;
+    }
     #myTabContent {
         padding-top: 7rem;
         padding-bottom: 2rem;
@@ -105,7 +108,8 @@
 
 <!-- banner end -->
 <!-- Modal -->
-<div class="modal fade" id="WarranyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="WarranyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+    @*<div class="bg-dark w-100 h-100" style="opacity:0.3"></div>*@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <img src="~/Resources/BusinessPlans/Warranty/@Model.ImageNameWarranty" />
@@ -512,7 +516,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            <div class="modal fade " id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog col-4">
                     <div class="modal-content">
@@ -573,7 +577,7 @@
 <!-- attention banner end -->
 @section Scripts{
 
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>*@
     @*<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
 <script src="~/Scripts/modal.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -582,6 +586,7 @@
 
     <script>
         function CreateComment(id) {
+            debugger;
             $.ajax({
                 url: "/Comment/AddComment/" + id+"?BusinessPlanId="+@Model.BussinessPlanID,
                 type: "Get"
