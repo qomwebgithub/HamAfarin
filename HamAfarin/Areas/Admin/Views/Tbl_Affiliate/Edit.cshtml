@@ -4,22 +4,7 @@
     ViewBag.Title = "ویرایش " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Content/js/Select2/select2.min.js"></script>
-<link href="~/Content/css/select2.min.css" rel="stylesheet" />
 
-
-
-<style>
-    input, select, textarea {
-        max-width: 987PX;
-    }
-</style>
-
-<script>
-    $(document).ready(function () {
-        $('.my_select').select2();
-    });
-</script>
 
 <h2>@ViewBag.Title</h2>
 
@@ -27,19 +12,16 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal w-25" >
+    <div class="form-horizontal w-25">
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ID)
 
 
-        <div class="form-group form-row form-control ">
-            <div class="col-md-12">
-                <select id="SelectProduct" name="SelectProduct">
-                    <option value="@Html.DropDownList("User_ID", String.Empty)">                      
-                        @Html.ValidationMessageFor(model => model.UserID)
-                    </option>
-                </select>
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.DropDownList("User_ID", String.Empty)
+                @Html.ValidationMessageFor(model => model.User_ID)
             </div>
         </div>
         <div class="form-group">
@@ -69,11 +51,14 @@
     </div>
 }
 
-<script>
-    $(document).ready(function () {
-        $('#SelectProduct').select2({
-            language: "fa",
-            width: 'resolve' 
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#User_ID').select2({
+                language: "fa",
+                width: 'resolve'
+            });
         });
-    });
-</script>
+    </script>
+}

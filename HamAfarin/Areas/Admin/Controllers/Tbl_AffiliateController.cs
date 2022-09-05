@@ -40,6 +40,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                      Username = upg.Tbl_Users.UserName,
                      Name = api.Name,
                      Url = api.Url,
+                     CreateDate= api.CreateDate,
                      PaymentPrice = pg.PaymentPrice ?? 0,
                  }).ToListAsync();
 
@@ -54,7 +55,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             var groupUser =
                 from a in fullJoin
-                group a.User_Id by new { a.ID, a.Mobile, a.Username, a.Name, a.Url } into g
+                group a.User_Id by new { a.ID, a.Mobile, a.Username, a.Name, a.Url , a.CreateDate} into g
                 select new ApiTokenViewModel
                 {
                     ID = g.Key.ID,
@@ -62,6 +63,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     Username = g.Key.Username,
                     Name = g.Key.Name,
                     Url = g.Key.Url,
+                    CreateDate = g.Key.CreateDate,
                     UserCount = g.Count(),
                 };
 
@@ -74,7 +76,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                     Mobile = u.Mobile,
                     Username = u.Username,
                     Name = u.Name,
-                    Url = u.Url,
+                    Url = "hamafarin.ir/Account/Affiliate/" + u.Url,
+                    CreateDate = u.CreateDate,
                     UserCount = u.UserCount,
                     TotalInvestment = i.TotalInvestment,
                 };
@@ -102,6 +105,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 tbl_ApiToken.Name = apiTokenViewModel.Name;
                 tbl_ApiToken.User_Id = apiTokenViewModel.User_ID;
                 tbl_ApiToken.Token = Guid.NewGuid().ToString();
+                tbl_ApiToken.CreateDate = DateTime.Now;
                 var bytes = UTF8Encoding.UTF8.GetBytes(tbl_ApiToken.Token);
                 var shaM = new HMACSHA512();
                 tbl_ApiToken.TokenHash = Convert.ToBase64String(shaM.ComputeHash(bytes));

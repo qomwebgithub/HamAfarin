@@ -13,13 +13,15 @@
         columns.Bound(model => model.Name);
         columns.Bound(model => model.Username);
         columns.Bound(model => model.Mobile);
+        columns.Bound(model => model.CreateDate);
         columns.Bound(model => model.Url);
         columns.Bound(model => model.UserCount);
         columns.Bound(model => model.TotalInvestment);
         columns.Bound(item => @item.ID).Title("دستورات").Filterable(false).Groupable(false)
         .Template(@<text>
-            @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "col-3 btn btn-warning" })
-            @Html.ActionLink("حذف", "Delete", new { id = @item.ID }, new { @class = "col-3 btn btn-danger " })
+            @Html.ActionLink("ویرایش", "Edit", new { id = @item.ID }, new { @class = "text-danger" })
+            @Html.ActionLink("حذف", "Delete", new { id = @item.ID }, new { @class = "text-danger" })
+            @Html.ActionLink("جزئیات", "Details", new { id = @item.ID }, new { @class = "text-danger" })
         </text>);
 
     })
