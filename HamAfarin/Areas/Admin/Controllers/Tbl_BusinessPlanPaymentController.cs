@@ -277,20 +277,52 @@ namespace HamAfarin.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Tbl_BusinessPlanPayment tbl_BusinessPlanPayment)
+        public ActionResult Edit(Tbl_BusinessPlanPayment tbl_BusinessPlanPayment, HttpPostedFileBase imgUp)
         {
             if (ModelState.IsValid)
             {
+                if (imgUp != null && imgUp.IsImage())
+                {
+                    if (tbl_BusinessPlanPayment.PaymentImageName != "no-photo.jpg")
+                    {
+                        //به جای حذف کردن عکس قبلی اسمش را عوض میکنیم 
+
+                        //گرفتن عکس قبلی با فرمت و بدون فرمت
+                        var Extention = Path.GetExtension(tbl_BusinessPlanPayment.PaymentImageName);
+                        var noExtentionFileName =tbl_BusinessPlanPayment.PaymentID.ToString();
+
+                        //ساخت اسم جدید برای عکس قبلی
+                        int i = 0;
+                        var name = noExtentionFileName + Extention;
+
+                        while (System.IO.File.Exists(Server.MapPath("/Images/PaymentImages/" + name)))
+                        {
+                            i++;
+                            name = noExtentionFileName + "-" + i.ToString() + Extention;
+                        }
+                        //عوض کردن اسم جدید با اسم قبلی
+                        var oldName = Server.MapPath("/Images/PaymentImages/" + tbl_BusinessPlanPayment.PaymentImageName);
+                        System.IO.File.Move(oldName, Server.MapPath("/Images/PaymentImages/" + name));
+                    }
+                    tbl_BusinessPlanPayment.PaymentImageName = Guid.NewGuid().ToString() + Path.GetExtension(imgUp.FileName);
+                    imgUp.SaveAs(Server.MapPath("/Images/PaymentImages/" + tbl_BusinessPlanPayment.PaymentImageName));
+
+
+                }
                 bool oldIsConfirmedFromAdmin = db.Tbl_BusinessPlanPayment
                     .Where(b => b.PaymentID == tbl_BusinessPlanPayment.PaymentID && b.IsDelete == false)
                     .Select(b => b.IsConfirmedFromAdmin)
                     .FirstOrDefault();
                 if (oldIsConfirmedFromAdmin == false && tbl_BusinessPlanPayment.IsConfirmedFromAdmin)
                 {
+
+
+
                     tbl_BusinessPlanPayment.PaymentStatus = (int)PaymentStatusType.SUCCESS;
                     tbl_BusinessPlanPayment.AdminCheckDate = DateTime.Now;
                     AdminConfimSendSMS(tbl_BusinessPlanPayment.BusinessPlan_id, tbl_BusinessPlanPayment.PaymentUser_id);
                 }
+
                 db.Entry(tbl_BusinessPlanPayment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -618,5 +650,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
             (bool Success, string Message) smsResult = oSms.SendSms(qUser.MobileNumber, message);
         }
+
+
     }
 }
