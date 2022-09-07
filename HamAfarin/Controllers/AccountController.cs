@@ -44,11 +44,11 @@ namespace Hamafarin.Controllers
             string hashPassword = FormsAuthentication.HashPasswordForStoringInConfigFile(model.Password, "MD5");
             model.MobileNumber = StringExtensions.Fa2En(model.MobileNumber);
 
-            Tbl_Users user = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == model.MobileNumber && u.IsDeleted == false);
+            Tbl_Users user = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == model.MobileNumber && u.IsDeleted == false && u.IsActive);
 
             if (user == null)
             {
-                ModelState.AddModelError("MobileNumber", "نام کاربری یا کلمه عبور اشتباه است یا کاربری یافت نشد");
+                ModelState.AddModelError("MobileNumber", "نام کاربری یا کلمه عبور اشتباه است یا کاربری یافت نشد یا حساب کاربری شما فعال نیست");
                 return View(model);
             }
             // چک کردن پسورد
@@ -57,11 +57,11 @@ namespace Hamafarin.Controllers
                 ModelState.AddModelError("MobileNumber", "نام کاربری یا کلمه عبور اشتباه است یا کاربری یافت نشد");
                 return View(model);
             }
-            if (user.IsActive == false || user.IsDeleted)
-            {
-                ModelState.AddModelError("MobileNumber", "حساب کاربری شما فعال نیست");
-                return View(model);
-            }
+            //if (user.IsActive == false)
+            //{
+            //    ModelState.AddModelError("MobileNumber", "حساب کاربری شما فعال نیست");
+            //    return View(model);
+            //}
 
             //Request.UrlReferrer.Host()
             // FormsAuthentication.SetAuthCookie(user.UserName, model.RememberMe);
