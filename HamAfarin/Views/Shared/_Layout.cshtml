@@ -80,15 +80,11 @@
     <!-- menu end -->
 
     @RenderBody()
-<div class="container-fluid position-fixed fixed-bottom mb-5" style="height:40px">
-    <div class="row">
-        <div class="col-3 col-lg-1 align-content-center align-items-center">
-            <a href="whatsapp://send?text= هم آفرین, سلام&amp;phone=+9809134458905" target="_blank">
-                <img class="img-fluid" src="~/Content/img/Whatsapp_Icon.png" alt="whatsapp" />
-            </a>
-        </div>
+    <div class="position-fixed fixed-bottom m-3" style="width:70px">
+        <a href="whatsapp://send?text= هم آفرین, سلام&amp;phone=+9809134458905" target="_blank">
+            <img class="img-fluid" src="~/Content/img/Whatsapp_Icon.png" alt="whatsapp" />
+        </a>
     </div>
-</div>
     <!-- footer start -->
     @Html.Action("Footer", "Home", new { Area = "" })
     <!-- footer end -->
