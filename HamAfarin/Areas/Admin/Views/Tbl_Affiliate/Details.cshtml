@@ -20,15 +20,16 @@
                     columns.Bound(model => model.IsActive);
                     columns.Bound(model => model.RegisterDate).Format("{0:yyy/MM/dd HH:mm}")
               .Template(@<text>
-            <a class="k-button k-button-icontext k-grid-Insert" href="/Admin/Tbl_UserProfiles/Details/@item.UserID">اطلاعات سرمایه گذار</a>
+									@Html.ActionLink("لیست سرمایه گذاری ها", "PaymentList", "Tbl_Users", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
         </text>).Width(200);
         })
-		.Groupable()
-		.Pageable()
-		.Sortable()
-		.Scrollable()
-		.Filterable()
-		.DataSource(dataSource => dataSource
-									.Server()
-					)
-	)
+		  .Groupable()
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .DataSource(dataSource => dataSource
+                                    .Server()
+
+                                    .Model(model => model.Id(item => item.UserID))
+                    )
+    )
