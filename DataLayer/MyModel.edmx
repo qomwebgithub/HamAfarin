@@ -19,11 +19,11 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="User_Id" Type="int" />
-          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="Token" Type="nvarchar" MaxLength="50" />
           <Property Name="Url" Type="nvarchar" MaxLength="50" />
           <Property Name="TokenHash" Type="nvarchar" MaxLength="200" />
           <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Tbl_Blog">
@@ -229,6 +229,7 @@
           <Property Name="EnglishCodeOTC" Type="nvarchar(max)" />
           <Property Name="IndustryGroupDescription" Type="nvarchar(max)" />
           <Property Name="SubIndustryGroupDescription" Type="nvarchar(max)" />
+          <Property Name="IsPublish" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_CapitalApplicantHelp">
           <Key>
@@ -1844,11 +1845,11 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="User_Id" Type="Int32" />
-          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Url" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TokenHash" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Tbl_Affiliate" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Affiliate_Tbl_ApiToken" FromRole="Tbl_ApiToken" ToRole="Tbl_Affiliate" />
           <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_ApiToken_Tbl_Users" FromRole="Tbl_ApiToken" ToRole="Tbl_Users" />
@@ -2070,6 +2071,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="EnglishCodeOTC" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IndustryGroupDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SubIndustryGroupDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublish" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Tbl_BusinessPlanGallery" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanGallery_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanGallery" />
           <NavigationProperty Name="Tbl_BusinessPlanPayment" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanPayment_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanPayment" />
           <NavigationProperty Name="Tbl_BusinessPlanQuestion" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_BusinessPlanQuestion_Tbl_BussinessPlans" FromRole="Tbl_BussinessPlans" ToRole="Tbl_BusinessPlanQuestion" />
@@ -3268,11 +3270,11 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_ApiToken">
               <MappingFragment StoreEntitySet="Tbl_ApiToken">
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TokenHash" ColumnName="TokenHash" />
                 <ScalarProperty Name="Url" ColumnName="Url" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
-                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
                 <ScalarProperty Name="User_Id" ColumnName="User_Id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -3405,6 +3407,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySetMapping Name="Tbl_BussinessPlans">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_BussinessPlans">
               <MappingFragment StoreEntitySet="Tbl_BussinessPlans">
+                <ScalarProperty Name="IsPublish" ColumnName="IsPublish" />
                 <ScalarProperty Name="SubIndustryGroupDescription" ColumnName="SubIndustryGroupDescription" />
                 <ScalarProperty Name="IndustryGroupDescription" ColumnName="IndustryGroupDescription" />
                 <ScalarProperty Name="EnglishCodeOTC" ColumnName="EnglishCodeOTC" />
