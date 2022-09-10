@@ -129,7 +129,7 @@ namespace HamAfarin.Classes
             };
         }
 
-        public Expression<Func<Transaction, ParbadTransaction>> ToTransactionModel()
+        private Expression<Func<Transaction, ParbadTransaction>> ToTransactionModel()
         {
             return entity => new ParbadTransaction
             {

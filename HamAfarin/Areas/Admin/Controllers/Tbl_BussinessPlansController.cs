@@ -135,6 +135,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             bussinessPlan.User_id = UserSetAuthCookie.GetUserID(User.Identity.Name);
             bussinessPlan.IsActive = false;
             bussinessPlan.IsDeleted = false;
+            bussinessPlan.IsPublish = false;
 
             bussinessPlan.FaraboorsProjectId = dto.TraceCode;
             bussinessPlan.CreateDate = dto.CreationDate;
@@ -194,6 +195,7 @@ namespace Hamafarin.Areas.Admin.Controllers
             return View(new AdminCreateEditBusinessPlan()
             {
                 IsActive = true,
+                IsPublish = false,
                 MonetaryUnit_id = 2
             });
         }

@@ -22,11 +22,11 @@ namespace DataLayer
     
         public int ID { get; set; }
         public Nullable<int> User_Id { get; set; }
-        public bool IsDelete { get; set; }
         public string Token { get; set; }
         public string Url { get; set; }
         public string TokenHash { get; set; }
         public string Name { get; set; }
+        public bool IsDelete { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

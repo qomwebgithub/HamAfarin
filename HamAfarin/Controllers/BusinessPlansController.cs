@@ -25,20 +25,20 @@ namespace Hamafarin.Controllers
             ViewBag.id = page;
 
             //اجازه ی سرمایه گذاری
-            ViewBag.ActivePlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false).Count();
+            ViewBag.ActivePlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsPublish && b.IsDeleted == false).Count();
             //ViewBag.PastPlanCount = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate > DateTime.Now).Count();
             ViewBag.FuturePlanCount = db.Tbl_FutureBusinessPlan.Where(f => f.IsDeleted == false && f.IsActive == true).Count();
             // برای دریافت حداکثر مبلغ سرمایه گذاری برای استفاده در فیلتر قیمت
-            ViewBag.MaximumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault();
+            ViewBag.MaximumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.IsPublish && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault();
             // برای دریافت حداکثر مبلغ سرمایه گذاری برای استفاده در فیلتر قیمت
-            ViewBag.MinimumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).Min(p => p.MinimumAmountInvest).FirstOrDefault();
+            ViewBag.MinimumPrice = db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.IsPublish && p.InvestmentStartDate <= DateTime.Now).Min(p => p.MinimumAmountInvest).FirstOrDefault();
 
             return View();
         }
 
         public ActionResult SingleBusinessPlan(int id)
         {
-            Tbl_BussinessPlans qActivePlans = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == id && b.IsActive && b.IsDeleted == false);
+            Tbl_BussinessPlans qActivePlans = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == id && b.IsActive && b.IsPublish && b.IsDeleted == false);
 
             // تعداد روز های باقیمانده تا شروع
             int daysUntilStart = planService.CalculateRemainDay(qActivePlans.InvestmentStartDate);
@@ -119,12 +119,13 @@ namespace Hamafarin.Controllers
 
             if (highestPrice == 0)
             {
-                long qhighestPrice = Convert.ToInt64(db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault());
+                long qhighestPrice = Convert.ToInt64(db.Tbl_BussinessPlans.Where(p => p.IsActive && p.IsPublish && p.IsDeleted == false && p.InvestmentStartDate <= DateTime.Now).OrderByDescending(p => p.MinimumAmountInvest).Select(p => p.MinimumAmountInvest).FirstOrDefault());
                 highestPrice = qhighestPrice;
             }
 
             List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.AsEnumerable()
                 .Where(b => b.IsActive &&
+                    b.IsPublish &&
                     b.IsDeleted == false &&
                     (Convert.ToInt64(b.MinimumAmountInvest)) >= lowestPrice &&
                     (Convert.ToInt64(b.MinimumAmountInvest)) <= highestPrice &&
@@ -178,7 +179,7 @@ namespace Hamafarin.Controllers
         public ActionResult SearchActivePlans(string searchText = "", int page = 1)
         {
 
-            List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate <= DateTime.Now && b.Title.Contains(searchText) || b.BusinessPlanFeatures.Contains(searchText))
+            List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsPublish && b.IsDeleted == false && b.InvestmentStartDate <= DateTime.Now && b.Title.Contains(searchText) || b.BusinessPlanFeatures.Contains(searchText))
             .OrderByDescending(b => b.BussinessPlanID).ToList();
 
 
@@ -222,7 +223,7 @@ namespace Hamafarin.Controllers
         public ActionResult PastPlans(int page = 1)
         {
             //int takeNewActivePlans = 3;
-            List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsDeleted == false && b.InvestmentStartDate > DateTime.Now)
+            List<Tbl_BussinessPlans> qlstActivePlans = db.Tbl_BussinessPlans.Where(b => b.IsActive && b.IsPublish && b.IsDeleted == false && b.InvestmentStartDate > DateTime.Now)
                 .OrderByDescending(b => b.BussinessPlanID).ToList();
 
             List<BusinessPlansItemViewModel> lstPlans = new List<BusinessPlansItemViewModel>();
