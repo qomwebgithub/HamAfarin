@@ -5,9 +5,6 @@ using ViewModels;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data;
-using ClosedXML.Excel;
-using System.IO;
-using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net;
@@ -24,7 +21,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         public async Task<ActionResult> Index()
         {
             var fullJoin = await
-                (from api in db.Tbl_ApiToken.Where(d=>d.IsDelete ==false)
+                (from api in db.Tbl_ApiToken.Where(d => d.IsDelete == false)
                  join userProfiles in db.Tbl_UserProfiles on api.User_Id equals userProfiles.User_id into UserProfileGroup
                  from upg in UserProfileGroup.DefaultIfEmpty()
                  join affiliate in db.Tbl_Affiliate on api.ID equals affiliate.Token_Id into AffiliateGroup
@@ -40,7 +37,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                      Username = upg.Tbl_Users.UserName,
                      Name = api.Name,
                      Url = api.Url,
-                     CreateDate= api.CreateDate,
+                     CreateDate = api.CreateDate,
                      PaymentPrice = pg.PaymentPrice ?? 0,
                  }).ToListAsync();
 
@@ -55,7 +52,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
             var groupUser =
                 from a in fullJoin
-                group a.User_Id by new { a.ID, a.Mobile, a.Username, a.Name, a.Url , a.CreateDate} into g
+                group a.User_Id by new { a.ID, a.Mobile, a.Username, a.Name, a.Url, a.CreateDate } into g
                 select new ApiTokenViewModel
                 {
                     ID = g.Key.ID,
@@ -96,7 +93,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(ApiTokenViewModel apiTokenViewModel)
         {
-            ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName",apiTokenViewModel.User_ID);
+            ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName", apiTokenViewModel.User_ID);
             if (ModelState.IsValid)
             {
                 Tbl_ApiToken tbl_ApiToken = new Tbl_ApiToken();
@@ -143,7 +140,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var qTbl_ApiToken = await db.Tbl_ApiToken.Where(i => i.ID == apiTokenViewModel.ID).FirstOrDefaultAsync();
-                if(qTbl_ApiToken != null)
+                if (qTbl_ApiToken != null)
                 {
                     qTbl_ApiToken.Name = apiTokenViewModel.Name;
                     qTbl_ApiToken.Url = apiTokenViewModel.Url;
@@ -177,35 +174,35 @@ namespace HamAfarin.Areas.Admin.Controllers
                         IsActive = item.IsActive,
                     });
                 }
-            return View(lstUsersAffiliate);
+                return View(lstUsersAffiliate);
             }
             return View();
         }
-    
 
-    public ActionResult Delete(int? id)
-    {
-        if (id == null)
+
+        public ActionResult Delete(int? id)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
+            if (tbl_ApiToken == null)
+            {
+                return HttpNotFound();
+            }
+            return View(tbl_ApiToken);
         }
-        Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
-        if (tbl_ApiToken == null)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
         {
-            return HttpNotFound();
+            Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
+            tbl_ApiToken.IsDelete = true;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+
         }
-        return View(tbl_ApiToken);
     }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id)
-    {
-        Tbl_ApiToken tbl_ApiToken = db.Tbl_ApiToken.Find(id);
-        tbl_ApiToken.IsDelete = true;
-        db.SaveChanges();
-        return RedirectToAction("Index");
-
-    }
-}
 }
