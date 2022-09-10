@@ -24,8 +24,6 @@ namespace HamAfarin
             //string[] lsttMobileNumber = { mobileNumber };
             (bool Success, string Message) tokenResult;
 
-            var fullMassage = "کد:"+ message + System.Environment.NewLine + "از سایت هم آفرین برای شما ارسال شده است";
-
             DateTime date = DateTime.Now;
 
             //SendResult a = sms.send(
@@ -41,7 +39,7 @@ namespace HamAfarin
             //    true, date,"");
 
             // این کد پیش فرض داخل داکیومنت می باشد
-            string url = "https://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress0=" + mobileNumber + "&body0=" + fullMassage + "&unicode0=1";
+            string url = "https://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress0=" + mobileNumber + "&body0=" + message + "&unicode0=1";
 
             //string url = "http://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&body=" + message + "&unicode=1";
             WebClient client = new WebClient();
@@ -54,7 +52,7 @@ namespace HamAfarin
                     CreateDate = DateTime.Now,
                     Exception = null,
                     MobileNumber = mobileNumber,
-                    Message = fullMassage,
+                    Message = message,
                     ID = Guid.NewGuid().ToString(),
                     Method = nameof(SendSms)
                 };
@@ -70,7 +68,7 @@ namespace HamAfarin
                     CreateDate = DateTime.Now,
                     Exception = "Exception: " + x.ToString() + "Message: " + x.Message + " - Response: " + x.Response,
                     MobileNumber = mobileNumber,
-                    Message = fullMassage,
+                    Message = message,
                     ID = Guid.NewGuid().ToString(),
                     Method = nameof(SendSms)
                 };
@@ -86,16 +84,13 @@ namespace HamAfarin
         {
             mobileNumber = FixMobileNumber(mobileNumber);
 
-
-            var fullMassage = "کد:" + message + System.Environment.NewLine + "از سایت هم آفرین برای شما ارسال شده است";
-
             (bool Success, string Message) tokenResult;
 
             using (HttpClient client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://ws2.adpdigital.com/url/");
 
-                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&srcaddress=98200071072&body=" + fullMassage + "&unicode=1", null);
+                HttpResponseMessage response = await client.PostAsync("send?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&srcaddress=98200071072&body=" + message + "&unicode=1", null);
                 if (response.IsSuccessStatusCode)
                 {
                     string responseContent = await response.Content.ReadAsStringAsync();
@@ -104,7 +99,7 @@ namespace HamAfarin
                         CreateDate = DateTime.Now,
                         Exception = null,
                         MobileNumber = mobileNumber,
-                        Message = fullMassage,
+                        Message = message,
                         ID = Guid.NewGuid().ToString(),
                         Method = nameof(SendSmsAsync)
                     };
@@ -121,7 +116,7 @@ namespace HamAfarin
                         CreateDate = DateTime.Now,
                         Exception = "Response Code: " + response.StatusCode.ToString() + "Error Message: " + responseContent,
                         MobileNumber = mobileNumber,
-                        Message = fullMassage,
+                        Message = message,
                         ID = Guid.NewGuid().ToString(),
                         Method = nameof(SendSmsAsync)
                     };
