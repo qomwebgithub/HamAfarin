@@ -133,8 +133,8 @@ namespace Hamafarin.Controllers
                 return View(register);
             }
 
-            Random rndSmsCode = new Random();
-            int smsCode = rndSmsCode.Next(1000, 9999);
+            Random random = new Random();
+            int smsCode = random.Next(1000, 9999);
             Tbl_Users oUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == register.MobileNumber);
 
             oUser = new Tbl_Users()
@@ -178,8 +178,8 @@ namespace Hamafarin.Controllers
             transaction.Commit();
 
             ViewBag.IsSuccess = true;
-
-            oSms.SendSms(oUser.MobileNumber, oUser.SmsCode.ToString());
+            string smsMassage = "کد:" + oUser.SmsCode.ToString() + Environment.NewLine + "از سایت هم آفرین برای شما ارسال شده است";
+            oSms.SendSms(oUser.MobileNumber, smsMassage);
 
             return RedirectToAction(nameof(VerifySms), new { id = oUser.UserToken });
         }
@@ -203,11 +203,12 @@ namespace Hamafarin.Controllers
                 }
                 else
                 {
-                    Random rndSmsCode = new Random();
-                    int smsCode = rndSmsCode.Next(1000, 9999);
+                    Random random = new Random();
+                    int smsCode = random.Next(1000, 9999);
                     qUser.SmsCode = smsCode;
                     db.SaveChanges();
-                    oSms.SendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
+                    string smsMassage = "کد:" + smsCode.ToString() + Environment.NewLine + "از سایت هم آفرین برای شما ارسال شده است";
+                    oSms.SendSms(qUser.MobileNumber, smsMassage);
                 }
 
                 return Json(new { success = true, Message = Message }, JsonRequestBehavior.AllowGet);
@@ -478,7 +479,8 @@ namespace Hamafarin.Controllers
             int smsCode = rndSmsCode.Next(1000, 9999);
             qUser.SmsCode = smsCode;
             db.SaveChanges();
-            oSms.SendSms(qUser.MobileNumber, qUser.SmsCode.ToString());
+            string smsMassage = "کد:" + smsCode.ToString() + Environment.NewLine + "از سایت هم آفرین برای شما ارسال شده است";
+            oSms.SendSms(qUser.MobileNumber, smsMassage);
             return RedirectToAction(nameof(VerifyForgotPassword), new { id = qUser.UserToken });
         }
 
