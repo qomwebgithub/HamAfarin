@@ -12,18 +12,19 @@
                     .Name("Grid")
                     .Columns(columns =>
                     {
-                    columns.Bound(model => model.UserID);
-                    columns.Bound(model => model.MobileNumber);
-                    columns.Bound(model => model.FirstName);
-                    columns.Bound(model => model.LastName);
-                    columns.Bound(model => model.NationalCode);
-                    columns.Bound(model => model.IsActive);
-                    columns.Bound(model => model.RegisterDate).Format("{0:yyy/MM/dd HH:mm}")
-              .Template(@<text>
+                        columns.Bound(model => model.UserID);
+                        columns.Bound(model => model.MobileNumber);
+                        columns.Bound(model => model.FirstName);
+                        columns.Bound(model => model.LastName);
+                        columns.Bound(model => model.NationalCode);
+                        columns.Bound(model => model.IsActive);
+                        columns.Bound(model => model.RegisterDate).Format("{0: HH:mm yyyy/MM/dd }");
+                         columns.Bound(model => model).Title("لیست سرمایه گذاری ها").Filterable(false).Groupable(false)
+                  .Template(@<text>
 									@Html.ActionLink("لیست سرمایه گذاری ها", "PaymentList", "Tbl_Users", new {id = @item.UserID}, new {@class = "k-button k-button-icontext k-grid-Edit"})
         </text>).Width(200);
-        })
-		  .Groupable()
+                    })
+          .Groupable()
         .Pageable()
         .Sortable()
         .Filterable()

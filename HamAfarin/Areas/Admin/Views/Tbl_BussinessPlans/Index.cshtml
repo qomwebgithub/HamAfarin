@@ -11,12 +11,18 @@
     .Name("Grid")
     .Columns(columns =>
     {
+
         columns.Bound(item => @item.BussinessPlanID).Title("تصویر").Filterable(false).Groupable(false)
         .Template(@<text>
             <img class="thumbnail" src="/Images/BusinessPlans/Thumb/@item.ImageNameInListPalns" style="max-width: 150px" />
             </text>);
         columns.Bound(model => model.Title);
+         columns.Bound(item => @item.BussinessPlanID).Title("شناسه").Filterable(false).Groupable(false)
+        .Template(@<text>
+            <a class="k-button k-button-icontext k-grid-Insert" href="/BusinessPlans/SingleBusinessPlan/@item.BussinessPlanID">@item.BussinessPlanID</a>
+        </text>);
         columns.Bound(model => model.IsActive).Width(80);
+        columns.Bound(model => model.IsPublish).Width(80);
         columns.Bound(item => @item.BussinessPlanID).Title("دستورات").Filterable(false).Groupable(false)
         .Template(@<text>
             @Html.ActionLink("ویرایش", "Edit", new { id = @item.BussinessPlanID }, new { @class = "k-button k-button-icontext k-grid-Edit" })

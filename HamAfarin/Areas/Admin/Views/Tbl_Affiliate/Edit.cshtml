@@ -12,21 +12,22 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal w-25">
-        <hr />
+    <div class="form-horizontal">
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.ID)
 
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Mobile, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("User_ID", String.Empty)
                 @Html.ValidationMessageFor(model => model.User_ID)
             </div>
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Url, new { @class = "control-label col-md-2" })
-            <div class="col-md-12">
+            <div class="col-md-10">
                 @Html.EditorFor(model => model.Url)
                 @Html.ValidationMessageFor(model => model.Url)
             </div>
@@ -43,8 +44,8 @@
 
 
         <div class="form-group" id="buttons">
-            <div class="col-md-offset-2 col-md-12">
-                <input type="submit" value="ثبت" class="btn btn-primary col-4" />
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="ثبت" class="btn btn-primary col-2" />
                 <a href="/Admin/Tbl_Affiliate">بازگشت به فهرست</a>
             </div>
         </div>

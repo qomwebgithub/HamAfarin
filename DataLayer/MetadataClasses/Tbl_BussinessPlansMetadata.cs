@@ -15,6 +15,8 @@ namespace DataLayer
         public bool IsDeleted { get; set; }
         [Display(Name = "فعال")]
         public bool IsActive { get; set; }
+        [Display(Name = "انتشار")]
+        public bool IsPublish { get; set; }
         [Display(Name = "کاربر")]
         public Nullable<int> User_id { get; set; }
         [Display(Name = "عنوان(نمایش در سایت)")]

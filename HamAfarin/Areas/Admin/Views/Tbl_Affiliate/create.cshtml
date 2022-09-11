@@ -15,6 +15,7 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Mobile, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("User_ID", String.Empty)
                 @Html.ValidationMessageFor(model => model.User_ID)
