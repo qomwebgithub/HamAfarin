@@ -262,7 +262,7 @@ namespace Hamafarin.Controllers
                                 invoice
                                     .SetTrackingNumber(trackingNumber)
                                     .SetAmount(dclAmount)
-                                    .SetCallbackUrl("https://hamafarin.ir/Payment/VerifyPayment")
+                                    .SetCallbackUrl(redirectAddress)
                                     .SetGateway(dargah)
                             //.SetZarinPalData(new ZarinPalInvoice(
                             //    "test", "test@gmail.com", "09191155021"))
@@ -605,10 +605,10 @@ namespace Hamafarin.Controllers
 
             try
             {
-                Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.IsDelete == false && p.PaymentID == qPaymentOnline.Payment_id);
-
                 if (qPaymentOnline == null)
                     return View();
+
+                Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.IsDelete == false && p.PaymentID == qPaymentOnline.Payment_id);
 
                 long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
                 long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
