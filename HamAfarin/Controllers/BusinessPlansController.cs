@@ -38,7 +38,7 @@ namespace Hamafarin.Controllers
 
         public ActionResult SingleBusinessPlan(int id)
         {
-            Tbl_BussinessPlans qActivePlans = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == id && b.IsActive && b.IsPublish && b.IsDeleted == false);
+            Tbl_BussinessPlans qActivePlans = db.Tbl_BussinessPlans.FirstOrDefault(b => b.BussinessPlanID == id && b.IsActive && b.IsDeleted == false);
 
             // تعداد روز های باقیمانده تا شروع
             int daysUntilStart = planService.CalculateRemainDay(qActivePlans.InvestmentStartDate);
