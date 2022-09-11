@@ -25,7 +25,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                  join userProfiles in db.Tbl_UserProfiles on api.User_Id equals userProfiles.User_id into UserProfileGroup
                  from upg in UserProfileGroup.DefaultIfEmpty()
                  join affiliate in db.Tbl_Affiliate on api.ID equals affiliate.Token_Id into AffiliateGroup
-                 from ag in AffiliateGroup.DefaultIfEmpty()
+                 from ag in AffiliateGroup/*.DefaultIfEmpty()*/
                  join businessPlanPayment in db.Tbl_BusinessPlanPayment
                      on ag.User_Id equals businessPlanPayment.PaymentUser_id into PaymentGroup
                  from pg in PaymentGroup.Where(g => g.IsConfirmedFromFaraboors && g.IsDelete == false).DefaultIfEmpty()
@@ -79,13 +79,73 @@ namespace HamAfarin.Areas.Admin.Controllers
                     TotalInvestment = i.TotalInvestment,
                 };
 
-            return View(apiTokenVM.ToList());
+            var zeroUserCountApiTokenVM = await db.Tbl_ApiToken.AsNoTracking().Include(a => a.Tbl_Affiliate)
+                .Include(a => a.Tbl_Users)
+                .Where(a => a.Tbl_Affiliate.Any() == false)
+                .Select(a => new ApiTokenViewModel
+                {
+                    ID = a.ID,
+                    Mobile = a.Tbl_Users.MobileNumber,
+                    Username = a.Tbl_Users.UserName,
+                    Name = a.Name,
+                    Url = "hamafarin.ir/Account/Affiliate/" + a.Url,
+                    CreateDate = a.CreateDate,
+                    UserCount = 0,
+                    TotalInvestment = 0,
+                })
+                .ToListAsync();
+
+            #region WithJoin
+            //var test = await db.Tbl_ApiToken.AsNoTracking().Include(a => a.Tbl_Affiliate)
+            //    .Include(a => a.Tbl_Users)
+            //    .Where(a => a.Tbl_Affiliate.Any() == false)
+            //    .Join(
+            //        db.Tbl_UserProfiles,
+            //        token => token.User_Id,
+            //        profile => profile.User_id,
+            //        (token, profile) => new ApiTokenViewModel
+            //        {
+            //            ID = token.ID,
+            //            Mobile = token.Tbl_Users.MobileNumber,
+            //            Username = profile.NationalCode,
+            //            Name = token.Name,
+            //            Url = "hamafarin.ir/Account/Affiliate/" + token.Url,
+            //            CreateDate = token.CreateDate,
+            //            UserCount = 0,
+            //            TotalInvestment = 0,
+            //        })
+            //    .ToListAsync();
+            #endregion
+
+            var listApiTokenVM = apiTokenVM.ToList();
+            listApiTokenVM.AddRange(zeroUserCountApiTokenVM);
+
+
+            //var apiTokenVM2 =
+            //    from a in db.Tbl_ApiToken
+            //    join userProfiles in db.Tbl_UserProfiles on a.User_Id equals userProfiles.User_id
+            //    select new ApiTokenViewModel
+            //    {
+            //        ID = a.ID,
+            //        User_ID = a.User_Id,
+            //        Url = "hamafarin.ir/Account/Affiliate/" + a.Url,
+            //        CreateDate = a.CreateDate,
+            //        Name = a.Name,
+            //        Username = userProfiles.NationalCode,
+            //        Mobile = userProfiles.MobileNumber,
+            //        UserCount = 0,
+            //        TotalInvestment = 0
+            //    };
+
+            //IEnumerable<ApiTokenViewModel> apiTokenViewModel = apiTokenVM2.Except(apiTokenVM);
+
+            return View(listApiTokenVM.OrderByDescending(o => o.CreateDate));
         }
 
         public async Task<ActionResult> Create()
         {
             ApiTokenViewModel apiTokenViewModel = new ApiTokenViewModel();
-            ViewBag.User_ID = new SelectList(db.Tbl_Users.AsNoTracking(), "UserID", "UserName");
+            ViewBag.User_ID = new SelectList(db.Tbl_Users.AsNoTracking(), "UserID", "MobileNumber");
 
             return View(apiTokenViewModel);
         }
@@ -129,7 +189,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                 apiTokenViewModel.Name = qTbl_ApiToken.Name;
                 apiTokenViewModel.Url = qTbl_ApiToken.Url;
                 apiTokenViewModel.User_ID = qTbl_ApiToken.User_Id;
-                ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "UserName", qTbl_ApiToken.User_Id);
+                ViewBag.User_ID = new SelectList(db.Tbl_Users, "UserID", "MobileNumber", qTbl_ApiToken.User_Id);
             }
             return View(apiTokenViewModel);
         }
@@ -156,7 +216,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
         public async Task<ActionResult> Details(int? id)
         {
-            var qlstUser = await db.Tbl_Affiliate.AsNoTracking().Where(i => i.Token_Id == id).Select(u => u.Tbl_Users).ToListAsync();
+            var qlstUser = await db.Tbl_Affiliate.AsNoTracking().Where(i => i.Token_Id == id).Select(u => u.Tbl_Users).Where(u => u.IsActive).ToListAsync();
 
             if (qlstUser != null)
             {
