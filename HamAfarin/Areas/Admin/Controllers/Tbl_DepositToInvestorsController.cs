@@ -330,6 +330,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             if (message.Contains("@T"))
                 message = message.Replace("@T", qTbl_DepositToInvestors.Tbl_BussinessPlans.Title);
 
+            #region SmsActive
             (bool Success, string Message) smsResult = await oSms.SendSmsAsync(mobileNumbers, message);
 
             if (smsResult.Success)
@@ -340,6 +341,13 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
 
             return Json(new { success = smsResult.Success, message = smsResult.Success ? "عملیات با موفقیت انجام شد" : smsResult.Message });
+            #endregion
+            #region SmsDisabled
+            //qTbl_DepositToInvestors.IsPaid = true;
+            //qTbl_DepositToInvestors.DepositDate = DateTime.Now;
+            //await db.SaveChangesAsync();
+            //return Json(new { success = true, message = "عملیات با موفقیت انجام شد" });
+            #endregion
         }
 
         protected override void Dispose(bool disposing)
