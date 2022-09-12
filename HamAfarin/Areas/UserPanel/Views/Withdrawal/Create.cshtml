@@ -1,0 +1,45 @@
+﻿@model DataLayer.Tbl_WalletWithdrawalRequest
+
+@{
+    ViewBag.Title = "برداشت از حساب " + Server.HtmlDecode(Html.DisplayNameFor(model => model).ToString());
+}
+
+<h2>برداشت از حساب @Html.DisplayNameFor(model => model)</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Amount, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Amount)
+                @Html.ValidationMessageFor(model => model.Amount)
+            </div>
+        </div>
+
+        <div class="form-group" id="buttons">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="تایید" class="btn btn-primary" />
+                <input onclick="cancel()" type="button" value="انصراف" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+@section Scripts{
+    <script>
+        function cancel() {
+            $("#Amount").val("");
+        }
+    </script>
+}

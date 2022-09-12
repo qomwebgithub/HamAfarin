@@ -102,6 +102,10 @@
         <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_Profile_Tbl_Users" />
         <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_Wallet_Tbl_Users" />
         <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_Wallet_Tbl_WalletType" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalRequest" Width="1.5" PointX="5.25" PointY="43.75" />
+        <EntityTypeShape EntityType="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalStatus" Width="1.5" PointX="3" PointY="47.375" />
+        <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_Users" />
+        <AssociationConnector Association="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

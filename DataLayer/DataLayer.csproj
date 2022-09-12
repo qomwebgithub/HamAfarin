@@ -119,6 +119,7 @@
     <Compile Include="MetadataClasses\Tbl_PagesMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_InvestmentProcessMetadata.cs" />
     <Compile Include="MetadataClasses\Tbl_UsersMetadata.cs" />
+    <Compile Include="MetadataClasses\Tbl_WalletWithdrawalRequestMetadata.cs" />
     <Compile Include="MyModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -286,6 +287,12 @@
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Tbl_WalletType.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_WalletWithdrawalRequest.cs">
+      <DependentUpon>MyModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tbl_WalletWithdrawalStatus.cs">
       <DependentUpon>MyModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Transaction.cs">

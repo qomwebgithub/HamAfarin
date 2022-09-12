@@ -76,5 +76,7 @@ namespace DataLayer
         public virtual DbSet<Tbl_Wallet> Tbl_Wallet { get; set; }
         public virtual DbSet<Tbl_WalletType> Tbl_WalletType { get; set; }
         public virtual DbSet<View_DepositToInvestorsDetails> View_DepositToInvestorsDetails { get; set; }
+        public virtual DbSet<Tbl_WalletWithdrawalRequest> Tbl_WalletWithdrawalRequest { get; set; }
+        public virtual DbSet<Tbl_WalletWithdrawalStatus> Tbl_WalletWithdrawalStatus { get; set; }
     }
 }

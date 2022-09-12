@@ -39,6 +39,7 @@ namespace DataLayer
             this.Tbl_Tickets4 = new HashSet<Tbl_Tickets>();
             this.Tbl_UserProfiles = new HashSet<Tbl_UserProfiles>();
             this.Tbl_Wallet = new HashSet<Tbl_Wallet>();
+            this.Tbl_WalletWithdrawalRequest = new HashSet<Tbl_WalletWithdrawalRequest>();
         }
     
         public int UserID { get; set; }
@@ -104,5 +105,7 @@ namespace DataLayer
         public virtual ICollection<Tbl_UserProfiles> Tbl_UserProfiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tbl_Wallet> Tbl_Wallet { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Tbl_WalletWithdrawalRequest> Tbl_WalletWithdrawalRequest { get; set; }
     }
 }

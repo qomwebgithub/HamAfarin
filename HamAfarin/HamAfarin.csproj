@@ -835,6 +835,8 @@
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Details.cshtml" />
+    <Content Include="Areas\UserPanel\Views\Withdrawal\Create.cshtml" />
+    <Content Include="Areas\UserPanel\Views\Withdrawal\Index.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
@@ -2484,6 +2486,7 @@
     <Compile Include="Areas\UserPanel\Controllers\UserPaymentBusinessPlanController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserProfileController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\UserQuestionBusinessPlanController.cs" />
+    <Compile Include="Areas\UserPanel\Controllers\WithdrawalController.cs" />
     <Compile Include="Areas\UserPanel\UserPanelAreaRegistration.cs" />
     <Compile Include="Classes\CheckContentImage.cs" />
     <Compile Include="Classes\CheckNationalCode.cs" />

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DataLayer.Tbl_WalletWithdrawalRequest>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>لیست درخواست برداشت ها</h2>
+<a href="/UserPanel/Withdrawal/Create" class="btn btn-success">درخواست جدید</a>
+<hr />
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+        <tr class="table-info">
+            <th>@Html.DisplayNameFor(model => model.Amount)</th>
+            <th>@Html.DisplayNameFor(model => model.CreateDate)</th>
+            <th>@Html.DisplayNameFor(model => model.IsDelete)</th>
+            <th>@Html.DisplayNameFor(model => model.WithdrawalStatus)</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(model => item.Amount)</td>
+            <td>@Html.DisplayFor(model => item.CreateDate)</td>
+            <td>
+            @if(item.IsDelete)
+                {
+                    <span class="text-white bg-danger rounded p-1">حذف شده</span>
+                }
+                else
+                {
+                    <span class="text-white bg-success rounded p-1">حذف نشده</span>
+                }
+            </td>
+            <td>@Html.DisplayFor(model => item.Tbl_WalletWithdrawalStatus.StatusTitle)</td>
+        </tr>
+    }
+</table>
+

@@ -767,6 +767,26 @@
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Tbl_WalletWithdrawalRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Id" Type="int" />
+          <Property Name="Amount" Type="bigint" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="DeleteDate" Type="datetime" />
+          <Property Name="WithdrawalStatus" Type="int" />
+          <Property Name="StatusEditDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Tbl_WalletWithdrawalStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusTitle" Type="nvarchar(max)" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDetails' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="View_DepositToInvestorsDetails">
@@ -1337,6 +1357,30 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Tbl_WalletWithdrawalRequest_Tbl_Users">
+          <End Role="Tbl_Users" Type="Self.Tbl_Users" Multiplicity="0..1" />
+          <End Role="Tbl_WalletWithdrawalRequest" Type="Self.Tbl_WalletWithdrawalRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_WalletWithdrawalRequest">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus">
+          <End Role="Tbl_WalletWithdrawalStatus" Type="Self.Tbl_WalletWithdrawalStatus" Multiplicity="0..1" />
+          <End Role="Tbl_WalletWithdrawalRequest" Type="Self.Tbl_WalletWithdrawalRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_WalletWithdrawalStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Tbl_WalletWithdrawalRequest">
+              <PropertyRef Name="WithdrawalStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="webqomir_HamAfarinDBModelStoreContainer">
           <EntitySet Name="Tbl_Affiliate" EntityType="Self.Tbl_Affiliate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_ApiToken" EntityType="Self.Tbl_ApiToken" Schema="dbo" store:Type="Tables" />
@@ -1388,6 +1432,8 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySet Name="Tbl_Users" EntityType="Self.Tbl_Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_Wallet" EntityType="Self.Tbl_Wallet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tbl_WalletType" EntityType="Self.Tbl_WalletType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_WalletWithdrawalRequest" EntityType="Self.Tbl_WalletWithdrawalRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tbl_WalletWithdrawalStatus" EntityType="Self.Tbl_WalletWithdrawalStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="View_DepositToInvestorsDetails" EntityType="Self.View_DepositToInvestorsDetails" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [View_DepositToInvestorsDetails].[UserID] AS [UserID], 
@@ -1586,6 +1632,14 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <AssociationSet Name="FK_Tbl_Wallet_Tbl_WalletType" Association="Self.FK_Tbl_Wallet_Tbl_WalletType">
             <End Role="Tbl_WalletType" EntitySet="Tbl_WalletType" />
             <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WalletWithdrawalRequest_Tbl_Users" Association="Self.FK_Tbl_WalletWithdrawalRequest_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_WalletWithdrawalRequest" EntitySet="Tbl_WalletWithdrawalRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus" Association="Self.FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus">
+            <End Role="Tbl_WalletWithdrawalStatus" EntitySet="Tbl_WalletWithdrawalStatus" />
+            <End Role="Tbl_WalletWithdrawalRequest" EntitySet="Tbl_WalletWithdrawalRequest" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -1827,6 +1881,16 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <AssociationSet Name="FK_Tbl_Wallet_Tbl_WalletType" Association="webqomir_HamAfarinDBModel.FK_Tbl_Wallet_Tbl_WalletType">
             <End Role="Tbl_WalletType" EntitySet="Tbl_WalletType" />
             <End Role="Tbl_Wallet" EntitySet="Tbl_Wallet" />
+          </AssociationSet>
+          <EntitySet Name="Tbl_WalletWithdrawalRequest" EntityType="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalRequest" />
+          <EntitySet Name="Tbl_WalletWithdrawalStatus" EntityType="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalStatus" />
+          <AssociationSet Name="FK_Tbl_WalletWithdrawalRequest_Tbl_Users" Association="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_Users">
+            <End Role="Tbl_Users" EntitySet="Tbl_Users" />
+            <End Role="Tbl_WalletWithdrawalRequest" EntitySet="Tbl_WalletWithdrawalRequest" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus" Association="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus">
+            <End Role="Tbl_WalletWithdrawalStatus" EntitySet="Tbl_WalletWithdrawalStatus" />
+            <End Role="Tbl_WalletWithdrawalRequest" EntitySet="Tbl_WalletWithdrawalRequest" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Tbl_Affiliate">
@@ -2661,6 +2725,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <NavigationProperty Name="Tbl_Tickets4" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Tickets_Tbl_Users4" FromRole="Tbl_Users" ToRole="Tbl_Tickets" />
           <NavigationProperty Name="Tbl_UserProfiles" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Profile_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_UserProfiles" />
           <NavigationProperty Name="Tbl_Wallet" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_Wallet_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_Wallet" />
+          <NavigationProperty Name="Tbl_WalletWithdrawalRequest" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_Users" FromRole="Tbl_Users" ToRole="Tbl_WalletWithdrawalRequest" />
         </EntityType>
         <EntityType Name="Tbl_Wallet">
           <Key>
@@ -3248,6 +3313,53 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
             </Principal>
             <Dependent Role="Tbl_Wallet">
               <PropertyRef Name="Type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Tbl_WalletWithdrawalRequest">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Id" Type="Int32" />
+          <Property Name="Amount" Type="Int64" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="3" />
+          <Property Name="WithdrawalStatus" Type="Int32" />
+          <Property Name="StatusEditDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Tbl_Users" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_Users" FromRole="Tbl_WalletWithdrawalRequest" ToRole="Tbl_Users" />
+          <NavigationProperty Name="Tbl_WalletWithdrawalStatus" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus" FromRole="Tbl_WalletWithdrawalRequest" ToRole="Tbl_WalletWithdrawalStatus" />
+        </EntityType>
+        <EntityType Name="Tbl_WalletWithdrawalStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Tbl_WalletWithdrawalRequest" Relationship="webqomir_HamAfarinDBModel.FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus" FromRole="Tbl_WalletWithdrawalStatus" ToRole="Tbl_WalletWithdrawalRequest" />
+        </EntityType>
+        <Association Name="FK_Tbl_WalletWithdrawalRequest_Tbl_Users">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_Users" Role="Tbl_Users" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalRequest" Role="Tbl_WalletWithdrawalRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Tbl_WalletWithdrawalRequest">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Tbl_WalletWithdrawalRequest_Tbl_WalletWithdrawalStatus">
+          <End Type="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalStatus" Role="Tbl_WalletWithdrawalStatus" Multiplicity="0..1" />
+          <End Type="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalRequest" Role="Tbl_WalletWithdrawalRequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tbl_WalletWithdrawalStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="Tbl_WalletWithdrawalRequest">
+              <PropertyRef Name="WithdrawalStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4083,6 +4195,28 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_WalletWithdrawalRequest">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalRequest">
+              <MappingFragment StoreEntitySet="Tbl_WalletWithdrawalRequest">
+                <ScalarProperty Name="StatusEditDate" ColumnName="StatusEditDate" />
+                <ScalarProperty Name="WithdrawalStatus" ColumnName="WithdrawalStatus" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="User_Id" ColumnName="User_Id" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tbl_WalletWithdrawalStatus">
+            <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_WalletWithdrawalStatus">
+              <MappingFragment StoreEntitySet="Tbl_WalletWithdrawalStatus">
+                <ScalarProperty Name="StatusTitle" ColumnName="StatusTitle" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
