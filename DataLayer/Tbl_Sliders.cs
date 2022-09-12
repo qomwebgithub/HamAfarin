@@ -29,5 +29,6 @@ namespace DataLayer
         public string TitleClick2 { get; set; }
         public string LinkClick2 { get; set; }
         public bool IsActiveClick2 { get; set; }
+        public bool InMobile { get; set; }
     }
 }

@@ -15,6 +15,7 @@ columns.Bound(model => model.Title);
 columns.Bound(model => model.Url).Width(100);
 columns.Bound(model => model.Page_Title);
 columns.Bound(model => model.IsActive);
+columns.Bound(model => model.InMobile);
             columns.Bound(item => @item.SliderID).Title("دستورات").Filterable(false).Groupable(false)
                     .Template(@<text>
                 @Html.ActionLink("جزئیات", "Details", new { id = @item.SliderID }, new { @class = "btn btn-info" })

@@ -24,6 +24,8 @@ namespace ViewModels
         public string Url { get; set; }
         [Display(Name = "نمایش در صفحه اصلی")]
         public bool IsShowHomePage { get; set; }
+        [Display(Name = "نمایش در موبایل")]
+        public bool InMobile { get; set; }
         [Display(Name = "نمایش در صفحه")]
         public Nullable<int> Page_id { get; set; }
         [Display(Name = "نمایش در صفحه")]

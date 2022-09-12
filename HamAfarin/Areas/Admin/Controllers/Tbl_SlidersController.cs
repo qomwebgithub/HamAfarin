@@ -75,6 +75,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 ImageName = item.ImageName,
                 IsShowHomePage = item.IsShowHomePage,
                 Page_id = item.Page_id,
+                InMobile = item.InMobile,
                 Page_Title = pageTitle
             };
             return model;
@@ -145,6 +146,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 tbl_Sliders.Title = sliderModel.Title;
                 tbl_Sliders.IsShowHomePage = sliderModel.IsShowHomePage;
                 tbl_Sliders.IsActive = sliderModel.IsActive;
+                tbl_Sliders.InMobile = sliderModel.InMobile;
                 db.Tbl_Sliders.Add(tbl_Sliders);
                 db.SaveChanges();
                 return RedirectToAction("Details/" + tbl_Sliders.SliderID);
@@ -213,6 +215,7 @@ namespace Hamafarin.Areas.Admin.Controllers
                 tbl_Sliders.Title = sliders.Title;
                 tbl_Sliders.IsShowHomePage = sliders.IsShowHomePage;
                 tbl_Sliders.IsActive = sliders.IsActive;
+                tbl_Sliders.InMobile = sliders.InMobile;
                 tbl_Sliders.ImageName = sliders.ImageName;
                 db.Entry(tbl_Sliders).State = EntityState.Modified;
                 db.SaveChanges();

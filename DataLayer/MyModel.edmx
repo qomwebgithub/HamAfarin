@@ -650,6 +650,7 @@
           <Property Name="TitleClick2" Type="nvarchar(max)" />
           <Property Name="LinkClick2" Type="nvarchar(max)" />
           <Property Name="IsActiveClick2" Type="bit" Nullable="false" />
+          <Property Name="InMobile" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Sms">
           <Key>
@@ -2596,6 +2597,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <Property Name="TitleClick2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LinkClick2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="IsActiveClick2" Type="Boolean" Nullable="false" />
+          <Property Name="InMobile" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Tbl_Sms">
           <Key>
@@ -4040,6 +4042,7 @@ warning 6002: The table/view 'hamafari_HamafafinDB.dbo.View_DepositToInvestorsDe
           <EntitySetMapping Name="Tbl_Sliders">
             <EntityTypeMapping TypeName="webqomir_HamAfarinDBModel.Tbl_Sliders">
               <MappingFragment StoreEntitySet="Tbl_Sliders">
+                <ScalarProperty Name="InMobile" ColumnName="InMobile" />
                 <ScalarProperty Name="IsActiveClick2" ColumnName="IsActiveClick2" />
                 <ScalarProperty Name="LinkClick2" ColumnName="LinkClick2" />
                 <ScalarProperty Name="TitleClick2" ColumnName="TitleClick2" />
