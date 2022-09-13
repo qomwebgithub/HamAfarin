@@ -272,5 +272,11 @@ namespace Hamafarin.Controllers
             };
             return View(footerViewModel);
         }
+
+        [Route("404")]
+        public ActionResult Error404()
+        {
+            return View();
+        }
     }
 }
