@@ -445,7 +445,7 @@ h4 {
 .text-danger {
     color: #dc3545 !important;
     text-decoration: none !important;
-    font-size: 14px !important;
+    font-size: 15px !important;
 }
 
 .text-align-center {
@@ -497,7 +497,7 @@ h4 {
 
 .nav-link {
     display: block;
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem;
     padding-left: 0;
     padding-right: 0;
     margin: 0 1rem;

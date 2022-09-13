@@ -28,7 +28,7 @@
                 @Html.Partial("_CardBlog", item)
             }
         </div>
-        @Html.PagedListPager(Model, page => Url.Action("index", new { page }), new PagedListRenderOptions { MaximumPageNumbersToDisplay = count });
+        @Html.PagedListPager(Model, page => Url.Action("index", new { page }), new PagedListRenderOptions { MaximumPageNumbersToDisplay = count })
     </section>
     }
 }
