@@ -107,6 +107,7 @@
     <Compile Include="Payment\PaymentOfflineViewModel.cs" />
     <Compile Include="Payment\PaymentOnlineViewModel.cs" />
     <Compile Include="Payment\PaymentReturnedViewModel.cs" />
+    <Compile Include="Payment\ProjectParticipationViewModel.cs" />
     <Compile Include="Payment\SelectPaymentTypeViewModel.cs" />
     <Compile Include="Payment\UserPaymentBusinessPlanList.cs" />
     <Compile Include="Payment\UserPaymentBusinessPlanSingleViewModel.cs" />

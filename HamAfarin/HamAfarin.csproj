@@ -839,7 +839,7 @@
     <Content Include="Areas\Admin\Views\Tbl_Affiliate\Details.cshtml" />
     <Content Include="Areas\UserPanel\Views\Withdrawal\Create.cshtml" />
     <Content Include="Areas\UserPanel\Views\Withdrawal\Index.cshtml" />
-    <Content Include="Areas\UserPanel\Views\Certificate\Index.cshtml" />
+    <Content Include="Areas\UserPanel\Views\UserPaymentBusinessPlan\CertificateList.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />
@@ -2479,7 +2479,6 @@
     <Compile Include="Areas\Admin\Controllers\Tbl_WalletController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_UsersController.cs" />
     <Compile Include="Areas\Admin\Controllers\Tbl_DepositToInvestorsController.cs" />
-    <Compile Include="Areas\UserPanel\Controllers\CertificateController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\InvestmentsReportController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\PaymentReturnedController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\AffiliateController.cs" />
