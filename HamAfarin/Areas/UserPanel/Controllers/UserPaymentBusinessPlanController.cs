@@ -323,5 +323,23 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
             (bool Success, string Message) smsResult = oSms.SendSms(qUser.MobileNumber, message);
         }
+
+        public ActionResult CertificateList()
+        {
+            int UserID = UserSetAuthCookie.GetUserID(User.Identity.Name);
+            var CertifiedCertificate = db.Tbl_BusinessPlanPayment.Where(b => b.IsConfirmedFromFaraboors && b.IsDelete == false && b.PaymentUser_id == UserID && b.Tbl_BussinessPlans.IsProjectParticipationReady).ToList();
+            List<ProjectParticipationViewModel> projectParticipations = new List<ProjectParticipationViewModel>();
+            foreach (var item in CertifiedCertificate)
+            {
+                projectParticipations.Add(new ProjectParticipationViewModel()
+                {
+                    PaymentID = item.PaymentID,
+                    CreateDate = item.CreateDate,
+                    PaymentPrice = item.PaymentPrice,
+                    Title = item.Tbl_BussinessPlans.Title
+                });
+            }
+            return View(projectParticipations);
+        }
     }
 }
