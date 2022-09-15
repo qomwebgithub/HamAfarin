@@ -652,5 +652,68 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
 
 
+        public ActionResult InvestmentReport(int? id)
+        {
+            var listInvestor = db.Tbl_BusinessPlanPayment
+                .Where(b => b.BusinessPlan_id == id &&
+                b.IsConfirmedFromFaraboors && b.IsDelete==false)
+                .Select(u => u.Tbl_Users1).Distinct().ToList();
+
+            List<Tbl_Users> first = new List<Tbl_Users>();
+            List<Tbl_Users> notFirst = new List<Tbl_Users>();
+
+            var listBusinessPlanPayment = db.Tbl_BusinessPlanPayment.OrderBy(o => o.CreateDate).ToList();
+            
+            foreach (var item in listInvestor)
+            {
+                var firstOrNot = listBusinessPlanPayment
+                    .Where(b => b.CreateUser_id == item.UserID)
+                    .Select(s => s.BusinessPlan_id).FirstOrDefault();
+
+                if (firstOrNot == id) first.Add(item);
+                else notFirst.Add(item);
+            }
+
+            List<InvestorViewModel> firstInvestors = new List<InvestorViewModel>();
+            List<InvestorViewModel> notFirstInvestors = new List<InvestorViewModel>();
+
+            foreach (var item in first)
+            {
+                firstInvestors.Add(new InvestorViewModel()
+                {
+                    FirstName = item.Tbl_UserProfiles.FirstOrDefault().FirstName,
+                    LastName = item.Tbl_UserProfiles.FirstOrDefault().LastName,
+                    NationalId = item.Tbl_UserProfiles.FirstOrDefault().NationalCode,
+                    MobileNumber = item.MobileNumber,
+                    DepositAmount = item.Tbl_BusinessPlanPayment1.Where(b => b.BusinessPlan_id == id && b.IsConfirmedFromFaraboors && b.IsDelete == false).First().PaymentPrice.Value
+                });
+            }
+
+            foreach (var item in notFirst)
+            {
+                notFirstInvestors.Add(new InvestorViewModel()
+                {
+                    FirstName = item.Tbl_UserProfiles.FirstOrDefault().FirstName,
+                    LastName = item.Tbl_UserProfiles.FirstOrDefault().LastName,
+                    NationalId = item.Tbl_UserProfiles.FirstOrDefault().NationalCode,
+                    MobileNumber = item.MobileNumber,
+                    DepositAmount = item.Tbl_BusinessPlanPayment1.Where(b => b.BusinessPlan_id == id && b.IsConfirmedFromFaraboors && b.IsDelete == false).First().PaymentPrice.Value
+                });
+            }
+
+            InvestmentReportViewModel investmentReport = new InvestmentReportViewModel()
+            {
+                CountOfInvestMent = listInvestor.Count,
+                CountOfFirstInvestMent = first.Count,
+                CountOfNotFirstInvestMent = notFirst.Count,
+                TotalOfInvestMent = listInvestor.Sum(s => s.Tbl_BusinessPlanPayment1.Where(b => b.BusinessPlan_id == id && b.IsConfirmedFromFaraboors && b.IsDelete == false).Sum(b => b.PaymentPrice.Value)),
+                TotalFirstInvestment = first.Sum(s => s.Tbl_BusinessPlanPayment1.Where(b => b.BusinessPlan_id == id && b.IsConfirmedFromFaraboors && b.IsDelete == false).Sum(b => b.PaymentPrice.Value)),
+                TotalNotFirstInvestment = notFirst.Sum(s => s.Tbl_BusinessPlanPayment1.Where(b => b.BusinessPlan_id == id && b.IsConfirmedFromFaraboors && b.IsDelete == false).Sum(b => b.PaymentPrice.Value)),
+                FirstInvestores = firstInvestors,
+                NotFirstInvestores = notFirstInvestors
+            };
+
+            return View(investmentReport);
+        }
     }
 }

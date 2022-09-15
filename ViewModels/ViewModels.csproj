@@ -103,6 +103,7 @@
     <Compile Include="Payment\admin\AdminCreateEditPaymentViewModel.cs" />
     <Compile Include="Payment\admin\AdminOnlineDetilsPaymentViewModel.cs" />
     <Compile Include="Payment\admin\PaymentStatusViewModel.cs" />
+    <Compile Include="Payment\InvestmentReportViewModel.cs" />
     <Compile Include="Payment\InvestmentSummaryViewModel.cs" />
     <Compile Include="Payment\PaymentOfflineViewModel.cs" />
     <Compile Include="Payment\PaymentOnlineViewModel.cs" />

@@ -840,6 +840,7 @@
     <Content Include="Areas\UserPanel\Views\Withdrawal\Create.cshtml" />
     <Content Include="Areas\UserPanel\Views\Withdrawal\Index.cshtml" />
     <Content Include="Areas\UserPanel\Views\UserPaymentBusinessPlan\CertificateList.cshtml" />
+    <Content Include="Areas\Admin\Views\Tbl_BusinessPlanPayment\InvestmentReport.cshtml" />
     <None Include="Connected Services\SmsSender\MessagingService.wsdl" />
     <Content Include="Areas\UserPanel\Views\UserProfile\LegalOrIndividuals.cshtml" />
     <None Include="Connected Services\ZarinPal\configuration91.svcinfo" />

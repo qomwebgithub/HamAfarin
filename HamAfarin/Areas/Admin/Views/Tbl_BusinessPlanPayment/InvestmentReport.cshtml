@@ -1,0 +1,115 @@
+﻿@model ViewModels.InvestmentReportViewModel
+
+@{
+    ViewBag.Title = "جزئیات سرمایه گذاران";
+}
+
+<style>
+    #YieldPercent {
+        direction: ltr;
+    }
+
+    #Description {
+        max-width: none;
+    }
+
+    #Plan_id, #DepositType_id {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+</style>
+<div class="alert alert-secondary" role="alert">
+توجه: این لیست فقط شامل افرادی است که تاییدیه فرابورس دارند
+</div>
+<h5 class="mb-4">@ViewBag.Title</h5>
+<div class="row">
+    <div class="col-12 col-md-6">
+        <p class="">تعداد سرمایه گذاران : <span class="text-success text-medium p-0">@Model.CountOfInvestMent نفر</span></p>
+    </div>
+    <div class="col-12 col-md-6 p-0">
+        <p class="">جمع کل سرمایه گذاری : <span class="text-success text-medium p-0">@Model.TotalOfInvestMent.ToString("#,0")</span></p>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            @Html.Label("تعداد کسانی که این طرح اولین طرح انهاست")
+            <p class="text-success text-xlarge" style="font-size:17px">@Model.CountOfFirstInvestMent</p>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.Label("جمع سرمایه گذاری")
+            <p class="text-success text-xlarge" style="font-size:16px">@Model.TotalFirstInvestment.ToString("#,0")</p>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.Label("تعداد کسانی که این طرح چندمین طرح انهاست")
+            <p class="text-success text-xlarge" style="font-size:17px">@Model.CountOfNotFirstInvestMent</p>
+        </div>
+        <div class="form-group col-md-6">
+            @Html.Label("جمع سرمایه گذاری")
+            <p class="text-success text-xlarge" style="font-size:16px">@Model.TotalNotFirstInvestment.ToString("#,0")</p>
+        </div>
+    </div>
+}
+<h4 class="mb-3">لیست کسانی که این طرح اولین طرح انهاست </h4>
+<table class="table" id="investors">
+    <thead>
+        <tr>
+            <th>ردیف</th>
+            <th>نام</th>
+            <th>نام خانوادگی</th>
+            <th>کد ملی</th>
+            <th>موبایل</th>
+            <th>مبلغ واریزی</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{var index = 1; }
+        @foreach (var investors in Model.FirstInvestores)
+        {
+            <tr>
+                <td>@index</td>
+                <td>@investors.FirstName</td>
+                <td>@investors.LastName</td>
+                <td>@investors.NationalId</td>
+                <td>@investors.MobileNumber</td>
+                <td>@investors.DepositAmount.ToString("N0")</td>
+            </tr>
+            { index++; }
+        }
+    </tbody>
+</table>
+<hr />
+<br />
+<h4 class="mb-3">لیست کسانی که این طرح چندمین طرح انهاست </h4>
+<table class="table" id="investors">
+    <thead>
+        <tr>
+            <th>ردیف</th>
+            <th>نام</th>
+            <th>نام خانوادگی</th>
+            <th>کد ملی</th>
+            <th>موبایل</th>
+            <th>مبلغ واریزی</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{var index2 = 1; }
+        @foreach (var investors in Model.NotFirstInvestores)
+        {
+            <tr>
+                <td>@index2</td>
+                <td>@investors.FirstName</td>
+                <td>@investors.LastName</td>
+                <td>@investors.NationalId</td>
+                <td>@investors.MobileNumber</td>
+                <td>@investors.DepositAmount.ToString("N0")</td>
+            </tr>
+            { index2++; }
+        }
+    </tbody>
+</table>
