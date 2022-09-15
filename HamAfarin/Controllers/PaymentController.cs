@@ -23,6 +23,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
@@ -608,7 +609,7 @@ namespace Hamafarin.Controllers
                 if (qPaymentOnline == null)
                     return View();
 
-                Tbl_BusinessPlanPayment qBusinessPlanPayment = db.Tbl_BusinessPlanPayment.FirstOrDefault(p => p.IsDelete == false && p.PaymentID == qPaymentOnline.Payment_id);
+                Tbl_BusinessPlanPayment qBusinessPlanPayment = await db.Tbl_BusinessPlanPayment.FirstOrDefaultAsync(p => p.IsDelete == false && p.PaymentID == qPaymentOnline.Payment_id);
 
                 long raisedPrice = planService.GetRaisedPrice(db, qBusinessPlanPayment.Tbl_BussinessPlans.BussinessPlanID) + qBusinessPlanPayment.PaymentPrice.Value;
                 long totalPrice = long.Parse(qBusinessPlanPayment.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital);
@@ -844,11 +845,14 @@ namespace Hamafarin.Controllers
                     IOnlinePayment onlinePayment = OnlinePayment();
                     IPaymentFetchResult invoice = await onlinePayment.FetchAsync();
 
+                    qPaymentOnline.ShaparakCheckTransactionResult = System.Text.Json.JsonSerializer.Serialize(invoice);
+
                     // Check if the invoice is new or it's already processed before.
                     if (invoice.Status != PaymentFetchResultStatus.ReadyForVerifying)
                     {
                         ViewBag.IsSuccess = false;
                         ViewBag.Result = "عملیات ناموفق";
+                        await db.SaveChangesAsync();
                         return View();
                     }
 
@@ -858,26 +862,27 @@ namespace Hamafarin.Controllers
                     {
                         var cancelResult = await onlinePayment.CancelAsync(invoice, cancellationReason: "متاسفانه ظرفیت طرح تکمیل شده است.");
                         ViewBag.Result = "برگشت وجه";
+                        await db.SaveChangesAsync();
                         return View();
                     }
 
                     var verifyResult = await onlinePayment.VerifyAsync(invoice);
 
                     var payment = await _paymentDb.Payment.Where(p => p.TrackingNumber == verifyResult.TrackingNumber).SingleOrDefaultAsync();
-                    
+
                     qPaymentOnline.ShaparakVerifyPayment = payment.TransactionCode;
                     qPaymentOnline.IsFinally = true;
                     qBusinessPlanPayment.TransactionPaymentCode = payment.TransactionCode;
                     qBusinessPlanPayment.IsPaid = true;
                     qPaymentOnline.FinallyDate = DateTime.Now;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     ViewBag.IsSuccess = true;
                     ViewBag.TransactionReferenceID = payment.TransactionCode;
 
-                    Tbl_Sms qSms = db.Tbl_Sms.Find(4);
-                    Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                    (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+                    Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
+                    Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    (bool Success, string Message) result = await oSms.SendSmsAsync(qUser.MobileNumber, qSms.Message);
 
                     return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
                 }
@@ -1066,7 +1071,6 @@ namespace Hamafarin.Controllers
                 .ConfigureStorage(builder => builder.AddStorage(new PaymentStorage()))
                 .Build().OnlinePayment;
         }
-
 
         #region Test Code
 

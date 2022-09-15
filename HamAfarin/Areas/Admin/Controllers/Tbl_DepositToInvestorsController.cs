@@ -269,9 +269,9 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult DepositCalculation(int id, decimal percent = 0)
+        public async Task<ActionResult> DepositCalculation(int id, decimal percent = 0)
         {
-            List<InvestorViewModel> listInvestorsViewModel = db.Tbl_BusinessPlanPayment
+            List<InvestorViewModel> listInvestorsViewModel = await db.Tbl_BusinessPlanPayment.AsNoTracking()
                 .Where(b => b.IsDelete == false &&
                     b.BusinessPlan_id == id &&
                     b.IsConfirmedFromFaraboors)
@@ -291,7 +291,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     DepositAmount = (long)(percent / 100 * (decimal)g.Sum(b => b.PaymentPrice))
                 })
                 .OrderBy(g => g.FirstPaymentDate)
-                .ToList();
+                .ToListAsync();
 
             return Json(listInvestorsViewModel, JsonRequestBehavior.AllowGet);
         }
