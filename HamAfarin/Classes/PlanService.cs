@@ -297,7 +297,7 @@ namespace HamAfarin
         /// <returns>تعداد سرمایه گذار یک طرح</returns>
         public int GetPlanInvestorCount(HamAfarinDBEntities db, int id)
         {
-            return GetPlanSubmittedPaid(db, id).Select(p => p.PaymentUser_id).Distinct().Count(); ;
+            return GetPlanSubmittedPaid(db, id).Select(p => p.PaymentUser_id).Distinct().Count();
         }
 
         public int GetPercentageInvestmentPlan(string AmountRequiredRoRaiseCapital, long intRaisedPrice)
