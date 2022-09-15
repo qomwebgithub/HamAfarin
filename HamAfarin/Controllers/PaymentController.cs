@@ -190,41 +190,8 @@ namespace Hamafarin.Controllers
 
                         string redirectAddress = "https://www.hamafarin.ir/Payment/VerifyPayment/" + tbl_PaymentOnline.PaymentDetilsID;
 
-                        #region BankPayment
-                        //IBankService bankService;
-                        //switch (selectPaymentTypeViewModel.Dargah)
-                        //{
-                        //    case 1: bankService = new PasargadBankService(); break;
-                        //    case 2: bankService = new ZarinPalBankService(); break;
-                        //    default: bankService = new SamanBankService(); break;
-                        //};
-
-                        //var bankDto = new BankInvoice()
-                        //{
-                        //    UserEmail = email,
-                        //    UserMobile = qUser.MobileNumber,
-                        //    Description = $" طرح {selectPaymentTypeViewModel.BussinessName}",
-                        //    Amount = (long)dclAmount,
-                        //    AfterPaymentRedirectAddress = redirectAddress,
-                        //    InvoiceDate = tbl_BusinessPlanPayment.CreateDate.Value,
-                        //    InvoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber,
-                        //    TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
-                        //};
-
-                        //var request = bankService.Request(bankDto);
-                        //tbl_PaymentOnline.ShaparakMessageGetToken = request.Result;
-
-                        //if (request.IsSuccess)
-                        //{
-                        //    tbl_PaymentOnline.ShaparakToken = request.Token;
-                        //    db.SaveChanges();
-
-                        //    return Redirect(request.RedirectUrl);
-                        //}
-                        #endregion
 
 
-                        #region ParbadPayment
                         if (selectPaymentTypeViewModel.Dargah == 2)
                         {
                             #region Zarinpal
@@ -248,38 +215,71 @@ namespace Hamafarin.Controllers
                         }
                         else
                         {
-                            string dargah;
+                            #region ParbadPayment
+                            //string dargah;
+                            //switch (selectPaymentTypeViewModel.Dargah)
+                            //{
+                            //    case 1: dargah = "Pasargad"; break;
+                            //    case 2: dargah = "ZarinPal"; break;
+                            //    default: dargah = "Saman"; break;
+                            //};
+
+                            //IOnlinePayment onlinePayment = OnlinePayment();
+                            //long trackingNumber = long.Parse(tbl_BusinessPlanPayment.InvoiceNumber);
+
+                            //IPaymentRequestResult result = await onlinePayment.RequestAsync(invoice =>
+                            //    invoice
+                            //        .SetTrackingNumber(trackingNumber)
+                            //        .SetAmount(dclAmount)
+                            //        .SetCallbackUrl(redirectAddress)
+                            //        .SetGateway(dargah)
+                            ////.SetZarinPalData(new ZarinPalInvoice(
+                            ////    "test", "test@gmail.com", "09191155021"))
+                            //);
+
+                            //if (result.IsSucceed)
+                            //{
+                            //    var payment = await _paymentDb.Payment.Where(p => p.TrackingNumber == result.TrackingNumber).SingleOrDefaultAsync();
+                            //    tbl_PaymentOnline.ShaparakMessageGetToken = payment.Token;
+                            //    await db.SaveChangesAsync();
+
+                            //    return result.GatewayTransporter.TransportToGateway();
+                            //}
+                            #endregion
+                            #region BankPayment
+                            IBankService bankService;
                             switch (selectPaymentTypeViewModel.Dargah)
                             {
-                                case 1: dargah = "Pasargad"; break;
-                                case 2: dargah = "ZarinPal"; break;
-                                default: dargah = "Saman"; break;
+                                //case 1: bankService = new PasargadBankService(); break;
+                                //case 2: bankService = new ZarinPalBankService(); break;
+                                default: bankService = new SamanBankService(); break;
                             };
 
-                            IOnlinePayment onlinePayment = OnlinePayment();
-                            long trackingNumber = long.Parse(tbl_BusinessPlanPayment.InvoiceNumber);
-
-                            IPaymentRequestResult result = await onlinePayment.RequestAsync(invoice =>
-                                invoice
-                                    .SetTrackingNumber(trackingNumber)
-                                    .SetAmount(dclAmount)
-                                    .SetCallbackUrl(redirectAddress)
-                                    .SetGateway(dargah)
-                            //.SetZarinPalData(new ZarinPalInvoice(
-                            //    "test", "test@gmail.com", "09191155021"))
-                            );
-
-                            if (result.IsSucceed)
+                            var bankDto = new BankInvoice()
                             {
-                                var payment = await _paymentDb.Payment.Where(p => p.TrackingNumber == result.TrackingNumber).SingleOrDefaultAsync();
-                                tbl_PaymentOnline.ShaparakMessageGetToken = payment.Token;
-                                await db.SaveChangesAsync();
+                                UserEmail = email,
+                                UserMobile = qUser.MobileNumber,
+                                Description = $" طرح {selectPaymentTypeViewModel.BussinessName}",
+                                Amount = (long)dclAmount,
+                                AfterPaymentRedirectAddress = redirectAddress,
+                                InvoiceDate = tbl_BusinessPlanPayment.CreateDate.Value,
+                                InvoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber,
+                                TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
+                            };
 
-                                return result.GatewayTransporter.TransportToGateway();
+                            var request = await bankService.RequestAsync(bankDto);
+                            tbl_PaymentOnline.ShaparakMessageGetToken = request.Result;
+
+                            if (request.IsSuccess)
+                            {
+                                tbl_PaymentOnline.ShaparakToken = request.Token;
+                                db.SaveChanges();
+
+                                return Redirect(request.RedirectUrl);
                             }
+                            #endregion
                         }
 
-                        #endregion
 
                         ViewBag.Massage = "فعلا ارتباط با درگاه مقدور نمی باشد";
                         db.SaveChanges();
@@ -599,9 +599,13 @@ namespace Hamafarin.Controllers
         //    return View("SelectPaymentType/" + selectPaymentTypeViewModel.BusinessPlanID);
         //}
 
-
+        //[HttpGet]
         public async Task<ActionResult> VerifyPayment(string id)
         {
+            //تست نوع درخواست
+            //string methodType = HttpContext.Request.HttpMethod;
+            //await oSms.SendSmsAsync("09033802138", methodType);
+
             Tbl_PaymentOnlineDetils qPaymentOnline = db.Tbl_PaymentOnlineDetils.FirstOrDefault(p => p.PaymentDetilsID == id);
 
             try
@@ -842,13 +846,68 @@ namespace Hamafarin.Controllers
                 }
                 else
                 {
-                    IOnlinePayment onlinePayment = OnlinePayment();
-                    IPaymentFetchResult invoice = await onlinePayment.FetchAsync();
+                    #region Parbad
+                    //IOnlinePayment onlinePayment = OnlinePayment();
+                    //IPaymentFetchResult invoice = await onlinePayment.FetchAsync();
 
-                    qPaymentOnline.ShaparakCheckTransactionResult = System.Text.Json.JsonSerializer.Serialize(invoice);
+                    //qPaymentOnline.ShaparakCheckTransactionResult = System.Text.Json.JsonSerializer.Serialize(invoice);
 
-                    // Check if the invoice is new or it's already processed before.
-                    if (invoice.Status != PaymentFetchResultStatus.ReadyForVerifying)
+                    //// Check if the invoice is new or it's already processed before.
+                    //if (invoice.Status != PaymentFetchResultStatus.ReadyForVerifying)
+                    //{
+                    //    ViewBag.IsSuccess = false;
+                    //    ViewBag.Result = "عملیات ناموفق";
+                    //    await db.SaveChangesAsync();
+                    //    return View();
+                    //}
+
+                    //// This is an example of cancelling an invoice when you think that the payment process must be stopped.
+                    //if (isRefund)
+                    //{
+                    //    var cancelResult = await onlinePayment.CancelAsync(invoice, cancellationReason: "متاسفانه ظرفیت طرح تکمیل شده است.");
+                    //    ViewBag.Result = "برگشت وجه";
+                    //    await db.SaveChangesAsync();
+                    //    return View();
+                    //}
+
+                    //var verifyResult = await onlinePayment.VerifyAsync(invoice);
+
+                    //var payment = await _paymentDb.Payment.Where(p => p.TrackingNumber == verifyResult.TrackingNumber).SingleOrDefaultAsync();
+
+                    //qPaymentOnline.ShaparakVerifyPayment = payment.TransactionCode;
+                    //qPaymentOnline.IsFinally = true;
+                    //qBusinessPlanPayment.TransactionPaymentCode = payment.TransactionCode;
+                    //qBusinessPlanPayment.IsPaid = true;
+                    //qPaymentOnline.FinallyDate = DateTime.Now;
+                    //await db.SaveChangesAsync();
+
+                    //ViewBag.IsSuccess = true;
+                    //ViewBag.TransactionReferenceID = payment.TransactionCode;
+
+                    //Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
+                    //Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    //(bool Success, string Message) result = await oSms.SendSmsAsync(qUser.MobileNumber, qSms.Message);
+
+                    //return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+                    #endregion
+
+                    #region BankPayment
+                    IBankService bankService;
+                    switch (qPaymentOnline.Dargah_id)
+                    {
+                        //case 1: bankService = new PasargadBankService(); break;
+                        //case 2: bankService = new ZarinPalBankService(); break;
+                        default: bankService = new SamanBankService(); break;
+                    };
+
+                    BankCallbackResult callbackResult = bankService.Fetch(Request);
+                    qPaymentOnline.ShaparakCheckTransactionResult = callbackResult.Result;
+
+                    var isNotUniqueRefId = db.Tbl_PaymentOnlineDetils
+                        .Any(p => p.TransactionReferenceID == callbackResult.TransactionId &&
+                        p.Dargah_id == qPaymentOnline.Dargah_id && p.IsFinally);
+
+                    if (!callbackResult.IsSucceed || isNotUniqueRefId)
                     {
                         ViewBag.IsSuccess = false;
                         ViewBag.Result = "عملیات ناموفق";
@@ -856,35 +915,35 @@ namespace Hamafarin.Controllers
                         return View();
                     }
 
-                    // This is an example of cancelling an invoice when you think that the payment process must be stopped.
-                    //if (!Is_There_Still_Product_In_Shop(invoice.TrackingNumber))
-                    if (isRefund)
-                    {
-                        var cancelResult = await onlinePayment.CancelAsync(invoice, cancellationReason: "متاسفانه ظرفیت طرح تکمیل شده است.");
-                        ViewBag.Result = "برگشت وجه";
-                        await db.SaveChangesAsync();
-                        return View();
-                    }
+                    //// This is an example of cancelling an invoice when you think that the payment process must be stopped.
+                    //if (isRefund)
+                    //{
+                    //    var cancelResult = await onlinePayment.CancelAsync(invoice, cancellationReason: "متاسفانه ظرفیت طرح تکمیل شده است.");
+                    //    ViewBag.Result = "برگشت وجه";
+                    //    await db.SaveChangesAsync();
+                    //    return View();
+                    //}
 
-                    var verifyResult = await onlinePayment.VerifyAsync(invoice);
+                    PaymentVerifyResult verifyResult = await bankService.VerifyAsync(callbackResult);
 
-                    var payment = await _paymentDb.Payment.Where(p => p.TrackingNumber == verifyResult.TrackingNumber).SingleOrDefaultAsync();
 
-                    qPaymentOnline.ShaparakVerifyPayment = payment.TransactionCode;
+                    qPaymentOnline.ShaparakVerifyPayment = verifyResult.TransactionCode;
                     qPaymentOnline.IsFinally = true;
-                    qBusinessPlanPayment.TransactionPaymentCode = payment.TransactionCode;
+                    qBusinessPlanPayment.TransactionPaymentCode = verifyResult.TransactionCode;
                     qBusinessPlanPayment.IsPaid = true;
                     qPaymentOnline.FinallyDate = DateTime.Now;
                     await db.SaveChangesAsync();
 
                     ViewBag.IsSuccess = true;
-                    ViewBag.TransactionReferenceID = payment.TransactionCode;
+                    ViewBag.TransactionReferenceID = verifyResult.TransactionCode;
 
                     Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
                     Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
                     (bool Success, string Message) result = await oSms.SendSmsAsync(qUser.MobileNumber, qSms.Message);
 
                     return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
+
+                    #endregion
                 }
             }
             catch (Exception e)
@@ -894,6 +953,16 @@ namespace Hamafarin.Controllers
             }
             return View();
         }
+
+        //[HttpPost]
+        //[ActionName("VerifyPayment")]
+        //public async Task<ActionResult> VerifyPaymentPost(string id)
+        //{
+        //    string methodType = HttpContext.Request.HttpMethod;
+        //    await oSms.SendSmsAsync("09033802138", methodType);
+
+        //    return Content("ok");
+        //}
 
         [OutputCache(Duration = 86400)]
         public ActionResult InvestmentSummary()
@@ -931,87 +1000,87 @@ namespace Hamafarin.Controllers
             return sign;
         }
 
-        private string CheckTransactionResult(string TransactionReferenceID)
-        {
-            PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
-            dp.TransactionReferenceID = TransactionReferenceID;
-            string output = JsonConvert.SerializeObject(dp);
-            string sign = GetSign(output);
+        //private string CheckTransactionResult(string TransactionReferenceID)
+        //{
+        //    PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
+        //    dp.TransactionReferenceID = TransactionReferenceID;
+        //    string output = JsonConvert.SerializeObject(dp);
+        //    string sign = GetSign(output);
 
-            byte[] textArray = Encoding.UTF8.GetBytes(output);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/CheckTransactionResult");
-            request.Method = "POST";
-            request.ContentType = "Application/Json";
-            request.ContentLength = textArray.Length;
-            request.Headers.Add("Sign", sign);
-            request.GetRequestStream().Write(textArray, 0, textArray.Length);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            string result = reader.ReadToEnd();
-            return result;
-        }
+        //    byte[] textArray = Encoding.UTF8.GetBytes(output);
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/CheckTransactionResult");
+        //    request.Method = "POST";
+        //    request.ContentType = "Application/Json";
+        //    request.ContentLength = textArray.Length;
+        //    request.Headers.Add("Sign", sign);
+        //    request.GetRequestStream().Write(textArray, 0, textArray.Length);
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    StreamReader reader = new StreamReader(response.GetResponseStream());
+        //    string result = reader.ReadToEnd();
+        //    return result;
+        //}
 
-        private string ConfirmPayment(string amount, string invoiceNumber, string invoiceDate)
-        {
-            string merchantCode = "4650168"; //کد پذیرنده
-            string terminalCode = "1837060"; //کد ترمینال  
-            string timeStamp = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        //private string ConfirmPayment(string amount, string invoiceNumber, string invoiceDate)
+        //{
+        //    string merchantCode = "4650168"; //کد پذیرنده
+        //    string terminalCode = "1837060"; //کد ترمینال  
+        //    string timeStamp = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
-            PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
-            dp.InvoiceNumber = invoiceNumber;
-            dp.InvoiceDate = invoiceDate;
-            dp.MerchantCode = merchantCode;
-            dp.TerminalCode = terminalCode;
-            dp.Amount = amount.ToString();
-            dp.TimeStamp = timeStamp;
-            string output = JsonConvert.SerializeObject(dp);
-            string sign = GetSign(output);
+        //    PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
+        //    dp.InvoiceNumber = invoiceNumber;
+        //    dp.InvoiceDate = invoiceDate;
+        //    dp.MerchantCode = merchantCode;
+        //    dp.TerminalCode = terminalCode;
+        //    dp.Amount = amount.ToString();
+        //    dp.TimeStamp = timeStamp;
+        //    string output = JsonConvert.SerializeObject(dp);
+        //    string sign = GetSign(output);
 
-            byte[] textArray = Encoding.UTF8.GetBytes(output);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/VerifyPayment");
-            request.Method = "POST";
-            request.ContentType = "Application/Json";
-            request.ContentLength = textArray.Length;
-            request.Headers.Add("Sign", sign);
+        //    byte[] textArray = Encoding.UTF8.GetBytes(output);
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/VerifyPayment");
+        //    request.Method = "POST";
+        //    request.ContentType = "Application/Json";
+        //    request.ContentLength = textArray.Length;
+        //    request.Headers.Add("Sign", sign);
 
-            request.GetRequestStream().Write(textArray, 0, textArray.Length);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    request.GetRequestStream().Write(textArray, 0, textArray.Length);
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            string result = reader.ReadToEnd();
-            return result;
-        }
+        //    StreamReader reader = new StreamReader(response.GetResponseStream());
+        //    string result = reader.ReadToEnd();
+        //    return result;
+        //}
 
-        private string RefundPayment(string amount, string invoiceNumber, string invoiceDate)
-        {
-            string merchantCode = "4650168"; //کد پذیرنده
-            string terminalCode = "1837060"; //کد ترمینال  
-            string timeStamp = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        //private string RefundPayment(string amount, string invoiceNumber, string invoiceDate)
+        //{
+        //    string merchantCode = "4650168"; //کد پذیرنده
+        //    string terminalCode = "1837060"; //کد ترمینال  
+        //    string timeStamp = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
 
-            PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
-            dp.InvoiceNumber = invoiceNumber;
-            dp.InvoiceDate = invoiceDate;
-            dp.MerchantCode = merchantCode;
-            dp.TerminalCode = terminalCode;
-            dp.Amount = amount.ToString();
-            dp.TimeStamp = timeStamp;
-            string output = JsonConvert.SerializeObject(dp);
-            string sign = GetSign(output);
+        //    PasargadBankRequestTokenDto dp = new PasargadBankRequestTokenDto();
+        //    dp.InvoiceNumber = invoiceNumber;
+        //    dp.InvoiceDate = invoiceDate;
+        //    dp.MerchantCode = merchantCode;
+        //    dp.TerminalCode = terminalCode;
+        //    dp.Amount = amount.ToString();
+        //    dp.TimeStamp = timeStamp;
+        //    string output = JsonConvert.SerializeObject(dp);
+        //    string sign = GetSign(output);
 
-            byte[] textArray = Encoding.UTF8.GetBytes(output);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/RefundPayment");
-            request.Method = "POST";
-            request.ContentType = "Application/Json";
-            request.ContentLength = textArray.Length;
-            request.Headers.Add("Sign", sign);
+        //    byte[] textArray = Encoding.UTF8.GetBytes(output);
+        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://pep.shaparak.ir/Api/v1/Payment/RefundPayment");
+        //    request.Method = "POST";
+        //    request.ContentType = "Application/Json";
+        //    request.ContentLength = textArray.Length;
+        //    request.Headers.Add("Sign", sign);
 
-            request.GetRequestStream().Write(textArray, 0, textArray.Length);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        //    request.GetRequestStream().Write(textArray, 0, textArray.Length);
+        //    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
-            StreamReader reader = new StreamReader(response.GetResponseStream());
-            string result = reader.ReadToEnd();
-            return result;
-        }
+        //    StreamReader reader = new StreamReader(response.GetResponseStream());
+        //    string result = reader.ReadToEnd();
+        //    return result;
+        //}
 
         private IOnlinePayment OnlinePayment()
         {

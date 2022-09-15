@@ -29,7 +29,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
         public FileResult DownloadExcel()
         {
-            List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false && p.IsActive).ToList();
+            List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false).ToList();
 
             List<string> lstColumnsName = new List<string> { "شناسه", " شماره موبایل" };
 
