@@ -83,7 +83,8 @@
         </div>
         <div class="card-body">
             <p class="card-text">
-                @Html.DisplayFor(model => model.PaymentPrice)
+                @*@Html.DisplayFor(model => model.PaymentPrice.Value)*@
+                @String.Format("{0:n0}", Model.PaymentPrice)
             </p>
         </div>
     </div>

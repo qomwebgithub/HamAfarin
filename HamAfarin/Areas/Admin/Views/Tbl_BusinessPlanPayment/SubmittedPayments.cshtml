@@ -25,7 +25,7 @@
             <p>فیش</p>
         }
     </text>);
-        columns.Bound(model => model.PaymentPrice);
+        columns.Bound(model => model.PaymentPrice).Format("{0:n0}");
         columns.Bound(model => model.Tbl_Users.UserName);
         columns.Bound(model => model.Tbl_BussinessPlans.Title);
         columns.Bound(model => model.InvoiceNumber);

@@ -17,7 +17,7 @@
         columns.Bound(model => model.DepositDate).Format("{0:yyy/MM/dd HH:mm}");
         columns.Bound(model => model.Tbl_DepositTypes.DepositTypeName);
         columns.Bound(model => model.YieldPercent);
-        columns.Bound(model => model.TotalDeposit);
+        columns.Bound(model => model.TotalDeposit).Format("{0:n0}");
         columns.Bound(model => model.Description);
         columns.Bound(model => model.IsPaid);
         columns.Bound(item => @item.DepositID).Title("دستورات").Filterable(false).Groupable(false)

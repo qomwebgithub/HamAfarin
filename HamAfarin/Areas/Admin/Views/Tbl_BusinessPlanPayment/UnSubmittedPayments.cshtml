@@ -55,7 +55,7 @@ columns.Bound(item => item.PaymentType_id).Filterable(false).Groupable(false)
             <p>فیش</p>
         }
     </text>);
-columns.Bound(model => model.PaymentPrice);
+columns.Bound(model => model.PaymentPrice).Format("{0:n0}");
 columns.Bound(model => model.Tbl_Users.UserName);
 columns.Bound(model => model.Tbl_BussinessPlans.Title);
             columns.Bound(item => @item.PaymentID).Title("دستورات").Filterable(false).Groupable(false)

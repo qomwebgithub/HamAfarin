@@ -17,6 +17,7 @@
             {
             columns.Bound(model => model.IsPaid);
             columns.Bound(model => model.PaidDateTime).Format("{0:yyy/MM/dd HH:mm}");
+            columns.Bound(model => model.InvoiceNumber);
             columns.Bound(model => model.TransactionPaymentCode);
             columns.Bound(item => item.PaymentType_id).Filterable(false).Groupable(false)
               .Template(@<text>
@@ -30,7 +31,7 @@
                  }
 
         </text>);
-columns.Bound(model => model.PaymentPrice);
+columns.Bound(model => model.PaymentPrice).Format("{0:n0}");
 columns.Bound(model => model.Tbl_Users.UserName);
 columns.Bound(model => model.Tbl_BussinessPlans.Title);
             columns.Bound(item => @item.PaymentID).Title("دستورات").Filterable(false).Groupable(false)
