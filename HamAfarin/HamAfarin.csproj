@@ -2492,6 +2492,7 @@
     <Compile Include="Areas\UserPanel\Controllers\UserQuestionBusinessPlanController.cs" />
     <Compile Include="Areas\UserPanel\Controllers\WithdrawalController.cs" />
     <Compile Include="Areas\UserPanel\UserPanelAreaRegistration.cs" />
+    <Compile Include="Classes\BankCallbackResult.cs" />
     <Compile Include="Classes\CheckContentImage.cs" />
     <Compile Include="Classes\CheckNationalCode.cs" />
     <Compile Include="Classes\CheckPassword.cs" />
@@ -2509,6 +2510,7 @@
     <Compile Include="Classes\MyRoleProvider.cs" />
     <Compile Include="Classes\Dto\BankInvoice.cs" />
     <Compile Include="Classes\PaymentStorage.cs" />
+    <Compile Include="Classes\PaymentVerifyResult.cs" />
     <Compile Include="Classes\SamanBankService.cs" />
     <Compile Include="Classes\ZarinPalBankService.cs" />
     <Compile Include="Classes\PasargadBankService.cs" />
