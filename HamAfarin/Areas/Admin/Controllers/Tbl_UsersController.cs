@@ -29,9 +29,9 @@ namespace HamAfarin.Areas.Admin.Controllers
         }
         public FileResult DownloadExcel()
         {
-            List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false && p.IsActive).ToList();
+            List<Tbl_Users> qlstProducts = db.Tbl_Users.Where(p => p.IsDeleted == false).ToList();
 
-            List<string> lstColumnsName = new List<string> { "شناسه", " شماره موبایل" };
+            List<string> lstColumnsName = new List<string> { "شناسه", " شماره موبایل", "فعال", "جنسیت", "حقیقی/حقوقی" };
 
             DataTable dt = new DataTable("Grid");
             foreach (var item in lstColumnsName)
@@ -39,11 +39,10 @@ namespace HamAfarin.Areas.Admin.Controllers
                 dt.Columns.Add(item);
             }
 
-
             foreach (var item in qlstProducts)
             {
-
-                dt.Rows.Add(item.UserID, item.MobileNumber);
+                string legal = item.IsLegal ? "حقوقی" : "حقیقی";
+                dt.Rows.Add(item.UserID, item.MobileNumber, item.IsActive, item.Tbl_UserProfiles.Select(s => s.Gender).FirstOrDefault(), legal);
             }
 
             using (XLWorkbook wb = new XLWorkbook()) //Install ClosedXml from Nuget for XLWorkbook  
@@ -176,7 +175,7 @@ namespace HamAfarin.Areas.Admin.Controllers
         /// <returns>لیست پروفایلهای تایید نشده</returns>
         public ActionResult UnSubmittedProfile()
         {
-            List<Tbl_UserProfiles> qListProfile = db.Tbl_UserProfiles.Where(p => p.IsActive == false && p.IsDeleted == false).OrderByDescending(p=>p.CreateDate).ToList();
+            List<Tbl_UserProfiles> qListProfile = db.Tbl_UserProfiles.Where(p => p.IsActive == false && p.IsDeleted == false).OrderByDescending(p => p.CreateDate).ToList();
             List<ProfileItemViewModel> listProfileItems = new List<ProfileItemViewModel>();
             foreach (var item in qListProfile)
             {

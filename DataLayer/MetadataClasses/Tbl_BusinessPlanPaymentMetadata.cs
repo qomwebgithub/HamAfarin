@@ -27,6 +27,8 @@ namespace DataLayer
         public Nullable<int> CreateUser_id { get; set; }
         [Display(Name = "کاربر پرداخت کننده")]
         public Nullable<int> PaymentUser_id { get; set; }
+        [Display(Name = "شماره فاکتور")]
+        public string InvoiceNumber { get; set; }
         [Display(Name = "کد پیگیری")]
         public string TransactionPaymentCode { get; set; }
         [Display(Name = "مبلغ پرداختی")]
