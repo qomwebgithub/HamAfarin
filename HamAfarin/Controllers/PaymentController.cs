@@ -32,6 +32,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using ViewModels;
+using HamAfarin.PaymentVerifySaman;
 
 namespace Hamafarin.Controllers
 {
@@ -280,7 +281,7 @@ namespace Hamafarin.Controllers
                                 db.SaveChanges();
                                 ViewBag.Token = request.Token;
                                 return View();
-                               // return Redirect(request.RedirectUrl);
+                                // return Redirect(request.RedirectUrl);
                             }
                             #endregion
                         }
@@ -787,7 +788,7 @@ namespace Hamafarin.Controllers
                         // 4 = سرمایه گذاری
                         Tbl_Sms qSms = db.Tbl_Sms.Find(4);
                         Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                        (bool Success, string Message) result = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+                        oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
                         return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
                     }
@@ -916,8 +917,17 @@ namespace Hamafarin.Controllers
                     callbackResult.ReferenceId = Request.QueryString["ResNum"];
                     callbackResult.TransactionId = Request.QueryString["RefNum"];
 
-                    qPaymentOnline.ShaparakCheckTransactionResult = callbackResult.TransactionId;
-                    db.SaveChanges();
+                    if (callbackResult.State == "OK")
+                    {
+                        qPaymentOnline.ShaparakCheckTransactionResult = callbackResult.TransactionId;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        qPaymentOnline.ShaparakCheckTransactionResult = callbackResult.State;
+                        db.SaveChanges();
+                        return View();
+                    }
 
                     //var isNotUniqueRefId = db.Tbl_PaymentOnlineDetils
                     //    .Any(p => p.TransactionReferenceID == callbackResult.TransactionId &&
@@ -944,36 +954,21 @@ namespace Hamafarin.Controllers
                     string _terminalId = "12949549";
 
 
+                    PaymentIFBindingSoapClient payment = new PaymentIFBindingSoapClient();
+                    // این مقدار در صورتی که مثبت باشد، مبلغ انتقالی (مبلغ کسر شده از کارت مشتری) را نشان میدهد و
+                    //در صورتی که منفی باشد، معرف کد خطاست
+                    double PaymentPrice = payment.verifyTransaction(callbackResult.TransactionId, _terminalId);
 
-                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/VerifyTransaction");
-                    httpWebRequest.Method = "POST";
-                    httpWebRequest.ContentType = "application/json";
-                    // httpWebRequest.ContentLength = 0;
-                    httpWebRequest.Expect = "application/json";
-
-                    ListDictionary body = new ListDictionary();
-                    body.Add("RefNum", _terminalId);
-                    body.Add("TerminalNumber", callbackResult.TransactionId);
-                    string json = JsonConvert.SerializeObject(body);
-
-                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    if (PaymentPrice < 0)
                     {
-                        streamWriter.Write(json);
-                    }
-                    string strResult = "";
-                    // Get the response.
-                    using (var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
-                    {
-                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                        {
-                            strResult = streamReader.ReadToEnd();
-                        }
+                        qPaymentOnline.ShaparakVerifyPayment = PaymentPrice.ToString();
+                        db.SaveChanges();
+                        return View();
                     }
 
-
-                    qPaymentOnline.ShaparakVerifyPayment = strResult;
+                    qPaymentOnline.ShaparakVerifyPayment = PaymentPrice.ToString();
                     qPaymentOnline.IsFinally = true;
-                    qBusinessPlanPayment.TransactionPaymentCode = callbackResult.TransactionId;
+                    qBusinessPlanPayment.TransactionPaymentCode = callbackResult.ReferenceId;
                     qBusinessPlanPayment.IsPaid = true;
                     qPaymentOnline.FinallyDate = DateTime.Now;
                     await db.SaveChangesAsync();
@@ -983,7 +978,7 @@ namespace Hamafarin.Controllers
 
                     Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
                     Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                    (bool Success, string Message) result = await oSms.SendSmsAsync(qUser.MobileNumber, qSms.Message);
+                    oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
                     return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
 

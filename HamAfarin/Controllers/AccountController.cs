@@ -70,7 +70,7 @@ namespace Hamafarin.Controllers
 
             // 1 = ورود
             Tbl_Sms qSms = db.Tbl_Sms.Find(1);
-            (bool Success, string Message) result = oSms.SendSms(user.MobileNumber, qSms.Message);
+            oSms.SendSms(user.MobileNumber, qSms.Message);
 
             return Redirect(ReturnUrl);
         }
@@ -253,7 +253,6 @@ namespace Hamafarin.Controllers
             }
 
             Tbl_Sms qSms;
-            (bool Success, string Message) smsResult;
             // انگلیسی سازی عدد اس ام اس
             verifySms.SmsCode = StringExtensions.Fa2En(verifySms.SmsCode);
             // پیدا کردن کابر از طریق توکن
@@ -284,7 +283,7 @@ namespace Hamafarin.Controllers
                     {
                         // 3 = ثبت اطلاعات از سجام
                         qSms = db.Tbl_Sms.Find(3);
-                        smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+                        oSms.SendSms(qUser.MobileNumber, qSms.Message);
                     }
                 }
                 else if (qUser.SmsCode != Convert.ToInt32(verifySms.SmsCode))
@@ -303,7 +302,7 @@ namespace Hamafarin.Controllers
 
             // 2 = ثبت نام
             qSms = db.Tbl_Sms.Find(2);
-            smsResult = oSms.SendSms(qUser.MobileNumber, qSms.Message);
+            oSms.SendSms(qUser.MobileNumber, qSms.Message);
 
             string strSetAuthCookie = new UserService().SetCookieString(qUser);
             FormsAuthentication.SetAuthCookie(strSetAuthCookie, false);

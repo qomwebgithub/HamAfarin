@@ -113,7 +113,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                     if (string.IsNullOrEmpty(sendSms.MobileNumber) == false)
                     {
                         sendSms.MobileNumber = StringExtensions.Fa2En(sendSms.MobileNumber);
-                        (bool Success, string Message) result = oSms.SendSms(sendSms.MobileNumber, sendSms.Message);
+                         oSms.SendSms(sendSms.MobileNumber, sendSms.Message);
                     }
                     else
                     {
@@ -125,7 +125,7 @@ namespace HamAfarin.Areas.Admin.Controllers
                             common = ",";
                         }
 
-                        (bool Success, string Message) result = oSms.SendSms(sendSms.MobileNumber, sendSms.Message);
+                        oSms.SendSms(sendSms.MobileNumber, sendSms.Message);
                         //// شماره موبایل ها را در لیستی از استرینگ ذخیره میکنیم
                         //foreach (var item in lstGetOrdersForSendSms)
                         //{

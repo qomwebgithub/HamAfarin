@@ -289,7 +289,7 @@ namespace HamAfarin.Areas.Admin.Controllers
 
                         //گرفتن عکس قبلی با فرمت و بدون فرمت
                         var Extention = Path.GetExtension(tbl_BusinessPlanPayment.PaymentImageName);
-                        var noExtentionFileName =tbl_BusinessPlanPayment.PaymentID.ToString();
+                        var noExtentionFileName = tbl_BusinessPlanPayment.PaymentID.ToString();
 
                         //ساخت اسم جدید برای عکس قبلی
                         int i = 0;
@@ -648,7 +648,7 @@ namespace HamAfarin.Areas.Admin.Controllers
             }
 
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
-            (bool Success, string Message) smsResult = oSms.SendSms(qUser.MobileNumber, message);
+            oSms.SendSms(qUser.MobileNumber, message);
         }
 
 
@@ -656,14 +656,14 @@ namespace HamAfarin.Areas.Admin.Controllers
         {
             var listInvestor = db.Tbl_BusinessPlanPayment
                 .Where(b => b.BusinessPlan_id == id &&
-                b.IsConfirmedFromFaraboors && b.IsDelete==false)
+                b.IsConfirmedFromFaraboors && b.IsDelete == false)
                 .Select(u => u.Tbl_Users1).Distinct().ToList();
 
             List<Tbl_Users> first = new List<Tbl_Users>();
             List<Tbl_Users> notFirst = new List<Tbl_Users>();
 
             var listBusinessPlanPayment = db.Tbl_BusinessPlanPayment.OrderBy(o => o.CreateDate).ToList();
-            
+
             foreach (var item in listInvestor)
             {
                 var firstOrNot = listBusinessPlanPayment

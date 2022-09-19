@@ -6,11 +6,15 @@
 }
 @if (ViewBag.Token != null)
 {
-    <form id="formSaman" name="formSaman" action="https://sep.shaparak.ir/OnlinePG/OnlinePG" method="post">
+    
+    <form id="formSaman" name="formSaman" action="https://sep.shaparak.ir/MobilePG/MobilePayment" method="post">
         <input type="hidden" name="Token" value="@ViewBag.Token" />
         <input name="GetMethod" type="hidden" value="true"> <!--true | false | empty string | null-->
         <input type="submit" class="d-none" />
     </form>
+    <div class="text-center">
+        <h1 class="text-success"> درحال انتقال به درگاه پرداخت ... </h1>
+    </div>
 }
 else
 {
@@ -428,8 +432,8 @@ else
                             <div class="container-fluid">
                                 <div class="form-group" id="buttons">
                                     <br />
-                                    <div class="mx-auto" style="width: 200px;">
-                                        <input id="btnSubmit" type="submit" value="تایید" class="btn btn-success" />
+                                    <div class="mx-auto" style="width: 300px;">
+                                        <input id="btnSubmit" type="submit" value="تایید" class="btn btn-success px-5" />
                                         <a href="/BusinessPlans" class="btn btn-danger">انصراف</a>
                                     </div>
                                 </div>

@@ -18,66 +18,62 @@ namespace HamAfarin
         HamAfarinDBEntities db = new HamAfarinDBEntities();
         //JaxRpcMessagingServiceClient sms = new JaxRpcMessagingServiceClient();
 
-        public (bool Success, string Message) SendSms(string mobileNumber, string message)
+        public async Task SendSms(string mobileNumber, string message)
         {
-            mobileNumber = FixMobileNumber(mobileNumber);
-            //string[] lsttMobileNumber = { mobileNumber };
-            (bool Success, string Message) tokenResult;
-
-            DateTime date = DateTime.Now;
-
-            //SendResult a = sms.send(
-            //    "irfintech",
-            //    "irfintech123",
-            //    "98200071072",
-            //    lsttMobileNumber,
-            //    "",
-            //    "",
-            //    lsttMobileNumber,
-            //    1,
-            //    1,
-            //    true, date,"");
-
-            // این کد پیش فرض داخل داکیومنت می باشد
-            string url = "https://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress0=" + mobileNumber + "&body0=" + message + "&unicode0=1";
-
-            //string url = "http://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&body=" + message + "&unicode=1";
-            WebClient client = new WebClient();
-            try
+            await Task.Run(() =>
             {
-                byte[] respData = client.DownloadData(url);
-                string response = Encoding.ASCII.GetString(respData);
-                Tbl_SmsLog oSmsException = new Tbl_SmsLog()
-                {
-                    CreateDate = DateTime.Now,
-                    Exception = null,
-                    MobileNumber = mobileNumber,
-                    Message = message,
-                    ID = Guid.NewGuid().ToString(),
-                    Method = nameof(SendSms)
-                };
-                db.Tbl_SmsLog.Add(oSmsException);
-                db.SaveChanges();
-                tokenResult = (true, response);
-                return tokenResult;
-            }
-            catch (WebException x)
-            {
-                Tbl_SmsLog oSmsException = new Tbl_SmsLog()
-                {
-                    CreateDate = DateTime.Now,
-                    Exception = "Exception: " + x.ToString() + "Message: " + x.Message + " - Response: " + x.Response,
-                    MobileNumber = mobileNumber,
-                    Message = message,
-                    ID = Guid.NewGuid().ToString(),
-                    Method = nameof(SendSms)
-                };
-                db.Tbl_SmsLog.Add(oSmsException);
-                db.SaveChanges();
-                tokenResult = (false, "Message: " + x.Message + " - Response: " + x.Response);
-                return tokenResult;
-            }
+                mobileNumber = FixMobileNumber(mobileNumber);
+                //string[] lsttMobileNumber = { mobileNumber };
+                DateTime date = DateTime.Now;
 
+                //SendResult a = sms.send(
+                //    "irfintech",
+                //    "irfintech123",
+                //    "98200071072",
+                //    lsttMobileNumber,
+                //    "",
+                //    "",
+                //    lsttMobileNumber,
+                //    1,
+                //    1,
+                //    true, date,"");
+
+                // این کد پیش فرض داخل داکیومنت می باشد
+                string url = "https://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress0=" + mobileNumber + "&body0=" + message + "&unicode0=1";
+
+                //string url = "http://ws2.adpdigital.com/url/multisend?username=irfintech&password=irfintech123&dstaddress=" + mobileNumber + "&body=" + message + "&unicode=1";
+                WebClient client = new WebClient();
+                try
+                {
+                    byte[] respData = client.DownloadData(url);
+                    string response = Encoding.ASCII.GetString(respData);
+                    Tbl_SmsLog oSmsException = new Tbl_SmsLog()
+                    {
+                        CreateDate = DateTime.Now,
+                        Exception = null,
+                        MobileNumber = mobileNumber,
+                        Message = message,
+                        ID = Guid.NewGuid().ToString(),
+                        Method = nameof(SendSms)
+                    };
+                    db.Tbl_SmsLog.Add(oSmsException);
+                    db.SaveChanges();
+                }
+                catch (WebException x)
+                {
+                    Tbl_SmsLog oSmsException = new Tbl_SmsLog()
+                    {
+                        CreateDate = DateTime.Now,
+                        Exception = "Exception: " + x.ToString() + "Message: " + x.Message + " - Response: " + x.Response,
+                        MobileNumber = mobileNumber,
+                        Message = message,
+                        ID = Guid.NewGuid().ToString(),
+                        Method = nameof(SendSms)
+                    };
+                    db.Tbl_SmsLog.Add(oSmsException);
+                    db.SaveChanges();
+                }
+            });
         }
 
         public async Task<(bool Success, string Message)> SendSmsAsync(string mobileNumber, string message)
