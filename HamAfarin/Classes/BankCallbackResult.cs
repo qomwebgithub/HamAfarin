@@ -10,7 +10,7 @@
 
         public string SecurePan { get; set; }
 
-        public string Cid { get; set; }
+        public string MID { get; set; }
 
         public string Rrn { get; set; }
 
@@ -18,5 +18,6 @@
 
         public string Message { get; set; }
         public string Result { get; set; }
+        public string State { get; set; }
     }
 }

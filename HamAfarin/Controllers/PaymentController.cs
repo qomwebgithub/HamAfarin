@@ -16,11 +16,13 @@ using Parbad.Mvc;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -28,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using ViewModels;
 
 namespace Hamafarin.Controllers
@@ -115,6 +118,7 @@ namespace Hamafarin.Controllers
             List<Tbl_Dargah> qlstDargah = db.Tbl_Dargah.Where(d => d.IsActive).ToList();
             return PartialView(qlstDargah);
         }
+
 
         [HttpPost]
         public async Task<ActionResult> SelectPaymentType(SelectPaymentTypeViewModel selectPaymentTypeViewModel, HttpPostedFileBase imgPaymentImageNameUploaded)
@@ -274,8 +278,9 @@ namespace Hamafarin.Controllers
                             {
                                 tbl_PaymentOnline.ShaparakToken = request.Token;
                                 db.SaveChanges();
-
-                                return Redirect(request.RedirectUrl);
+                                ViewBag.Token = request.Token;
+                                return View();
+                               // return Redirect(request.RedirectUrl);
                             }
                             #endregion
                         }
@@ -900,20 +905,31 @@ namespace Hamafarin.Controllers
                         default: bankService = new SamanBankService(); break;
                     };
 
-                    BankCallbackResult callbackResult = bankService.Fetch(Request);
-                    qPaymentOnline.ShaparakCheckTransactionResult = callbackResult.Result;
+                    //  BankCallbackResult callbackResult = bankService.Fetch(Request);
 
-                    var isNotUniqueRefId = db.Tbl_PaymentOnlineDetils
-                        .Any(p => p.TransactionReferenceID == callbackResult.TransactionId &&
-                        p.Dargah_id == qPaymentOnline.Dargah_id && p.IsFinally);
+                    BankCallbackResult callbackResult = new BankCallbackResult();
+                    callbackResult.TraceNo = Request.QueryString["TraceNo"];
+                    callbackResult.SecurePan = Request.QueryString["SecurePan"];
+                    callbackResult.MID = Request.QueryString["MID"];
+                    callbackResult.Rrn = Request.QueryString["Rrn"];
+                    callbackResult.State = Request.QueryString["State"];
+                    callbackResult.ReferenceId = Request.QueryString["ResNum"];
+                    callbackResult.TransactionId = Request.QueryString["RefNum"];
 
-                    if (!callbackResult.IsSucceed || isNotUniqueRefId)
-                    {
-                        ViewBag.IsSuccess = false;
-                        ViewBag.Result = "عملیات ناموفق";
-                        await db.SaveChangesAsync();
-                        return View();
-                    }
+                    qPaymentOnline.ShaparakCheckTransactionResult = callbackResult.TransactionId;
+                    db.SaveChanges();
+
+                    //var isNotUniqueRefId = db.Tbl_PaymentOnlineDetils
+                    //    .Any(p => p.TransactionReferenceID == callbackResult.TransactionId &&
+                    //    p.Dargah_id == qPaymentOnline.Dargah_id && p.IsFinally);
+
+                    //if (!callbackResult.IsSucceed || isNotUniqueRefId)
+                    //{
+                    //    ViewBag.IsSuccess = false;
+                    //    ViewBag.Result = "عملیات ناموفق";
+                    //    await db.SaveChangesAsync();
+                    //    return View();
+                    //}
 
                     //// This is an example of cancelling an invoice when you think that the payment process must be stopped.
                     //if (isRefund)
@@ -924,18 +940,46 @@ namespace Hamafarin.Controllers
                     //    return View();
                     //}
 
-                    PaymentVerifyResult verifyResult = await bankService.VerifyAsync(callbackResult);
+                    // PaymentVerifyResult verifyResult = await bankService.VerifyAsync(callbackResult);
+                    string _terminalId = "12949549";
 
 
-                    qPaymentOnline.ShaparakVerifyPayment = verifyResult.TransactionCode;
+
+                    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://sep.shaparak.ir/verifyTxnRandomSessionkey/ipg/VerifyTransaction");
+                    httpWebRequest.Method = "POST";
+                    httpWebRequest.ContentType = "application/json";
+                    // httpWebRequest.ContentLength = 0;
+                    httpWebRequest.Expect = "application/json";
+
+                    ListDictionary body = new ListDictionary();
+                    body.Add("RefNum", _terminalId);
+                    body.Add("TerminalNumber", callbackResult.TransactionId);
+                    string json = JsonConvert.SerializeObject(body);
+
+                    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                    {
+                        streamWriter.Write(json);
+                    }
+                    string strResult = "";
+                    // Get the response.
+                    using (var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse())
+                    {
+                        using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                        {
+                            strResult = streamReader.ReadToEnd();
+                        }
+                    }
+
+
+                    qPaymentOnline.ShaparakVerifyPayment = strResult;
                     qPaymentOnline.IsFinally = true;
-                    qBusinessPlanPayment.TransactionPaymentCode = verifyResult.TransactionCode;
+                    qBusinessPlanPayment.TransactionPaymentCode = callbackResult.TransactionId;
                     qBusinessPlanPayment.IsPaid = true;
                     qPaymentOnline.FinallyDate = DateTime.Now;
                     await db.SaveChangesAsync();
 
                     ViewBag.IsSuccess = true;
-                    ViewBag.TransactionReferenceID = verifyResult.TransactionCode;
+                    ViewBag.TransactionReferenceID = callbackResult.TransactionId;
 
                     Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
                     Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);

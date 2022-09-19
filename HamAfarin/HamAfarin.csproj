@@ -2697,6 +2697,13 @@
     <Folder Include="UploadFiles\TicketFileUploads\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\SmsSender\" />
+    <WCFMetadataStorage Include="Connected Services\ZarinPal\" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{d869e89a-3e33-4c45-83ec-f6dc068a57d9}</Project>
       <Name>DataLayer</Name>
@@ -2705,13 +2712,6 @@
       <Project>{0e66d359-a862-4d20-ba0e-e76147985ac3}</Project>
       <Name>ViewModels</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\SmsSender\" />
-    <WCFMetadataStorage Include="Connected Services\ZarinPal\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

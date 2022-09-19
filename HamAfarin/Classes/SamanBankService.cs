@@ -121,7 +121,7 @@ namespace HamAfarin.Classes
                 ReferenceId = referenceIdResult,
                 TransactionId = transactionIdResult,
                 SecurePan = securePan,
-                Cid = cid,
+                MID = cid,
                 TraceNo = traceNo,
                 Rrn = rrn,
                 Message = message,
@@ -144,7 +144,7 @@ namespace HamAfarin.Classes
 
                 var dto = new PaymentVerifyResult();
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode == false)
                 {
                     dto.Result = responseContent;
                     return dto;
