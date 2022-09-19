@@ -977,8 +977,8 @@ namespace Hamafarin.Controllers
                     ViewBag.TransactionReferenceID = callbackResult.TransactionId;
 
                     Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
-                    Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
-                    oSms.SendSms(qUser.MobileNumber, qSms.Message);
+                   // Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    oSms.SendSms(UserSetAuthCookie.GetMobileNumber(User.Identity.Name), qSms.Message);
 
                     return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
 
