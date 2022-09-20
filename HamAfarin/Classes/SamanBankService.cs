@@ -218,7 +218,11 @@ namespace HamAfarin.Classes
                 CellNumber = bankInvoice.UserMobile,
                 RedirectUrl = bankInvoice.AfterPaymentRedirectAddress,
                 ResNum = bankInvoice.InvoiceNumber,
-                TerminalId = _terminalId
+                TerminalId = _terminalId,
+                ResNum1 = bankInvoice.PlanTitleAndCodeOTC,
+                ResNum2 = bankInvoice.UserNationalCode,
+                ResNum3 = bankInvoice.UserMobile,
+                ResNum4 = bankInvoice.AccountNumber
             };
             return JsonConvert.SerializeObject(data);
         }
@@ -269,6 +273,10 @@ namespace HamAfarin.Classes
         public string TerminalId { get; set; }
         public long Amount { get; set; }
         public string ResNum { get; set; }
+        public string ResNum1 { get; set; }
+        public string ResNum2 { get; set; }
+        public string ResNum3 { get; set; }
+        public string ResNum4 { get; set; }
         public string RedirectUrl { get; set; }
         public string CellNumber { get; set; }
     }

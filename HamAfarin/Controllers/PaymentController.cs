@@ -260,7 +260,12 @@ namespace Hamafarin.Controllers
                                 default: bankService = new SamanBankService(); break;
                             };
                             string strUserNationalCode = UserSetAuthCookie.GetUserName(User.Identity.Name);
+                            string strAccountNumber = "";
+                            if (qUser.Tbl_UserProfiles != null)
+                            {
+                                strAccountNumber = qUser.Tbl_UserProfiles.First().AccountNumber;
 
+                            }
                             var bankDto = new BankInvoice()
                             {
                                 UserEmail = email,
@@ -272,9 +277,9 @@ namespace Hamafarin.Controllers
                                 InvoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber,
                                 TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
                                 PlanTitleAndCodeOTC = tbl_BusinessPlanPayment.Tbl_BussinessPlans.Title + " - " + tbl_BusinessPlanPayment.Tbl_BussinessPlans.CodeOTC,
-                                UserNationalCode = strUserNationalCode
+                                UserNationalCode = strUserNationalCode,
+                                AccountNumber = strAccountNumber
                             };
-
                             var request = await bankService.RequestAsync(bankDto);
                             tbl_PaymentOnline.ShaparakMessageGetToken = request.Result;
 
