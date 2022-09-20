@@ -7,7 +7,8 @@ namespace HamAfarin.Classes.Dto
         public long Amount { get; set; }
         public string InvoiceNumber { get; set; }
         public string AfterPaymentRedirectAddress { get; set; }
-
+        public string PlanTitleAndCodeOTC { get; set; }
+        public string UserNationalCode { get; set; }
         public string UserEmail { get; set; }
         public string UserMobile { get; set; }
         public string Description { get; set; }

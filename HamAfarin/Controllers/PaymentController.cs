@@ -259,6 +259,7 @@ namespace Hamafarin.Controllers
                                 //case 2: bankService = new ZarinPalBankService(); break;
                                 default: bankService = new SamanBankService(); break;
                             };
+                            string strUserNationalCode = UserSetAuthCookie.GetUserName(User.Identity.Name);
 
                             var bankDto = new BankInvoice()
                             {
@@ -270,6 +271,8 @@ namespace Hamafarin.Controllers
                                 InvoiceDate = tbl_BusinessPlanPayment.CreateDate.Value,
                                 InvoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber,
                                 TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
+                                PlanTitleAndCodeOTC = tbl_BusinessPlanPayment.Tbl_BussinessPlans.Title + " - " + tbl_BusinessPlanPayment.Tbl_BussinessPlans.CodeOTC,
+                                UserNationalCode = strUserNationalCode
                             };
 
                             var request = await bankService.RequestAsync(bankDto);
@@ -977,7 +980,7 @@ namespace Hamafarin.Controllers
                     ViewBag.TransactionReferenceID = callbackResult.TransactionId;
 
                     Tbl_Sms qSms = await db.Tbl_Sms.FindAsync(4);
-                   // Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
+                    // Tbl_Users qUser = await db.Tbl_Users.FirstOrDefaultAsync(u => u.UserID == qPaymentOnline.Tbl_BusinessPlanPayment.Tbl_BussinessPlans.User_id);
                     oSms.SendSms(UserSetAuthCookie.GetMobileNumber(User.Identity.Name), qSms.Message);
 
                     return RedirectToAction("SinglePaymentBusinessPlan", "UserPaymentBusinessPlan", new { area = "UserPanel", id = qPaymentOnline.Payment_id, notify = true });
