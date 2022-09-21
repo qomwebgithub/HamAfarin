@@ -32,61 +32,51 @@ namespace HamAfarin.Areas.UserPanel.Controllers
         /// </summary>
         /// <returns></returns>
         [Authorize]
-        public ActionResult Index(int page = 1)
+        public async Task<ActionResult> Index(int page = 1)
         {
-            // Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.MobileNumber == User.Identity.Name);
             int UserID = UserSetAuthCookie.GetUserID(User.Identity.Name);
-            List<Tbl_BusinessPlanPayment> qlstBusinessPlanPayments = db.Tbl_BusinessPlanPayment.Where(p => p.IsDelete == false && p.PaymentUser_id == UserID).OrderBy(p => p.BusinessPlan_id).OrderByDescending(p => p.PaidDateTime).ToList();
+
+            List<Tbl_BusinessPlanPayment> qlstBusinessPlanPayments = await db.Tbl_BusinessPlanPayment
+                .Include(p => p.Tbl_PaymentOnlineDetils).Include(p => p.Tbl_BussinessPlans)
+                .AsNoTracking().Where(p => p.IsDelete == false && p.PaymentUser_id == UserID)
+                .OrderBy(p => p.BusinessPlan_id).OrderByDescending(p => p.PaidDateTime).ToListAsync();
+
             List<UserPaymentBusinessPlanList> lstUserPaymentBusinessPlan = new List<UserPaymentBusinessPlanList>();
             int Row_id = 1;
+
             foreach (var item in qlstBusinessPlanPayments)
             {
                 if (item.PaymentType_id == 2)
                 {
                     if (item.Tbl_PaymentOnlineDetils.Count == 0) continue;
-                    Tbl_PaymentOnlineDetils qOnlineDetails = item.Tbl_PaymentOnlineDetils.First(d => item.PaymentID == d.Payment_id);
-                    if (qOnlineDetails == null || !qOnlineDetails.IsFinally)
+
+                    Tbl_PaymentOnlineDetils qOnlineDetails = item.Tbl_PaymentOnlineDetils
+                        .FirstOrDefault(d => item.PaymentID == d.Payment_id);
+
+                    if ( !item.IsConfirmedFromFaraboors && (qOnlineDetails == null || !qOnlineDetails.IsFinally))
                         continue;
                 }
+
                 string strPaymentStatus = "تایید نشده";
-                if (item.IsConfirmedFromAdmin)
-                {
-                    strPaymentStatus = "تایید شده";
-                }
-                else if (item.IsReturned)
-                {
-                    strPaymentStatus = "برگشت خورده";
-                }
-                else if (item.IsPaid)
-                {
-                    strPaymentStatus = "در انتظار تایید";
-                }
-                string strBusinessPlanStatus = "درحال تامین سرمایه";
+                if (item.IsConfirmedFromAdmin) strPaymentStatus = "تایید شده";
+                else if (item.IsReturned) strPaymentStatus = "برگشت خورده";
+                else if (item.IsPaid) strPaymentStatus = "در انتظار تایید";
+
                 int qRemainingDay = -1;
-
                 if (item.Tbl_BussinessPlans.IsSuccessBussinessPlan == false)
-                {
-                    qRemainingDay = planService.CalculateRemainDay(item.Tbl_BussinessPlans.InvestmentExpireDate);
-                }
+                    qRemainingDay = planService.CalculateRemainDay(
+                        item.Tbl_BussinessPlans.InvestmentExpireDate);
 
-                int qPercentageComplate = planService.GetPercentage(long.Parse(item.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital),
+                int qPercentageComplate = planService.GetPercentage(
+                    long.Parse(item.Tbl_BussinessPlans.AmountRequiredRoRaiseCapital),
                     planService.GetRaisedPrice(db, item.Tbl_BussinessPlans.BussinessPlanID));
-                if (qRemainingDay <= 0 && qPercentageComplate >= 100)
-                {
-                    strBusinessPlanStatus = "تکمیل سرمایه";
-                }
-                else if (qPercentageComplate >= 100)
-                {
-                    strBusinessPlanStatus = "در انتظار تایید فرابورس";
-                }
-                else if (qRemainingDay <= 0 && qPercentageComplate < 100)
-                {
-                    strBusinessPlanStatus = "عدم تامین سرمایه";
-                }
-                else if (qRemainingDay > 0)
-                {
-                    strBusinessPlanStatus = "درحال تامین سرمایه";
-                }
+
+                string strBusinessPlanStatus = "درحال تامین سرمایه";
+                if (qRemainingDay <= 0 && qPercentageComplate >= 100) strBusinessPlanStatus = "تکمیل سرمایه";
+                else if (qPercentageComplate >= 100) strBusinessPlanStatus = "در انتظار تایید فرابورس";
+                else if (qRemainingDay <= 0 && qPercentageComplate < 100) strBusinessPlanStatus = "عدم تامین سرمایه";
+                else if (qRemainingDay > 0) strBusinessPlanStatus = "درحال تامین سرمایه";
+
 
                 lstUserPaymentBusinessPlan.Add(new UserPaymentBusinessPlanList()
                 {
@@ -104,9 +94,17 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
 
             IPagedList PagedList = lstUserPaymentBusinessPlan.ToPagedList(page, 6);
+
             ViewBag.Count = qlstBusinessPlanPayments.Where(p => p.IsConfirmedFromAdmin).Count();
-            ViewBag.DepositToInvestors = db.Tbl_DepositToInvestorsDetails.Where(p => p.InvestorUser_id == UserID && p.IsDelete == false && p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false).Sum(p => p.DepositAmount);
-            ViewBag.TotalInvestment = qlstBusinessPlanPayments.Where(p => p.IsConfirmedFromAdmin).Select(p => p.PaymentPrice).Sum();
+
+            ViewBag.DepositToInvestors = await db.Tbl_DepositToInvestorsDetails.AsNoTracking()
+                .Where(p => p.InvestorUser_id == UserID && p.IsDelete == false &&
+                p.Tbl_DepositToInvestors.IsPaid && p.Tbl_DepositToInvestors.IsDelete == false)
+                .SumAsync(p => p.DepositAmount);
+
+            ViewBag.TotalInvestment = qlstBusinessPlanPayments.Where(p => p.IsConfirmedFromAdmin)
+                .Select(p => p.PaymentPrice).Sum();
+
             return View(PagedList);
         }
 
@@ -321,7 +319,7 @@ namespace HamAfarin.Areas.UserPanel.Controllers
             }
 
             Tbl_Users qUser = db.Tbl_Users.FirstOrDefault(u => u.UserID == paymentUser_id);
-             oSms.SendSms(qUser.MobileNumber, message);
+            oSms.SendSms(qUser.MobileNumber, message);
         }
 
         public ActionResult CertificateList()
