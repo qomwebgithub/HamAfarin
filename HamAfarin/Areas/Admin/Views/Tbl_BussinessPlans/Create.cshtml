@@ -281,7 +281,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FinancialDuration_id, new { @class = "control-label col-12" })
             <div class="col-md-10">
-                @Html.DropDownList("FinancialDuration_id", String.Empty)
+                @Html.DropDownList("FinancialDuration_id")
                 @Html.ValidationMessageFor(model => model.FinancialDuration_id)
             </div>
         </div>
