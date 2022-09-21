@@ -276,7 +276,7 @@ namespace Hamafarin.Controllers
                                 InvoiceDate = tbl_BusinessPlanPayment.CreateDate.Value,
                                 InvoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber,
                                 TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
-                                PlanTitleAndCodeOTC = tbl_BusinessPlanPayment.Tbl_BussinessPlans.Title + " - " + tbl_BusinessPlanPayment.Tbl_BussinessPlans.CodeOTC,
+                                PlanTitleAndCodeOTC = tbl_BusinessPlanPayment.Tbl_BussinessPlans.CodeOTC + " - " +  tbl_BusinessPlanPayment.Tbl_BussinessPlans.Title,
                                 UserNationalCode = strUserNationalCode,
                                 AccountNumber = strAccountNumber
                             };
