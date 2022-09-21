@@ -264,7 +264,6 @@ namespace Hamafarin.Controllers
                             if (qUser.Tbl_UserProfiles != null)
                             {
                                 strAccountNumber = qUser.Tbl_UserProfiles.First().AccountNumber;
-
                             }
                             var bankDto = new BankInvoice()
                             {
@@ -276,9 +275,9 @@ namespace Hamafarin.Controllers
                                 InvoiceDate = tbl_BusinessPlanPayment.CreateDate.Value,
                                 InvoiceNumber = tbl_BusinessPlanPayment.InvoiceNumber,
                                 TimeStamp = tbl_BusinessPlanPayment.CreateDate.Value,
-                                PlanTitleAndCodeOTC = tbl_BusinessPlanPayment.Tbl_BussinessPlans.CodeOTC + " - " +  tbl_BusinessPlanPayment.Tbl_BussinessPlans.Title,
+                                PlanTitle = tbl_BusinessPlanPayment.Tbl_BussinessPlans.Title,
                                 UserNationalCode = strUserNationalCode,
-                                AccountNumber = strAccountNumber
+                                CodeOTC = tbl_BusinessPlanPayment.Tbl_BussinessPlans.CodeOTC
                             };
                             var request = await bankService.RequestAsync(bankDto);
                             tbl_PaymentOnline.ShaparakMessageGetToken = request.Result;

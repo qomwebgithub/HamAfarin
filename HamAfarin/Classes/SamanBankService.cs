@@ -20,6 +20,7 @@ namespace HamAfarin.Classes
     {
         private const string _terminalId = "12949549";
         private const string _terminalPassword = "1837060";
+        SmsService oSms = new SmsService();
 
         public async Task<BankRequestDto> RequestAsync(BankInvoice bankInvoice)
         {
@@ -52,14 +53,18 @@ namespace HamAfarin.Classes
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync("https://sep.shaparak.ir/onlinepg/onlinepg", content);
                 string responseContent = await response.Content.ReadAsStringAsync();
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode == false)
                 {
+                    oSms.SendSms("09197246889", "IsSuccessStatusCode" + " --- " +  json);
+
                     dto.Result = responseContent;
                     return dto;
                 }
 
-                if (!responseContent.Contains("\"status\":1"))
+                if (responseContent.Contains("\"status\":1") == false)
                 {
+                    oSms.SendSms("09197246889", "status" + " --- " + json);
+
                     dto.Result = responseContent;
                     return dto;
                 }
@@ -219,10 +224,10 @@ namespace HamAfarin.Classes
                 RedirectUrl = bankInvoice.AfterPaymentRedirectAddress,
                 ResNum = bankInvoice.InvoiceNumber,
                 TerminalId = _terminalId,
-                ResNum1 = bankInvoice.PlanTitleAndCodeOTC,
-                ResNum2 = bankInvoice.UserNationalCode,
-                ResNum3 = bankInvoice.UserMobile,
-                ResNum4 = bankInvoice.AccountNumber
+                ResNum1 = bankInvoice.PlanTitle,
+                ResNum2 = bankInvoice.CodeOTC ,
+                ResNum3 = bankInvoice.UserNationalCode,
+                ResNum4 = bankInvoice.UserMobile
             };
             return JsonConvert.SerializeObject(data);
         }
