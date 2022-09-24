@@ -103,7 +103,8 @@ namespace HamAfarin.Areas.Admin.Controllers
                 return HttpNotFound();
             }
 
-            (string Date, string Time) dateTime = DateTimeFormating(tbl_BusinessPlanPayment.PaidDateTime);
+            //(string Date, string Time) dateTime = DateTimeFormating(tbl_BusinessPlanPayment.PaidDateTime);
+            (string Date, string Time) dateTime = DateTimeFormating(DateTime.Now);
             ViewBag.PaymentDate = dateTime.Date;
             ViewBag.PaymentTime = dateTime.Time;
 
